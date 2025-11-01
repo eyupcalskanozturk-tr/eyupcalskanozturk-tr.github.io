@@ -1,11 +1,223 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Eyüp Çalışkanoztürk | Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+    :root {
+      --bg: #0d1117;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #2b93ff;
+      --accent2: #6ab0ff;
+      --border: rgba(255, 255, 255, 0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: background 1s ease, color 1s ease;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      background: rgba(13, 17, 23, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      z-index: 10;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: auto;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+    }
+    .brand-mark {
+      background: linear-gradient(45deg, #ffd36b, #c59024);
+      color: #111;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+    }
+    .menu { display: flex; align-items: center; gap: 22px; }
+    .menu a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    .menu a:hover { color: var(--accent); }
+
+    /* Tema Butonu */
+    #themeToggle {
+      position: relative;
+      width: 48px;
+      height: 26px;
+      border-radius: 30px;
+      background: linear-gradient(90deg, #1e2530, #29313f);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      transition: all 0.5s ease;
+    }
+    #themeToggle::before {
+      content: "🌙";
+      position: absolute;
+      left: 4px;
+      top: 2px;
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, #2b93ff, #1868ff);
+      border-radius: 50%;
+      color: #fff;
+      font-size: 13px;
+      transition: all 0.5s ease;
+    }
+    body.light {
+      --bg: #f4f7fb;
+      --text: #1a1a1a;
+      --muted: #555;
+    }
+    body.light #themeToggle {
+      background: linear-gradient(90deg, #f0f0f0, #d9d9d9);
+    }
+    body.light #themeToggle::before {
+      transform: translateX(22px);
+      content: "☀️";
+      background: linear-gradient(180deg, #ffb84a, #ff9800);
+      color: #111;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 120px 20px 80px;
+    }
+    .hero h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+    }
+    .accent {
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .hero p { color: var(--muted); margin-top: 8px; }
+    .hero-cta { margin-top: 25px; display: flex; justify-content: center; gap: 16px; }
+
+    /* Buttons */
+    .btn {
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s ease;
+      border: 1px solid transparent;
+    }
+    .btn-primary {
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(43, 147, 255, 0.4);
+    }
+    .btn-ghost {
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+    .btn-ghost:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* Sections */
+    .section {
+      text-align: center;
+      padding: 80px 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    .section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .section p {
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    /* Socials */
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 20px;
+    }
+    .socials a {
+      font-size: 1.6rem;
+      color: var(--muted);
+      transition: all 0.3s ease;
+    }
+    .socials a:hover {
+      color: var(--accent);
+      transform: scale(1.2);
+      text-shadow: 0 0 10px rgba(43,147,255,0.6);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 35px 10px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: var(--muted);
+    }
+    .glow-text {
+      background: linear-gradient(90deg, #ffc877, #ffd77d, #ffb84a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glowMove 4s infinite linear;
+    }
+    @keyframes glowMove {
+      0% { filter: drop-shadow(0 0 2px #ffb84a); }
+      50% { filter: drop-shadow(0 0 10px #ffcc66); }
+      100% { filter: drop-shadow(0 0 2px #ffb84a); }
+    }
+
+    /* Fade */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body>
   <nav class="navbar">
@@ -21,29 +233,30 @@
     </div>
   </nav>
 
-  <section class="hero fade-in">
+  <section class="hero fade-in visible">
     <h1>Merhaba, ben <span class="accent">Eyüp Çalışkanoztürk</span></h1>
     <p>Bilgisayar Programcılığı 1. sınıf öğrencisi · Bilgi İşlem (IT) · Çanakkale</p>
     <div class="hero-cta">
       <a href="#projects" class="btn btn-primary">Projeleri Gör</a>
-      <a href="cv.pdf" class="btn btn-ghost" target="_blank">CV İndir</a>
+      <a href="#" class="btn btn-ghost">CV İndir</a>
     </div>
   </section>
 
-  <section id="about" class="section fade-in">
+  <section id="about" class="section fade-in visible">
     <h2>💡 Hakkımda</h2>
     <p>Merhaba! Ben Eyüp, sade ama güçlü çözümler üretmeyi seven bir yazılım geliştiricisiyim.
       UI tasarımı, C# ve algoritma geliştirme alanlarında ilerliyorum.
       Teknolojiyi sadece kullanmak değil, anlamak ve üretmek benim için bir tutku.</p>
   </section>
 
-  <section id="contact" class="section fade-in">
-    <h2>📫 Sosyal Medya</h2>
+  <section id="contact" class="section fade-in visible">
+    <h2>📫 Bana Ulaş</h2>
+    <p>Projeler, iş teklifleri veya sadece selam vermek istersen aşağıdaki kanallardan bana ulaşabilirsin 👇</p>
     <div class="socials">
-      <a href="mailto:eyupcalskanofficial@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
-      <a href="https://www.linkedin.com/in/ey%C3%BCp-%C3%A7ali%C5%9Fkan%C3%B6zt%C3%BCrk-413208273/" target="_blank"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/eyupcalskanozturk-tr" target="_blank"><i class="fab fa-github"></i></a>
-      <a href="https://www.instagram.com/eyupcalskanozturk" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="mailto:eyupcalskanofficial@gmail.com" target="_blank" title="Mail"><i class="fas fa-envelope"></i></a>
+      <a href="https://www.linkedin.com/in/ey%C3%BCp-%C3%A7ali%C5%9Fkan%C3%B6zt%C3%BCrk-413208273/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/eyupcalskanozturk-tr" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+      <a href="https://www.instagram.com/eyupcalskanozturk" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
     </div>
   </section>
 
@@ -51,6 +264,23 @@
     <p>© <span id="year"></span> <span class="glow-text">Eyüp Çalışkanoztürk</span> | 💫 Designed & Coded by <span class="glow-text">Eyüp</span></p>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Tema geçişi
+    const toggle = document.getElementById("themeToggle");
+    toggle.addEventListener("click", () => {
+      document.body.classList.toggle("light");
+    });
+
+    // Fade görünümü
+    const fades = document.querySelectorAll(".fade-in");
+    window.addEventListener("scroll", () => {
+      fades.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) el.classList.add("visible");
+      });
+    });
+  </script>
 </body>
 </html>
