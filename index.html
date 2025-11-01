@@ -14,7 +14,7 @@
       --muted: #8b949e;
       --accent: #2b93ff;
       --accent2: #6ab0ff;
-      --border: rgba(255, 255, 255, 0.1);
+      --border: rgba(255,255,255,0.1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -22,15 +22,15 @@
       font-family: 'Inter', sans-serif;
       background: var(--bg);
       color: var(--text);
+      transition: background 0.8s ease, color 0.8s ease;
       line-height: 1.6;
-      transition: background 1s ease, color 1s ease;
     }
 
     /* Navbar */
     .navbar {
       position: sticky;
       top: 0;
-      background: rgba(13, 17, 23, 0.8);
+      background: rgba(13,17,23,0.85);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border);
       z-index: 10;
@@ -46,20 +46,18 @@
     .brand {
       color: var(--text);
       text-decoration: none;
+      font-weight: 700;
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-weight: 600;
+      gap: 8px;
     }
     .brand-mark {
       background: linear-gradient(45deg, #ffd36b, #c59024);
       color: #111;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
       font-weight: 800;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: grid; place-items: center;
     }
     .menu { display: flex; align-items: center; gap: 22px; }
     .menu a {
@@ -70,35 +68,31 @@
     }
     .menu a:hover { color: var(--accent); }
 
-    /* Tema Butonu */
+    /* Tema butonu */
     #themeToggle {
       position: relative;
-      width: 48px;
-      height: 26px;
+      width: 48px; height: 26px;
       border-radius: 30px;
       background: linear-gradient(90deg, #1e2530, #29313f);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255,255,255,0.1);
       cursor: pointer;
       transition: all 0.5s ease;
     }
     #themeToggle::before {
       content: "🌙";
       position: absolute;
-      left: 4px;
-      top: 2px;
-      width: 22px;
-      height: 22px;
-      display: grid;
-      place-items: center;
+      left: 4px; top: 2px;
+      width: 22px; height: 22px;
       background: linear-gradient(180deg, #2b93ff, #1868ff);
       border-radius: 50%;
+      display: grid; place-items: center;
       color: #fff;
       font-size: 13px;
       transition: all 0.5s ease;
     }
     body.light {
       --bg: #f4f7fb;
-      --text: #1a1a1a;
+      --text: #111;
       --muted: #555;
     }
     body.light #themeToggle {
@@ -128,19 +122,19 @@
     .hero p { color: var(--muted); margin-top: 8px; }
     .hero-cta { margin-top: 25px; display: flex; justify-content: center; gap: 16px; }
 
-    /* Buttons */
+    /* Butonlar */
     .btn {
       padding: 12px 22px;
       border-radius: 10px;
       font-weight: 600;
       text-decoration: none;
-      transition: 0.3s ease;
+      transition: 0.3s;
       border: 1px solid transparent;
     }
     .btn-primary {
       background: linear-gradient(90deg, var(--accent), var(--accent2));
       color: #fff;
-      box-shadow: 0 4px 14px rgba(43, 147, 255, 0.4);
+      box-shadow: 0 4px 14px rgba(43,147,255,0.4);
     }
     .btn-ghost {
       border: 1px solid var(--accent);
@@ -151,7 +145,7 @@
       color: #fff;
     }
 
-    /* Sections */
+    /* Bölümler */
     .section {
       text-align: center;
       padding: 80px 20px;
@@ -170,7 +164,31 @@
       margin-bottom: 24px;
     }
 
-    /* Socials */
+    /* Yetenekler */
+    .skills { display: flex; flex-direction: column; gap: 18px; }
+    .skill {
+      text-align: left;
+    }
+    .skill span { font-weight: 600; }
+    .bar {
+      height: 10px;
+      background: #1f2933;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 5px;
+      width: 0;
+      transition: width 1.2s ease;
+    }
+    .visible .bar-fill[data-width] {
+      width: attr(data-width);
+    }
+
+    /* Sosyal */
     .socials {
       display: flex;
       justify-content: center;
@@ -206,17 +224,6 @@
       50% { filter: drop-shadow(0 0 10px #ffcc66); }
       100% { filter: drop-shadow(0 0 2px #ffb84a); }
     }
-
-    /* Fade */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.8s ease;
-    }
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
   </style>
 </head>
 <body>
@@ -226,7 +233,6 @@
       <div class="menu">
         <a href="#about">Hakkımda</a>
         <a href="#skills">Yetenekler</a>
-        <a href="#projects">Projeler</a>
         <a href="#contact">İletişim</a>
         <button id="themeToggle"></button>
       </div>
@@ -237,26 +243,36 @@
     <h1>Merhaba, ben <span class="accent">Eyüp Çalışkanoztürk</span></h1>
     <p>Bilgisayar Programcılığı 1. sınıf öğrencisi · Bilgi İşlem (IT) · Çanakkale</p>
     <div class="hero-cta">
-      <a href="#projects" class="btn btn-primary">Projeleri Gör</a>
+      <a href="#skills" class="btn btn-primary">Yeteneklerim</a>
       <a href="#" class="btn btn-ghost">CV İndir</a>
     </div>
   </section>
 
   <section id="about" class="section fade-in visible">
     <h2>💡 Hakkımda</h2>
-    <p>Merhaba! Ben Eyüp, sade ama güçlü çözümler üretmeyi seven bir yazılım geliştiricisiyim.
-      UI tasarımı, C# ve algoritma geliştirme alanlarında ilerliyorum.
-      Teknolojiyi sadece kullanmak değil, anlamak ve üretmek benim için bir tutku.</p>
+    <p>Ben Eyüp, sade ama güçlü çözümler üretmeyi seven bir yazılım geliştiricisiyim.
+      Arayüz tasarımı, algoritma ve backend geliştirme alanlarında çalışıyorum.
+      Hedefim, estetikle işlevi birleştiren sistemler üretmek.</p>
+  </section>
+
+  <section id="skills" class="section fade-in visible">
+    <h2>🧠 Yetenekler</h2>
+    <div class="skills">
+      <div class="skill"><span>HTML / CSS</span><div class="bar"><div class="bar-fill" style="width:90%"></div></div></div>
+      <div class="skill"><span>JavaScript</span><div class="bar"><div class="bar-fill" style="width:75%"></div></div></div>
+      <div class="skill"><span>C#</span><div class="bar"><div class="bar-fill" style="width:85%"></div></div></div>
+      <div class="skill"><span>UI Design</span><div class="bar"><div class="bar-fill" style="width:80%"></div></div></div>
+    </div>
   </section>
 
   <section id="contact" class="section fade-in visible">
-    <h2>📫 Bana Ulaş</h2>
-    <p>Projeler, iş teklifleri veya sadece selam vermek istersen aşağıdaki kanallardan bana ulaşabilirsin 👇</p>
+    <h2>📫 İletişim</h2>
+    <p>Bana ulaşmak için sosyal medya hesaplarımdan veya e-posta adresimden iletişime geçebilirsin 👇</p>
     <div class="socials">
-      <a href="mailto:eyupcalskanofficial@gmail.com" target="_blank" title="Mail"><i class="fas fa-envelope"></i></a>
-      <a href="https://www.linkedin.com/in/ey%C3%BCp-%C3%A7ali%C5%9Fkan%C3%B6zt%C3%BCrk-413208273/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/eyupcalskanozturk-tr" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-      <a href="https://www.instagram.com/eyupcalskanozturk" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="mailto:eyupcalskanofficial@gmail.com"><i class="fas fa-envelope"></i></a>
+      <a href="https://linkedin.com/in/eyüp-çalışkanoztürk-413208273"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/eyupcalskanozturk-tr"><i class="fab fa-github"></i></a>
+      <a href="https://instagram.com/eyupcalskanozturk"><i class="fab fa-instagram"></i></a>
     </div>
   </section>
 
@@ -266,21 +282,8 @@
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
-
-    // Tema geçişi
     const toggle = document.getElementById("themeToggle");
-    toggle.addEventListener("click", () => {
-      document.body.classList.toggle("light");
-    });
-
-    // Fade görünümü
-    const fades = document.querySelectorAll(".fade-in");
-    window.addEventListener("scroll", () => {
-      fades.forEach((el) => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 100) el.classList.add("visible");
-      });
-    });
+    toggle.addEventListener("click", () => document.body.classList.toggle("light"));
   </script>
 </body>
 </html>
