@@ -1,176 +1,109 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Eyüp Çalışkanöztürk — Kişisel Web Sitesi</title>
-  <meta name="description" content="Eyüp Çalışkanöztürk · Bilgisayar Programcılığı · Web UI · C# · Algoritmalar · Gold-Black minimalist portföy.">
-  <meta property="og:title" content="Eyüp Çalışkanöztürk — Portföy" />
-  <meta property="og:description" content="Gold-Black minimalist portföy · Web UI · C# · Algoritmalar" />
-  <meta property="og:type" content="website" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Poppins:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eyüp Çalışkanöztürk | Portfolio</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- NAV -->
-  <header class="nav">
-    <div class="container nav-inner">
-      <a class="brand" href="#top" aria-label="Ana sayfa">
-        <span class="brand-mark">EÇ</span>
-        <span class="brand-text">Eyüp Çalışkanöztürk</span>
-      </a>
-      <nav class="menu">
+  <header class="navbar">
+    <div class="container">
+      <div class="logo">EÇ</div>
+      <nav>
         <a href="#about">Hakkımda</a>
-        <a href="#skills">Teknolojiler</a>
+        <a href="#skills">Yetenekler</a>
         <a href="#projects">Projeler</a>
         <a href="#contact">İletişim</a>
+        <button id="theme-toggle">🌙</button>
       </nav>
     </div>
   </header>
 
-  <!-- HERO -->
-  <main id="top" class="hero">
+  <section class="hero fade-in">
     <div class="container">
-      <h1 class="hero-title">
-        Merhaba, ben <span class="gold-text">Eyüp Çalışkanöztürk</span>
-      </h1>
-      <p class="hero-sub">
-        Bilgisayar Programcılığı 1. sınıf öğrencisi · Bilgi İşlem Teknisyeni (IT) · Çanakkale, TR
-      </p>
-
-      <p class="hero-tags">
-        Web UI · C# · Algoritmalar · Minimal &amp; Şık Tasarım
-      </p>
-
-      <div class="hero-cta">
-        <a class="btn btn-gold" href="#projects">Projelerimi Gör</a>
-        <a class="btn btn-ghost" href="#contact">Bana Ulaş</a>
-      </div>
-
-      <!-- alttan yumuşak ışık -->
-      <div class="underlight" aria-hidden="true"></div>
+      <h1>Merhaba, ben <span>Eyüp Çalışkanöztürk</span></h1>
+      <p>Bilgisayar Programcılığı 1. sınıf öğrencisiyim.<br>Modern, sade ve işlevsel arayüzler geliştiriyorum.</p>
+      <a href="#projects" class="btn">Projelerime Göz At</a>
     </div>
-  </main>
+  </section>
 
-  <!-- ABOUT -->
-  <section id="about" class="section">
-    <div class="container grid-2">
-      <div>
-        <h2 class="section-title">Hakkımda</h2>
-        <p class="muted">
-          Kod yazarken <strong>sadelik</strong> ve <strong>temizlik</strong> benim için öncelik. Web arayüzleri, C# tabanlı
-          mini araçlar ve <strong>algoritmik düşünce</strong> gerektiren işlerden keyif alırım. Tasarımda altın-siyah
-          estetiği seviyorum; gözü yormayan ama profesyonel bir iz bırakmayı hedefliyorum.
-        </p>
-        <p class="muted">
-          Hedefim; güvenli, anlaşılır ve sürdürülebilir projelerle portföyümü büyütmek. Öğrenmeyi, not etmeyi ve
-          düzenli ilerlemeyi seviyorum.
-        </p>
-        <p class="signature">– Eyüp</p>
-      </div>
-      <div class="about-card">
-        <ul class="facts">
-          <li>🎯 Odak: Web UI, C#, Algoritmalar</li>
-          <li>🛠️ Çalışma: Bilgi İşlem / IT Technician</li>
-          <li>📍 Konum: Çanakkale, Türkiye</li>
-          <li>🕶️ Stil: Minimal, sade, gold–black</li>
-        </ul>
+  <section id="about" class="fade-in">
+    <div class="container">
+      <h2>💡 Hakkımda</h2>
+      <p>Kod yazmak benim için sadece bir meslek değil, aynı zamanda bir ifade biçimi.  
+         Arayüz tasarımı, algoritmik düşünme ve kullanıcı deneyimini birleştiren işler yapmaktan keyif alıyorum.  
+         Hedefim, kaliteli yazılımlar üretirken sürekli kendimi geliştirmek.</p>
+    </div>
+  </section>
+
+  <section id="skills" class="fade-in">
+    <div class="container">
+      <h2>⚙️ Yetenekler</h2>
+      <div class="skills">
+        <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
+        <span>C#</span><span>Git</span><span>React (öğreniyorum)</span>
       </div>
     </div>
   </section>
 
-  <!-- SKILLS -->
-  <section id="skills" class="section">
+  <section id="projects" class="fade-in">
     <div class="container">
-      <h2 class="section-title">Kullandığım Teknolojiler</h2>
-      <div class="pillbox">
-        <span class="pill">HTML5</span>
-        <span class="pill">CSS3</span>
-        <span class="pill">JavaScript</span>
-        <span class="pill">C#</span>
-        <span class="pill">Git</span>
-        <span class="pill muted-pill">React (öğreniyorum)</span>
+      <h2>🚀 Projeler</h2>
+      <div class="projects-grid">
+        <div class="card">
+          <h3>Gold Password Generator</h3>
+          <p>Gelişmiş şifre üretici ve test aracı.</p>
+          <a href="https://github.com/eyupcalskanozturk-tr/gold-password-generator" target="_blank">GitHub</a>
+        </div>
+        <div class="card">
+          <h3>Weather App</h3>
+          <p>Modern arayüzlü hava durumu uygulaması.</p>
+          <a href="#">Yakında</a>
+        </div>
+        <div class="card">
+          <h3>CMD Dinozor (C#)</h3>
+          <p>Konsol tabanlı mini oyun.</p>
+          <a href="#">Yakında</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- PROJECTS -->
-  <section id="projects" class="section">
+  <section id="contact" class="fade-in">
     <div class="container">
-      <h2 class="section-title">Öne Çıkan Projeler</h2>
-
-      <div class="cards">
-        <!-- Proje 1 -->
-        <article class="card">
-          <div class="card-top">
-            <h3>Gold Password Generator</h3>
-            <p class="card-desc">Güçlü şifre üretici + şifre güç testi · gold-black UI</p>
-          </div>
-          <div class="card-actions">
-            <a class="btn btn-gold sm" href="https://github.com/eyupcalskanozturk-tr/gold-password-generator" target="_blank" rel="noopener">Projeye Git</a>
-          </div>
-        </article>
-
-        <!-- Proje 2 (isteğe göre ekle/oluştur) -->
-        <article class="card">
-          <div class="card-top">
-            <h3>Modern Weather App</h3>
-            <p class="card-desc">Modern hava durumu arayüzü · sade kutu tasarımları</p>
-          </div>
-          <div class="card-actions">
-            <a class="btn btn-ghost sm disabled" href="#" aria-disabled="true" title="Yakında">Yakında</a>
-          </div>
-        </article>
-
-        <!-- Proje 3 -->
-        <article class="card">
-          <div class="card-top">
-            <h3>CMD Dinozor (C#)</h3>
-            <p class="card-desc">Konsol tabanlı mini oyun · akış kontrol &amp; algoritma</p>
-          </div>
-          <div class="card-actions">
-            <a class="btn btn-ghost sm disabled" href="#" aria-disabled="true" title="Yakında">Yakında</a>
-          </div>
-        </article>
-
-        <!-- Proje 4 -->
-        <article class="card">
-          <div class="card-top">
-            <h3>AI Mini Project</h3>
-            <p class="card-desc">Basit yapay zeka denemeleri · JS temelli</p>
-          </div>
-          <div class="card-actions">
-            <a class="btn btn-ghost sm disabled" href="#" aria-disabled="true" title="Yakında">Yakında</a>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" class="section">
-    <div class="container">
-      <h2 class="section-title">İletişim</h2>
+      <h2>📬 İletişim</h2>
       <div class="contact">
-        <a class="btn btn-gold" href="mailto:eyupcalskanofficial@gmail.com">✉️ Mail Gönder</a>
-        <a class="btn btn-ghost" href="https://www.instagram.com/eyupcalskanozturk" target="_blank" rel="noopener">📸 Instagram</a>
-        <a class="btn btn-ghost" href="https://www.linkedin.com/in/ey%C3%BCp-%C3%A7ali%C5%9Fkan%C3%B6zt%C3%BCrk-413208273/" target="_blank" rel="noopener">💼 LinkedIn</a>
+        <a href="mailto:eyupcalskanofficial@gmail.com" class="btn">Mail Gönder</a>
+        <a href="https://www.linkedin.com/in/ey%C3%BCp-%C3%A7ali%C5%9Fkan%C3%B6zt%C3%BCrk-413208273/" target="_blank" class="btn-outline">LinkedIn</a>
+        <a href="https://www.instagram.com/eyupcalskanozturk" target="_blank" class="btn-outline">Instagram</a>
       </div>
-      <p class="small muted mt8">Projeleri beğendiysen bir ⭐ bırakman motivasyon olur.</p>
     </div>
   </section>
 
-  <footer class="footer">
-    <div class="container footer-inner">
-      <span class="small muted">© <span id="y"></span> Eyüp Çalışkanöztürk</span>
-      <a class="small link" href="#top">Yukarı çık ↑</a>
-    </div>
+  <footer>
+    <p>© <span id="year"></span> Eyüp Çalışkanöztürk</p>
   </footer>
 
   <script>
-    // Yıl otomatik
-    document.getElementById('y').textContent = new Date().getFullYear();
+    // yıl otomatik
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // tema geçişi
+    const toggle = document.getElementById("theme-toggle");
+    toggle.addEventListener("click", () => {
+      document.body.classList.toggle("light");
+      toggle.textContent = document.body.classList.contains("light") ? "☀️" : "🌙";
+    });
+
+    // scroll animasyonu
+    const fades = document.querySelectorAll(".fade-in");
+    window.addEventListener("scroll", () => {
+      fades.forEach(f => {
+        const rect = f.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) f.classList.add("visible");
+      });
+    });
   </script>
 </body>
 </html>
