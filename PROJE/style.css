@@ -1,0 +1,178 @@
+:root {
+    --canakkale-red: #C8102E;
+    --navy: #1D3557;
+    --transition-fast: 0.3s ease;
+}
+
+body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--navy); overflow-x: hidden; margin: 0; background-color: #f8f9fa; }
+
+/* --- NAVBAR --- */
+.navbar-modern { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(15px); margin: 15px; border-radius: 20px; padding: 10px 25px; transition: var(--transition-fast); z-index: 1030; }
+.navbar-scrolled { margin: 0; border-radius: 0 0 20px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+.navbar-brand { font-weight: 800; color: var(--navy) !important; text-transform: uppercase; }
+.navbar-brand span { color: var(--canakkale-red); }
+.nav-link { font-weight: 600; color: var(--navy) !important; margin: 0 10px; position: relative; transition: color var(--transition-fast); }
+.nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background: var(--canakkale-red); transition: width var(--transition-fast); }
+.nav-link:hover { color: var(--canakkale-red) !important; }
+.nav-link:hover::after { width: 100%; }
+
+/* --- MOBİL MENÜ --- */
+.hamburger-icon span { display: block; height: 3px; width: 25px; background: var(--navy); margin-bottom: 5px; border-radius: 10px; }
+.offcanvas-modern { width: 300px !important; border-radius: 30px 0 0 30px !important; z-index: 1050; }
+.nav-offcanvas-links .nav-link { font-size: 1.2rem; margin-bottom: 10px; }
+
+/* --- HERO --- */
+.hero-section { height: 100vh; display: flex; align-items: center; position: relative; }
+.hero-bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -2; will-change: transform, opacity; }
+.hero-bg-img { width: 100%; height: 100%; object-fit: cover; }
+.hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: -1; }
+.hero-title { font-size: clamp(2.5rem, 8vw, 4.5rem); text-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+.text-red { color: var(--canakkale-red); }
+
+/* --- HOVER BAŞLIK VE ROZET --- */
+.badge-soft-red { background: rgba(200,16,46,0.15); color: var(--canakkale-red); padding: 8px 20px; border-radius: 50px; font-weight: 700; }
+.section-title-hover { display: inline-block; position: relative; padding-bottom: 10px; cursor: pointer; }
+.section-title-hover::after { content: ''; position: absolute; width: 40px; height: 4px; bottom: 0; left: 50%; transform: translateX(-50%); background: var(--canakkale-red); border-radius: 10px; transition: width var(--transition-fast); }
+.section-title-hover:hover::after { width: 100%; }
+
+/* --- BEYAZ İÇERİK KILIFI --- */
+.content-wrapper { position: relative; background: #ffffff; z-index: 5; border-radius: 40px 40px 0 0; margin-top: -80px; padding-top: 20px; box-shadow: 0 -15px 40px rgba(0,0,0,0.15); }
+
+/* ========================================== */
+/* TIMELINE (Tur Programı - Daha Belirgin!) */
+/* ========================================== */
+.timeline-container { max-width: 800px; margin: 0 auto; padding-left: 20px; }
+.timeline { position: relative; padding-left: 40px; border-left: 2px solid #e9ecef; }
+.timeline-item { position: relative; margin-bottom: 35px; }
+
+/* Timeline Noktası */
+.timeline-dot { position: absolute; left: -46px; top: 30px; width: 12px; height: 12px; border-radius: 50%; background: var(--canakkale-red); box-shadow: 0 0 0 6px rgba(200,16,46,0.1); z-index: 2; }
+
+/* Timeline Kartı - DAHA GÖRÜNÜR TASARIM */
+.timeline-card { 
+    background: #ffffff; 
+    padding: 30px 35px; 
+    border-radius: 20px; 
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08); /* Güçlü gölge */
+    border: 1px solid rgba(0,0,0,0.06); /* Belirgin çerçeve */
+    transition: var(--transition-fast); 
+}
+.timeline-card:hover { 
+    transform: translateY(-5px); 
+    box-shadow: 0 15px 40px rgba(200,16,46,0.1); /* Kırmızımsı hover gölgesi */
+    border-color: rgba(200,16,46,0.15); 
+}
+.timeline-card-header { display: flex; justify-content: space-between; align-items: center; }
+.time-badge { color: var(--canakkale-red); font-weight: 800; font-size: 1.15rem; }
+
+/* ========================================== */
+/* GEZİ ROTASI (Snake Grid - KIRMIZI ÇİZGİLER)*/
+/* ========================================== */
+.route-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    grid-auto-flow: dense; /* PATLAMAYI ÖNLEYEN SİHİRLİ KOD */
+}
+.route-col {
+    position: relative;
+    z-index: 1;
+}
+
+/* Route Kart Tasarımı */
+.route-card {
+    background: #fff; border-radius: 16px; padding: 20px;
+    display: flex; align-items: center; gap: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.05);
+    height: 100%; transition: var(--transition-fast); position: relative; z-index: 2;
+}
+.route-col:hover .route-card { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(200,16,46,0.08); border-color: rgba(200,16,46,0.2); }
+
+/* Kutu İçerikleri */
+.route-num { background: var(--canakkale-red); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 800; flex-shrink: 0; transition: var(--transition-fast); }
+.route-col:hover .route-num { transform: scale(1.1); box-shadow: 0 4px 10px rgba(200,16,46,0.3); }
+.route-text { font-weight: 700; color: var(--navy); font-size: 0.95rem; flex-grow: 1; line-height: 1.3; }
+.route-icon { color: #6c757d; font-size: 1.2rem; transition: var(--transition-fast); }
+.route-col:hover .route-icon { color: var(--canakkale-red); }
+.route-badge { background: #f1f3f5; color: #6c757d; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 50px; white-space: nowrap; }
+.lunch-card .route-badge { background: rgba(200,16,46,0.1); color: var(--canakkale-red); }
+
+/* ========================================== */
+/* ÇİZGİLERLE BAĞLAMA (KIRMIZI SNAKE)         */
+/* ========================================== */
+.route-col::after {
+    content: ''; 
+    position: absolute; 
+    background: var(--canakkale-red); /* STANDART OLARAK KIRMIZI YAPILDI */
+    border-radius: 10px; 
+    transition: box-shadow 0.3s ease; 
+    z-index: -1;
+    opacity: 0.8; /* Göz yormaması için hafif saydam */
+}
+
+/* Hover olduğunda çizgiyi parlat (Glow efekti) */
+.route-col:hover::after {
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(200, 16, 46, 0.4);
+}
+
+/* --- PC: 3 SÜTUNLU YILAN --- */
+@media (min-width: 992px) {
+    /* İkinci ve Dördüncü satırları fiziksel olarak sağdan sola diz (Snake) */
+    .route-col:nth-child(6n + 4) { grid-column: 3; }
+    .route-col:nth-child(6n + 5) { grid-column: 2; }
+    .route-col:nth-child(6n + 6) { grid-column: 1; }
+
+    /* Sağa Giden Çizgiler (1->2, 2->3 vb.) */
+    .route-col:nth-child(6n + 1)::after, 
+    .route-col:nth-child(6n + 2)::after {
+        right: -45px; top: 50%; width: 55px; height: 4px; transform: translateY(-50%);
+    }
+
+    /* Sağdan Aşağı İnen Çizgiler (3->4, 9->10 vb.) */
+    .route-col:nth-child(6n + 3)::after {
+        bottom: -45px; right: 50%; width: 4px; height: 55px; transform: translateX(50%);
+    }
+
+    /* Sola Giden Çizgiler (4->5, 5->6 vb.) */
+    .route-col:nth-child(6n + 4)::after, 
+    .route-col:nth-child(6n + 5)::after {
+        left: -45px; top: 50%; width: 55px; height: 4px; transform: translateY(-50%);
+    }
+
+    /* Soldan Aşağı İnen Çizgiler (6->7, 12->13 vb.) */
+    .route-col:nth-child(6n + 6)::after {
+        bottom: -45px; left: 50%; width: 4px; height: 55px; transform: translateX(-50%);
+    }
+}
+
+/* --- TABLET: 2 SÜTUNLU YILAN --- */
+@media (min-width: 768px) and (max-width: 991px) {
+    .route-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+    
+    .route-col:nth-child(4n + 3) { grid-column: 2; }
+    .route-col:nth-child(4n + 4) { grid-column: 1; }
+
+    .route-col:nth-child(4n + 1)::after { right: -45px; top: 50%; width: 55px; height: 4px; transform: translateY(-50%); }
+    .route-col:nth-child(4n + 2)::after { bottom: -45px; right: 50%; width: 4px; height: 55px; transform: translateX(50%); }
+    .route-col:nth-child(4n + 3)::after { left: -45px; top: 50%; width: 55px; height: 4px; transform: translateY(-50%); }
+    .route-col:nth-child(4n + 4)::after { bottom: -45px; left: 50%; width: 4px; height: 55px; transform: translateX(-50%); }
+}
+
+/* --- MOBİL: TEK SÜTUN --- */
+@media (max-width: 767px) {
+    .content-wrapper { margin-top: -50px; border-radius: 30px 30px 0 0; }
+    .timeline-container { padding-left: 0; }
+    .timeline { padding-left: 20px; margin-left: 15px; }
+    .timeline-dot { left: -26px; }
+    .timeline-card { padding: 25px 20px; }
+    
+    .route-grid { grid-template-columns: 1fr; gap: 30px; }
+    .route-col::after { bottom: -30px; left: 50%; width: 4px; height: 35px; transform: translateX(-50%); }
+    
+    .route-card { padding: 15px; }
+    .route-badge { font-size: 0.65rem; }
+}
+
+/* En sondaki kutunun çizgisini gizle */
+.route-col:last-child::after { display: none !important; }
