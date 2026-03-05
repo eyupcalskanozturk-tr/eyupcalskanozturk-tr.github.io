@@ -1,289 +1,564 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eyüp Çalışkanoztürk | Portfolio</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Çanakkale Şehitlik Turu | ÇanakkaleTravel</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    :root {
-      --bg: #0d1117;
-      --text: #e6edf3;
-      --muted: #8b949e;
-      --accent: #2b93ff;
-      --accent2: #6ab0ff;
-      --border: rgba(255,255,255,0.1);
-    }
+    <style>
+        :root {
+            --canakkale-red: #C8102E;
+            --navy: #1D3557;
+            --navy-dark: #0f1c30;
+            --radius-soft: 20px;
+            --transition-fast: 0.3s ease;
+        }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      transition: background 0.8s ease, color 0.8s ease;
-      line-height: 1.6;
-    }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--navy); overflow-x: hidden; margin: 0; background-color: #f8f9fa; }
 
-    /* Navbar */
-    .navbar {
-      position: sticky;
-      top: 0;
-      background: rgba(13,17,23,0.85);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border);
-      z-index: 10;
-    }
-    .nav-inner {
-      max-width: 1100px;
-      margin: auto;
-      padding: 14px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .brand {
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .brand-mark {
-      background: linear-gradient(45deg, #ffd36b, #c59024);
-      color: #111;
-      font-weight: 800;
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      display: grid; place-items: center;
-    }
-    .menu { display: flex; align-items: center; gap: 22px; }
-    .menu a {
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 600;
-      transition: 0.3s;
-    }
-    .menu a:hover { color: var(--accent); }
+        /* --- NAVBAR --- */
+        .navbar-modern { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(15px); margin: 15px; border-radius: 20px; padding: 10px 25px; transition: 0.3s; z-index: 1030; }
+        .navbar-scrolled { margin: 0; border-radius: 0 0 20px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .navbar-brand { font-weight: 800; color: var(--navy) !important; text-transform: uppercase; }
+        .navbar-brand span { color: var(--canakkale-red); }
+        .nav-link { font-weight: 600; color: var(--navy) !important; margin: 0 10px; position: relative; transition: 0.3s; }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background: var(--canakkale-red); transition: 0.3s; }
+        .nav-link:hover { color: var(--canakkale-red) !important; }
+        .nav-link:hover::after { width: 100%; }
 
-    /* Tema butonu */
-    #themeToggle {
-      position: relative;
-      width: 48px; height: 26px;
-      border-radius: 30px;
-      background: linear-gradient(90deg, #1e2530, #29313f);
-      border: 1px solid rgba(255,255,255,0.1);
-      cursor: pointer;
-      transition: all 0.5s ease;
-    }
-    #themeToggle::before {
-      content: "🌙";
-      position: absolute;
-      left: 4px; top: 2px;
-      width: 22px; height: 22px;
-      background: linear-gradient(180deg, #2b93ff, #1868ff);
-      border-radius: 50%;
-      display: grid; place-items: center;
-      color: #fff;
-      font-size: 13px;
-      transition: all 0.5s ease;
-    }
-    body.light {
-      --bg: #f4f7fb;
-      --text: #111;
-      --muted: #555;
-    }
-    body.light #themeToggle {
-      background: linear-gradient(90deg, #f0f0f0, #d9d9d9);
-    }
-    body.light #themeToggle::before {
-      transform: translateX(22px);
-      content: "☀️";
-      background: linear-gradient(180deg, #ffb84a, #ff9800);
-      color: #111;
-    }
+        .hamburger-icon span { display: block; height: 3px; width: 25px; background: var(--navy); margin-bottom: 5px; border-radius: 10px; }
+        .offcanvas-modern { width: 300px !important; border-radius: 30px 0 0 30px !important; z-index: 1050; }
+        .nav-offcanvas-links .nav-link { font-size: 1.2rem; margin-bottom: 10px; }
 
-    /* Hero */
-    .hero {
-      text-align: center;
-      padding: 120px 20px 80px;
-    }
-    .hero h1 {
-      font-size: 2.4rem;
-      font-weight: 700;
-    }
-    .accent {
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-    .hero p { color: var(--muted); margin-top: 8px; }
-    .hero-cta { margin-top: 25px; display: flex; justify-content: center; gap: 16px; }
+        /* --- HERO --- */
+        .hero-section { height: 100vh; display: flex; align-items: center; position: relative; }
+        .hero-bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -2; will-change: transform, opacity; }
+        .hero-bg-img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: -1; }
+        .hero-title { font-size: clamp(2.5rem, 8vw, 4.5rem); text-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .text-red { color: var(--canakkale-red); }
 
-    /* Butonlar */
-    .btn {
-      padding: 12px 22px;
-      border-radius: 10px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: 0.3s;
-      border: 1px solid transparent;
-    }
-    .btn-primary {
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      color: #fff;
-      box-shadow: 0 4px 14px rgba(43,147,255,0.4);
-    }
-    .btn-ghost {
-      border: 1px solid var(--accent);
-      color: var(--accent);
-    }
-    .btn-ghost:hover {
-      background: var(--accent);
-      color: #fff;
-    }
+        /* --- BAŞLIK & ROZET --- */
+        .badge-soft-red { background: rgba(200,16,46,0.15); color: var(--canakkale-red); padding: 8px 20px; border-radius: 50px; font-weight: 700; }
+        .section-title-hover { display: inline-block; position: relative; padding-bottom: 10px; cursor: pointer; }
+        .section-title-hover::after { content: ''; position: absolute; width: 40px; height: 4px; bottom: 0; left: 50%; transform: translateX(-50%); background: var(--canakkale-red); border-radius: 10px; transition: 0.4s; }
+        .section-title-hover:hover::after { width: 100%; }
+        .red-underline::after { background: var(--canakkale-red); }
 
-    /* Bölümler */
-    .section {
-      text-align: center;
-      padding: 80px 20px;
-      max-width: 800px;
-      margin: auto;
-    }
-    .section h2 {
-      font-size: 1.8rem;
-      margin-bottom: 12px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-    .section p {
-      color: var(--muted);
-      margin-bottom: 24px;
-    }
+        .content-wrapper { position: relative; background: #ffffff; z-index: 5; border-radius: 40px 40px 0 0; margin-top: -80px; padding-top: 20px; box-shadow: 0 -15px 40px rgba(0,0,0,0.15); overflow: hidden; }
 
-    /* Yetenekler */
-    .skills { display: flex; flex-direction: column; gap: 18px; }
-    .skill {
-      text-align: left;
-    }
-    .skill span { font-weight: 600; }
-    .bar {
-      height: 10px;
-      background: #1f2933;
-      border-radius: 5px;
-      overflow: hidden;
-      margin-top: 6px;
-    }
-    .bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      border-radius: 5px;
-      width: 0;
-      transition: width 1.2s ease;
-    }
-    .visible .bar-fill[data-width] {
-      width: attr(data-width);
-    }
+        /* --- TIMELINE (Tur Programı) --- */
+        .timeline-container { max-width: 800px; margin: 0 auto; padding-left: 20px; }
+        .timeline { position: relative; padding-left: 40px; border-left: 2px solid #e9ecef; }
+        .timeline-item { position: relative; margin-bottom: 35px; }
+        .timeline-dot { position: absolute; left: calc(-40px - 7px); top: 35px; width: 14px; height: 14px; border-radius: 50%; background: var(--canakkale-red); box-shadow: 0 0 0 6px rgba(200,16,46,0.1); z-index: 2; }
+        .timeline-card { background: white; padding: 30px 35px; border-radius: var(--radius-soft); box-shadow: 0 8px 30px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.04); transition: 0.3s; }
+        .timeline-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(200,16,46,0.1); border-color: rgba(200,16,46,0.15); }
+        .timeline-card-header { display: flex; justify-content: space-between; align-items: center; }
+        .time-badge { color: var(--canakkale-red); font-weight: 800; font-size: 1.15rem; }
 
-    /* Sosyal */
-    .socials {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      margin-top: 20px;
-    }
-    .socials a {
-      font-size: 1.6rem;
-      color: var(--muted);
-      transition: all 0.3s ease;
-    }
-    .socials a:hover {
-      color: var(--accent);
-      transform: scale(1.2);
-      text-shadow: 0 0 10px rgba(43,147,255,0.6);
-    }
+        /* --- PREMIUM CAROUSEL (Gezi Rotası) --- */
+        .bg-navy-dark { background-color: var(--navy-dark); }
+        .carousel-wrapper { position: relative; width: 100%; display: flex; align-items: center; padding: 20px 0; }
+        .carousel-container { display: flex; gap: 30px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding: 20px 10px; width: 100%; -webkit-overflow-scrolling: touch; -ms-overflow-style: none; scrollbar-width: none; }
+        .carousel-container::-webkit-scrollbar { display: none; }
 
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 35px 10px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      color: var(--muted);
-    }
-    .glow-text {
-      background: linear-gradient(90deg, #ffc877, #ffd77d, #ffb84a);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: glowMove 4s infinite linear;
-    }
-    @keyframes glowMove {
-      0% { filter: drop-shadow(0 0 2px #ffb84a); }
-      50% { filter: drop-shadow(0 0 10px #ffcc66); }
-      100% { filter: drop-shadow(0 0 2px #ffb84a); }
-    }
-  </style>
+        .clickable-card { cursor: pointer; }
+        .route-carousel-card { flex: 0 0 320px; height: 380px; scroll-snap-align: center; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 24px; padding: 30px; display: flex; flex-direction: column; position: relative; transition: all 0.4s ease; backdrop-filter: blur(10px); overflow: hidden; }
+        .route-carousel-card:hover { transform: translateY(-10px); background: rgba(255, 255, 255, 0.08); border-color: rgba(200, 16, 46, 0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+
+        .card-bg-number { position: absolute; top: -20px; right: -10px; font-size: 8rem; font-weight: 800; color: rgba(255, 255, 255, 0.03); line-height: 1; z-index: 0; transition: color 0.4s; user-select: none; }
+        .route-carousel-card:hover .card-bg-number { color: rgba(200, 16, 46, 0.1); }
+        .route-icon-circle { position: relative; z-index: 1; color: white; font-size: 1.5rem; background: var(--canakkale-red); width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; border-radius: 50%; margin-bottom: 20px; box-shadow: 0 10px 20px rgba(200,16,46,0.3); }
+        .card-content { position: relative; z-index: 1; }
+        .route-text { font-size: 1.4rem; font-weight: 700; color: white; margin: 0; line-height: 1.3; }
+        .click-hint { display: block; font-size: 0.85rem; color: #ced4da; margin-top: 10px; opacity: 0; transition: 0.3s; transform: translateY(10px); font-weight: 600; }
+        .route-carousel-card:hover .click-hint { opacity: 1; transform: translateY(0); color: var(--canakkale-red); }
+        .route-badge { background: rgba(255,255,255,0.1); color: #e9ecef; font-size: 0.8rem; padding: 6px 15px; border-radius: 50px; font-weight: 600; }
+        .lunch-card .route-badge { background: rgba(200,16,46,0.2); color: #ff4d6d; }
+
+        .carousel-btn { position: absolute; z-index: 10; width: 55px; height: 55px; border-radius: 50%; background: white; color: var(--navy); border: none; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .carousel-btn:hover { background: var(--canakkale-red); color: white; transform: scale(1.1); }
+        .left-btn { left: -25px; }
+        .right-btn { right: -25px; }
+
+        /* --- MODAL (Bilgi Penceresi) --- */
+        .premium-modal .modal-content { border-radius: 25px; overflow: hidden; border: none; box-shadow: 0 25px 50px rgba(0,0,0,0.2); }
+        .modal-close-btn { position: absolute; top: 20px; right: 20px; z-index: 10; background-color: white; border-radius: 50%; padding: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: 0.3s; }
+        .modal-close-btn:hover { transform: scale(1.1) rotate(90deg); background-color: var(--canakkale-red); filter: invert(1); }
+        .modal-img { width: 100%; height: 100%; min-height: 350px; object-fit: cover; aspect-ratio: 4/3; }
+        .modal-text-content { padding: 40px 50px; }
+
+        /* --- PREMIUM GALERİ --- */
+        .premium-gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); grid-auto-rows: 250px; gap: 15px; grid-auto-flow: dense; }
+        .gallery-item { position: relative; border-radius: 20px; overflow: hidden; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .gallery-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .gallery-item:hover .gallery-img { transform: scale(1.1); }
+        .gallery-overlay { position: absolute; inset: 0; background: rgba(29, 53, 87, 0.6); opacity: 0; transition: opacity 0.3s; display: flex; justify-content: center; align-items: center; font-size: 2.5rem; color: white; }
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+        .item-large { grid-column: span 2; grid-row: span 2; }
+        .item-wide { grid-column: span 2; }
+
+        /* Lightbox */
+        .premium-lightbox { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(15, 28, 48, 0.95); backdrop-filter: blur(10px); justify-content: center; align-items: center; padding: 20px; }
+        .lightbox-img { max-width: 90%; max-height: 90vh; border-radius: 15px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); object-fit: contain; animation: zoomIn 0.3s ease-out; }
+        .lightbox-close { position: absolute; top: 30px; right: 40px; font-size: 3rem; color: white; cursor: pointer; transition: 0.3s; line-height: 1; }
+        .lightbox-close:hover { color: var(--canakkale-red); transform: rotate(90deg); }
+        @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        /* --- FİYAT VE REZERVASYON --- */
+        .time-info-box { display: flex; align-items: center; background: white; padding: 15px 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.04); width: 100%; max-width: 300px;}
+        .time-info-box .icon-box { background: rgba(200,16,46,0.1); color: var(--canakkale-red); width: 45px; height: 45px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; margin-right: 15px; }
+
+        .included-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; max-width: 600px; }
+        .included-item { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); font-weight: 600; color: var(--navy); display: flex; align-items: flex-start; border: 1px solid rgba(0,0,0,0.04); transition: 0.3s; }
+        .included-item:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.06); }
+        .included-item i { font-size: 1.3rem; margin-right: 12px; margin-top: 2px; }
+        .fs-small { font-size: 0.8rem; }
+        .info-alert { background: #e9ecef; border-radius: 15px; padding: 20px; display: flex; align-items: flex-start; color: #495057; font-size: 0.95rem; max-width: 600px; }
+        .info-icon { color: var(--navy); font-size: 1.5rem; margin-right: 15px; margin-top: 3px; }
+
+        .pricing-card { background: white; border-radius: 30px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); position: relative; transition: 0.3s; }
+        .pricing-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.15); }
+        .pricing-header { background: var(--navy); color: white; padding: 40px 30px; position: relative; text-align: center; }
+        .pricing-tag { position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.2); color: white; font-size: 0.75rem; font-weight: 700; padding: 5px 15px; border-radius: 50px; }
+        .pricing-header h3 { font-size: 1.2rem; font-weight: 600; opacity: 0.9; margin-bottom: 10px; }
+        .price-display { font-size: 4.5rem; font-weight: 800; line-height: 1; color: white; margin-bottom: 5px; }
+        .price-display .currency { font-size: 2rem; vertical-align: super; opacity: 0.8; margin-right: 5px; }
+        .per-person { font-size: 0.9rem; opacity: 0.7; margin: 0; }
+        .pricing-body { padding: 40px 30px; background: white; }
+        .free-child-badge { background: rgba(40, 167, 69, 0.1); color: #28a745; text-align: center; padding: 10px; border-radius: 10px; font-weight: 700; font-size: 0.95rem; }
+        .btn-premium-wa { display: flex; align-items: center; justify-content: center; background: linear-gradient(45deg, #25D366, #128C7E); color: white; padding: 15px 20px; border-radius: 15px; font-weight: 700; font-size: 1.1rem; text-decoration: none; transition: 0.3s; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3); }
+        .btn-premium-wa:hover { transform: translateY(-3px); color: white; box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4); }
+        .icon-large { font-size: 2.2rem; margin-right: 15px; }
+        .call-link { text-decoration: none; transition: 0.3s; }
+        .call-link:hover { color: var(--canakkale-red) !important; }
+
+        /* --- EDİTORYAL SEO METNİ --- */
+        .editorial-content { padding: 40px; background: #fff; border-radius: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.02); }
+        .premium-quote-box { background: rgba(29, 53, 87, 0.03); border-left: 5px solid var(--canakkale-red); padding: 30px 40px; border-radius: 0 20px 20px 0; position: relative; }
+        .quote-icon { position: absolute; font-size: 3rem; color: rgba(200, 16, 46, 0.1); top: 15px; left: 15px; }
+        .premium-quote-box p { font-size: 1.15rem; color: var(--navy); position: relative; z-index: 1; }
+        .panoramic-info-box { background: white; border: 1px solid #e9ecef; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
+        .underline-red { width: 60px; height: 4px; background: var(--canakkale-red); border-radius: 10px; }
+
+        /* --- MOBİL UYUM --- */
+        @media (max-width: 991px) {
+            .content-wrapper { margin-top: -50px; border-radius: 30px 30px 0 0; }
+            .timeline { padding-left: 20px; }
+            .timeline-dot { left: calc(-20px - 7px); top: 30px; }
+            .timeline-card { padding: 25px; }
+            
+            .carousel-container { padding: 10px 5px; gap: 20px; }
+            .route-carousel-card { flex: 0 0 280px; height: 320px; padding: 25px; }
+            .route-text { font-size: 1.2rem; }
+            .card-bg-number { font-size: 6rem; top: -10px; right: -5px; }
+
+            .premium-gallery-grid { display: flex; flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 20px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+            .premium-gallery-grid::-webkit-scrollbar { display: none; }
+            .gallery-item { flex: 0 0 85%; height: 350px; scroll-snap-align: center; border-radius: 15px; }
+            .item-large, .item-wide { grid-column: auto; grid-row: auto; }
+
+            .modal-img { aspect-ratio: 16/9; min-height: 200px; border-radius: 25px 25px 0 0; }
+            .modal-text-content { padding: 30px; }
+            
+            .time-info-box { max-width: 100%; }
+            .included-grid { grid-template-columns: 1fr; }
+            .pricing-card { margin-top: 20px; }
+
+            .editorial-content { padding: 25px 20px; }
+            .premium-quote-box { padding: 20px 20px 20px 30px; }
+        }
+    </style>
 </head>
 <body>
-  <nav class="navbar">
-    <div class="nav-inner">
-      <a href="#" class="brand"><span class="brand-mark">EÇ</span> Eyüp Çalışkanoztürk</a>
-      <div class="menu">
-        <a href="#about">Hakkımda</a>
-        <a href="#skills">Yetenekler</a>
-        <a href="#contact">İletişim</a>
-        <button id="themeToggle"></button>
-      </div>
+
+    <nav class="navbar navbar-expand-lg fixed-top navbar-modern" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#">ÇANAKKALE<span>TRAVEL</span></a>
+            <button class="navbar-toggler border-0 shadow-none p-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+                <div class="hamburger-icon"><span></span><span></span><span></span></div>
+            </button>
+            <div class="collapse navbar-collapse d-none d-lg-block">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Anasayfa</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tours">Tur Programı</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#route">Gezi Rotası</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#gallery">Galeri</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#pricing">Fiyat & Rezervasyon</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="offcanvas offcanvas-end offcanvas-modern" tabindex="-1" id="offcanvasNavbar">
+        <div class="offcanvas-header p-4 pb-0">
+            <button type="button" class="btn-close shadow-none ms-auto" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body p-4 d-flex flex-column text-center">
+            <a class="navbar-brand fs-3 mb-4" href="#">ÇANAKKALE<span class="text-danger">TRAVEL</span></a>
+            <ul class="navbar-nav nav-offcanvas-links mb-auto">
+                <li class="nav-item"><a class="nav-link" href="#home">Anasayfa</a></li>
+                <li class="nav-item"><a class="nav-link" href="#tours">Tur Programı</a></li>
+                <li class="nav-item"><a class="nav-link" href="#route">Gezi Rotası</a></li>
+                <li class="nav-item"><a class="nav-link" href="#gallery">Galeri</a></li>
+                <li class="nav-item"><a class="nav-link" href="#pricing">Fiyat & Bilgi</a></li>
+            </ul>
+        </div>
     </div>
-  </nav>
 
-  <section class="hero fade-in visible">
-    <h1>Merhaba, ben <span class="accent">Eyüp Çalışkanoztürk</span></h1>
-    <p>Bilgisayar Programcılığı 1. sınıf öğrencisi · Bilgi İşlem (IT) · Çanakkale</p>
-    <div class="hero-cta">
-      <a href="#skills" class="btn btn-primary">Yeteneklerim</a>
-      <a href="#" class="btn btn-ghost">CV İndir</a>
+    <section class="hero-section" id="home">
+        <div class="hero-bg-container">
+            <img src="AnaEkranResim/cmanzara1.jpg" alt="Çanakkale" class="hero-bg-img">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="container hero-content text-center text-white">
+            <div class="row justify-content-center">
+                <div class="col-lg-10" data-aos="fade-up">
+                    <span class="badge badge-soft-red mb-3">2026 Premium Sezon</span>
+                    <h1 class="hero-title fw-bold mb-4">Tarihe Yolculuk<br><span class="text-red">Burada Başlıyor</span></h1>
+                    <p class="lead mb-0 fs-5 opacity-75">Tarihin en şanlı destanının yazıldığı topraklarda unutulmaz bir deneyim.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="content-wrapper">
+        
+        <section id="tours" class="py-5 bg-white">
+            <div class="container py-5">
+                <div class="text-center mb-5" data-aos="fade-up">
+                    <span class="badge badge-soft-red mb-2">Günlük Akış</span><br>
+                    <h2 class="display-5 fw-bold text-navy section-title-hover">Tur Programı</h2>
+                </div>
+
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <div class="timeline-item" data-aos="fade-up">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-card">
+                                <div class="timeline-card-header">
+                                    <h4 class="fw-bold mb-0">Buluşma</h4>
+                                    <span class="time-badge">09:00</span>
+                                </div>
+                                <p class="text-muted mb-0 mt-3">Çanakkale Cumhuriyet Meydanı'nda Tarihi Top'un önünde rehberimizle buluşuyoruz.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item" data-aos="fade-up">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-card">
+                                <div class="timeline-card-header">
+                                    <h4 class="fw-bold mb-0">İskele ve Feribot</h4>
+                                    <span class="time-badge">09:30</span>
+                                </div>
+                                <p class="text-muted mb-0 mt-3">Çanakkale iskeleden Kilitbahir feribotuyla boğazın karşı yakasına, Kilitbahir'e geçiyoruz.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item" data-aos="fade-up">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-card">
+                                <div class="timeline-card-header">
+                                    <h4 class="fw-bold mb-0">Başlangıç</h4>
+                                    <span class="time-badge">09:45</span>
+                                </div>
+                                <p class="text-muted mb-0 mt-3">Kilitbahir İskele ve Eceabat noktalarında diğer katılımcılarımızla buluşarak turumuza başlıyoruz.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="route" class="py-5 bg-navy-dark text-white position-relative">
+            <div class="container py-5">
+                <div class="text-center mb-5" data-aos="fade-up">
+                    <span class="badge badge-soft-red mb-2">Tüm Duraklar</span><br>
+                    <h2 class="display-5 fw-bold text-white section-title-hover red-underline">Gezi Rotamız</h2>
+                    <p class="text-white opacity-75 mt-3">Detaylı bilgi ve fotoğraflar için kartların üzerine tıklayın.</p>
+                </div>
+
+                <div class="carousel-wrapper" data-aos="fade-up">
+                    <button class="carousel-btn left-btn d-none d-lg-flex" id="scrollLeftBtn" aria-label="Sola Kaydır"><i class="fas fa-chevron-left"></i></button>
+                    
+                    <div class="carousel-container" id="routeCarousel">
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal1"><div class="card-bg-number">01</div><div class="route-icon-circle"><i class="fas fa-monument"></i></div><div class="card-content mt-auto"><h4 class="route-text">Kilitbahir Kalesi</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal2"><div class="card-bg-number">02</div><div class="route-icon-circle"><i class="fas fa-shield-halved"></i></div><div class="card-content mt-auto"><h4 class="route-text">Namazgah Tabyası</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal3"><div class="card-bg-number">03</div><div class="route-icon-circle"><i class="fas fa-shield-halved"></i></div><div class="card-content mt-auto"><h4 class="route-text">Rumeli Mecidiye Tabyası</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal4"><div class="card-bg-number">04</div><div class="route-icon-circle"><i class="fas fa-star"></i></div><div class="card-content mt-auto"><h4 class="route-text">Seyit Onbaşı Anıtı</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal5"><div class="card-bg-number">05</div><div class="route-icon-circle"><i class="fas fa-dove"></i></div><div class="card-content mt-auto"><h4 class="route-text">Şahindere Şehitliği</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal6"><div class="card-bg-number">06</div><div class="route-icon-circle"><i class="fas fa-dove"></i></div><div class="card-content mt-auto"><h4 class="route-text">Havuzlar Şehitliği</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal7"><div class="card-bg-number">07</div><div class="route-icon-circle"><i class="fas fa-camera"></i></div><div class="card-content mt-auto"><span class="route-badge mb-2 d-inline-block">Panoramik</span><h4 class="route-text">Soğanlıdere Şehitliği</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal8"><div class="card-bg-number">08</div><div class="route-icon-circle"><i class="fas fa-briefcase-medical"></i></div><div class="card-content mt-auto"><h4 class="route-text">Şahindere (Sargı Yeri)</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal9"><div class="card-bg-number">09</div><div class="route-icon-circle"><i class="fas fa-hospital"></i></div><div class="card-content mt-auto"><h4 class="route-text">Hilal-i Ahmer Müzesi</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal10"><div class="card-bg-number">10</div><div class="route-icon-circle"><i class="fas fa-camera"></i></div><div class="card-content mt-auto"><span class="route-badge mb-2 d-inline-block">Panoramik</span><h4 class="route-text">Azerbaycan Şehitliği</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal11"><div class="card-bg-number">11</div><div class="route-icon-circle"><i class="fas fa-monument"></i></div><div class="card-content mt-auto"><h4 class="route-text">Çanakkale Şehitler Abidesi</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal12"><div class="card-bg-number">12</div><div class="route-icon-circle"><i class="fas fa-camera"></i></div><div class="card-content mt-auto"><span class="route-badge mb-2 d-inline-block">Panoramik</span><h4 class="route-text">Morto Koyu - Seddülbahir</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal13"><div class="card-bg-number">13</div><div class="route-icon-circle"><i class="fas fa-camera"></i></div><div class="card-content mt-auto"><span class="route-badge mb-2 d-inline-block">Panoramik</span><h4 class="route-text">Yahya Çavuş Şehitliği</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        
+                        <div class="route-carousel-card lunch-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal14"><div class="card-bg-number">14</div><div class="route-icon-circle"><i class="fas fa-utensils"></i></div><div class="card-content mt-auto"><span class="route-badge mb-2 d-inline-block">Öğle Yemeği</span><h4 class="route-text">Alçıtepe Köyü</h4><span class="click-hint text-danger"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal15"><div class="card-bg-number">15</div><div class="route-icon-circle"><i class="fas fa-camera"></i></div><div class="card-content mt-auto"><span class="route-badge mb-2 d-inline-block">Panoramik</span><h4 class="route-text">Anzak Koyu</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal16"><div class="card-bg-number">16</div><div class="route-icon-circle"><i class="fas fa-camera"></i></div><div class="card-content mt-auto"><span class="route-badge mb-2 d-inline-block">Panoramik</span><h4 class="route-text">Mehmetçiğe Saygı Anıtı</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal17"><div class="card-bg-number">17</div><div class="route-icon-circle"><i class="fas fa-camera"></i></div><div class="card-content mt-auto"><span class="route-badge mb-2 d-inline-block">Panoramik</span><h4 class="route-text">Kanlı Sırt, Lone Pine</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal18"><div class="card-bg-number">18</div><div class="route-icon-circle"><i class="fas fa-camera"></i></div><div class="card-content mt-auto"><span class="route-badge mb-2 d-inline-block">Panoramik</span><h4 class="route-text">Kırmızı Sırt Siperleri</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal19"><div class="card-bg-number">19</div><div class="route-icon-circle"><i class="fas fa-flag"></i></div><div class="card-content mt-auto"><h4 class="route-text">57. Piyade Alay Şehitliği</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal20"><div class="card-bg-number">20</div><div class="route-icon-circle"><i class="fas fa-mountain-sun"></i></div><div class="card-content mt-auto"><h4 class="route-text">Conk Bayırı</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal21"><div class="card-bg-number">21</div><div class="route-icon-circle"><i class="fas fa-camera"></i></div><div class="card-content mt-auto"><span class="route-badge mb-2 d-inline-block">Panoramik</span><h4 class="route-text">Anafartalar Ovası</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal22"><div class="card-bg-number">22</div><div class="route-icon-circle"><i class="fas fa-star"></i></div><div class="card-content mt-auto"><h4 class="route-text">Atatürk Anıtı Kemal Yeri</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal23"><div class="card-bg-number">23</div><div class="route-icon-circle"><i class="fas fa-camera"></i></div><div class="card-content mt-auto"><span class="route-badge mb-2 d-inline-block">Panoramik</span><h4 class="route-text">Yeni Zelanda Anıtı</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+                        <div class="route-carousel-card clickable-card" data-bs-toggle="modal" data-bs-target="#modal24"><div class="card-bg-number">24</div><div class="route-icon-circle"><i class="fas fa-location-dot"></i></div><div class="card-content mt-auto"><h4 class="route-text text-red">Eceabat (Dönüş)</h4><span class="click-hint"><i class="fas fa-hand-pointer me-1"></i> İncele</span></div></div>
+
+                    </div>
+                    <button class="carousel-btn right-btn d-none d-lg-flex" id="scrollRightBtn" aria-label="Sağa Kaydır"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="py-5 bg-white">
+            <div class="container py-5">
+                <div class="text-center mb-5" data-aos="fade-up">
+                    <span class="badge badge-soft-red mb-2">Tarihin İzleri</span><br>
+                    <h2 class="display-5 fw-bold text-navy section-title-hover">Galeri</h2>
+                    <p class="text-muted mt-3">Turlarımızdan yansıyan unutulmaz kareler. <br><small class="text-danger d-inline-block d-lg-none mt-1"><i class="fas fa-arrows-alt-h me-1"></i> Mobilde fotoğrafları sağa kaydırarak inceleyebilirsiniz.</small></p>
+                </div>
+
+                <div class="premium-gallery-grid">
+                    <div class="gallery-item item-large" data-aos="fade-up"><img src="Galeri/galeri1.jpg" alt="Galeri 1" class="gallery-img"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+                    <div class="gallery-item" data-aos="fade-up" data-aos-delay="100"><img src="Galeri/galeri2.jpg" alt="Galeri 2" class="gallery-img"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+                    <div class="gallery-item" data-aos="fade-up" data-aos-delay="200"><img src="Galeri/galeri3.jpg" alt="Galeri 3" class="gallery-img"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+                    <div class="gallery-item" data-aos="fade-up"><img src="Galeri/galeri4.jpg" alt="Galeri 4" class="gallery-img"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+                    <div class="gallery-item item-wide" data-aos="fade-up" data-aos-delay="100"><img src="Galeri/galeri5.jpg" alt="Galeri 5" class="gallery-img"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+                    <div class="gallery-item" data-aos="fade-up" data-aos-delay="200"><img src="Galeri/galeri6.jpg" alt="Galeri 6" class="gallery-img"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="py-5 bg-light">
+            <div class="container py-5">
+                <div class="row g-5 align-items-center">
+                    
+                    <div class="col-lg-7 text-center text-lg-start" data-aos="fade-right">
+                        <div class="d-inline-block position-relative mb-4">
+                            <h2 class="display-5 fw-bold text-navy section-title-hover">Tur Detayları</h2>
+                        </div>
+                        
+                        <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-3 mb-5">
+                            <div class="time-info-box text-start">
+                                <div class="icon-box"><i class="fas fa-clock"></i></div>
+                                <div><h6 class="fw-bold mb-1">Saat 17:00 Civarı</h6><p class="mb-0 text-muted small">Eceabat veya Kilitbahir'e ulaşıyoruz.</p></div>
+                            </div>
+                            <div class="time-info-box text-start">
+                                <div class="icon-box"><i class="fas fa-bus"></i></div>
+                                <div><h6 class="fw-bold mb-1">17:30 Dönüş</h6><p class="mb-0 text-muted small">Çanakkale şehir merkezine dönüyoruz.</p></div>
+                            </div>
+                        </div>
+
+                        <h4 class="fw-bold text-navy mb-4">Fiyata Dahil Olanlar</h4>
+                        <div class="included-grid text-start mb-5 mx-auto mx-lg-0">
+                            <div class="included-item"><i class="fas fa-check-circle text-success"></i> Lüks Araçlar ile Ulaşım</div>
+                            <div class="included-item"><i class="fas fa-check-circle text-success"></i> Profesyonel Turist Rehberi</div>
+                            <div class="included-item"><i class="fas fa-check-circle text-success"></i> Feribot Geçiş Ücretleri</div>
+                            <div class="included-item"><i class="fas fa-check-circle text-success"></i> Öğle Yemeği <span class="text-muted fs-small d-block mt-1">(Köfte, Pilav, Salata, Ayran ve Su)</span></div>
+                        </div>
+
+                        <div class="info-alert text-start mx-auto mx-lg-0">
+                            <i class="fas fa-info-circle info-icon"></i>
+                            <p class="mb-0"><strong>Önemli Not:</strong> Yeterli katılımcı sayısı oluşmadığı takdirde firma tarafından tur iptal edilebilir. Çanakkale şehitlikleri yılın 365 günü ziyarete açıktır ve şehitliklere giriş <strong>ücretsizdir.</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5" data-aos="fade-left" data-aos-delay="100">
+                        <div class="pricing-card">
+                            <div class="pricing-header">
+                                <span class="pricing-tag">Popüler Seçim</span>
+                                <h3>Tur Fiyatı</h3>
+                                <div class="price-display"><span class="currency">₺</span>1100</div>
+                                <p class="per-person">Kişi Başı</p>
+                            </div>
+                            
+                            <div class="pricing-body">
+                                <div class="free-child-badge mb-4"><i class="fas fa-child"></i> 0 - 6 Yaş Çocuk Ücretsiz <small>(Kucakta)</small></div>
+                                <p class="text-center text-muted small mb-4">Bölgenin en iyi ve en deneyimli rehberleriyle şanlı tarihi yerinde hissederek yaşayın.</p>
+                                
+                                <a href="https://wa.me/905312833363?text=Merhaba,%20Çanakkale%20Şehitlik%20Turu%20hakkında%20bilgi%20almak%20ve%20rezervasyon%20yaptırmak%20istiyorum." target="_blank" class="btn-premium-wa w-100">
+                                    <i class="fab fa-whatsapp icon-large"></i> 
+                                    <span>Hemen Rezervasyon Yap<small class="d-block fw-normal mt-1">Hızlı İletişim</small></span>
+                                </a>
+
+                                <div class="text-center mt-4">
+                                    <span class="d-block text-muted mb-1">Veya direkt arayın:</span>
+                                    <a href="tel:+905312833363" class="call-link fw-bold fs-4 text-navy">0531 283 33 63</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="tour-info" class="py-5 bg-white">
+            <div class="container py-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="text-center mb-5" data-aos="fade-up">
+                            <span class="badge badge-soft-red mb-2">Hakkımızda</span><br>
+                            <h2 class="display-6 fw-bold text-navy">Tur İşleyişi ve Genel Bilgiler</h2>
+                            <div class="underline-red mx-auto mt-3"></div>
+                        </div>
+
+                        <div class="editorial-content" data-aos="fade-up" data-aos-delay="100">
+                            <p class="lead text-navy fw-semibold lh-lg mb-4">
+                                Gelibolu Şehitlik Turları düzenleyen şirketimiz bölgenin en iyi ve en uzman kadrosu ile sizlere hizmet etmeye devam ediyor. Günübirlik Şehitlik Turu, Konaklamalı Şehitlik Turu ve yaz sezonunda öğleden sonra yarım günlük Şehitlik Turlarımızla sizlere hizmet ediyoruz.
+                            </p>
+
+                            <div class="premium-quote-box my-5">
+                                <i class="fas fa-quote-left quote-icon"></i>
+                                <p class="mb-0 fst-italic">Şehitlik Turlarında uzun yıllardır deneyim sahibi olan acentamızı tercih ederek sizler de <strong>Çanakkale Ruhu'nu hissedecek</strong>, o zorlu günleri ve zorlu şartları rehberimizin anlatımlarıyla adeta yaşayacaksınız.</p>
+                            </div>
+
+                            <p class="text-muted lh-lg mb-4">
+                                Çanakkale çıkışlı şehitlik turlarımız her gün kesin kalkışlı olarak hareket etmektedir. Şehitlik Turlarımız yılın 365 günü her gün Çanakkale merkezden hareketli Eceabat ve Kilitbahir'dan katılma imkanı sağlanmaktadır. Gelibolu Şehitlik Turu Gelibolu Yarımadasının tamamını kapsamaktadır.
+                            </p>
+
+                            <div class="panoramic-info-box my-5">
+                                <h5 class="fw-bold text-navy mb-3"><i class="fas fa-camera text-red me-2"></i> Panoramik Göreceğimiz Noktalar</h5>
+                                <p class="text-muted mb-0 lh-lg">
+                                    Hareketli şehitlik turumuz boyunca panoramik göreceğimiz noktalar: <strong>Kilitbahir Kalesi, Namazgah Tabyası, Rumeli Hamidiye Tabyası, Soğanlıdere ve Şahindere Sargı Yeri, Seddülbahir Köyü, Fransız Mezar Anıtı, İngiliz Mezar Anıtı, Albayrak Sırtı, Kanlı Sırt, Mehmetçiğe Saygı Anıtı, Avustralya Mezar Anıtı, Anafartalar Ovası, Kemal Yeri</strong> ve daha birçok nokta…
+                                </p>
+                            </div>
+
+                            <p class="text-muted lh-lg mb-4">
+                                Kültür ve Turizm Bakanlığına bağlı Profesyonel Turist Rehberi arkadaşlarımız turunuz boyunca sizlere eşlik edecek ve Gelibolu hakkında bildiği her şeyi sizlerle paylaşacaktır. Tüm belgeleri tamam araçlarımız ve profesyonel şoförlerimizle sizlere güvenli seyahati sunuyoruz. Çanakkale şehitlikleri yılın 365 günü ziyarete açıktır ve <strong>şehitliklere girişte ücret alınmamaktadır.</strong>
+                            </p>
+
+                            <div class="row g-4 mt-5 pt-4 border-top text-start">
+                                <div class="col-md-6">
+                                    <h6 class="fw-bold text-navy mb-3">İletişim & Rezervasyon</h6>
+                                    <p class="text-muted mb-1">Grup turlarımızın haricinde size ve ailenize özel turlarda düzenliyoruz. <strong>2026 yılı sezonu</strong> Şehitlik Turu ile ilgili bilgi ve rezervasyon için bizlerle iletişime geçebilirsiniz:</p>
+                                    <div class="d-flex flex-wrap align-items-center mt-3 gap-3">
+                                        <a href="tel:+905312833363" class="btn btn-outline-danger rounded-pill fw-bold"><i class="fas fa-phone me-2"></i>0531 283 33 63</a>
+                                        <a href="tel:+902862179333" class="btn btn-outline-secondary rounded-pill fw-bold"><i class="fas fa-phone me-2"></i>0286 217 93 33</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="fw-bold text-navy mb-3">Önemli Adres & Notlar</h6>
+                                    <p class="text-muted small mb-2"><i class="fas fa-map-marker-alt text-red me-2"></i> <strong>Şehitler Abidesi Adresi:</strong> Seddülbahir köyü yolu, 17902 Seddülbahir - Eceabat - Çanakkale</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-  </section>
 
-  <section id="about" class="section fade-in visible">
-    <h2>💡 Hakkımda</h2>
-    <p>Ben Eyüp, sade ama güçlü çözümler üretmeyi seven bir yazılım geliştiricisiyim.
-      Arayüz tasarımı, algoritma ve backend geliştirme alanlarında çalışıyorum.
-      Hedefim, estetikle işlevi birleştiren sistemler üretmek.</p>
-  </section>
-
-  <section id="skills" class="section fade-in visible">
-    <h2>🧠 Yetenekler</h2>
-    <div class="skills">
-      <div class="skill"><span>HTML / CSS</span><div class="bar"><div class="bar-fill" style="width:90%"></div></div></div>
-      <div class="skill"><span>JavaScript</span><div class="bar"><div class="bar-fill" style="width:75%"></div></div></div>
-      <div class="skill"><span>C#</span><div class="bar"><div class="bar-fill" style="width:85%"></div></div></div>
-      <div class="skill"><span>UI Design</span><div class="bar"><div class="bar-fill" style="width:80%"></div></div></div>
+    <div id="galleryLightbox" class="premium-lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-img" id="lightboxImg" src="">
     </div>
-  </section>
 
-  <section id="contact" class="section fade-in visible">
-    <h2>📫 İletişim</h2>
-    <p>Bana ulaşmak için sosyal medya hesaplarımdan veya e-posta adresimden iletişime geçebilirsin 👇</p>
-    <div class="socials">
-      <a href="mailto:eyupcalskanofficial@gmail.com"><i class="fas fa-envelope"></i></a>
-      <a href="https://linkedin.com/in/eyüp-çalışkanoztürk-413208273"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/eyupcalskanozturk-tr"><i class="fab fa-github"></i></a>
-      <a href="https://instagram.com/eyupcalskanozturk"><i class="fab fa-instagram"></i></a>
-    </div>
-  </section>
+    <div class="modal fade premium-modal" id="modal1" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim1.jpg" alt="Kilitbahir" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 01</span><h3 class="fw-bold text-navy mb-3">Kilitbahir Kalesi</h3><p class="text-muted">Kilitbahir Kalesi hakkında bilgilendirici metin.</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal2" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim2.jpg" alt="Namazgah" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 02</span><h3 class="fw-bold text-navy mb-3">Namazgah Tabyası</h3><p class="text-muted">Namazgah Tabyası hakkında açıklayıcı metin.</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal3" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim3.jpg" alt="Rumeli Mecidiye" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 03</span><h3 class="fw-bold text-navy mb-3">Rumeli Mecidiye Tabyası</h3><p class="text-muted">Rumeli Mecidiye Tabyası bölgesi hakkında bilgiler.</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal4" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim4.jpg" alt="Seyit Onbaşı" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 04</span><h3 class="fw-bold text-navy mb-3">Seyit Onbaşı Anıtı</h3><p class="text-muted">Seyit Onbaşı'nın kahramanlık destanı hakkında bilgi.</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal5" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim5.jpg" alt="Şahindere Şehitliği" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 05</span><h3 class="fw-bold text-navy mb-3">Şahindere Şehitliği</h3><p class="text-muted">Şahindere Şehitliği hakkında açıklama alanı.</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal6" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim6.jpg" alt="Havuzlar Şehitliği" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 06</span><h3 class="fw-bold text-navy mb-3">Havuzlar Şehitliği</h3><p class="text-muted">Havuzlar Şehitliği bölge tarihi hakkında bilgiler.</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal7" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim7.jpg" alt="Soğanlıdere" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 07</span><h3 class="fw-bold text-navy mb-3">Soğanlıdere Şehitliği</h3><p class="text-muted">Soğanlıdere bölgesinin tarihi önemi (Panoramik).</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal8" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim8.jpg" alt="Sargı Yeri" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 08</span><h3 class="fw-bold text-navy mb-3">Şahindere (Sargı Yeri)</h3><p class="text-muted">Sargı Yeri Şehitliği hakkında tarihi bilgiler.</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal9" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim9.jpg" alt="Hilal-i Ahmer" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 09</span><h3 class="fw-bold text-navy mb-3">Hilal-i Ahmer Müzesi</h3><p class="text-muted">Kızılay'ın sağlık hizmetlerini yansıtan müze hakkında bilgiler.</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal10" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim10.jpg" alt="Azerbaycan" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 10</span><h3 class="fw-bold text-navy mb-3">Azerbaycan Şehitliği</h3><p class="text-muted">Azerbaycan Şehitliği hakkında açıklayıcı metin.</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal11" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim11.jpg" alt="Abide" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 11</span><h3 class="fw-bold text-navy mb-3">Çanakkale Şehitler Abidesi</h3><p class="text-muted">Tüm şehitlerimizi temsil eden devasa Şehitler Abidesi.</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal12" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim12.jpg" alt="Morto" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 12</span><h3 class="fw-bold text-navy mb-3">Morto Koyu</h3><p class="text-muted">Morto Koyu ve Seddülbahir bölgesinin tarihi önemi.</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal13" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim13.jpg" alt="Yahya Çavuş" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 13</span><h3 class="fw-bold text-navy mb-3">Yahya Çavuş Şehitliği</h3><p class="text-muted">Yahya Çavuş ve takımının kahramanlık hikayesi.</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal14" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim14.jpg" alt="Alçıtepe" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 14</span><h3 class="fw-bold text-navy mb-3">Alçıtepe Köyü</h3><p class="text-muted">Yöresel lezzetlerle öğle yemeği molası.</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal15" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim15.jpg" alt="Anzak Koyu" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 15</span><h3 class="fw-bold text-navy mb-3">Anzak Koyu</h3><p class="text-muted">Anzak birliklerinin çıkarma yaptığı sahil şeridi.</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal16" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim16.jpg" alt="Saygı Anıtı" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 16</span><h3 class="fw-bold text-navy mb-3">Mehmetçiğe Saygı Anıtı</h3><p class="text-muted">Türk askerinin merhametini simgeleyen anıt.</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal17" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim17.jpg" alt="Lone Pine" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 17</span><h3 class="fw-bold text-navy mb-3">Kanlı Sırt, Lone Pine</h3><p class="text-muted">Avustralyalı askerlerin anıt mezarının bulunduğu bölge.</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal18" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim18.jpg" alt="Kırmızı Sırt" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 18</span><h3 class="fw-bold text-navy mb-3">Kırmızı Sırt Siperleri</h3><p class="text-muted">Orijinal siper hatları ve çetin savaşların yaşandığı nokta.</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal19" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim19.jpg" alt="57. Alay" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 19</span><h3 class="fw-bold text-navy mb-3">57. Piyade Alay Şehitliği</h3><p class="text-muted">Kahraman 57. Alayımızın anıtı hakkında bilgiler.</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal20" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim20.jpg" alt="Conk Bayırı" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 20</span><h3 class="fw-bold text-navy mb-3">Conk Bayırı</h3><p class="text-muted">Savaşların kırılma noktası olan eşsiz tepe.</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal21" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim21.jpg" alt="Anafartalar" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 21</span><h3 class="fw-bold text-navy mb-3">Anafartalar Ovası</h3><p class="text-muted">Geniş ovanın Conkbayırı'ndan panoramik görünümü.</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal22" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim22.jpg" alt="Kemal Yeri" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 22</span><h3 class="fw-bold text-navy mb-3">Atatürk Anıtı Kemal Yeri</h3><p class="text-muted">Mustafa Kemal'in karargahını kurduğu 'Kemal Yeri'.</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal23" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim23.jpg" alt="Yeni Zelanda Anıtı" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 23</span><h3 class="fw-bold text-navy mb-3">Yeni Zelanda Anıtı</h3><p class="text-muted">Yeni Zelandalı askerlerin anısına dikilen Ulusal Anıt.</p></div></div></div></div></div></div>
+    <div class="modal fade premium-modal" id="modal24" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content"><button type="button" class="btn-close modal-close-btn shadow-none" data-bs-dismiss="modal"></button><div class="row g-0"><div class="col-lg-6"><img src="TurResim/resim24.jpg" alt="Eceabat" class="modal-img"></div><div class="col-lg-6 d-flex align-items-center"><div class="modal-text-content"><span class="badge badge-soft-red mb-2">Durak 24</span><h3 class="fw-bold text-navy mb-3">Eceabat (Dönüş)</h3><p class="text-muted">Tarihe tanıklık ettiğimiz turumuzu Eceabat'ta tamamlıyoruz.</p></div></div></div></div></div></div>
 
-  <footer>
-    <p>© <span id="year"></span> <span class="glow-text">Eyüp Çalışkanoztürk</span> | 💫 Designed & Coded by <span class="glow-text">Eyüp</span></p>
-  </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // AOS Animasyonları
+            AOS.init({ duration: 800, once: false, offset: 20 });
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-    const toggle = document.getElementById("themeToggle");
-    toggle.addEventListener("click", () => document.body.classList.toggle("light"));
-  </script>
+            // Gezi Rotası Yatay Kaydırma (Carousel) Butonları
+            const carousel = document.getElementById('routeCarousel');
+            const leftBtn = document.getElementById('scrollLeftBtn');
+            const rightBtn = document.getElementById('scrollRightBtn');
+
+            if (carousel && leftBtn && rightBtn) {
+                leftBtn.addEventListener('click', () => { carousel.scrollBy({ left: -350, behavior: 'smooth' }); });
+                rightBtn.addEventListener('click', () => { carousel.scrollBy({ left: 350, behavior: 'smooth' }); });
+            }
+
+            // Özel Galeri Lightbox Kodları (Resmi tam ekran yapar)
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const lightbox = document.getElementById('galleryLightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            const closeBtn = document.querySelector('.lightbox-close');
+
+            galleryItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const imgSrc = this.querySelector('img').src;
+                    lightboxImg.src = imgSrc;
+                    lightbox.style.display = 'flex';
+                    document.body.style.overflow = 'hidden'; // Arka plan kaymasını engeller
+                });
+            });
+
+            closeBtn.addEventListener('click', () => {
+                lightbox.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Kaymayı geri açar
+            });
+
+            lightbox.addEventListener('click', (e) => {
+                if(e.target === lightbox) {
+                    lightbox.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
+        // Sayfa Kaydırma (Scroll) Efektleri
+        window.addEventListener('scroll', function() {
+            const scrollPos = window.scrollY;
+            const heroContent = document.querySelector('.hero-content');
+            const heroBg = document.querySelector('.hero-bg-container');
+            const nav = document.querySelector('#mainNav');
+
+            // Hero bölümü yumuşak Fade-Out Efekti
+            let opacityValue = 1 - (scrollPos / 600);
+            if (opacityValue < 0) opacityValue = 0;
+            
+            if (heroContent) heroContent.style.opacity = opacityValue;
+            if (heroBg) {
+                heroBg.style.opacity = opacityValue;
+                heroBg.style.transform = `translateY(${scrollPos * 0.15}px)`; 
+            }
+
+            // Navbar Gölge Efekti
+            if (scrollPos > 50) {
+                nav.classList.add('navbar-scrolled');
+            } else {
+                nav.classList.remove('navbar-scrolled');
+            }
+        });
+    </script>
 </body>
 </html>
