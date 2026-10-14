@@ -1,0 +1,42 @@
+name: GitHub Pages yayınlama
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Depoyu al
+        uses: actions/checkout@v6
+      - name: Pages ayarları
+        uses: actions/configure-pages@v5
+      # Derleme yok; yalnızca yayınlanacak dosyalar paketlenir.
+      - name: Statik dosyaları hazırla
+        run: |
+          mkdir -p _site
+          cp index.html _site/
+          cp -R css js assets _site/
+          # Depodaki mevcut proje sayfasının adresini koru.
+          if [ -d PROJE ]; then cp -R PROJE _site/; fi
+      - name: Dosyaları yükle
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+      - name: Yayınla
+        id: deployment
+        uses: actions/deploy-pages@v4
