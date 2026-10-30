@@ -209,6 +209,36 @@
     return card;
   }
 
+  // Depo olmayan, bu sitede yayınlanan çalışmalar; API listesinin önünde her zaman görünür.
+  const FEATURED = Object.freeze([
+    {
+      name: "Chen Atölyesi",
+      description: "Veri Tabanı I için ER modeli ve Chen notasyonunu uygulamalı öğreten atölye: adım adım çözümlü örnek, alıştırmalar ve otomatik kontrollü diyagram kurma.",
+      tags: ["HTML", "Veri tabanı"],
+      art: "[ ◇ ]",
+      label: "Ders aracı",
+      demo: "chen-atolyesi/",
+      source: "https://github.com/eyupcalskanozturk-tr/eyupcalskanozturk-tr.github.io/tree/main/chen-atolyesi"
+    }
+  ]);
+  function featuredCard(item) {
+    const card = element("article", "project-card glass");
+    const art = element("div", "project-art art-2");
+    art.setAttribute("aria-hidden", "true");
+    art.append(element("span", "", item.art), element("small", "", item.label));
+    const body = element("div", "project-body");
+    const tags = element("ul", "tags");
+    tags.setAttribute("aria-label", "Teknolojiler ve konular");
+    item.tags.forEach((tag) => tags.append(element("li", "", tag)));
+    const links = element("div", "project-links");
+    const open = element("a", "", "Atölyeyi aç ↗");
+    open.href = item.demo;
+    links.append(open, externalLink("Kaynak kod ↗", item.source));
+    body.append(element("h3", "", item.name), element("p", "", item.description), tags, links);
+    card.append(art, body);
+    return card;
+  }
+
   async function loadProjects() {
     const status = $("#project-status");
     const retry = $("#retry-projects");
@@ -221,8 +251,8 @@
       if (!response.ok) throw new Error(`GitHub: ${response.status}`);
       const data = await response.json();
       if (!Array.isArray(data)) throw new Error("Geçersiz depo yanıtı");
-      const repos = data.filter((repo) => repo && typeof repo.name === "string" && !repo.fork && !repo.archived && !repo.private && repo.name.toLowerCase() !== CONFIG.github.toLowerCase() && webURL(repo.html_url)).slice(0, CONFIG.maxProjects);
-      grid.replaceChildren(...repos.map(projectCard));
+      const repos = data.filter((repo) => repo && typeof repo.name === "string" && !repo.fork && !repo.archived && !repo.private && repo.name.toLowerCase() !== CONFIG.github.toLowerCase() && webURL(repo.html_url)).slice(0, Math.max(0, CONFIG.maxProjects - FEATURED.length));
+      grid.replaceChildren(...FEATURED.map(featuredCard), ...repos.map(projectCard));
       status.textContent = repos.length ? "GitHub'daki güncel, herkese açık projelerim. Fork ve arşiv depoları gösterilmez." : "Henüz gösterilecek herkese açık bir proje yok. Yeni çalışmalar burada görünecek.";
     } catch {
       status.textContent = "GitHub'a şu an ulaşılamıyor. Mevcut proje listesi korunuyor; daha sonra yeniden deneyebilirsin.";
