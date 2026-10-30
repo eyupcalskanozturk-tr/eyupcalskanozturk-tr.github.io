@@ -1,0 +1,1329 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Veri Tabanı I · ER modeli ve Chen notasyonunu uygulamalı öğrenme atölyesi: adım adım çözümlü örnek, oran laboratuvarı, açıklamalı alıştırmalar ve otomatik kontrollü diyagram kurma.">
+<meta property="og:title" content="Chen Atölyesi">
+<meta property="og:description" content="Chen diyagramını uygulayarak öğren: çözümlü örnek, laboratuvar, alıştırmalar ve otomatik kontrollü 10 senaryo.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://eyupcalskanozturk-tr.github.io/chen-atolyesi/">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Chen Atölyesi</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  /* Layout: koyu üst bant + sekmeler; her görünüm iki sütunlu bir çalışma masası, 900px altında tek sütun */
+  :root {
+    --bg: #f4f4ef; --surface: #ffffff; --surface-2: #ebebe3; --ink: #16181d; --muted: #5a606c; --line: #d8d8cd;
+    --ent: #fbefc4; --rel: #dcf0d6; --attr: #ffffff;
+    --gold: #9c7008; --yellow: #f5c518; --green: #1c7a35; --green-bg: #e2f3e5; --red: #b3302a; --red-bg: #fbe6e3;
+    --band: #111318; --band-ink: #f2f2ec; --band-muted: #9aa0ab;
+    --f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --f-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+    --f-mono: "JetBrains Mono", Consolas, "Courier New", monospace;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #111317; --surface: #1a1d23; --surface-2: #23272f; --ink: #e8e9ec; --muted: #9ba1ad; --line: #323640;
+    --ent: #3d3420; --rel: #1b3524; --attr: #1a1d23;
+    --gold: #e3b744; --green: #56d283; --green-bg: #173323; --red: #f2786d; --red-bg: #3b1e1c;
+    --band: #08090b; color-scheme: dark; } }
+  :root[data-theme="dark"] {
+    --bg: #111317; --surface: #1a1d23; --surface-2: #23272f; --ink: #e8e9ec; --muted: #9ba1ad; --line: #323640;
+    --ent: #3d3420; --rel: #1b3524; --attr: #1a1d23;
+    --gold: #e3b744; --green: #56d283; --green-bg: #173323; --red: #f2786d; --red-bg: #3b1e1c;
+    --band: #08090b; color-scheme: dark; }
+
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5; }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--band); }
+  h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  code, .mono { font-family: var(--f-mono); font-size: 0.9em; }
+
+  /* üst bant */
+  .top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--band); color: var(--band-ink); border-bottom: 3px solid var(--yellow); }
+  .top-in { max-width: 1260px; margin: 0 auto; padding-block: 10px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; align-items: center; gap: 12px 24px; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand svg { flex: none; }
+  .brand h1 { font-size: 21px; font-weight: 800; letter-spacing: -0.3px; }
+  .brand small { display: block; color: var(--band-muted); font-size: 12px; letter-spacing: 0.4px; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tabs button { background: transparent; border: 1px solid #343843; color: var(--band-ink); border-radius: 999px; padding: 6px 14px; cursor: pointer; font-weight: 700; font-size: 14px; }
+  .tabs button span { color: #4ade80; font-family: var(--f-mono); font-size: 12px; margin-right: 6px; }
+  .tabs button[aria-selected="true"] { background: var(--yellow); color: #16181d; border-color: var(--yellow); }
+  .tabs button[aria-selected="true"] span { color: #16181d; }
+  .scores { margin-left: auto; display: flex; gap: 6px; font-size: 12.5px; }
+  .scores span { border: 1px solid #343843; border-radius: 999px; padding: 3px 10px; color: var(--band-muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .scores b { color: var(--yellow); }
+
+  main { max-width: 1260px; margin: 0 auto; padding-block: 18px 40px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .view-head { display: flex; align-items: baseline; gap: 6px 14px; flex-wrap: wrap; margin-bottom: 14px; }
+  .view-head h2 { font-size: 26px; font-weight: 800; letter-spacing: -0.4px; }
+  .view-head p { margin: 0; color: var(--muted); max-width: 70ch; }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; min-width: 0; }
+  .lbl-s { display: block; font-size: 12px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); font-weight: 700; margin: 0 0 6px; }
+  .stack { display: grid; gap: 14px; align-content: start; }
+
+  .seg { display: flex; flex-wrap: wrap; gap: 3px; background: var(--surface-2); padding: 3px; border-radius: 10px; }
+  .seg button { border: 0; background: transparent; padding: 6px 11px; border-radius: 7px; cursor: pointer; font-weight: 700; font-size: 14px; }
+  .seg button:hover { background: var(--surface); }
+  .seg button.on { background: var(--band); color: var(--yellow); }
+  .btn { border: 1px solid var(--line); background: var(--surface); padding: 7px 13px; border-radius: 9px; font-weight: 700; cursor: pointer; font-size: 14px; }
+  .btn:hover { border-color: var(--muted); }
+  .btn.pri { background: var(--yellow); color: #16181d; border-color: var(--yellow); }
+  .btn.warn { border-color: var(--red); color: var(--red); }
+  .btn:disabled { opacity: 0.45; cursor: default; }
+
+  /* SVG Chen şekilleri */
+  svg.chen { display: block; width: 100%; height: auto; }
+  .chen text { text-anchor: middle; pointer-events: none; }
+  .sh { stroke: var(--ink); stroke-width: 1.6; }
+  .sh.ent { fill: var(--ent); } .sh.rel { fill: var(--rel); } .sh.att { fill: var(--attr); } .sh.in { fill: none; }
+  .sh.der { stroke-dasharray: 5 3; }
+  .ul { stroke: var(--ink); stroke-width: 1.2; } .ul.dash { stroke-dasharray: 3 2; }
+  .ln { stroke: var(--ink); stroke-width: 1.6; }
+  .t-ent { fill: var(--ink); font-family: var(--f-body); font-weight: 700; font-size: 13px; }
+  .t-rel { fill: var(--ink); font-family: var(--f-body); font-weight: 700; font-size: 11.5px; }
+  .t-att { fill: var(--ink); font-family: var(--f-mono); font-size: 11.5px; }
+  .t-card { fill: var(--gold); font-family: var(--f-display); font-weight: 800; font-size: 16px; }
+  .t-mm { fill: var(--green); font-family: var(--f-mono); font-weight: 600; font-size: 13px; }
+  .t-role { fill: var(--green); font-style: italic; font-size: 12px; font-family: var(--f-body); }
+  .t-empty { fill: var(--muted); font-family: var(--f-body); font-size: 15px; }
+  .node { cursor: grab; }
+  .node.sel .sh { stroke: var(--gold); stroke-width: 3; }
+  .node.from .sh { stroke: var(--green); stroke-width: 3; }
+  .hit { stroke: transparent; stroke-width: 16; cursor: pointer; }
+  .esel { stroke: var(--gold); stroke-width: 2.8; }
+  .flash { animation: flash 0.6s ease; }
+  @keyframes flash { from { opacity: 0.2; } to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .flash { animation: none; } }
+
+  /* LAB */
+  .lab-grid { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 16px; align-items: start; }
+  .sent-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+  .sent { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; background: var(--bg); }
+  .sent h3 { font-family: var(--f-body); font-size: 12px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .sent .big { font-size: 17px; font-weight: 700; margin: 0 0 6px; }
+  .sent .big em { font-style: normal; color: var(--gold); }
+  .sent p { margin: 0; color: var(--muted); font-size: 14px; }
+  .rule { margin-top: 12px; background: var(--band); color: var(--band-ink); border-radius: 10px; padding: 10px 14px; font-size: 14px; }
+  .rule b { color: var(--yellow); }
+  .fix-grid { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 16px; margin-top: 18px; align-items: start; }
+  .tbl-wrap { overflow-x: auto; }
+  table.data { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+  table.data th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); padding: 6px 10px; border-bottom: 2px solid var(--ink); }
+  table.data td { padding: 6px 10px; border-bottom: 1px solid var(--line); font-family: var(--f-mono); font-size: 13px; }
+  table.data tr.dim td { opacity: 0.28; }
+  table.data .hl { background: var(--ent); font-weight: 600; }
+  .verdict { margin-top: 12px; border-radius: 10px; padding: 10px 14px; border: 1px solid var(--line); }
+  .verdict.ok { background: var(--green-bg); border-color: var(--green); }
+  .verdict.ok b { color: var(--green); }
+
+  /* QUIZ */
+  .quiz-wrap { max-width: 780px; margin: 0 auto; display: grid; gap: 14px; }
+  .qbar { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+  .qbar b { color: var(--ink); }
+  .prog { height: 6px; background: var(--surface-2); border-radius: 99px; overflow: hidden; }
+  .prog i { display: block; height: 100%; background: var(--yellow); transition: width 0.3s; }
+  .qcard { padding: 22px; }
+  .qmeta { font-size: 12px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 8px; }
+  .qtext { font-size: 18px; margin: 0 0 12px; }
+  .qtext b { background: var(--ent); padding: 0 3px; border-radius: 3px; }
+  .qvis { margin: 6px 0 14px; display: flex; justify-content: center; }
+  .qvis svg { max-width: 560px; }
+  .opts { display: grid; gap: 8px; }
+  .opt { display: flex; align-items: center; gap: 12px; text-align: left; border: 1.5px solid var(--line); background: var(--surface); border-radius: 10px; padding: 10px 14px; cursor: pointer; font-size: 15.5px; }
+  .opt:hover:not(:disabled) { border-color: var(--ink); }
+  .opt kbd { font-family: var(--f-mono); font-size: 12px; border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px; color: var(--muted); }
+  .opt.right { border-color: var(--green); background: var(--green-bg); }
+  .opt.wrong { border-color: var(--red); background: var(--red-bg); }
+  .opt:disabled { cursor: default; }
+  .qfb { margin-top: 14px; border-radius: 10px; padding: 12px 14px; border-left: 4px solid var(--green); background: var(--green-bg); }
+  .qfb.bad { border-left-color: var(--red); background: var(--red-bg); }
+  .qfb .h { font-weight: 700; margin-bottom: 4px; }
+  .qfb svg { margin-top: 8px; background: var(--surface); border-radius: 8px; }
+  .qnext { margin-top: 12px; display: flex; justify-content: flex-end; }
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+  .stat { border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; background: var(--surface); font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .stat b { display: block; color: var(--ink); font-size: 15px; }
+
+  /* BUILDER */
+  .kur-grid { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 16px; align-items: start; }
+  .sc-text { font-size: 14.5px; line-height: 1.6; background: var(--bg); border-radius: 10px; padding: 12px 14px; border: 1px solid var(--line); }
+  .sc-text b { background: var(--ent); padding: 0 2px; border-radius: 3px; font-weight: 700; }
+  select { font: inherit; padding: 7px 10px; border-radius: 9px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); width: 100%; }
+  .bank { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { border: 1px dashed var(--muted); background: var(--surface); border-radius: 8px; padding: 4px 9px; cursor: pointer; font-family: var(--f-mono); font-size: 13px; }
+  .chip.up { font-family: var(--f-body); font-weight: 700; font-size: 13px; }
+  .chip:hover { border-style: solid; border-color: var(--ink); }
+  .chip.on { background: var(--yellow); color: #16181d; border: 1px solid var(--yellow); }
+  .chip.used { opacity: 0.35; text-decoration: line-through; cursor: default; }
+  .chooser { border: 1.5px solid var(--yellow); border-radius: 10px; padding: 10px; background: var(--bg); }
+  .chooser p { margin: 0 0 8px; font-size: 14px; }
+  .types { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .types button { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 5px 8px; cursor: pointer; font-size: 13px; text-align: left; }
+  .types button:hover { border-color: var(--ink); }
+  .types svg { flex: none; }
+  .work { display: grid; gap: 10px; min-width: 0; }
+  .toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .toolbar .sp { flex: 1; }
+  .insp { min-height: 50px; display: flex; gap: 10px 16px; align-items: center; flex-wrap: wrap; padding: 10px 14px; font-size: 14px; }
+  .insp .nm { font-weight: 700; }
+  .insp input { font: inherit; padding: 5px 9px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); width: 130px; }
+  .insp .msg { color: var(--muted); }
+  .insp .warnmsg { color: var(--red); font-weight: 700; }
+  .canvas-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    background-image: radial-gradient(var(--line) 1px, transparent 1.3px); background-size: 22px 22px; }
+  #cv { min-width: 680px; touch-action: none; user-select: none; }
+  #cv.link .node { cursor: crosshair; }
+  .howto { font-size: 14px; color: var(--muted); }
+  .howto summary { cursor: pointer; color: var(--ink); font-weight: 700; }
+  .howto ol { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 3px; }
+  .fb-sum { display: flex; align-items: center; gap: 12px; font-size: 15px; }
+  .fb-sum .prog { flex: 1; }
+  .fb-list { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 6px; max-height: 360px; overflow-y: auto; }
+  .fb-list li { border-radius: 8px; padding: 7px 10px; font-size: 14px; display: grid; grid-template-columns: 18px 1fr; gap: 6px; }
+  .fb-list li.ok { background: var(--green-bg); } .fb-list li.ok::before { content: "✓"; color: var(--green); font-weight: 800; }
+  .fb-list li.bad { background: var(--red-bg); } .fb-list li.bad::before { content: "✗"; color: var(--red); font-weight: 800; }
+  .fb-list small { display: block; color: var(--muted); margin-top: 2px; }
+  .hintbox { background: var(--ent); border-radius: 10px; padding: 10px 12px; font-size: 14px; }
+  .win { background: var(--green-bg); border: 1.5px solid var(--green); border-radius: 10px; padding: 12px 14px; font-weight: 700; }
+
+  /* BAŞLANGIÇ */
+  .hero-s { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 16px; align-items: stretch; }
+  .hero-s .lead h2 { font-size: 32px; font-weight: 800; letter-spacing: -0.6px; margin-bottom: 10px; }
+  .hero-s .lead p { margin: 0 0 10px; max-width: 62ch; }
+  .hero-s .lead .mini { margin-top: 12px; background: var(--bg); border-radius: 10px; border: 1px solid var(--line); padding: 6px; }
+  .path { display: grid; gap: 8px; }
+  .path button { display: grid; grid-template-columns: 32px 1fr; gap: 10px; text-align: left; align-items: start; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 10px 12px; cursor: pointer; }
+  .path button:hover { border-color: var(--ink); }
+  .path .no { width: 32px; height: 32px; border-radius: 8px; background: var(--band); color: var(--yellow); font-family: var(--f-mono); font-weight: 700; display: grid; place-items: center; }
+  .path b { display: block; font-size: 15px; } .path small { color: var(--muted); font-size: 13.5px; }
+  .sec { margin-top: 34px; scroll-margin-top: 96px; }
+  .walk { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 16px; align-items: start; }
+  .walk-text { font-size: 15px; line-height: 1.75; }
+  .walk-text span[data-s] { border-radius: 3px; padding: 0 2px; transition: background 0.2s; }
+  .walk-text span.past { background: var(--surface-2); }
+  .walk-text span.now { background: var(--yellow); color: #16181d; font-weight: 700; }
+  .steps-bar { display: flex; gap: 4px; margin: 0 0 12px; }
+  .steps-bar button { flex: 1; height: 8px; border-radius: 99px; background: var(--surface-2); border: 0; cursor: pointer; padding: 0; }
+  .steps-bar button.on { background: var(--yellow); }
+  .walk-exp { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 12px; }
+  .walk-exp .k { font-size: 12px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+  .walk-exp h3 { font-size: 20px; margin: 2px 0 6px; }
+  .walk-exp p { margin: 0 0 8px; }
+  .walk-exp ul { margin: 0 0 8px; padding-left: 20px; display: grid; gap: 4px; }
+  .walk-nav { display: flex; gap: 8px; justify-content: space-between; align-items: center; margin-top: 12px; }
+  .walk-nav span { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+  .node.new .sh { stroke: var(--gold); stroke-width: 3; }
+  .ln.new { stroke: var(--gold); stroke-width: 2.6; }
+  .node.bad .sh { stroke: var(--red); stroke-width: 3; }
+  .ln.bad { stroke: var(--red); stroke-width: 2.6; }
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 8px; }
+  .gallery button { border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 8px 6px; cursor: pointer; display: grid; justify-items: center; gap: 4px; font-size: 13px; font-weight: 700; }
+  .gallery button:hover { border-color: var(--ink); }
+  .gallery button.on { border-color: var(--gold); box-shadow: inset 0 0 0 2px var(--gold); }
+  .shape-detail { margin-top: 12px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: center; }
+  .shape-detail dl { margin: 0; display: grid; gap: 2px; }
+  .shape-detail dt { font-size: 12px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted); font-weight: 700; margin-top: 6px; }
+  .shape-detail dd { margin: 0; }
+  .shape-detail h3 { font-size: 20px; }
+  .mistakes { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 10px; }
+  .mistake { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; background: var(--surface); font-size: 14px; display: grid; gap: 4px; }
+  .mistake .x { color: var(--red); font-weight: 700; } .mistake .v { color: var(--green); font-weight: 700; }
+  .mistake .w { color: var(--muted); }
+  .gloss-in { font: inherit; width: 100%; max-width: 420px; padding: 8px 11px; border-radius: 9px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+  .gloss { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 4px 18px; margin-top: 12px; }
+  .gloss div { border-bottom: 1px solid var(--line); padding: 7px 2px 9px; font-size: 14px; }
+  .gloss b { display: block; font-family: var(--f-display); font-size: 15.5px; }
+  .gloss .en { color: var(--muted); font-size: 12.5px; font-style: italic; }
+  .lab-real { border: 1px dashed var(--muted); border-radius: 10px; padding: 10px 12px; font-size: 14px; display: grid; gap: 6px; }
+  .lab-real .st { font-weight: 700; } .lab-real .st.ok { color: var(--green); } .lab-real .st.chg { color: var(--gold); }
+  .site-foot { margin-top: 44px; border-top: 1px solid var(--line); padding-top: 14px; color: var(--muted); font-size: 13px; max-width: 90ch; }
+
+  @media (max-width: 900px) {
+    .lab-grid, .fix-grid, .kur-grid, .hero-s, .walk, .shape-detail { grid-template-columns: minmax(0, 1fr); }
+    .sent-grid { grid-template-columns: 1fr; }
+    .scores { margin-left: 0; }
+  }
+</style>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <svg width="34" height="26" viewBox="0 0 34 26" aria-hidden="true"><polygon points="2,13 17,2 32,13 17,24" fill="#dcf0d6" stroke="#f5c518" stroke-width="2"/></svg>
+      <div><h1>Chen Atölyesi</h1><small>VERİ TABANI I · 1–2. HAFTA</small></div>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-v="start" aria-selected="true"><span>0</span>Başlangıç</button>
+      <button role="tab" data-v="lab" aria-selected="false"><span>1</span>Laboratuvar</button>
+      <button role="tab" data-v="quiz" aria-selected="false"><span>2</span>Alıştırma</button>
+      <button role="tab" data-v="kur" aria-selected="false"><span>3</span>Diyagram kur</button>
+    </nav>
+    <div class="scores"><span>Alıştırma <b id="sc-quiz">0</b> doğru</span><span>Diyagram <b id="sc-kur">0/10</b></span></div>
+  </div>
+</header>
+
+<main>
+  <!-- ================= BAŞLANGIÇ ================= -->
+  <section id="v-start">
+    <div class="hero-s">
+      <div class="panel lead">
+        <span class="lbl-s">Veri Tabanı I · ER modeli · Chen gösterimi</span>
+        <h2>Metinden diyagrama, adım adım</h2>
+        <p>Sınavda bir metin verilir ve senden Chen diyagramı istenir. Bu atölyede önce çözülmüş bir örneği adım adım izlersin, sonra kuralları laboratuvarda dener, alıştırmalarla pekiştirir ve en sonda kendi diyagramını kurup otomatik kontrol ettirirsin.</p>
+        <p>Hiçbir şey kurman gerekmez. İlerlemen kendi tarayıcında saklanır.</p>
+        <div class="mini"><svg class="chen" id="hero-svg" viewBox="0 0 660 150" role="img" aria-label="Örnek Chen diyagramı: BÖLÜM 1 BAĞLIDIR N ÖĞRENCİ"></svg></div>
+      </div>
+      <div class="panel">
+        <span class="lbl-s">Nereden başlamalıyım?</span>
+        <div class="path">
+          <button type="button" data-go="walk"><span class="no">1</span><span><b>Çözümlü örneği izle</b><small>Kütüphane metni, kitabın 5 adımlı yöntemiyle diyagrama dönüşüyor; her kare açıklamalı.</small></span></button>
+          <button type="button" data-go="gallery"><span class="no">2</span><span><b>Şekilleri tanı</b><small>Dikdörtgen, baklava, elips türleri: ne zaman hangisi, örnek ve sık hata.</small></span></button>
+          <button type="button" data-go="lab"><span class="no">3</span><span><b>Oranı ve katılımı dene</b><small>Laboratuvarda ayarları değiştir, hangi değerin hangi uca yazıldığını gör.</small></span></button>
+          <button type="button" data-go="quiz"><span class="no">4</span><span><b>Alıştırma çöz</b><small>8 konu, 100'den fazla soru kombinasyonu, her cevaba açıklama.</small></span></button>
+          <button type="button" data-go="kur"><span class="no">5</span><span><b>Kendi diyagramını kur</b><small>10 senaryo: ısınmadan sınav tipine. Kontrol et, yanlışlar kırmızı yanar.</small></span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec" id="walk-sec">
+      <div class="view-head"><h2>Çözümlü örnek: Kütüphane</h2><p>Ders kitabının 2. hafta çözümlü örneği. İleri'ye bastıkça metinde ilgili kelimeler sarı yanar, diyagrama o adımda eklenenler altın renkle çizilir.</p></div>
+      <div class="walk">
+        <div class="panel">
+          <span class="lbl-s">Metin</span>
+          <div class="walk-text" id="walk-text"></div>
+        </div>
+        <div class="panel">
+          <div class="steps-bar" id="walk-bar"></div>
+          <svg class="chen" id="walk-svg" viewBox="0 0 780 480" role="img" aria-label="Adım adım çizilen Kütüphane diyagramı"></svg>
+          <div class="walk-exp" id="walk-exp"></div>
+          <div class="walk-nav"><button class="btn" id="walk-prev">← Geri</button><span id="walk-pos"></span><button class="btn pri" id="walk-next">İleri →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec" id="gallery-sec">
+      <div class="view-head"><h2>Şekil rehberi</h2><p>Bir şekle tıkla: ne zaman kullanılır, örneği ve en sık yapılan hata.</p></div>
+      <div class="panel">
+        <div class="gallery" id="gallery"></div>
+        <div class="shape-detail" id="shape-detail"></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="view-head"><h2>Sık karşılaşılan yanılgılar</h2><p>Ders kitabındaki "sık karşılaşılan yanılgılar" ve çizim kuralları: yanlış, doğru ve nedeni.</p></div>
+      <div class="mistakes" id="mistakes"></div>
+    </div>
+
+    <div class="sec">
+      <div class="view-head"><h2>Sözlük</h2><p>Ders kitabının terimleri, İngilizce karşılıkları ve kısa tanımlarıyla.</p></div>
+      <div class="panel">
+        <label class="lbl-s" for="gloss-q">Terim ara</label>
+        <input class="gloss-in" id="gloss-q" placeholder="ör. katılım, rol, anahtar">
+        <div class="gloss" id="gloss"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LAB ================= -->
+  <section id="v-lab" hidden>
+    <div class="view-head"><h2>Oran laboratuvarı</h2><p>Ayarları değiştir. Diyagram, iki cümle ve (en az, en çok) gösterimi birlikte değişir. Hangi değerin hangi uca yazıldığını izle.</p></div>
+    <div class="lab-grid">
+      <div class="panel stack">
+        <div><span class="lbl-s">Örnek</span><div class="seg" id="lab-pair"></div></div>
+        <div><span class="lbl-s">Kardinalite oranı</span><div class="seg" id="lab-ratio"></div></div>
+        <div><span class="lbl-s" id="lab-ta-l">A katılımı</span><div class="seg" id="lab-ta"></div></div>
+        <div><span class="lbl-s" id="lab-tb-l">B katılımı</span><div class="seg" id="lab-tb"></div></div>
+        <div><span class="lbl-s">Gösterim</span><div class="seg" id="lab-mode"></div></div>
+        <div class="lab-real" id="lab-real"></div>
+      </div>
+      <div class="panel">
+        <svg class="chen" id="lab-svg" viewBox="0 0 660 190" role="img" aria-label="Canlı Chen diyagramı"></svg>
+        <div class="sent-grid" id="lab-sent"></div>
+        <div class="rule" id="lab-rule"></div>
+      </div>
+    </div>
+
+    <div class="view-head" style="margin-top:28px"><h2>Neyi sabitlersem?</h2><p>Bir niteliğin nereye ait olduğunu bulmanın yolu: neyi sabitlediğinde tek değer kalıyor? Kitaptaki KAYIT verisiyle dene: öğrenci derse değil, bir <b>ders açılışına</b> (ör. 1001 = VT1, 2026 güz, 1. şube) kaydolur.</p></div>
+    <div class="fix-grid">
+      <div class="panel stack">
+        <div><span class="lbl-s">Bakılan nitelik</span><div class="seg" id="fx-attr"></div></div>
+        <div><span class="lbl-s">Öğrenciyi sabitle</span><div class="seg" id="fx-ogr"></div></div>
+        <div><span class="lbl-s">Ders açılışını sabitle</span><div class="seg" id="fx-ders"></div></div>
+      </div>
+      <div class="panel">
+        <div class="tbl-wrap"><table class="data" id="fx-tbl"></table></div>
+        <div class="verdict" id="fx-v"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= QUIZ ================= -->
+  <section id="v-quiz" hidden>
+    <div class="quiz-wrap">
+      <div class="view-head" style="margin:0"><h2>Alıştırma</h2><p>10 soruluk turlar. Her cevaptan sonra nedenini görürsün. Kısayollar: 1–5 ile cevap ver, Enter ile sonraki soruya geç.</p></div>
+      <div class="seg" id="q-cats"></div>
+      <div class="qbar"><span id="q-pos"></span><span id="q-run"></span></div>
+      <div class="prog"><i id="q-prog" style="width:0%"></i></div>
+      <div class="panel qcard" id="qcard"></div>
+      <div><span class="lbl-s">Konu bazında (tüm turlar)</span><div class="stat-grid" id="q-stats"></div></div>
+    </div>
+  </section>
+
+  <!-- ================= BUILDER ================= -->
+  <section id="v-kur" hidden>
+    <div class="view-head"><h2>Diyagram kur</h2><p>Senaryoyu oku, kelime bankasındaki her kelimeye doğru şekli ver, şekilleri bağla, oranı ve katılımı ayarla. Sonra Kontrol et'e bas.</p></div>
+    <div class="kur-grid">
+      <aside class="panel stack">
+        <div><label class="lbl-s" for="sc-sel">Senaryo</label><select id="sc-sel"></select></div>
+        <div class="sc-text" id="sc-text"></div>
+        <details class="howto" id="howto" open><summary>Nasıl kullanılır?</summary><ol>
+          <li>Kelime bankasından bir kelimeye tıkla, şeklini seç.</li>
+          <li><b>Bağla</b> aracını seç (C). İki şekle sırayla tıkla.</li>
+          <li>Varlık–ilişki çizgisine tıkla. Varlığın ucuna yazılacak oranı ve tek/çift çizgiyi seç.</li>
+          <li>Şekilleri sürükleyerek düzenle (Taşı aracı, V). Sil tuşu seçileni siler.</li>
+          <li><b>Kontrol et</b>: neyin doğru, neyin yanlış olduğunu gösterir.</li>
+        </ol></details>
+        <div><span class="lbl-s">Kelime bankası</span><div class="bank" id="bank"></div></div>
+        <div class="chooser" id="chooser" hidden></div>
+        <div id="fb" class="stack"></div>
+      </aside>
+      <div class="work">
+        <div class="toolbar">
+          <div class="seg" id="tool"><button data-m="move" class="on" title="Taşı (V)">✥ Taşı</button><button data-m="link" title="Bağla (C)">⟋ Bağla</button></div>
+          <button class="btn" id="b-del" title="Seçileni sil (Delete)">Sil</button>
+          <span class="sp"></span>
+          <button class="btn" id="b-hint">İpucu</button>
+          <button class="btn pri" id="b-check">Kontrol et</button>
+          <button class="btn" id="b-sol">Çözümü göster</button>
+          <button class="btn warn" id="b-reset">Sıfırla</button>
+        </div>
+        <div class="panel insp" id="insp"></div>
+        <div class="canvas-wrap"><svg class="chen" id="cv" viewBox="0 0 900 560" role="img" aria-label="Çizim alanı"></svg></div>
+      </div>
+    </div>
+  </section>
+  <footer class="site-foot">Veri Tabanı I dersinin 1–2. hafta konuları (ER modeli, Chen gösterimi) için öğrenci tarafından hazırlanmış bir çalışma aracıdır; resmî ders materyali değildir. Örnekler ders sunumlarındaki çözümlü örnek ve sınıf uygulamalarından uyarlanmıştır. İlerlemen yalnızca kendi tarayıcında saklanır.</footer>
+</main>
+
+<script>
+/* ---------- yardımcılar ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const store = {
+  get(k, d) { try { const v = localStorage.getItem("chen:" + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem("chen:" + k, JSON.stringify(v)); } catch (e) {} }
+};
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const pick = a => a[Math.floor(Math.random() * a.length)];
+function seg(el, items, cur, onPick) {
+  el.innerHTML = items.map(([v, t]) => `<button type="button" data-v="${esc(v)}" class="${String(v) === String(cur) ? "on" : ""}">${t}</button>`).join("");
+  el.onclick = e => { const b = e.target.closest("button"); if (b) onPick(b.dataset.v); };
+}
+
+/* ---------- Chen çizici ---------- */
+const KIND = t => "EW".includes(t) ? "ent" : "RI".includes(t) ? "rel" : "att";
+const SHAPES = { E: "Varlık", W: "Zayıf varlık", R: "İlişki", I: "Tanımlayıcı ilişki", A: "Basit nitelik", K: "Anahtar nitelik", P: "Kısmi anahtar", M: "Çok değerli nitelik", D: "Türetilmiş nitelik" };
+const SHAPE_DESC = { E: "dikdörtgen", W: "çift dikdörtgen", R: "eşkenar dörtgen", I: "çift eşkenar dörtgen", A: "elips", K: "altı çizili elips", P: "kesikli alt çizgili elips", M: "çift elips", D: "kesikli elips" };
+const TYPE_WHY = {
+  E: "Ayrı ayrı tanınan ve hakkında bilgi tutulan şey: dikdörtgen.",
+  W: "Kendi nitelikleriyle tek başına tanınamaz, kimliğini sahibinden alır: çift dikdörtgen.",
+  R: "Varlıklar arasındaki bağ, adı fiil: eşkenar dörtgen (baklava).",
+  I: "Zayıf varlığı sahibine bağlayan ilişki: çift eşkenar dörtgen.",
+  A: "Tek, bölünmeyen değer: düz elips. Bileşik nitelik de düz elipstir, parçaları ona bağlanır.",
+  K: "Her örnekte farklı olan tanıtıcı: altı çizili elips.",
+  P: "Zayıf varlığı sahibiyle birlikte tanıtır: kesikli alt çizgi.",
+  M: "Bir örnekte birden çok değer alabilir: çift elips.",
+  D: "Başka bir nitelikten hesaplanır: kesikli elips."
+};
+function geom(n) {
+  const k = KIND(n.t), L = n.label.length;
+  if (k === "ent") return { hw: Math.max(50, L * 4.7 + 18), hh: 22 };
+  if (k === "rel") return { hw: Math.max(56, L * 4.2 + 30), hh: 27 };
+  return { hw: Math.max(28, L * 3.6 + 14), hh: 16 };
+}
+function shapeSVG(n, cls = "") {
+  const { hw, hh } = geom(n), x = n.x, y = n.y, k = KIND(n.t), L = esc(n.label);
+  let s = "";
+  if (k === "ent") {
+    s += `<rect class="sh ent" x="${x - hw}" y="${y - hh}" width="${2 * hw}" height="${2 * hh}"/>`;
+    if (n.t === "W") s += `<rect class="sh in" x="${x - hw + 4}" y="${y - hh + 4}" width="${2 * hw - 8}" height="${2 * hh - 8}"/>`;
+    s += `<text class="t-ent" x="${x}" y="${y + 4.5}">${L}</text>`;
+  } else if (k === "rel") {
+    const p = (w, h) => `${x - w},${y} ${x},${y - h} ${x + w},${y} ${x},${y + h}`;
+    s += `<polygon class="sh rel" points="${p(hw, hh)}"/>`;
+    if (n.t === "I") s += `<polygon class="sh in" points="${p(hw - 13, hh - 6)}"/>`;
+    s += `<text class="t-rel" x="${x}" y="${y + 4}">${L}</text>`;
+  } else {
+    if (n.t === "M") s += `<ellipse class="sh att" cx="${x}" cy="${y}" rx="${hw + 4}" ry="${hh + 4}"/>`;
+    s += `<ellipse class="sh ${n.t === "M" ? "in" : "att"}${n.t === "D" ? " der" : ""}" cx="${x}" cy="${y}" rx="${hw}" ry="${hh}"/>`;
+    s += `<text class="t-att" x="${x}" y="${y + 4}">${L}</text>`;
+    const w = n.label.length * 3.45;
+    if (n.t === "K" || n.t === "P") s += `<line class="ul${n.t === "P" ? " dash" : ""}" x1="${x - w}" y1="${y + 7}" x2="${x + w}" y2="${y + 7}"/>`;
+  }
+  return `<g class="node ${cls}" data-node="${esc(n.id || "")}">${s}</g>`;
+}
+function exitRect(n, px, py, ux, uy) {
+  const { hw, hh } = geom(n);
+  const tx = ux > 0 ? (n.x + hw - px) / ux : ux < 0 ? (n.x - hw - px) / ux : Infinity;
+  const ty = uy > 0 ? (n.y + hh - py) / uy : uy < 0 ? (n.y - hh - py) / uy : Infinity;
+  const t = Math.min(tx, ty);
+  return [px + ux * t, py + uy * t];
+}
+// nodes: {id,t,x,y,label}; edges: {id,a,b,c,t,role}; c varlık ucuna yazılır
+function chenSVG(nodes, edges, o = {}) {
+  const N = {}; nodes.forEach(n => N[n.id] = n);
+  const groups = {};
+  edges.forEach(e => { const k = [e.a, e.b].sort().join("|"); (groups[k] = groups[k] || []).push(e); });
+  let lines = "", hits = "", labels = "";
+  edges.forEach(e => {
+    const A = N[e.a], B = N[e.b]; if (!A || !B) return;
+    const k = [e.a, e.b].sort().join("|"), grp = groups[k], cnt = grp.length, i = grp.indexOf(e);
+    const [s1, s2] = e.a < e.b ? [A, B] : [B, A];
+    const L = Math.hypot(s2.x - s1.x, s2.y - s1.y) || 1;
+    const qx = -(s2.y - s1.y) / L, qy = (s2.x - s1.x) / L;
+    const off = cnt > 1 ? (i - (cnt - 1) / 2) * 34 : 0;
+    const ax = A.x + qx * off, ay = A.y + qy * off, bx = B.x + qx * off, by = B.y + qy * off;
+    const ux = (bx - ax) / L, uy = (by - ay) / L, px = -uy, py = ux;
+    const selC = o.selEdge === e.id ? " esel" : (o.mark && o.mark[e.id] ? " " + o.mark[e.id] : "");
+    if (e.t) [-2.8, 2.8].forEach(d => lines += `<line class="ln${selC}" x1="${ax + px * d}" y1="${ay + py * d}" x2="${bx + px * d}" y2="${by + py * d}"/>`);
+    else lines += `<line class="ln${selC}" x1="${ax}" y1="${ay}" x2="${bx}" y2="${by}"/>`;
+    if (o.hits) hits += `<line class="hit" data-edge="${e.id}" x1="${ax}" y1="${ay}" x2="${bx}" y2="${by}"/>`;
+    // etiketin yan yönü: paralel çiftlerde dışarı, tek çizgide yukarı/sağa
+    let lx, ly;
+    if (off) { lx = qx * Math.sign(off); ly = qy * Math.sign(off); }
+    else { lx = px; ly = py; if (ly > 0.01 || (Math.abs(ly) <= 0.01 && lx < 0)) { lx = -lx; ly = -ly; } }
+    if (e.c && KIND(A.t) === "ent") {
+      const [ex, ey] = exitRect(A, ax, ay, ux, uy);
+      const long = e.c.length > 2, along = long ? 32 : 15, side = long ? 15 : 13;
+      labels += `<text class="${long ? "t-mm" : "t-card"}${o.flash ? " flash" : ""}" x="${ex + ux * along + lx * side}" y="${ey + uy * along + ly * side + 5}">${esc(e.c)}</text>`;
+    }
+    if (e.role) {
+      const d = 12 + Math.abs(lx) * e.role.length * 3.3;
+      labels += `<text class="t-role" x="${(ax + bx) / 2 + lx * d}" y="${(ay + by) / 2 + ly * d + 4}">${esc(e.role)}</text>`;
+    }
+  });
+  const shapes = nodes.map(n => shapeSVG(n, (o.sel === n.id ? "sel " : "") + (o.from === n.id ? "from " : "") + (o.mark && o.mark[n.id] ? o.mark[n.id] : ""))).join("");
+  return lines + hits + shapes + labels;
+}
+function miniShape(t, w = 64, h = 34) {
+  const labels = { E: "VARLIK", W: "ZAYIF", R: "İLİŞKİ", I: "TANIM.", A: "ad", K: "no", P: "sira", M: "tel", D: "yas" };
+  const n = { id: "", t, x: w / 2, y: h / 2, label: labels[t] };
+  return `<svg class="chen" width="${w}" height="${h}" viewBox="${-14} ${-6} ${w + 28} ${h + 12}" style="width:${w}px">${shapeSVG(n)}</svg>`;
+}
+
+/* ================= BAŞLANGIÇ ================= */
+const WALK_TEXT = `Kütüphanenin <span data-s="1">üyeleri</span> vardır; her üyenin <span data-s="1">üye numarası</span>, <span data-s="2">adı soyadı</span> ve <span data-s="2">bir ya da daha fazla telefon numarası</span> kayıtlıdır. Her <span data-s="1">kitabın</span> <span data-s="1">ISBN'i</span>, <span data-s="2">başlığı</span> ve <span data-s="2">yayın yılı</span> bilinir ve <span data-s="4">her kitabı yalnızca bir yayınevi</span> <span data-s="3">yayımlar</span>; <span data-s="4">bir yayınevinin kütüphanede kitabı bulunmayabilir</span>. <span data-s="1">Yayınevinin</span> <span data-s="1">adı</span> ve <span data-s="2">şehri</span> tutulur. Üyeler kitap <span data-s="3">ödünç alır</span>; <span data-s="4">bir üye birden çok kitabı</span> ödünç alabilir, <span data-s="5">aynı kitabı zaman içinde birden çok üye</span> ödünç alabilir. Her ödünç işleminin <span data-s="3">alış ve iade tarihi</span> tutulur.`;
+// [tür, id, x, y, etiket, adım] — adım numaraları kitabın 5 karesini izler
+const WALK_N = [["E", "u", 150, 225, "ÜYE", 1], ["E", "k", 570, 225, "KİTAP", 1], ["E", "y", 570, 430, "YAYINEVİ", 1],
+  ["K", "uno", 110, 115, "uye_no", 1], ["K", "isbn", 545, 115, "isbn", 1], ["K", "yad", 380, 430, "yayinevi_adi", 1],
+  ["A", "as", 95, 335, "ad_soyad", 2], ["M", "tel", 225, 350, "telefon", 2], ["A", "bas", 655, 125, "baslik", 2], ["A", "yy", 715, 300, "yayin_yili", 2], ["A", "seh", 725, 430, "sehir", 2],
+  ["R", "o", 360, 225, "ÖDÜNÇ ALIR", 3], ["R", "yr", 570, 330, "YAYIMLAR", 3], ["A", "at", 300, 120, "alis_tarihi", 3], ["A", "it", 425, 120, "iade_tarihi", 3]];
+// [a, b, adım, oran, tam] — oran ve katılım 4. karede yazılır
+const WALK_E = [["uno", "u", 1], ["isbn", "k", 1], ["yad", "y", 1], ["as", "u", 2], ["tel", "u", 2], ["bas", "k", 2], ["yy", "k", 2], ["seh", "y", 2],
+  ["u", "o", 3, "M", 0], ["k", "o", 3, "N", 0], ["k", "yr", 3, "N", 1], ["y", "yr", 3, "1", 0], ["at", "o", 3], ["it", "o", 3]];
+const CARD_STEP = 4;
+const WALK = [
+  { k: "Başlangıç", h: "Önce metni oku", b: `<p>Bu, ders kitabındaki <b>Çözümlü örnek 2 · Kütüphane</b>'dir. Henüz hiçbir şey çizme; metni baştan sona bir kez oku.</p><p>Kitabın yöntemi beş adımdır: <b>1</b> isimleri işaretle, <b>2</b> fiilleri işaretle, <b>3</b> nitelikleri yerleştir, <b>4</b> kısıtları yaz, <b>5</b> diyagramın ifade edemediklerini ayrıca yaz. Aşağıdaki kareler kitaptaki çözümün sırasını izler.</p>` },
+  { k: "Adım 1 · isimler", h: "Varlık türleri ve doğal anahtarları", b: `<p>Her isim yalnızca bir <b>adaydır</b>. Aday, şu üç soruya "evet" derse varlık türü olur:</p><ul><li>Bu şeyi tek tek ayırt etmemiz gerekiyor mu?</li><li>Kendine ait, başka bilgilerden türetilemeyen bilgisi var mı?</li><li>Modelin kapsamı içinde mi?</li></ul><p>Üç sorudan geçen üç aday: <b>ÜYE, KİTAP, YAYINEVİ</b>. Doğal anahtarları üye numarası, ISBN ve yayınevinin adıdır; altları çizilir. Varlık adı tekil ve büyük harfle yazılır.</p>` },
+  { k: "Adım 3 · nitelikler", h: "Varlıkların nitelikleri", b: `<p><code>ad_soyad</code>, <code>baslik</code>, <code>yayin_yili</code>, <code>sehir</code> basit niteliklerdir.</p><p>Metin "bir ya da daha fazla telefon" dediği için <code>telefon</code> <b>çok değerlidir</b> ve çift elipsle çizilir.</p><p>Kural: bir elips yalnızca bir şekle bağlanır; nitelik adları küçük harfle yazılır.</p>` },
+  { k: "Adım 2 ve 3 · fiiller", h: "İlişkiler ve ilişkinin nitelikleri", b: `<p>Fiiller "ödünç alır" ve "yayımlar"dır: iki ilişki çizilir. Eşkenar dörtgenin içine fiil yazılır; ilişkinin çizgileri yalnız varlıklara gider.</p><p>Alış ve iade tarihi kimin? <b>Hangi şey sabitlenince tek kalıyor?</b> Kitap sabitlenince tek kalmaz (aynı kitap farklı üyelere farklı tarihlerde verilir), üye sabitlenince de tek kalmaz. Bu tarihler ödünç işleminin, yani <b>ÖDÜNÇ ALIR</b> ilişkisinin nitelikleridir.</p>` },
+  { k: "Adım 4 · kısıtlar", h: "Her ilişki için iki cümle", b: `<p><b>YAYIMLAR (1:N)</b></p><ul><li>"Her kitabı yalnızca bir yayınevi yayımlar": bir kitap için en az 1, en çok <b>1</b> yayınevi. 1 karşı uca, YAYINEVİ ucuna yazılır; KİTAP'ın katılımı <b>tam</b> (çift çizgi).</li><li>"Bir yayınevinin kitabı bulunmayabilir": bir yayınevi için en az 0, en çok <b>N</b> kitap. N, KİTAP ucuna; YAYINEVİ tek çizgi.</li></ul><p><b>ÖDÜNÇ ALIR (M:N)</b>: iki taraf da "birden çok" der. Metin hiç ödünç almamış üyeyi ya da hiç verilmemiş kitabı <b>yasaklamaz</b>, bu yüzden iki taraf da kısmidir (tek çizgi).</p>` },
+  { k: "Adım 5 · açık kalan", h: "Diyagramın söyleyemedikleri", b: `<p>Bir ilişki örneği, katılan iki varlığın <b>çiftiyle</b> tanınır; aynı üye–kitap çifti ÖDÜNÇ ALIR'da yalnız <b>bir kez</b> bulunabilir. Üye aynı kitabı ikinci kez ödünç alırsa ikinci işlemin tarihleri ayrı tutulamaz.</p><p>Bu soru 2. haftanın araçlarıyla çözülemez; <b>açık soru</b> olarak diyagramın altına not edilir. Diyagramın altına ayrıca kullanılan gösterimin adı yazılır: <i>Chen, oran ve katılım gösterimi</i>.</p><p>Bitti! Şimdi <b>Diyagram kur</b> sekmesinde "B7 · Kütüphane"yi kendin kur.</p>` }
+];
+let walkI = 0;
+function renderWalk() {
+  const st = walkI;
+  $("#walk-text").innerHTML = WALK_TEXT;
+  document.querySelectorAll("#walk-text span[data-s]").forEach(sp => { const s = +sp.dataset.s; sp.className = s === st ? "now" : s < st ? "past" : ""; });
+  $("#walk-bar").innerHTML = WALK.map((w, i) => `<button type="button" class="${i <= st ? "on" : ""}" data-i="${i}" aria-label="${esc(w.k)}" title="${esc(w.k)}"></button>`).join("");
+  const nodes = WALK_N.filter(n => n[5] <= st).map(([t, id, x, y, label]) => ({ t, id, x, y, label }));
+  const mark = {};
+  WALK_N.forEach(n => { if (n[5] === st) mark[n[1]] = "new"; });
+  const edges = WALK_E.filter(e => e[2] <= st).map(([a, b, s, c, t], i) => {
+    const id = "w" + i;
+    if (s === st || (st === CARD_STEP && c)) mark[id] = "new";
+    return { id, a, b, c: st >= CARD_STEP ? (c || "") : "", t: st >= CARD_STEP ? t : 0 };
+  });
+  $("#walk-svg").innerHTML = st === 0 ? `<text class="t-empty" x="390" y="240">Diyagram burada adım adım çizilecek.</text>` : chenSVG(nodes, edges, { mark });
+  const W = WALK[st];
+  $("#walk-exp").innerHTML = `<div class="k">${W.k}</div><h3>${W.h}</h3>${W.b}`;
+  $("#walk-pos").textContent = `${st + 1} / ${WALK.length}`;
+  $("#walk-prev").disabled = st === 0;
+  $("#walk-next").textContent = st === WALK.length - 1 ? "Kendin kur →" : "İleri →";
+}
+$("#walk-prev").onclick = () => { if (walkI > 0) { walkI--; renderWalk(); } };
+$("#walk-next").onclick = () => {
+  if (walkI < WALK.length - 1) { walkI++; renderWalk(); }
+  else { show("kur"); loadScenario("s7"); window.scrollTo(0, 0); }
+};
+$("#walk-bar").onclick = e => { const b = e.target.closest("button"); if (b) { walkI = +b.dataset.i; renderWalk(); } };
+
+const GALLERY = {
+  E: { n: "Varlık", when: "Alanda ayrı ayrı tanınan ve hakkında bilgi tutmak istediğimiz şey. Aday üç soruya evet demeli: tek tek ayırt etmemiz gerekiyor mu, kendine ait türetilemeyen bilgisi var mı, kapsamın içinde mi?", ex: "ÖĞRENCİ, KİTAP, DOKTOR", err: "Her ismi varlık sanmak (not bir niteliktir, transkript türetilen bir dökümdür) ya da dikdörtgene örnek (101) veya çoğul ad (ÖĞRENCİLER) yazmak.",
+    d: [[["E", "a", 230, 110, "ÖĞRENCİ"], ["K", "b", 120, 40, "ogrenci_no"], ["A", "c", 340, 40, "ad"]], [["b", "a"], ["c", "a"]]] },
+  W: { n: "Zayıf varlık", when: "Kendi nitelikleriyle tek başına tanınamaz; kimliğini sahip varlıktan alır (kimlik bağımlılığı). Tam kimliği = sahibin anahtarı + kendi kısmi anahtarı.", ex: "DERS_AÇILIŞI'nın DEĞERLENDİRME'si: (1001, 2) = 1001'in finali", err: "Tek dikdörtgenle çizip alanda olmayan bir anahtar uydurmak. Ayrıca her bağımlı varlık zayıf değildir: ÖĞRENCİ bölüme bağlı olmak zorundadır ama ogrenci_no onu tek başına tanır.",
+    d: [[["E", "a", 70, 90, "ÇALIŞAN"], ["I", "r", 235, 90, "BAĞIMLISIDIR"], ["W", "b", 400, 90, "YAKIN"]], [["a", "r", "1", 0], ["b", "r", "N", 1]]] },
+  R: { n: "İlişki", when: "İki ya da daha fazla varlık türü arasındaki anlamlı bağ; eşkenar dörtgen. Adı fiildir, çizgileri yalnızca varlıklara gider.", ex: "BAĞLIDIR, KAYIT, YÖNETİR", err: "İlişkiyi dikdörtgen gibi çizmek ya da ona anahtar nitelik eklemek; ikisi de onu varlıkla karıştırır.",
+    d: [[["E", "a", 70, 90, "BÖLÜM"], ["R", "r", 235, 90, "BAĞLIDIR"], ["E", "b", 400, 90, "ÖĞRENCİ"]], [["a", "r", "1", 0], ["b", "r", "N", 1]]] },
+  I: { n: "Tanımlayıcı ilişki", when: "Zayıf varlığı sahibine bağlayan ve kimliğini tamamlayan ilişki; çift eşkenar dörtgen. Oran çoğunlukla 1:N, sahip tarafına 1 yazılır; zayıf taraf her zaman çift çizgidir.", ex: "ÇALIŞAN – BAĞIMLISIDIR – YAKIN", err: "Tek eşkenar dörtgen çizmek ya da zayıf tarafı tek çizgiyle bağlamak.",
+    d: [[["E", "a", 70, 90, "ÇALIŞAN"], ["I", "r", 235, 90, "BAĞIMLISIDIR"], ["W", "b", 400, 90, "YAKIN"]], [["a", "r", "1", 0], ["b", "r", "N", 1]]] },
+  K: { n: "Anahtar nitelik", when: "Değeri her örnekte farklı olan, örnekleri ayıran nitelik; altı çizilir. Kavramsal modelde yalnız doğal anahtar (kurumun kullandığı tanımlayıcı) yer alır.", ex: "ogrenci_no, isbn, plaka", err: "Tekrar edebilen ya da boş kalabilen bir değeri anahtar yapmak (ad, e-posta) ya da yapay sıra numarası eklemek.",
+    d: [[["E", "a", 150, 90, "ARAÇ"], ["K", "b", 330, 50, "plaka"], ["A", "c", 330, 130, "renk"]], [["b", "a"], ["c", "a"]]] },
+  P: { n: "Kısmi anahtar", when: "Zayıf varlığın örneklerini yalnızca aynı sahibin örnekleri arasında ayıran nitelik (discriminator); tek başına hiçbir örneği tanımaz. Altı kesikli çizilir.", ex: "YAKIN için yakin_adi: (sicil_no, yakin_adi) birlikte tanıtır.", err: "Düz çizgiyle altını çizmek; o zaman tek başına anahtar sanılır.",
+    d: [[["W", "a", 150, 90, "YAKIN"], ["P", "b", 330, 50, "yakin_adi"], ["A", "c", 330, 130, "yakinlik"]], [["b", "a"], ["c", "a"]]] },
+  A: { n: "Basit (atomik) nitelik", when: "Bu uygulamada bölünmesi gerekmeyen değer; düz elips. Bazı örneklerde bilinmiyorsa yanına \"boş kalabilir\" yazılır.", ex: "akts, fiyat, baslik, eposta (boş kalabilir)", err: "Bir elipsi iki şekle birden bağlamak; öyle bir bilgi büyük olasılıkla ikisinin arasındaki ilişkiye aittir.",
+    d: [[["E", "a", 150, 90, "DERS"], ["K", "b", 330, 50, "ders_kodu"], ["A", "c", 330, 130, "akts"]], [["b", "a"], ["c", "a"]]] },
+  C: { n: "Bileşik nitelik", when: "Anlamlı alt parçalara ayrılan nitelik; parçalar kendi elipsleriyle varlığa değil üst niteliğe bağlanır. Ör. soyada göre arama yapılacaksa ad_soyad parçalanır.", ex: "ad_soyad → ad, soyad · adres → il, ilçe, açık adres", err: "Parçaları doğrudan varlığa bağlamak; o zaman bileşik olduğu görünmez.",
+    d: [[["E", "a", 90, 90, "KİŞİ"], ["A", "b", 240, 90, "ad_soyad"], ["A", "c", 385, 45, "ad"], ["A", "d", 385, 135, "soyad"]], [["b", "a"], ["c", "b"], ["d", "b"]]] },
+  M: { n: "Çok değerli nitelik", when: "Bir örnek için birden fazla değer alan nitelik; çift elips. Kendine ait bilgileri olursa (telefonun türü, aranabileceği saatler) ayrı bir varlık türüne dönüşür.", ex: "telefon ('bir ya da daha fazla')", err: "telefon1, telefon2 diye iki elips çizmek: kaç telefona yer açılacağını keyfî sınırlar.",
+    d: [[["E", "a", 150, 90, "ÖĞRENCİ"], ["K", "b", 330, 50, "ogrenci_no"], ["M", "c", 330, 130, "telefon"]], [["b", "a"], ["c", "a"]]] },
+  D: { n: "Türetilmiş nitelik", when: "Değeri başka bilgilerden hesaplanır; kesikli elips. Hesaplandığı nitelik de diyagramda bulunur.", ex: "yas ← dogum_tarihi · kayıtlı öğrenci sayısı ← kayıtlar", err: "Saklanan nitelik gibi düz elips çizmek: saklanan bir yaş bir yıl sonra yanlıştır.",
+    d: [[["E", "a", 150, 90, "KİŞİ"], ["A", "b", 330, 50, "dogum_tarihi"], ["D", "c", 330, 130, "yas"]], [["b", "a"], ["c", "a"]]] }
+};
+let galK = "E";
+function galSVG(g) {
+  const [ns, es] = g.d;
+  const nodes = ns.map(([t, id, x, y, label]) => ({ t, id, x, y, label }));
+  const edges = es.map(([a, b, c, t], i) => ({ id: "g" + i, a, b, c: c || "", t: t || 0 }));
+  return `<svg class="chen" viewBox="0 0 470 180">${chenSVG(nodes, edges)}</svg>`;
+}
+function renderGallery() {
+  $("#gallery").innerHTML = Object.entries(GALLERY).map(([k, g]) => `<button type="button" data-k="${k}" class="${k === galK ? "on" : ""}">${miniShape(k === "C" ? "A" : k)}<span>${g.n}</span></button>`).join("");
+  const g = GALLERY[galK];
+  $("#shape-detail").innerHTML = `<div><h3>${g.n}</h3><dl><dt>Ne zaman?</dt><dd>${esc(g.when)}</dd><dt>Örnek</dt><dd>${esc(g.ex)}</dd><dt>Sık hata</dt><dd style="color:var(--red)">${esc(g.err)}</dd></dl></div><div>${galSVG(g)}</div>`;
+}
+$("#gallery").onclick = e => { const b = e.target.closest("button"); if (b) { galK = b.dataset.k; renderGallery(); } };
+
+const MISTAKES = [
+  ["Metindeki her ismi varlık saymak.", "İsim yalnızca adaydır; karar üç soruyla verilir.", "\"not\" bir niteliktir, \"transkript\" kayıtlardan türetilen bir dökümdür."],
+  ["\"Bir bölümde bir öğrenci gördüm; ilişki 1:1.\"", "Oran veriden değil, kuraldan çıkar.", "Veri bir kuralı kanıtlayamaz, yalnızca çürütebilir."],
+  ["Çoka çok ilişkiyi tasarım hatası sanmak.", "Kavramsal modelde M:N gerçeğin doğal tarifidir.", "Bir öğrenci birçok açılışa, bir açılışa birçok öğrenci kaydolur."],
+  ["Notu ÖĞRENCİ'ye bağlamak.", "Not, KAYIT ilişkisinin niteliğidir.", "101'in iki notu var; not öğrenci ile açılış birlikte sabitlenince tek kalır."],
+  ["Oran ile (en az, en çok) çiftini aynı uca yazmak.", "Oran karşı taraftan, (en az, en çok) kendi tarafında okunur.", "Aynı kural iki gösterimde karşıt uçlarda görünür."],
+  ["Başka listeye başvuran sütunu nitelik çizmek (öğrencinin bölümü).", "BÖLÜM ayrı bir varlık türüdür; ona bir ilişkiyle ulaşılır.", "Bölüm adını öğrenciye yazmak onu her öğrencide tekrar ettirir."],
+  ["\"Diyagram bütün kuralları gösterir.\"", "Not aralığı, kontenjan, \"ders kendisinin ön koşulu olamaz\" gibi kurallar diyagramın altına yazılır.", "Kavramsal model = diyagram + yazılı kurallar."],
+  ["Kavramsal modele sıra numarası gibi yapay bir kimlik eklemek.", "Yalnız alanın doğal anahtarlarını kullan.", "Üretilen kimliklere tablolara geçerken karar verilir."],
+  ["İki varlığı ilişkisiz bağlamak ya da ilişkiyi ilişkiye bağlamak.", "İlişkinin çizgileri yalnızca varlıklara gider.", "Kitabın çizim kuralı."],
+  ["Özyinelemeli ilişkide rol yazmamak.", "Çizgilerin üzerine rolleri yaz: \"ön koşulu olan ders\", \"ön koşul olan ders\".", "Roller yoksa hangi dersin hangisini gerektirdiği belirsiz kalır."],
+  ["Diyagramın altına gösterimin adını yazmamak.", "Ör. \"Chen · oran ve katılım gösterimi\".", "ER için tek bir evrensel gösterim yoktur; aynı kural farklı gösterimlerde farklı yazılır."]
+];
+const GLOSS = [
+  ["Kavramsal tasarım", "conceptual design", "Alanın verisinin ve kurallarının VTYS'den bağımsız olarak modellenmesi."],
+  ["Varlık-ilişki modeli (ER)", "entity–relationship model", "Varlık, nitelik ve ilişkilerle kurulan kavramsal model."],
+  ["Chen notasyonu", "Chen notation", "Dikdörtgen, elips ve eşkenar dörtgenle ER çizimi; ER'in ilk gösterimi."],
+  ["Varlık", "entity", "Alanda ayrı ayrı tanınan ve hakkında bilgi tutulan şey."],
+  ["Varlık türü / örneği / kümesi", "entity type / instance / set", "Kategori (ÖĞRENCİ) / tek üye (öğrenci 101) / o anki bütün üyeler. Tür şemaya, örnek ve küme veriye aittir."],
+  ["Nitelik", "attribute", "Varlığın ya da ilişkinin her örneği için tutulan bilgi. Elips; yalnız bir şekle bağlanır."],
+  ["Anahtar nitelik", "key attribute", "Örnekleri birbirinden ayıran nitelik; altı çizilir."],
+  ["Doğal anahtar", "natural key", "Kurumun kullandığı, alanda anlamı olan tanımlayıcı."],
+  ["Basit (atomik) / bileşik", "simple / composite", "Bölünmesi gerekmeyen / anlamlı parçalara ayrılan nitelik."],
+  ["Tek / çok değerli", "single-valued / multivalued", "Bir örnek için tek / birden çok değer alan nitelik. Çok değerli: çift elips."],
+  ["Saklanan / türetilmiş", "stored / derived", "Kaydedilen / başka bilgilerden hesaplanan nitelik. Türetilmiş: kesikli elips."],
+  ["Boş kalabilir", "null", "Değeri bazı örneklerde bilinmeyen nitelik; yanına \"boş kalabilir\" yazılır."],
+  ["İlişki", "relationship", "Varlık türleri arasındaki anlamlı bağ. Eşkenar dörtgen; adı fiil."],
+  ["İlişki türü / örneği", "relationship type / instance", "Bağın şemadaki tanımı / somut bir bağ (öğrenci 101 ile Bilişim)."],
+  ["İlişki niteliği", "relationship attribute", "Yalnızca ilişki örneğinde tek değere inen bilgi (not)."],
+  ["Derece", "degree", "İlişkiye katılan varlık türü sayısı: tekli, ikili, üçlü."],
+  ["Tekli (özyinelemeli) ilişki", "unary, recursive", "Bir varlık türünün kendisiyle ilişkisi; tür ilişkiye iki kez katılır."],
+  ["Rol", "role", "Varlık türünün ilişkideki görevi; çizginin üzerine yazılır, özyinelemelide zorunlu."],
+  ["Yapısal kısıt", "structural constraint", "İlişkinin oran ve katılım kuralları."],
+  ["Kardinalite oranı", "cardinality ratio", "Karşı taraftaki bir örnek için en çok kaç: 1:1, 1:N, M:N. Karşı taraftan okunur; kuraldan çıkar."],
+  ["Tam / kısmi katılım", "total / partial participation", "İlişkiye katılmak zorunlu (çift çizgi) / zorunlu değil (tek çizgi). Kendi tarafında okunur."],
+  ["Varoluş bağımlılığı", "existence dependency", "Tam katılımın öteki adı: ancak ilişkiye katılarak var olabilme."],
+  ["(En az, en çok) gösterimi", "min–max notation", "Her türün ilişkiye kaç kez katıldığını kendi tarafında yazan gösterim: (0,N), (1,1)."],
+  ["Diyagramın ifade edemediği kural", "written constraint", "Yapısal kısıtla gösterilemeyen, diyagramın altına yazılan kural."],
+  ["Zayıf varlık", "weak entity", "Tek başına tanınamayan, kimliğini sahip varlıktan alan tür. Çift dikdörtgen."],
+  ["Sahip varlık", "owner entity", "Zayıf varlığın kimliğini aldığı varlık türü."],
+  ["Tanımlayıcı ilişki", "identifying relationship", "Zayıf varlığı sahibine bağlayan ilişki. Çift eşkenar dörtgen."],
+  ["Kısmi anahtar", "partial key, discriminator", "Zayıf varlığı yalnız aynı sahip içinde ayıran nitelik. Altı kesikli."],
+  ["Kimlik bağımlılığı", "identification dependency", "Tanınabilmek için başka bir varlığın anahtarına ihtiyaç duymak; zayıf varlığı belirleyen budur."]
+];
+function renderGloss() {
+  const q = ($("#gloss-q").value || "").toLocaleLowerCase("tr");
+  const rows = GLOSS.filter(g => !q || g.join(" ").toLocaleLowerCase("tr").includes(q));
+  $("#gloss").innerHTML = rows.length ? rows.map(([t, en, d]) => `<div><b>${esc(t)}</b><span class="en">${esc(en)}</span><br>${esc(d)}</div>`).join("") : `<div>Bu aramaya uyan terim yok.</div>`;
+}
+$("#gloss-q").oninput = renderGloss;
+function renderStart() {
+  $("#hero-svg").innerHTML = chenSVG([{ id: "a", t: "E", x: 105, y: 80, label: "BÖLÜM" }, { id: "r", t: "R", x: 330, y: 80, label: "BAĞLIDIR" }, { id: "b", t: "E", x: 555, y: 80, label: "ÖĞRENCİ" }],
+    [{ id: "1", a: "a", b: "r", c: "1", t: 0 }, { id: "2", a: "b", b: "r", c: "N", t: 1 }]);
+  renderWalk(); renderGallery(); renderGloss();
+  $("#mistakes").innerHTML = MISTAKES.map(([x, v, w]) => `<div class="mistake"><span class="x">✗ ${esc(x)}</span><span class="v">✓ ${esc(v)}</span><span class="w">${esc(w)}</span></div>`).join("");
+}
+document.querySelector(".path").onclick = e => {
+  const b = e.target.closest("button"); if (!b) return;
+  const g = b.dataset.go;
+  if (g === "walk" || g === "gallery") $("#" + g + "-sec").scrollIntoView({ behavior: "smooth", block: "start" });
+  else { show(g); window.scrollTo(0, 0); }
+};
+
+/* ================= LAB ================= */
+const PAIRS = [
+  { A: "BÖLÜM", B: "ÖĞRENCİ", R: "BAĞLIDIR", a2b: "Bir bölüme {q} öğrenci bağlıdır.", b2a: "Bir öğrenci {q} bölüme bağlıdır.", d: ["1:N", 0, 1], rule: "Her öğrenci tek bir bölüme bağlı olmak zorundadır; yeni açılmış bölümün öğrencisi olmayabilir." },
+  { A: "MÜŞTERİ", B: "SİPARİŞ", R: "VERİR", a2b: "Bir müşteri {q} sipariş verir.", b2a: "Bir sipariş {q} müşteri tarafından verilir.", d: ["1:N", 0, 1], rule: "Her sipariş tek bir müşteriye aittir; hiç sipariş vermemiş müşteriler de kayıtlıdır." },
+  { A: "DOKTOR", B: "POLİKLİNİK", R: "YÖNETİR", a2b: "Bir doktor {q} poliklinik yönetir.", b2a: "Bir poliklinik {q} doktor tarafından yönetilir.", d: ["1:1", 0, 1], rule: "Her polikliniği tek bir doktor yönetmek zorundadır; bir doktor en fazla bir polikliniği yönetir." },
+  { A: "ÖĞRENCİ", B: "DERS_AÇILIŞI", R: "KAYIT", a2b: "Bir öğrenci {q} açılışa kaydolur.", b2a: "Bir açılışa {q} öğrenci kaydolur.", d: ["M:N", 0, 0], rule: "Bir öğrenci birçok açılışa, bir açılışa birçok öğrenci kaydolur; 106 hiç kaydolmamıştır, 1004'e kimse kaydolmamıştır (kitaptaki üniversite örneği)." },
+  { A: "YAYINEVİ", B: "KİTAP", R: "YAYIMLAR", a2b: "Bir yayınevi {q} kitap yayımlar.", b2a: "Bir kitap {q} yayınevi tarafından yayımlanır.", d: ["1:N", 0, 1], rule: "Her kitabı tek bir yayınevi yayımlar; henüz kitabı olmayan yayınevleri de kayıtlıdır." },
+  { A: "KİŞİ", B: "PASAPORT", R: "SAHİPTİR", a2b: "Bir kişinin {q} pasaportu vardır.", b2a: "Bir pasaport {q} kişiye aittir.", d: ["1:1", 0, 1], rule: "Her pasaport tek bir kişiye aittir; pasaportu olmayan kişiler de vardır." },
+  { A: "YAZAR", B: "KİTAP", R: "YAZMIŞTIR", a2b: "Bir yazar {q} kitap yazmıştır.", b2a: "Bir kitabı {q} yazar yazmıştır.", d: ["M:N", 1, 1], rule: "Her kitabın en az bir yazarı vardır; sistemde yalnızca kitabı olan yazarlar tutulur." },
+  { A: "DOKTOR", B: "HASTA", R: "TEDAVİ EDER", a2b: "Bir doktor {q} hastayı tedavi eder.", b2a: "Bir hasta {q} doktor tarafından tedavi edilir.", d: ["M:N", 0, 0], rule: "Bir doktor birçok hastayı, bir hasta birçok doktoru görebilir; iki taraf da isteğe bağlıdır." }
+];
+const RATIOS = { "1:1": ["1", "1"], "1:N": ["1", "N"], "N:1": ["N", "1"], "M:N": ["M", "N"] };
+const lab = { pair: 0, ratio: "1:N", ta: 0, tb: 1, mode: "oran" };
+const MX = c => (c === "1" ? "1" : "N"); // kitap (en az, en çok) çiftinde M kullanmaz: (0,N)
+const q = (mn, mx) => `<em>en az ${mn}, en çok ${MX(mx)}</em>`;
+function renderLab(flash = true) {
+  const P = PAIRS[lab.pair], [ca, cb] = RATIOS[lab.ratio];
+  seg($("#lab-pair"), PAIRS.map((p, i) => [i, `${p.A} – ${p.B}`]), lab.pair, v => { lab.pair = +v; const d = PAIRS[lab.pair].d; lab.ratio = d[0]; lab.ta = d[1]; lab.tb = d[2]; renderLab(); });
+  seg($("#lab-ratio"), Object.keys(RATIOS).map(r => [r, r.replace(":", " : ")]), lab.ratio, v => { lab.ratio = v; renderLab(); });
+  $("#lab-ta-l").textContent = P.A + " katılımı"; $("#lab-tb-l").textContent = P.B + " katılımı";
+  seg($("#lab-ta"), [[0, "Kısmi · tek çizgi"], [1, "Tam · çift çizgi"]], lab.ta, v => { lab.ta = +v; renderLab(); });
+  seg($("#lab-tb"), [[0, "Kısmi · tek çizgi"], [1, "Tam · çift çizgi"]], lab.tb, v => { lab.tb = +v; renderLab(); });
+  seg($("#lab-mode"), [["oran", "Oran + katılım"], ["mm", "(en az, en çok)"]], lab.mode, v => { lab.mode = v; renderLab(); });
+  const nodes = [{ id: "a", t: "E", x: 105, y: 95, label: P.A }, { id: "r", t: "R", x: 330, y: 95, label: P.R }, { id: "b", t: "E", x: 555, y: 95, label: P.B }];
+  const edges = lab.mode === "oran"
+    ? [{ id: "1", a: "a", b: "r", c: ca, t: lab.ta }, { id: "2", a: "b", b: "r", c: cb, t: lab.tb }]
+    : [{ id: "1", a: "a", b: "r", c: `(${lab.ta},${MX(cb)})` }, { id: "2", a: "b", b: "r", c: `(${lab.tb},${MX(ca)})` }];
+  $("#lab-svg").innerHTML = chenSVG(nodes, edges, { flash });
+  const real = lab.ratio === P.d[0] && lab.ta === P.d[1] && lab.tb === P.d[2];
+  $("#lab-real").innerHTML = `<span class="lbl-s" style="margin:0">Bu örneğin gerçek kuralı</span><span>${esc(P.rule)}</span>
+    <span class="st ${real ? "ok" : "chg"}">${real ? "✓ Şu anki ayar bu kurala uygun." : "Ayarı değiştirdin; artık başka bir kuralı çiziyorsun."}</span>
+    ${real ? "" : `<button class="btn" id="lab-back" type="button">Gerçek kurala dön</button>`}`;
+  const back = $("#lab-back"); if (back) back.onclick = () => { lab.ratio = P.d[0]; lab.ta = P.d[1]; lab.tb = P.d[2]; renderLab(); };
+  const side = (t, X) => t ? `${X} tarafı <b>çift çizgi</b> (tam katılım)` : `${X} tarafı <b>tek çizgi</b> (kısmi katılım)`;
+  const card = (title, sentence, mn, mx, own, other) => `<div class="sent"><h3>${esc(own)} tarafından oku</h3><p class="big">${sentence}</p><p>${lab.mode === "oran"
+    ? `"En çok" değeri karşı uçta, <b>${esc(other)}</b> ucunda <b>${mx}</b> olarak yazar. En az <b>${mn}</b> olduğu için ${side(mn, own)}.`
+    : `<b>(${mn},${MX(mx)})</b> çifti kendi ucuna, yani <b>${esc(own)}</b> ucuna yazılır. Gösterimde katılım çizgisi yoktur; en az 0 kısmi, en az 1 tam demektir.`}</p></div>`;
+  $("#lab-sent").innerHTML =
+    card("", P.a2b.replace("{q}", q(lab.ta, cb)), lab.ta, cb, P.A, P.B) +
+    card("", P.b2a.replace("{q}", q(lab.tb, ca)), lab.tb, ca, P.B, P.A);
+  $("#lab-rule").innerHTML = lab.mode === "oran"
+    ? `<b>Oran</b> karşı taraftan okunur, <b>katılım</b> kendi tarafında. "Gösterim"i (en az, en çok) yap: en çok değerlerinin karşı uca geçtiğini göreceksin.`
+    : `<b>(en az, en çok)</b> her zaman kendi ucuna yazılır. Bu yüzden en çok değerleri oran gösterimindekinin <b>tersi</b> uçta durur. Örnek: oranda ${esc(P.B)} ucundaki <b>${cb}</b>, burada ${esc(P.A)} ucunda.`;
+}
+
+/* ---- Neyi sabitlersem ---- */
+// Kitaptaki gibi: kayıt bir ders açılışına yapılır; 101: 1001→80, 1002→90; 102: 1001→60
+const KAYIT = [
+  { no: 101, ad: "Ayşe", ac: "1001", ders: "VT1 · 2026-GUZ · 1", kont: 3, not: 80 }, { no: 101, ad: "Ayşe", ac: "1002", ders: "PR1 · 2026-GUZ · 1", kont: 40, not: 90 },
+  { no: 102, ad: "Mehmet", ac: "1001", ders: "VT1 · 2026-GUZ · 1", kont: 3, not: 60 }, { no: 102, ad: "Mehmet", ac: "1003", ders: "MAT1 · 2026-GUZ · 1", kont: 35, not: 75 },
+  { no: 103, ad: "Zeynep", ac: "1001", ders: "VT1 · 2026-GUZ · 1", kont: 3, not: 55 }, { no: 103, ad: "Zeynep", ac: "1002", ders: "PR1 · 2026-GUZ · 1", kont: 40, not: 85 }
+];
+const FX_ATTR = { not: ["not", "basari_notu"], ad: ["ad", "ogrenci_adi"], kont: ["kont", "kontenjan"] };
+const fx = { attr: "not", ogr: "", ac: "" };
+function renderFix() {
+  seg($("#fx-attr"), Object.entries(FX_ATTR).map(([k, v]) => [k, v[1]]), fx.attr, v => { fx.attr = v; renderFix(); });
+  seg($("#fx-ogr"), [["", "Hiçbiri"], ["101", "101"], ["102", "102"], ["103", "103"]], fx.ogr, v => { fx.ogr = v; renderFix(); });
+  seg($("#fx-ders"), [["", "Hiçbiri"], ["1001", "1001"], ["1002", "1002"], ["1003", "1003"]], fx.ac, v => { fx.ac = v; renderFix(); });
+  const match = r => (!fx.ogr || r.no === +fx.ogr) && (!fx.ac || r.ac === fx.ac);
+  const col = FX_ATTR[fx.attr][0];
+  const head = [["no", "öğrenci"], ["ad", "ogrenci_adi"], ["ac", "açılış"], ["ders", "ders · dönem · şube"], ["kont", "kontenjan"], ["not", "basari_notu"]];
+  $("#fx-tbl").innerHTML = `<tr>${head.map(([k, h]) => `<th>${h}</th>`).join("")}</tr>` +
+    KAYIT.map(r => `<tr class="${match(r) ? "" : "dim"}">${head.map(([k]) => `<td class="${k === col && match(r) ? "hl" : ""}">${r[k]}</td>`).join("")}</tr>`).join("");
+  const rows = KAYIT.filter(match), vals = [...new Set(rows.map(r => r[col]))];
+  const name = FX_ATTR[fx.attr][1];
+  const single = (f) => { const rs = KAYIT.filter(f); return rs.length && new Set(rs.map(r => r[col])).size === 1; };
+  let html, ok = false;
+  if (!rows.length) html = "Bu öğrenci bu açılışa kayıtlı değil, eşleşen satır yok. Başka bir açılış seç.";
+  else if (!fx.ogr && !fx.ac) html = `Hiçbir şey sabitlenmedi: <b>${name}</b> için ${vals.length} farklı değer var. Soldan bir şey sabitle.`;
+  else if (vals.length > 1) html = `Hâlâ ${vals.length} farklı değer var (${vals.join(", ")}). Bu kadarını sabitlemek <b>yetmedi</b>.`;
+  else {
+    ok = true;
+    if (fx.ogr && fx.ac) {
+      if (single(r => r.no === +fx.ogr)) { html = `Tek değer kaldı, ama yalnızca öğrenciyi sabitlemek de yeterdi. En az şeyi sabitlemeye çalış.`; ok = false; }
+      else if (single(r => r.ac === fx.ac)) { html = `Tek değer kaldı, ama yalnızca açılışı sabitlemek de yeterdi. En az şeyi sabitlemeye çalış.`; ok = false; }
+      else html = `Tek değer (<b>${vals[0]}</b>) ancak öğrenci ve açılış <b>birlikte</b> sabitlenince kaldı. Sonuç: <b>${name}</b>, ÖĞRENCİ ile DERS_AÇILIŞI arasındaki <b>KAYIT ilişkisinin</b> niteliğidir.`;
+    } else if (fx.ogr) html = `Tek değer (<b>${vals[0]}</b>) kaldı. Yalnızca öğrenciyi sabitlemek yetti. Sonuç: <b>${name}</b>, <b>ÖĞRENCİ</b> varlığının niteliğidir.`;
+    else html = `Tek değer (<b>${vals[0]}</b>) kaldı. Yalnızca açılışı sabitlemek yetti. Sonuç: <b>${name}</b>, <b>DERS_AÇILIŞI</b> varlığının niteliğidir (VT1'in iki şubesinin kontenjanı farklı olabilir).`;
+  }
+  const v = $("#fx-v"); v.className = "verdict" + (ok ? " ok" : ""); v.innerHTML = html;
+}
+
+/* ================= QUIZ ================= */
+const QCATS = { mix: "Karışık", shape: "Şekiller", type: "Nitelik türü", owner: "Nitelik kimin?", ratio: "Oran", part: "Katılım", mm: "(en az, en çok)", err: "Hata bul", tf: "Doğru / Yanlış" };
+const SHAPE_Q = { E: "ÖĞRENCİ", W: "BAĞIMLI", R: "KAYIT", I: "SAHİPTİR", A: "eposta", K: "ogrenci_no", P: "sira_no", M: "telefon", D: "yas" };
+const TYPE_BANK = [
+  ["ARAÇ", "plaka", "Her aracın plakası farklıdır.", "Anahtar"],
+  ["ÖĞRENCİ", "adres", "İl, ilçe ve sokak ayrı ayrı sorgulanacak.", "Bileşik"],
+  ["ÖĞRENCİ", "telefon", "Bir öğrencinin birden fazla telefonu olabilir.", "Çok değerli"],
+  ["ÇALIŞAN", "kidem_yili", "İşe giriş tarihinden hesaplanır.", "Türetilmiş"],
+  ["DERS", "kredi", "Her dersin tek bir kredisi vardır.", "Basit"],
+  ["SİPARİŞ", "toplam_tutar", "Ürün fiyatları ve adetlerden bulunur.", "Türetilmiş"],
+  ["FİLM", "turler", "Bir film hem dram hem komedi olabilir.", "Çok değerli"],
+  ["KİŞİ", "ad_soyad", "Ad ve soyad ayrı ayrı kullanılacak.", "Bileşik"],
+  ["KİTAP", "isbn", "Her kitabın ISBN numarası tektir.", "Anahtar"],
+  ["ÖĞRENCİ", "ad", "İki öğrencinin adı aynı olabilir.", "Basit"],
+  ["ÜRÜN", "fiyat", "Her ürünün tek bir fiyatı vardır.", "Basit"],
+  ["KİŞİ", "yas", "Doğum tarihinden hesaplanır.", "Türetilmiş"],
+  ["YAZAR", "eposta_adresleri", "Bir yazar birden çok e-posta kullanabilir.", "Çok değerli"],
+  ["VATANDAŞ", "tc_kimlik_no", "Her vatandaşın numarası farklıdır.", "Anahtar"],
+  ["ETKİNLİK", "tarih_saat", "Tarih ve saat ayrı ayrı sorgulanacak.", "Bileşik"],
+  ["DERS_AÇILIŞI", "ogrenci_sayisi", "Kayıtlı öğrenciler sayılarak bulunur.", "Türetilmiş"],
+  ["OTEL", "oda_sayisi", "Otelin odaları sayılarak bulunur.", "Türetilmiş"],
+  ["MÜŞTERİ", "adres", "İl, ilçe ve posta kodu ayrı ayrı kullanılacak.", "Bileşik"],
+  ["DOKTOR", "uzmanliklar", "Bir doktorun birden fazla uzmanlığı olabilir.", "Çok değerli"],
+  ["PERSONEL", "sicil_no", "Her personelin sicil numarası farklıdır.", "Anahtar"],
+  ["FİLM", "sure", "Her filmin tek bir süresi vardır.", "Basit"],
+  ["ÖĞRENCİ", "not_ortalamasi", "Aldığı derslerin notlarından hesaplanır.", "Türetilmiş"],
+  ["KİTAP", "yazarlar", "Bir kitabın birden çok yazarı olabilir; yazar hakkında başka bilgi tutulmuyor.", "Çok değerli"]
+];
+const TYPE_EXPL = {
+  "Anahtar": "Her örnekte farklıdır, örneği tanıtır: altı çizili elips.",
+  "Bileşik": "Anlamlı parçalara bölünür: elipsten parça elipsler çıkar.",
+  "Çok değerli": "Bir örnekte birden çok değer alabilir: çift elips.",
+  "Türetilmiş": "Saklanmaz, başka nitelikten hesaplanır: kesikli elips.",
+  "Basit": "Tek, bölünmeyen değer: düz elips."
+};
+const OWNER_BANK = [
+  ["Bir öğrencinin bir ders açılışında aldığı <b>not</b>", ["ÖĞRENCİ", "DERS_AÇILIŞI", "KAYIT ilişkisi"], 2, "Öğrenci 101'in iki notu (80, 90), açılış 1001'in üç notu var; ikisi birlikte sabitlenince tek not kalır."],
+  ["Bir ürünün <b>fiyatı</b>", ["ÜRÜN", "SİPARİŞ", "İÇERİR ilişkisi"], 0, "Ürünü sabitlemek yeter: tek fiyat."],
+  ["Bir siparişte bir üründen alınan <b>adet</b>", ["SİPARİŞ", "ÜRÜN", "İÇERİR ilişkisi"], 2, "Sipariş ve ürün birlikte sabitlenince tek adet kalır."],
+  ["Bir çalışanın bir projede haftalık çalışma <b>saati</b>", ["ÇALIŞAN", "PROJE", "GÖREV ALIR ilişkisi"], 2, "Çalışan ve proje birlikte gerekir."],
+  ["Bir oyuncunun bir filmdeki <b>rol adı</b>", ["OYUNCU", "FİLM", "OYNAR ilişkisi"], 2, "Aynı oyuncu farklı filmlerde farklı roller oynar; oyuncu ve film birlikte gerekir."],
+  ["Bir kitabın <b>sayfa sayısı</b>", ["KİTAP", "ÜYE", "ÖDÜNÇ ALIR ilişkisi"], 0, "Kitabı sabitlemek yeter."],
+  ["Bir üyenin bir kitabı ödünç <b>alış tarihi</b>", ["ÜYE", "KİTAP", "ÖDÜNÇ ALIR ilişkisi"], 2, "Üye ve kitap birlikte gerekir."],
+  ["Bir doktorun <b>uzmanlığı</b>", ["DOKTOR", "HASTA", "TEDAVİ EDER ilişkisi"], 0, "Doktoru sabitlemek yeter."],
+  ["Bir doktorun bir hastayı tedaviye <b>başlangıç tarihi</b>", ["DOKTOR", "HASTA", "TEDAVİ EDER ilişkisi"], 2, "Doktor ve hasta birlikte gerekir."],
+  ["Bir kullanıcının bir filme verdiği <b>puan</b>", ["KULLANICI", "FİLM", "İZLER ilişkisi"], 2, "Kullanıcı ve film birlikte gerekir."],
+  ["Bir filmin <b>yapım yılı</b>", ["FİLM", "KULLANICI", "İZLER ilişkisi"], 0, "Filmi sabitlemek yeter."],
+  ["Bir öğrencinin <b>doğum tarihi</b>", ["ÖĞRENCİ", "DERS_AÇILIŞI", "KAYIT ilişkisi"], 0, "Öğrenciyi sabitlemek yeter."],
+  ["Bir müşterinin bir otelde konaklamasının <b>giriş tarihi</b>", ["MÜŞTERİ", "OTEL", "KONAKLAR ilişkisi"], 2, "Müşteri ve otel birlikte gerekir."],
+  ["Bir yayınevinin <b>şehri</b>", ["YAYINEVİ", "KİTAP", "YAYIMLAR ilişkisi"], 0, "Yayınevini sabitlemek yeter."],
+  ["Bir kullanıcının başka bir kullanıcıyı <b>takip etmeye başladığı tarih</b>", ["takip eden KULLANICI", "takip edilen KULLANICI", "TAKİP EDER ilişkisi"], 2, "Takip eden ve takip edilen birlikte gerekir."],
+  ["Bir dersin <b>AKTS</b> değeri", ["DERS", "DERS_AÇILIŞI", "KAYIT ilişkisi"], 0, "AKTS katalogdaki ders tanımının bilgisidir; dersi sabitlemek yeter."],
+  ["Bir ders açılışının <b>kontenjanı</b>", ["DERS", "DERS_AÇILIŞI", "KAYIT ilişkisi"], 1, "VT1'in iki şubesinin kontenjanı farklı olabilir; açılışı sabitlemek yeter."],
+  ["Bir kaydın <b>ücreti</b> (kayıt anında uygulanan)", ["ÖĞRENCİ", "DERS_AÇILIŞI", "KAYIT ilişkisi"], 2, "101 VT1 için 1000, PR1 için 750 TL ödemiştir; öğrenci ve açılış birlikte gerekir."],
+  ["Bir yolcunun bir uçuştaki <b>koltuk numarası</b>", ["YOLCU", "UÇUŞ", "BİNER ilişkisi"], 2, "Yolcu ve uçuş birlikte gerekir."],
+  ["Bir şarkının <b>süresi</b>", ["ŞARKI", "ÇALMA LİSTESİ", "İÇERİR ilişkisi"], 0, "Şarkıyı sabitlemek yeter."],
+  ["Bir şarkının bir çalma listesindeki <b>sıra numarası</b>", ["ŞARKI", "ÇALMA LİSTESİ", "İÇERİR ilişkisi"], 2, "Aynı şarkı farklı listelerde farklı sırada olabilir; ikisi birlikte gerekir."]
+];
+// A, B, ilişki, metin, A ucundaki oran, B ucundaki oran, A tam?, B tam?
+const REL_BANK = [
+  ["ÖĞRETİM ÜYESİ", "ÖĞRENCİ", "DANIŞMANIDIR", "Her öğrencinin tam olarak bir danışmanı (öğretim üyesi) vardır. Bir öğretim üyesi birden fazla öğrenciye danışmanlık yapabilir; hiç danışmanlık yapmayanlar da vardır.", "1", "N", 0, 1],
+  ["ÜLKE", "BAŞKENT", "SAHİPTİR", "Her ülkenin tek bir başkenti vardır; her başkent de tek bir ülkeye aittir.", "1", "1", 1, 1],
+  ["ÖĞRENCİ", "DERS_AÇILIŞI", "KAYIT", "Bir öğrenci birçok ders açılışına kaydolabilir, bir açılışa birçok öğrenci kaydolur. Hiç kaydolmamış öğrenciler ve kimsenin kaydolmadığı açılışlar olabilir.", "M", "N", 0, 0],
+  ["DERS", "DERS_AÇILIŞI", "AÇILIR", "Bir ders birçok kez açılabilir (aynı dönemde iki şube bile). Her açılış tek bir derse aittir; dersi olmayan açılış olamaz. Hiç açılmamış dersler olabilir.", "1", "N", 0, 1],
+  ["MÜŞTERİ", "SİPARİŞ", "VERİR", "Bir müşteri birden fazla sipariş verebilir; hiç sipariş vermemiş müşteriler de kayıtlıdır. Her sipariş tek bir müşteriye aittir.", "1", "N", 0, 1],
+  ["ÇALIŞAN", "DEPARTMAN", "YÖNETİR", "Bir çalışan en fazla bir departmanı yönetebilir. Her departmanın tam olarak bir yöneticisi vardır.", "1", "1", 0, 1],
+  ["YAZAR", "KİTAP", "YAZMIŞTIR", "Bir yazar birçok kitap yazabilir, bir kitabın birden fazla yazarı olabilir. Her kitabın en az bir yazarı vardır ve sistemde yalnızca en az bir kitabı olan yazarlar tutulur.", "M", "N", 1, 1],
+  ["BÖLÜM", "ÖĞRENCİ", "BAĞLIDIR", "Her öğrenci tek bir bölüme bağlı olmak zorundadır. Bir bölüme birçok öğrenci bağlıdır; yeni açılmış bölümün öğrencisi olmayabilir.", "1", "N", 0, 1],
+  ["POLİKLİNİK", "DOKTOR", "ÇALIŞIR", "Her doktor tek bir poliklinikte çalışır. Bir poliklinikte birden çok doktor çalışabilir; henüz doktoru olmayan poliklinikler olabilir.", "1", "N", 0, 1],
+  ["DOKTOR", "HASTA", "TEDAVİ EDER", "Doktorlar hastaları tedavi eder. Bir doktor birçok hastayı, bir hasta birçok doktoru görebilir. Hiç hastası olmayan doktor ve henüz tedavi görmemiş hasta olabilir.", "M", "N", 0, 0],
+  ["YÖNETMEN", "FİLM", "YÖNETİR", "Her filmin tek bir yönetmeni vardır; bir yönetmen birçok film yönetebilir. Henüz filmi olmayan yönetmenler de kayıtlıdır.", "1", "N", 0, 1],
+  ["KİŞİ", "PASAPORT", "SAHİPTİR", "Her pasaport tek bir kişiye aittir; sahipsiz pasaport olamaz. Bir kişinin en fazla bir pasaportu olabilir; pasaportu olmayan kişiler de vardır.", "1", "1", 0, 1],
+  ["FİLM", "OYUNCU", "OYNAR", "Her filmde en az bir oyuncu oynar; bir oyuncu birçok filmde oynayabilir. Sistemde yalnızca en az bir filmde oynamış oyuncular tutulur.", "M", "N", 1, 1],
+  ["YAYINEVİ", "KİTAP", "YAYIMLAR", "Her kitabı tek bir yayınevi yayımlar; bir yayınevi birçok kitap yayımlayabilir. Henüz kitabı olmayan yayınevleri de kayıtlıdır.", "1", "N", 0, 1],
+  ["KULLANICI", "GÖNDERİ", "PAYLAŞIR", "Her gönderiyi tek bir kullanıcı paylaşır; paylaşanı olmayan gönderi olamaz. Bir kullanıcı birçok gönderi paylaşabilir; hiç paylaşmamış kullanıcılar da vardır.", "1", "N", 0, 1],
+  ["YOLCU", "UÇUŞ", "BİNER", "Bir yolcu birçok uçuşa, bir uçuşa birçok yolcu biner. Sistemde yalnızca en az bir uçuşa binmiş yolcular tutulur; henüz yolcusu olmayan uçuşlar olabilir.", "M", "N", 1, 0],
+  ["ŞEHİR", "PLAKA KODU", "SAHİPTİR", "Her şehrin tek bir plaka kodu vardır ve her plaka kodu tek bir şehre aittir.", "1", "1", 1, 1],
+  ["TAKIM", "OYUNCU", "OYNAR", "Her oyuncu en fazla bir takımda oynar; takımı olmayan serbest oyuncular da vardır. Bir takımda birçok oyuncu oynar ve oyuncusu olmayan takım olamaz.", "1", "N", 1, 0],
+  ["ŞUBE", "KURYE", "ÇALIŞIR", "Her kurye tek bir şubede çalışmak zorundadır. Bir şubede birçok kurye çalışabilir; yeni açılan şubede kurye olmayabilir.", "1", "N", 0, 1]
+];
+const TF_BANK = [
+  ["Kardinalite oranı karşı taraftan okunur.", true, "Karşıdaki bir örnek için bu taraftan en çok kaç örnek olabileceğini söyler."],
+  ["Tam katılım tek çizgiyle gösterilir.", false, "Tam katılım çift çizgidir, kısmi katılım tek çizgi."],
+  ["(en az, en çok) çifti varlığın kendi ucuna yazılır.", true, "Kendi tarafında okunur; bu yüzden en çok değerleri oran gösteriminin tersi uçta durur."],
+  ["İki varlığa birlikte bağlı bir nitelik (ör. not) ilişkinin niteliği olarak çizilir.", true, "Neyi sabitlersem? İkisini birlikte sabitlemek gerekiyorsa nitelik ilişkiye aittir."],
+  ["Türetilmiş nitelik çift elipsle gösterilir.", false, "Türetilmiş nitelik kesikli elipstir. Çift elips çok değerli niteliktir."],
+  ["Özyinelemeli ilişkide rol adlarını yazmak zorunludur.", true, "İki uç da aynı varlık olduğu için hangi ucun hangi görevde olduğu ancak rol adıyla anlaşılır."],
+  ["İki varlık doğrudan bir çizgiyle bağlanabilir.", false, "Varlıklar arasına her zaman bir ilişki (baklava) girer."],
+  ["Zayıf varlığın tanımlayıcı ilişkiye katılımı her zaman tamdır.", true, "Sahibi olmayan bir zayıf varlık örneği düşünülemez; zayıf taraftaki çizgi her zaman çifttir."],
+  ["Kardinalite oranı tablodaki mevcut verilere bakılarak belirlenir.", false, "Oran veriden değil, kuraldan çıkar. Veri bir kuralı kanıtlayamaz, yalnızca çürütebilir."],
+  ["Bir bölüme bağlı olmak zorunda olan her varlık zayıf varlıktır.", false, "Bu varoluş bağımlılığıdır. Zayıf varlığı belirleyen kimlik bağımlılığıdır: ÖĞRENCİ'yi ogrenci_no tek başına tanır, güçlüdür."],
+  ["Bir ilişkiye anahtar nitelik eklemek onu varlıkla karıştırmak demektir.", true, "İlişki örneği katılan varlıkların çiftiyle tanınır; ilişkinin kendi anahtarı olmaz."],
+  ["Kavramsal modele yapay bir sıra numarası anahtar olarak eklenmelidir.", false, "Kavramsal modelde yalnız doğal anahtarlar yer alır; üretilen kimliğe tablolara geçerken karar verilir."],
+  ["Çok değerli bir niteliğin kendine ait bilgileri olursa ayrı bir varlık türüne dönüşür.", true, "Telefonun türü ve aranabileceği saatler de tutulursa TELEFON varlığı çizilir."],
+  ["Anahtar niteliğin altı çizilir.", true, "Kısmi anahtar ise kesikli çizgiyle altı çizilir."],
+  ["Kısmi katılımda en az değeri 0'dır.", true, "En az 0 → katılmak zorunlu değil → tek çizgi."],
+  ["Özyinelemeli ilişkinin derecesi 2'dir.", false, "Derecesi 1'dir (tekli ilişki): tek bir varlık türü ilişkiye iki kez katılır."],
+  ["Varlık adları tekil ve büyük harfle yazılır.", true, "ÖĞRENCİLER değil, ÖĞRENCİ."],
+  ["Bir nitelik aynı anda iki varlığa bağlanabilir.", false, "Bir nitelik tek bir şekle bağlanır. İki varlığa birlikte aitse ilişkinin niteliğidir."],
+  ["Sistemin kendisi (ör. HASTANE) genellikle varlık olarak çizilmez.", true, "Tek bir hastaneyi modelliyorsak onu tek tek ayırt etmemiz gerekmez; varlık seçmenin ilk sorusundan geçmez."],
+  ["Kavramsal model yalnızca diyagramdan oluşur.", false, "Kavramsal model = diyagram + diyagramın ifade edemediği yazılı kurallar."],
+  ["1:N ilişkide ilişkinin niteliği N tarafındaki varlığa taşınabilir.", true, "N tarafını sabitlemek de tek değer bırakır. Chen'de yine de ilişkiye bağlamak en açık gösterimdir."],
+  ["M:N ilişkide aynı örnek çifti (aynı üye, aynı kitap) birden çok kez bulunabilir.", false, "Çift bir kez bulunur; aynı olayın tekrarını tutmak için ileride farklı modelleme gerekir."],
+  ["(en az, en çok) gösteriminde katılım için ayrıca çift çizgi çizilir.", false, "Gerek yok: en az 1 tam, en az 0 kısmi demektir."],
+  ["Bileşik nitelik, anlamlı parçalara bölünebilen niteliktir.", true, "ad_soyad → ad + soyad; adres → il, ilçe, açık adres."]
+];
+const ratioStr = (A, B, ca, cb) => (ca !== "1" && cb !== "1") ? `${A} M : N ${B}` : `${A} ${ca} : ${cb} ${B}`;
+function relDiagram(A, B, R, ca, cb, ta, tb, mm, rt = "R") {
+  const nodes = [{ id: "a", t: "E", x: 110, y: 70, label: A }, { id: "r", t: rt, x: 330, y: 70, label: R }, { id: "b", t: "E", x: 550, y: 70, label: B }];
+  const edges = mm ? [{ id: "1", a: "a", b: "r", c: `(${ta},${MX(cb)})` }, { id: "2", a: "b", b: "r", c: `(${tb},${MX(ca)})` }]
+    : [{ id: "1", a: "a", b: "r", c: ca, t: ta }, { id: "2", a: "b", b: "r", c: cb, t: tb }];
+  return `<svg class="chen" viewBox="0 0 660 140">${chenSVG(nodes, edges)}</svg>`;
+}
+function makeQ(cat) {
+  if (cat === "mix") cat = pick(["shape", "type", "owner", "ratio", "part", "mm", "err", "tf", "type", "ratio", "part", "owner"]);
+  if (cat === "err") {
+    const [A, B, R, txt, ca, cb, ta, tb] = pick(REL_BANK);
+    const kinds = ["ok", "shape", "part"];
+    if (ca !== cb && !(ca !== "1" && cb !== "1")) kinds.push("swap", "swap");
+    const k = pick(kinds);
+    let dca = ca, dcb = cb, dta = ta, dtb = tb, rt = "R";
+    if (k === "swap") { dca = cb; dcb = ca; }
+    if (k === "part") { if (ta === tb) dta = 1 - ta; else { dta = tb; dtb = ta; } }
+    if (k === "shape") rt = "E";
+    const opts = ["Diyagram doğru", "Oranlar ters uçlara yazılmış", "Katılım (tek/çift çizgi) yanlış çizilmiş", "İlişki dikdörtgenle çizilmiş, baklava olmalı"];
+    const ans = { ok: 0, swap: 1, part: 2, shape: 3 }[k];
+    const why = {
+      ok: "Oranlar karşı taraftan okunarak doğru uca yazılmış, çift çizgiler de zorunlu katılan tarafta.",
+      swap: `Bir ${B} için en çok ${ca === "1" ? "1" : "birden çok"} ${A} vardır; bu değer ${A} ucuna yazılmalı. Oran karşı taraftan okunur.`,
+      part: `${A}: ${ta ? "zorunlu → çift çizgi" : "zorunlu değil → tek çizgi"}. ${B}: ${tb ? "zorunlu → çift çizgi" : "zorunlu değil → tek çizgi"}.`,
+      shape: `${R} bir fiildir, yani ilişkidir: baklava ile çizilir. Dikdörtgen yalnız varlıklar içindir.`
+    }[k];
+    return { cat: "err", text: `<span style="font-size:16px">${txt}</span><br><br>Bu metin için çizilen diyagramda <b>hata</b> var mı?`, vis: relDiagram(A, B, R, dca, dcb, dta, dtb, false, rt), opts, ans, why, after: k === "ok" ? "" : relDiagram(A, B, R, ca, cb, ta, tb) };
+  }
+  if (cat === "shape") {
+    const t = pick(Object.keys(SHAPES)), others = shuffle(Object.keys(SHAPES).filter(x => x !== t)).slice(0, 3), opts = shuffle([t, ...others]);
+    const n = { id: "", t, x: 150, y: 45, label: SHAPE_Q[t] };
+    return { cat, text: "Bu şekil neyi gösterir?", vis: `<svg class="chen" viewBox="0 0 300 90" style="max-width:300px">${shapeSVG(n)}</svg>`,
+      opts: opts.map(x => SHAPES[x]), ans: opts.indexOf(t), why: `${SHAPES[t]}: ${SHAPE_DESC[t]}. ${TYPE_WHY[t]}` };
+  }
+  if (cat === "type") {
+    const [E, a, ctx, ans] = pick(TYPE_BANK), opts = ["Basit", "Anahtar", "Bileşik", "Çok değerli", "Türetilmiş"];
+    return { cat, text: `${E} varlığının <code>${a}</code> niteliği hangi türdür?<br><span style="font-size:15px;color:var(--muted)">${ctx}</span>`,
+      opts, ans: opts.indexOf(ans), why: `${ans}. ${TYPE_EXPL[ans]}${a === "ad" ? " Aynı ada sahip iki öğrenci olabileceği için anahtar olamaz." : ""}` };
+  }
+  if (cat === "owner") {
+    const [txt, opts, ans, why] = pick(OWNER_BANK);
+    return { cat, text: `${txt} nereye aittir?`, opts, ans, why: `Neyi sabitlersem? ${why}` };
+  }
+  if (cat === "tf") {
+    const [s, v, why] = pick(TF_BANK);
+    return { cat, text: s, opts: ["Doğru", "Yanlış"], ans: v ? 0 : 1, why };
+  }
+  const [A, B, R, txt, ca, cb, ta, tb] = pick(REL_BANK);
+  const reading = `Bir ${B} için en çok <b>${ca === "1" ? "1" : "birden çok"}</b> ${A} → ${ca === "1" ? "1" : ca}, ${A} ucuna yazılır. Bir ${A} için en çok <b>${cb === "1" ? "1" : "birden çok"}</b> ${B} → ${cb === "1" ? "1" : cb}, ${B} ucuna yazılır.`;
+  const partWhy = `${A}: ${ta ? "her biri katılmak zorunda → tam (çift çizgi)" : "katılmayanlar olabilir → kısmi (tek çizgi)"}. ${B}: ${tb ? "her biri katılmak zorunda → tam (çift çizgi)" : "katılmayanlar olabilir → kısmi (tek çizgi)"}.`;
+  if (cat === "ratio") {
+    const opts = [`${A} 1 : 1 ${B}`, `${A} 1 : N ${B}`, `${A} N : 1 ${B}`, `${A} M : N ${B}`];
+    const ans = opts.indexOf(ratioStr(A, B, ca, cb));
+    return { cat, text: `<span style="font-size:16px">${txt}</span><br><br>${A} ile ${B} arasındaki <b>kardinalite oranı</b> nedir?`, opts, ans, why: reading, after: relDiagram(A, B, R, ca, cb, ta, tb) };
+  }
+  if (cat === "part") {
+    const opts = [`Yalnız ${A} tam`, `Yalnız ${B} tam`, "İkisi de tam", "İkisi de kısmi"];
+    const ans = ta && tb ? 2 : ta ? 0 : tb ? 1 : 3;
+    return { cat, text: `<span style="font-size:16px">${txt}</span><br><br>Hangi taraf <b>tam katılımlıdır</b> (çift çizgi)?`, opts, ans, why: partWhy, after: relDiagram(A, B, R, ca, cb, ta, tb) };
+  }
+  // (en az, en çok)
+  const fmt = (ma, xa, mb, xb) => `${A} (${ma},${MX(xa)}) · ${B} (${mb},${MX(xb)})`;
+  const right = fmt(ta, cb, tb, ca);
+  const pool = new Set([right]);
+  const cands = shuffle([fmt(ta, ca, tb, cb), fmt(1 - ta, cb, tb, ca), fmt(ta, cb, 1 - tb, ca), fmt(1 - ta, ca, 1 - tb, cb), fmt(tb, cb, ta, ca), fmt(1 - ta, cb, 1 - tb, ca)]);
+  for (const c of cands) { if (pool.size >= 4) break; pool.add(c); }
+  const opts = shuffle([...pool]);
+  return { cat, text: "Bu diyagramın <b>(en az, en çok)</b> karşılığı hangisi?", vis: relDiagram(A, B, R, ca, cb, ta, tb), opts, ans: opts.indexOf(right),
+    why: `Her çift kendi ucunda okunur. Bir ${A} için en az ${ta} (${ta ? "çift" : "tek"} çizgi), en çok ${MX(cb)} (oran gösteriminde karşı uçta duran değer). Bir ${B} için en az ${tb}, en çok ${MX(ca)}. Kitapta bu gösterimde "çok" her zaman N ile yazılır.`, after: relDiagram(A, B, R, ca, cb, ta, tb, true) };
+}
+const QZ = { cat: store.get("qcat", "mix"), i: 0, ok: 0, streak: 0, q: null, done: false, stats: store.get("stats", {}), total: store.get("qtotal", 0) };
+function newRound() { QZ.i = 0; QZ.ok = 0; QZ.streak = 0; nextQ(); }
+function nextQ() {
+  if (QZ.i >= 10) return endRound();
+  QZ.q = makeQ(QZ.cat); QZ.done = false; QZ.i++; renderQ();
+}
+function renderQ() {
+  const Q = QZ.q;
+  $("#q-pos").innerHTML = `Soru <b>${QZ.i}</b> / 10`;
+  $("#q-run").innerHTML = `Doğru <b>${QZ.ok}</b> · Seri <b>${QZ.streak}</b>`;
+  $("#q-prog").style.width = ((QZ.i - 1) / 10 * 100) + "%";
+  $("#qcard").innerHTML = `<div class="qmeta">${QCATS[Q.cat]}</div><p class="qtext">${Q.text}</p>${Q.vis ? `<div class="qvis">${Q.vis}</div>` : ""}
+    <div class="opts">${Q.opts.map((o, i) => `<button class="opt" data-i="${i}"><kbd>${i + 1}</kbd><span>${esc(o)}</span></button>`).join("")}</div><div id="q-fb"></div>`;
+  $("#qcard .opts").onclick = e => { const b = e.target.closest(".opt"); if (b) answer(+b.dataset.i); };
+}
+function answer(i) {
+  if (QZ.done) return; QZ.done = true;
+  const Q = QZ.q, good = i === Q.ans;
+  const s = QZ.stats[Q.cat] = QZ.stats[Q.cat] || { n: 0, ok: 0 };
+  s.n++; if (good) { s.ok++; QZ.ok++; QZ.streak++; QZ.total++; } else QZ.streak = 0;
+  store.set("stats", QZ.stats); store.set("qtotal", QZ.total);
+  document.querySelectorAll("#qcard .opt").forEach((b, j) => { b.disabled = true; if (j === Q.ans) b.classList.add("right"); else if (j === i) b.classList.add("wrong"); });
+  $("#q-fb").innerHTML = `<div class="qfb ${good ? "" : "bad"}"><div class="h">${good ? "Doğru!" : "Yanlış. Doğru cevap: " + esc(Q.opts[Q.ans])}</div>${Q.why}${Q.after || ""}</div>
+    <div class="qnext"><button class="btn pri" id="q-next">${QZ.i >= 10 ? "Turu bitir" : "Sonraki soru"} →</button></div>`;
+  $("#q-next").onclick = nextQ; $("#q-next").focus();
+  $("#q-run").innerHTML = `Doğru <b>${QZ.ok}</b> · Seri <b>${QZ.streak}</b>`;
+  renderStats(); renderScores();
+}
+function endRound() {
+  $("#q-prog").style.width = "100%";
+  const msg = QZ.ok >= 9 ? "Harika, bu konu oturmuş." : QZ.ok >= 6 ? "İyi gidiyor. Yanlış yaptıklarına bir daha bak." : "Laboratuvar sekmesine dönüp tekrar dene, sonra yeni tur aç.";
+  $("#qcard").innerHTML = `<div class="qmeta">Tur bitti</div><p class="qtext" style="font-size:24px;font-family:var(--f-display);font-weight:800">10 sorudan ${QZ.ok} doğru</p><p>${msg}</p><div class="qnext" style="justify-content:flex-start"><button class="btn pri" id="q-again">Yeni tur</button></div>`;
+  $("#q-again").onclick = newRound;
+}
+function renderStats() {
+  $("#q-stats").innerHTML = Object.entries(QCATS).filter(([k]) => k !== "mix").map(([k, v]) => {
+    const s = QZ.stats[k] || { n: 0, ok: 0 };
+    return `<div class="stat"><b>${v}</b>${s.n ? `${s.ok}/${s.n} · %${Math.round(s.ok / s.n * 100)}` : "henüz yok"}</div>`;
+  }).join("");
+}
+function renderCats() { seg($("#q-cats"), Object.entries(QCATS), QZ.cat, v => { QZ.cat = v; store.set("qcat", v); renderCats(); newRound(); }); }
+
+/* ================= BUILDER ================= */
+// düğüm: [tür, ad, x, y, sahip(nitelikler için)]; rels: ilişki → [[varlık, uçtaki oran, tam?, rol?]]
+const SC = [
+  { id: "s0", name: "0 · İlk adım: bölüm ve öğrenci", text: `Bir üniversitede her <b>bölümün</b> adı tutulur; iki bölümün adı aynı olamaz. Her <b>öğrencinin</b> öğrenci numarası ve adı tutulur. Her öğrenci <b>tek bir</b> bölüme <b>bağlı olmak zorundadır</b>; yeni açılmış bir bölümün <b>öğrencisi olmayabilir</b>.`,
+    nodes: [["E", "BÖLÜM", 230, 300], ["R", "BAĞLIDIR", 450, 300], ["E", "ÖĞRENCİ", 670, 300], ["K", "bolum_adi", 230, 190, "BÖLÜM"], ["K", "ogrenci_no", 610, 190, "ÖĞRENCİ"], ["A", "ad", 760, 200, "ÖĞRENCİ"]],
+    rels: { "BAĞLIDIR": [["BÖLÜM", "1", 0], ["ÖĞRENCİ", "N", 1]] },
+    distract: { "ÜNİVERSİTE": "Tek bir üniversiteyi modelliyoruz; varlık seçmenin 1. sorusundan geçmez: tek tek ayırt etmemiz gereken birden çok örneği yok." },
+    why: { "BAĞLIDIR": "Bir öğrenci en çok 1 bölüme bağlı → 1, BÖLÜM ucuna. Bir bölüme N öğrenci → N, ÖĞRENCİ ucuna. Her öğrenci zorunda → ÖĞRENCİ tarafı çift çizgi." },
+    hints: ["İsimler varlık adayıdır; üç soruyu sor (tek tek ayırt ediliyor mu, kendine ait bilgisi var mı, kapsamda mı). BÖLÜM ve ÖĞRENCİ geçer. Kelime bankasında BÖLÜM'e tıkla, Varlık seç.", "İlişki fiildir: BAĞLIDIR. Onu İlişki (baklava) olarak ekle.", "Bağla aracını seç (C). Önce BÖLÜM'e, sonra BAĞLIDIR'a tıkla. Aynısını ÖĞRENCİ için yap.", "Çizgiye tıkla. ÖĞRENCİ ucuna N ve çift çizgi ('her öğrenci zorunda'). BÖLÜM ucuna 1 ve tek çizgi.", "bolum_adi ve ogrenci_no anahtar; ad basit nitelik. Her birini kendi varlığına bağla."] },
+  { id: "s1", name: "B1 · Spor salonu", text: `Bir spor salonunda her <b>üyenin</b> üye numarası, adı ve soyadı (ayrı ayrı), <b>birden fazla olabilen</b> telefonları ve doğum tarihi tutulur; yaşı <b>hesaplanır</b>. Her <b>antrenörün</b> sicil numarası, adı ve uzmanlığı vardır. Her üye <b>tam olarak bir</b> antrenöre <b>atanır</b>; bir antrenör birden fazla üyeyle çalışabilir, yeni antrenörün <b>hiç üyesi olmayabilir</b>. Atamanın tarihi de tutulur.`,
+    nodes: [["E", "ÜYE", 245, 215], ["R", "ATANIR", 425, 215], ["E", "ANTRENÖR", 615, 215], ["K", "uye_no", 125, 140, "ÜYE"], ["A", "ad_soyad", 295, 115, "ÜYE"], ["A", "ad", 225, 55, "ad_soyad"], ["A", "soyad", 365, 55, "ad_soyad"],
+      ["M", "telefon", 110, 225, "ÜYE"], ["A", "dogum_tarihi", 150, 315, "ÜYE"], ["D", "yas", 295, 325, "ÜYE"], ["A", "atama_tarihi", 425, 120, "ATANIR", "ÜYE"], ["K", "sicil_no", 710, 140, "ANTRENÖR"], ["A", "ad", 730, 305, "ANTRENÖR"], ["A", "uzmanlik", 595, 320, "ANTRENÖR"]],
+    rels: { "ATANIR": [["ÜYE", "N", 1], ["ANTRENÖR", "1", 0]] },
+    distract: { "SPOR SALONU": "Tek bir spor salonunu modelliyoruz; varlık seçmenin 1. sorusundan geçmez: tek tek ayırt etmemiz gereken birden çok örneği yok." },
+    why: { "ATANIR": "Bir üye en çok 1 antrenöre → 1, ANTRENÖR ucuna. Bir antrenöre N üye → N, ÜYE ucuna. Her üye atanmak zorunda → ÜYE çift çizgi; yeni antrenörün üyesi olmayabilir → ANTRENÖR tek çizgi." },
+    hints: ["2 varlık (ÜYE, ANTRENÖR) ve 1 ilişki (ATANIR) var.", "ad_soyad bileşik: onu basit nitelik olarak ekle, ad ve soyad'ı ona bağla.", "telefon 'birden fazla olabilen' → çok değerli. yas 'hesaplanır' → türetilmiş.", "atama_tarihi bir atamaya aittir: ATANIR baklavasına bağla."] },
+  { id: "s2", name: "B2 · Online alışveriş", text: `Her <b>müşterinin</b> müşteri numarası, adı, e-postası ve adresi (il, ilçe, açık adres ayrı ayrı) tutulur. Müşteriler <b>sipariş verir</b>: bir müşteri birden çok sipariş verebilir, <b>henüz sipariş vermemiş</b> müşteriler de vardır; her sipariş <b>tek bir</b> müşteriye aittir. Siparişin numarası ve tarihi vardır; toplam tutarı <b>hesaplanır</b>. Bir sipariş birden çok <b>ürün içerir</b>, bir ürün birçok siparişte yer alabilir. <b>Boş sipariş olamaz</b>; hiç satılmamış ürünler olabilir. Her siparişte bir üründen <b>kaç adet</b> alındığı tutulur. Ürünün numarası, adı ve fiyatı bilinir.`,
+    nodes: [["E", "MÜŞTERİ", 145, 245], ["R", "VERİR", 295, 245], ["E", "SİPARİŞ", 445, 245], ["R", "İÇERİR", 595, 245], ["E", "ÜRÜN", 745, 245],
+      ["K", "musteri_no", 105, 150, "MÜŞTERİ"], ["A", "ad", 205, 140, "MÜŞTERİ"], ["A", "eposta", 85, 335, "MÜŞTERİ"], ["A", "adres", 205, 345, "MÜŞTERİ"], ["A", "il", 125, 420, "adres"], ["A", "ilce", 205, 435, "adres"], ["A", "acik_adres", 305, 420, "adres"],
+      ["K", "siparis_no", 395, 145, "SİPARİŞ"], ["A", "siparis_tarihi", 510, 135, "SİPARİŞ"], ["D", "toplam_tutar", 445, 360, "SİPARİŞ"], ["A", "adet", 600, 160, "İÇERİR"],
+      ["K", "urun_no", 760, 145, "ÜRÜN"], ["A", "urun_adi", 790, 345, "ÜRÜN"], ["A", "fiyat", 680, 355, "ÜRÜN"]],
+    rels: { "VERİR": [["MÜŞTERİ", "1", 0], ["SİPARİŞ", "N", 1]], "İÇERİR": [["SİPARİŞ", "M", 1], ["ÜRÜN", "N", 0]] },
+    distract: { "SİTE": "Tek bir e-ticaret sitesini modelliyoruz; varlık seçmenin 1. sorusundan geçmez: tek tek ayırt etmemiz gereken birden çok örneği yok." },
+    why: { "VERİR": "Bir sipariş en çok 1 müşteriye ait → 1, MÜŞTERİ ucuna. Her sipariş zorunlu → SİPARİŞ çift çizgi.", "İÇERİR": "M:N. Boş sipariş olamaz → SİPARİŞ çift çizgi; satılmamış ürün olabilir → ÜRÜN tek çizgi." },
+    hints: ["3 varlık, 2 ilişki: MÜŞTERİ–VERİR–SİPARİŞ–İÇERİR–ÜRÜN.", "adres bileşik: il, ilce, acik_adres ona bağlanır.", "toplam_tutar hesaplanır → türetilmiş.", "adet ne SİPARİŞ'in ne ÜRÜN'ün: ikisini birlikte sabitlemek gerekir → İÇERİR'e bağla."] },
+  { id: "s3", name: "B4 · Hastane (sınıf uygulaması)", text: `Her <b>doktorun</b> sicil numarası, adı ve uzmanlığı vardır. Her doktor <b>tek bir</b> poliklinikte <b>çalışır</b>; bir poliklinikte birden çok doktor çalışabilir. Her <b>polikliniği</b> (adıyla tanınır), o poliklinikte çalışan doktorlardan biri <b>yönetir</b>; bir doktor <b>en fazla bir</b> polikliniği yönetir. Doktorlar hastaları <b>tedavi eder</b>; bir doktorun <b>birçok</b> hastası, bir hastanın <b>birden çok</b> doktoru olabilir ve tedavinin başlangıç tarihi tutulur. <b>Hastanın</b> numarası, adı ve doğum tarihi bilinir; yaşı doğum tarihinden <b>hesaplanır</b>.`,
+    nodes: [["E", "POLİKLİNİK", 165, 255], ["R", "ÇALIŞIR", 320, 175], ["R", "YÖNETİR", 320, 340], ["E", "DOKTOR", 475, 255], ["R", "TEDAVİ EDER", 630, 255], ["E", "HASTA", 780, 255],
+      ["K", "poliklinik_adi", 165, 140, "POLİKLİNİK"], ["K", "sicil_no", 475, 140, "DOKTOR"], ["A", "ad", 420, 380, "DOKTOR"], ["A", "uzmanlik", 530, 395, "DOKTOR"],
+      ["A", "baslangic_tarihi", 630, 155, "TEDAVİ EDER"], ["K", "hasta_no", 780, 150, "HASTA"], ["A", "ad", 840, 365, "HASTA"], ["A", "dogum_tarihi", 700, 370, "HASTA"], ["D", "yas", 770, 440, "HASTA"]],
+    rels: { "ÇALIŞIR": [["POLİKLİNİK", "1", 0], ["DOKTOR", "N", 1]], "YÖNETİR": [["POLİKLİNİK", "1", 1], ["DOKTOR", "1", 0]], "TEDAVİ EDER": [["DOKTOR", "M", 0], ["HASTA", "N", 0]] },
+    distract: { "HASTANE": "Tek bir hastaneyi modelliyoruz; varlık seçmenin 1. sorusundan geçmez: tek tek ayırt etmemiz gereken birden çok örneği yok." },
+    why: { "ÇALIŞIR": "Bir doktor en çok 1 poliklinikte → 1, POLİKLİNİK ucuna. Her doktor çalışmak zorunda → DOKTOR çift çizgi.", "YÖNETİR": "1:1. Her polikliniğin yöneticisi olmak zorunda → POLİKLİNİK çift çizgi; her doktor yönetici değil → DOKTOR tek çizgi.", "TEDAVİ EDER": "M:N, iki taraf da kısmi: (0,N) · (0,N). Metin hastanın hiç doktoru olmamasını açıkça yasaklamadığı için bu bir varsayımdır ve diyagramın altına yazılır." },
+    hints: ["3 varlık, 3 ilişki. POLİKLİNİK ile DOKTOR arasında iki ayrı ilişki var: ÇALIŞIR ve YÖNETİR.", "baslangic_tarihi doktor + hasta birlikte → TEDAVİ EDER'e bağla.", "yas türetilmiş. Diyagramın altına yazılacak kural: yönetici o poliklinikte çalışmalıdır."] },
+  { id: "s4", name: "B3 · Şirket (özyinelemeli)", text: `Her <b>çalışanın</b> sicil numarası, adı ve maaşı tutulur. Her çalışan <b>tek bir</b> departmanda <b>çalışır</b>; her departmanda <b>en az bir</b> çalışan bulunur. Departmanın numarası, adı ve <b>birden fazla olabilen</b> konumları tutulur. Bazı çalışanlar başka çalışanları <b>yönetir</b>: bir yöneticinin birden çok astı olabilir, her çalışanın <b>en fazla bir</b> yöneticisi vardır (genel müdürün yoktur). Çalışanlar projelerde <b>görev alır</b> (M:N); her projede <b>en az bir</b> çalışan vardır, projesi olmayan çalışan olabilir. Haftalık <b>saat</b> tutulur. Projenin numarası, adı ve bütçesi bilinir.`,
+    nodes: [["E", "DEPARTMAN", 165, 275], ["R", "ÇALIŞIR", 310, 275], ["E", "ÇALIŞAN", 460, 275], ["R", "GÖREV ALIR", 620, 275], ["E", "PROJE", 775, 275], ["R", "YÖNETİR", 460, 430],
+      ["K", "dept_no", 105, 170, "DEPARTMAN"], ["A", "dept_adi", 215, 165, "DEPARTMAN"], ["M", "konumlar", 150, 385, "DEPARTMAN"], ["K", "sicil_no", 385, 165, "ÇALIŞAN"], ["A", "ad", 470, 145, "ÇALIŞAN"], ["A", "maas", 545, 180, "ÇALIŞAN"],
+      ["A", "saat", 640, 170, "GÖREV ALIR"], ["K", "proje_no", 775, 165, "PROJE"], ["A", "proje_adi", 805, 385, "PROJE"], ["A", "butce", 705, 400, "PROJE"]],
+    rels: { "ÇALIŞIR": [["DEPARTMAN", "1", 1], ["ÇALIŞAN", "N", 1]], "GÖREV ALIR": [["ÇALIŞAN", "M", 0], ["PROJE", "N", 1]], "YÖNETİR": [["ÇALIŞAN", "1", 0, "yönetici"], ["ÇALIŞAN", "N", 0, "ast"]] },
+    distract: { "ŞİRKET": "Tek bir şirketi modelliyoruz; varlık seçmenin 1. sorusundan geçmez: tek tek ayırt etmemiz gereken birden çok örneği yok." },
+    why: { "ÇALIŞIR": "Her çalışan tek departmanda ve zorunlu; her departmanda en az bir çalışan → iki taraf da çift çizgi.", "GÖREV ALIR": "M:N. Her projede en az bir çalışan → PROJE çift çizgi.", "YÖNETİR": "Özyinelemeli: ÇALIŞAN'dan YÖNETİR'e iki çizgi çek. Biri 'yönetici' (1), diğeri 'ast' (N); ikisi de kısmi." },
+    hints: ["YÖNETİR, ÇALIŞAN ile ÇALIŞAN arasında: Bağla aracıyla ÇALIŞAN → YÖNETİR bağlantısını iki kez yap.", "İki çizgiye de rol adı yaz: yönetici ve ast.", "konumlar çok değerli; saat GÖREV ALIR'a ait."] },
+  { id: "s5", name: "B5 · Film platformu (sınav tipi)", text: `Her <b>kullanıcının</b> numarası, adı ve e-postası tutulur. Kullanıcılar filmleri <b>izler</b> (M:N); izleme tarihi ve <b>puan</b> saklanır. Hiç izlememiş kullanıcı ve hiç izlenmemiş film olabilir. Her <b>filmin</b> numarası, başlığı, yılı ve <b>birden fazla olabilen</b> türleri vardır. Her filmin <b>tek bir</b> yönetmeni vardır; bir <b>yönetmen</b> birçok film <b>yönetir</b>, henüz filmi olmayan yönetmenler de kayıtlıdır. Yönetmenin numarası ve adı tutulur. <b>Oyuncular</b> filmlerde <b>oynar</b>: her filmde en az bir oyuncu oynar ve yalnızca en az bir filmde oynamış oyuncular tutulur. <b>Rol adı</b> saklanır. Oyuncunun numarası, adı ve soyadı (ayrı ayrı) tutulur.`,
+    nodes: [["E", "KULLANICI", 145, 225], ["R", "İZLER", 300, 225], ["E", "FİLM", 455, 225], ["R", "OYNAR", 610, 225], ["E", "OYUNCU", 760, 225], ["R", "YÖNETİR", 455, 345], ["E", "YÖNETMEN", 455, 465],
+      ["K", "kullanici_no", 120, 125, "KULLANICI"], ["A", "ad", 95, 325, "KULLANICI"], ["A", "eposta", 190, 340, "KULLANICI"], ["A", "izleme_tarihi", 255, 115, "İZLER"], ["A", "puan", 360, 140, "İZLER"],
+      ["K", "film_no", 450, 110, "FİLM"], ["A", "baslik", 535, 135, "FİLM"], ["M", "turler", 340, 315, "FİLM"], ["A", "yil", 565, 315, "FİLM"], ["A", "rol_adi", 640, 125, "OYNAR"],
+      ["K", "oyuncu_no", 775, 125, "OYUNCU"], ["A", "ad_soyad", 775, 335, "OYUNCU"], ["A", "ad", 710, 415, "ad_soyad"], ["A", "soyad", 820, 420, "ad_soyad"], ["K", "yonetmen_no", 285, 470, "YÖNETMEN"], ["A", "ad", 625, 470, "YÖNETMEN"]],
+    rels: { "İZLER": [["KULLANICI", "M", 0], ["FİLM", "N", 0]], "OYNAR": [["FİLM", "M", 1], ["OYUNCU", "N", 1]], "YÖNETİR": [["FİLM", "N", 1], ["YÖNETMEN", "1", 0]] },
+    distract: { "PLATFORM": "Tek bir platformu modelliyoruz; varlık seçmenin 1. sorusundan geçmez: tek tek ayırt etmemiz gereken birden çok örneği yok." },
+    why: { "İZLER": "M:N, iki taraf da kısmi.", "OYNAR": "M:N, iki taraf da tam: her filmde oyuncu var, her oyuncunun filmi var.", "YÖNETİR": "Bir filmin en çok 1 yönetmeni → 1, YÖNETMEN ucuna. Her filmin yönetmeni olmak zorunda → FİLM çift çizgi." },
+    hints: ["4 varlık, 3 ilişki.", "izleme_tarihi ve puan İZLER'e; rol_adi OYNAR'a bağlanır.", "turler çok değerli; oyuncunun ad_soyad'ı bileşik."] },
+  { id: "s6", name: "B6 · Zayıf varlık (bonus)", text: `Şirket, çalışanların sigortadan yararlanan <b>yakınlarını</b> kaydetmek istiyor. Bir yakın, <b>yalnızca bir çalışan üzerinden</b> tanınır: farklı çalışanların "Ayşe" adlı yakınları olabilir, ama aynı çalışanın iki yakınının adı aynı olamaz. Yakının adı, yakınlık derecesi ve doğum tarihi tutulur. Çalışanın sicil numarası ve adı vardır. Bir çalışanın birden çok yakını olabilir, hiç olmayabilir.`,
+    nodes: [["E", "ÇALIŞAN", 220, 270], ["I", "BAĞIMLISIDIR", 445, 270], ["W", "YAKIN", 670, 270], ["K", "sicil_no", 170, 175, "ÇALIŞAN"], ["A", "ad", 215, 365, "ÇALIŞAN"],
+      ["P", "yakin_adi", 610, 170, "YAKIN"], ["A", "yakinlik_derecesi", 760, 185, "YAKIN"], ["A", "dogum_tarihi", 690, 370, "YAKIN"]],
+    rels: { "BAĞIMLISIDIR": [["ÇALIŞAN", "1", 0], ["YAKIN", "N", 1]] },
+    distract: { "SİGORTA": "Metinde geçiyor ama kendine ait hiçbir bilgisi tutulmuyor; varlık seçmenin 2. sorusundan geçmez." },
+    why: { "BAĞIMLISIDIR": "Zayıf varlığın katılımı her zaman tamdır → YAKIN çift çizgi. Bir çalışanın N yakını olabilir." },
+    hints: ["YAKIN'ın kendi anahtarı yok → zayıf varlık (çift dikdörtgen).", "Onu sahibine bağlayan ilişki tanımlayıcı ilişkidir (çift baklava).", "yakin_adi kısmi anahtar (kesikli alt çizgi)."] },
+  { id: "s7", name: "B7 · Kütüphane (çözümlü örnek)", text: `Kütüphanenin <b>üyeleri</b> vardır; her üyenin üye numarası, adı soyadı ve <b>bir ya da daha fazla</b> telefonu tutulur. Her <b>kitabın</b> ISBN numarası, başlığı ve yayın yılı bilinir. Her kitabı <b>yalnızca bir</b> yayınevi <b>yayımlar</b>; bir yayınevinin kütüphanede <b>kitabı bulunmayabilir</b>. Yayınevinin adı ve şehri tutulur. Üyeler kitap <b>ödünç alır</b>: bir üye <b>birden çok</b> kitabı ödünç alabilir, aynı kitabı zaman içinde <b>birden çok</b> üye ödünç alabilir. Her ödünç işleminin alış ve iade tarihi tutulur.`,
+    nodes: [["E", "ÜYE", 150, 250], ["R", "ÖDÜNÇ ALIR", 360, 250], ["E", "KİTAP", 570, 250], ["R", "YAYIMLAR", 570, 385], ["E", "YAYINEVİ", 570, 495],
+      ["K", "uye_no", 110, 140, "ÜYE"], ["A", "ad_soyad", 95, 360, "ÜYE"], ["M", "telefon", 220, 375, "ÜYE"], ["A", "alis_tarihi", 300, 145, "ÖDÜNÇ ALIR"], ["A", "iade_tarihi", 425, 145, "ÖDÜNÇ ALIR"],
+      ["K", "isbn", 545, 140, "KİTAP"], ["A", "baslik", 650, 150, "KİTAP"], ["A", "yayin_yili", 740, 250, "KİTAP"], ["K", "yayinevi_adi", 380, 495, "YAYINEVİ"], ["A", "sehir", 740, 495, "YAYINEVİ"]],
+    rels: { "ÖDÜNÇ ALIR": [["ÜYE", "M", 0], ["KİTAP", "N", 0]], "YAYIMLAR": [["KİTAP", "N", 1], ["YAYINEVİ", "1", 0]] },
+    distract: { "KÜTÜPHANE": "Tek bir kütüphaneyi modelliyoruz; varlık seçmenin 1. sorusundan geçmez: tek tek ayırt etmemiz gereken birden çok örneği yok." },
+    why: { "ÖDÜNÇ ALIR": "M:N. Metin hiç ödünç almamış üyeyi ya da hiç verilmemiş kitabı yasaklamıyor → iki taraf da kısmi (tek çizgi).", "YAYIMLAR": "Bir kitabı en çok 1 yayınevi yayımlar → 1, YAYINEVİ ucuna. Her kitabın yayınevi olmak zorunda → KİTAP çift çizgi." },
+    hints: ["3 varlık: ÜYE, KİTAP, YAYINEVİ. 2 ilişki: ÖDÜNÇ ALIR, YAYIMLAR.", "telefon 'bir ya da daha fazla' → çok değerli.", "alis_tarihi ve iade_tarihi ödünç işleminin bilgisidir → ÖDÜNÇ ALIR'a bağla.", "Başlangıç sekmesindeki çözümlü örnek bu senaryonun adım adım çözümüdür."] },
+  { id: "s8", name: "B8 · Sosyal medya (sınav sorusu)", text: `Bir sosyal medya uygulamasında her <b>kullanıcının</b> numarası, kullanıcı adı, e-postası ve doğum tarihi tutulur; yaşı <b>hesaplanır</b>. Kullanıcılar birbirini <b>takip eder</b>: bir kullanıcı birçok kişiyi takip edebilir ve birçok kişi tarafından takip edilebilir; kimseyi takip etmeyen de olabilir. Takibin başladığı <b>tarih</b> tutulur. Her <b>gönderiyi</b> tek bir kullanıcı <b>paylaşır</b>; <b>paylaşanı olmayan gönderi olamaz</b>, hiç paylaşım yapmamış kullanıcılar olabilir. Gönderinin numarası, içeriği ve paylaşım tarihi tutulur. Kullanıcılar gönderileri <b>beğenir</b> (M:N); hiç beğeni almamış gönderiler olabilir.`,
+    nodes: [["E", "KULLANICI", 300, 290], ["R", "TAKİP EDER", 300, 130], ["R", "PAYLAŞIR", 520, 290], ["E", "GÖNDERİ", 720, 290], ["R", "BEĞENİR", 520, 430],
+      ["A", "takip_tarihi", 110, 120, "TAKİP EDER"], ["K", "kullanici_no", 115, 230, "KULLANICI"], ["A", "kullanici_adi", 105, 300, "KULLANICI"], ["A", "eposta", 115, 370, "KULLANICI"],
+      ["A", "dogum_tarihi", 190, 450, "KULLANICI"], ["D", "yas", 330, 455, "KULLANICI"],
+      ["K", "gonderi_no", 690, 175, "GÖNDERİ"], ["A", "icerik", 835, 250, "GÖNDERİ"], ["A", "paylasim_tarihi", 770, 405, "GÖNDERİ"]],
+    rels: { "TAKİP EDER": [["KULLANICI", "M", 0, "takip eden"], ["KULLANICI", "N", 0, "takip edilen"]], "PAYLAŞIR": [["KULLANICI", "1", 0], ["GÖNDERİ", "N", 1]], "BEĞENİR": [["KULLANICI", "M", 0], ["GÖNDERİ", "N", 0]] },
+    distract: { "UYGULAMA": "Tek bir uygulamayı modelliyoruz; varlık seçmenin 1. sorusundan geçmez: tek tek ayırt etmemiz gereken birden çok örneği yok." },
+    why: { "TAKİP EDER": "Özyinelemeli M:N: KULLANICI'dan TAKİP EDER'e iki çizgi; roller 'takip eden' ve 'takip edilen'. İki taraf kısmi.", "PAYLAŞIR": "Bir gönderiyi en çok 1 kullanıcı paylaşır → 1, KULLANICI ucuna. Paylaşanı olmayan gönderi olamaz → GÖNDERİ çift çizgi.", "BEĞENİR": "M:N, iki taraf da kısmi." },
+    hints: ["2 varlık, 3 ilişki. Biri KULLANICI ile KULLANICI arasında (TAKİP EDER).", "TAKİP EDER için Bağla aracıyla KULLANICI → TAKİP EDER bağlantısını iki kez yap ve iki çizgiye rol yaz.", "takip_tarihi iki kullanıcıya birlikte bağlı → TAKİP EDER'in niteliği. yas türetilmiş.", "Bu, ders sunumundaki değerlendirme sorusunun ER kısmıdır."] },
+  { id: "s9", name: "B9 · Kargo şirketi", text: `Bir kargo şirketinde her <b>müşterinin</b> numarası, adı ve <b>birden fazla olabilen</b> telefonları tutulur. Müşteriler <b>kargo gönderir</b>: bir müşteri birçok kargo gönderebilir, hiç göndermemiş müşteriler de kayıtlıdır; her kargoyu <b>tek bir</b> müşteri gönderir. Gönderim tarihi tutulur. <b>Kargonun</b> takip numarası, ağırlığı ve alıcı adresi (il, ilçe, açık adres ayrı ayrı) tutulur; ücreti ağırlıktan <b>hesaplanır</b>. Her kargoyu <b>en fazla bir</b> kurye <b>taşır</b>; henüz kuryeye verilmemiş kargolar olabilir. Bir kurye birçok kargo taşır, boşta kurye de olabilir. Teslim tarihi tutulur. Her <b>kurye</b> tek bir şubede <b>çalışmak zorundadır</b>; bir şubede birçok kurye çalışabilir, yeni açılan şubede kurye olmayabilir. <b>Şubenin</b> kodu ve şehri, kuryenin sicil numarası ve adı tutulur.`,
+    nodes: [["E", "MÜŞTERİ", 130, 180], ["R", "GÖNDERİR", 320, 180], ["E", "KARGO", 510, 180], ["R", "TAŞIR", 510, 320], ["E", "KURYE", 510, 455], ["R", "ÇALIŞIR", 310, 455], ["E", "ŞUBE", 120, 455],
+      ["K", "musteri_no", 90, 75, "MÜŞTERİ"], ["A", "ad", 200, 80, "MÜŞTERİ"], ["M", "telefon", 110, 285, "MÜŞTERİ"], ["A", "gonderim_tarihi", 320, 80, "GÖNDERİR", "KARGO"],
+      ["K", "takip_no", 465, 75, "KARGO"], ["A", "agirlik", 590, 80, "KARGO"], ["D", "ucret", 680, 170, "KARGO"], ["A", "alici_adres", 680, 275, "KARGO"],
+      ["A", "il", 805, 220, "alici_adres"], ["A", "ilce", 830, 285, "alici_adres"], ["A", "acik_adres", 790, 345, "alici_adres"],
+      ["A", "teslim_tarihi", 650, 410, "TAŞIR", "KARGO"], ["K", "sicil_no", 690, 495, "KURYE"], ["A", "ad", 510, 535, "KURYE"], ["K", "sube_kodu", 120, 360, "ŞUBE"], ["A", "sehir", 200, 535, "ŞUBE"]],
+    rels: { "GÖNDERİR": [["MÜŞTERİ", "1", 0], ["KARGO", "N", 1]], "TAŞIR": [["KARGO", "N", 0], ["KURYE", "1", 0]], "ÇALIŞIR": [["ŞUBE", "1", 0], ["KURYE", "N", 1]] },
+    distract: { "ŞİRKET": "Tek bir şirketi modelliyoruz; varlık seçmenin 1. sorusundan geçmez: tek tek ayırt etmemiz gereken birden çok örneği yok." },
+    why: { "GÖNDERİR": "Bir kargoyu en çok 1 müşteri gönderir → 1, MÜŞTERİ ucuna. Her kargonun göndereni olmak zorunda → KARGO çift çizgi.", "TAŞIR": "Bir kargoyu en çok 1 kurye taşır → 1, KURYE ucuna. Kuryesi olmayan kargo ve boşta kurye olabilir → iki taraf tek çizgi.", "ÇALIŞIR": "Her kurye bir şubede çalışmak zorunda → KURYE çift çizgi. Bir kuryenin en çok 1 şubesi → 1, ŞUBE ucuna." },
+    hints: ["4 varlık (MÜŞTERİ, KARGO, KURYE, ŞUBE) ve 3 ilişki.", "alici_adres bileşik: il, ilce, acik_adres ona bağlanır. ucret türetilmiş.", "gonderim_tarihi ve teslim_tarihi 1:N ilişkilerin niteliği: ilişkiye bağla (N tarafına, KARGO'ya bağlamak da kabul edilir)."] }
+];
+const BD = { bad: {}, sc: null, nodes: [], edges: [], mode: "move", sel: null, from: null, chip: null, hintI: 0, seq: 1, msg: "", solved: store.get("solved", {}) };
+const cv = $("#cv");
+const byId = id => BD.nodes.find(n => n.id === id);
+function bankItems() {
+  const items = BD.sc.nodes.map(n => n[1]).concat(Object.keys(BD.sc.distract));
+  return items.sort((a, b) => a.localeCompare(b, "tr"));
+}
+function saveDraft() { BD.bad = {}; store.set("draft:" + BD.sc.id, { nodes: BD.nodes, edges: BD.edges }); }
+function loadScenario(id) {
+  BD.sc = SC.find(s => s.id === id) || SC[0];
+  const d = store.get("draft:" + BD.sc.id, null);
+  BD.nodes = d ? d.nodes : []; BD.edges = d ? d.edges : [];
+  BD.seq = 1 + Math.max(0, ...BD.nodes.map(n => +n.id.slice(1) || 0), ...BD.edges.map(e => +e.id.slice(1) || 0));
+  BD.sel = null; BD.from = null; BD.chip = null; BD.hintI = 0; BD.msg = ""; BD.bad = {};
+  store.set("sc", BD.sc.id);
+  renderSide(); renderCanvas(); $("#fb").innerHTML = "";
+}
+function renderSide() {
+  $("#sc-sel").innerHTML = SC.map(s => `<option value="${s.id}" ${s.id === BD.sc.id ? "selected" : ""}>${BD.solved[s.id] ? "✓ " : ""}${esc(s.name)}</option>`).join("");
+  $("#sc-text").innerHTML = BD.sc.text;
+  renderBank();
+}
+function renderBank() {
+  const used = {}; BD.nodes.forEach(n => used[n.label] = (used[n.label] || 0) + 1);
+  const seen = {};
+  $("#bank").innerHTML = bankItems().map(w => {
+    seen[w] = (seen[w] || 0) + 1;
+    const isUsed = seen[w] <= (used[w] || 0);
+    const upper = w === w.toLocaleUpperCase("tr");
+    return `<button type="button" class="chip${upper ? " up" : ""}${isUsed ? " used" : ""}${BD.chip === w && !isUsed ? " on" : ""}" data-w="${esc(w)}" ${isUsed ? "disabled" : ""}>${esc(w)}</button>`;
+  }).join("");
+  const ch = $("#chooser");
+  if (BD.chip) {
+    ch.hidden = false;
+    ch.innerHTML = `<p><b>${esc(BD.chip)}</b> hangi şekil olsun?</p><div class="types">${Object.keys(SHAPES).map(t => `<button type="button" data-t="${t}">${miniShape(t)}<span>${SHAPES[t]}</span></button>`).join("")}</div>`;
+  } else { ch.hidden = true; ch.innerHTML = ""; }
+}
+$("#bank").onclick = e => { const b = e.target.closest(".chip"); if (!b || b.disabled) return; BD.chip = BD.chip === b.dataset.w ? null : b.dataset.w; renderBank(); };
+$("#chooser").onclick = e => { const b = e.target.closest("button[data-t]"); if (b) addNode(BD.chip, b.dataset.t); };
+function spawnPos() {
+  for (let y = 60; y <= 520; y += 64) for (let x = 90; x <= 830; x += 130) {
+    if (BD.nodes.every(n => Math.abs(n.x - x) > 115 || Math.abs(n.y - y) > 52)) return [x, y];
+  }
+  return [450 + Math.random() * 40, 280 + Math.random() * 40];
+}
+function addNode(label, t) {
+  const [x, y] = spawnPos();
+  const n = { id: "n" + BD.seq++, t, label, x, y };
+  BD.nodes.push(n); BD.chip = null; BD.sel = { k: "n", id: n.id }; BD.msg = "";
+  saveDraft(); renderBank(); renderCanvas();
+}
+function addEdge(a, b) {
+  const A = byId(a), B = byId(b), ka = KIND(A.t), kb = KIND(B.t);
+  if (ka === "ent" && kb === "ent") { BD.msg = "İki varlık doğrudan bağlanmaz. Araya bir ilişki (baklava) koy."; return; }
+  if (ka === "rel" && kb === "rel") { BD.msg = "İki ilişki birbirine bağlanmaz."; return; }
+  let x = a, y = b;
+  if (kb === "ent" && ka === "rel") [x, y] = [b, a];
+  if (kb === "att" && ka !== "att") [x, y] = [b, a];
+  const same = BD.edges.filter(e => [e.a, e.b].sort().join() === [x, y].sort().join()).length;
+  const isER = KIND(byId(x).t) === "ent" && KIND(byId(y).t) === "rel";
+  if (same >= (isER ? 2 : 1)) { BD.msg = isER ? "Bu ikili arasında zaten iki çizgi var." : "Bu ikili zaten bağlı."; return; }
+  const e = { id: "e" + BD.seq++, a: x, b: y, c: "", t: 0, role: "" };
+  BD.edges.push(e); BD.msg = "";
+  if (isER) BD.sel = { k: "e", id: e.id };
+  saveDraft();
+}
+function delSel() {
+  if (!BD.sel) return;
+  if (BD.sel.k === "n") { BD.nodes = BD.nodes.filter(n => n.id !== BD.sel.id); BD.edges = BD.edges.filter(e => e.a !== BD.sel.id && e.b !== BD.sel.id); }
+  else BD.edges = BD.edges.filter(e => e.id !== BD.sel.id);
+  BD.sel = null; saveDraft(); renderBank(); renderCanvas();
+}
+function renderCanvas() {
+  cv.classList.toggle("link", BD.mode === "link");
+  const empty = BD.nodes.length ? "" : `<text class="t-empty" x="450" y="270">Soldaki kelime bankasından bir kelimeye tıklayarak başla.</text><text class="t-empty" x="450" y="296">Şekli seçince burada belirir.</text>`;
+  const legend = `<text class="t-empty" x="890" y="550" style="text-anchor:end;font-size:12px">Gösterim: Chen · oran ve katılım</text>`;
+  cv.innerHTML = empty + legend + chenSVG(BD.nodes, BD.edges, { hits: true, mark: BD.bad, sel: BD.sel && BD.sel.k === "n" ? BD.sel.id : null, selEdge: BD.sel && BD.sel.k === "e" ? BD.sel.id : null, from: BD.from });
+  renderInsp();
+}
+function renderInsp() {
+  const I = $("#insp"); let h = "";
+  if (BD.msg) h += `<span class="warnmsg">${esc(BD.msg)}</span>`;
+  if (BD.mode === "link" && (BD.from || !BD.sel)) h += `<span class="msg">${BD.from ? `<b>${esc(byId(BD.from).label)}</b> seçildi. Şimdi bağlanacak ikinci şekle tıkla.` : "Bağla: bağlamak istediğin ilk şekle tıkla."}</span>`;
+  else if (!BD.sel) h += `<span class="msg">Bir şekle ya da çizgiye tıkla, ayarları burada görünür.</span>`;
+  else if (BD.sel.k === "n") {
+    const n = byId(BD.sel.id);
+    if (n) h += `<span class="nm">${esc(n.label)}</span><div class="seg" id="i-type">${Object.keys(SHAPES).map(t => `<button data-v="${t}" class="${t === n.t ? "on" : ""}" title="${SHAPES[t]}">${SHAPES[t].replace(" nitelik", "")}</button>`).join("")}</div><button class="btn" id="i-del">Sil</button>`;
+  } else {
+    const e = BD.edges.find(x => x.id === BD.sel.id);
+    if (e) {
+      const A = byId(e.a), B = byId(e.b);
+      if (KIND(A.t) === "ent" && KIND(B.t) === "rel") {
+        h += `<span class="nm">${esc(A.label)} — ${esc(B.label)}</span>
+          <label class="msg">${esc(A.label)} ucundaki oran</label><div class="seg" id="i-c">${[["", "—"], ["1", "1"], ["N", "N"], ["M", "M"]].map(([v, t]) => `<button data-v="${v}" class="${e.c === v ? "on" : ""}">${t}</button>`).join("")}</div>
+          <div class="seg" id="i-t"><button data-v="0" class="${!e.t ? "on" : ""}">Kısmi · tek</button><button data-v="1" class="${e.t ? "on" : ""}">Tam · çift</button></div>
+          <label class="msg" for="i-role">Rol</label><input id="i-role" value="${esc(e.role)}" placeholder="isteğe bağlı">
+          <button class="btn" id="i-del">Sil</button>`;
+      } else h += `<span class="nm">${esc(A.label)} — ${esc(B.label)}</span><span class="msg">Nitelik çizgisi</span><button class="btn" id="i-del">Sil</button>`;
+    }
+  }
+  I.innerHTML = h;
+  const tSeg = $("#i-type"); if (tSeg) tSeg.onclick = ev => { const b = ev.target.closest("button"); if (!b) return; byId(BD.sel.id).t = b.dataset.v; saveDraft(); renderCanvas(); };
+  const cSeg = $("#i-c"); if (cSeg) cSeg.onclick = ev => { const b = ev.target.closest("button"); if (!b) return; BD.edges.find(x => x.id === BD.sel.id).c = b.dataset.v; saveDraft(); renderCanvas(); };
+  const pSeg = $("#i-t"); if (pSeg) pSeg.onclick = ev => { const b = ev.target.closest("button"); if (!b) return; BD.edges.find(x => x.id === BD.sel.id).t = +b.dataset.v; saveDraft(); renderCanvas(); };
+  const r = $("#i-role"); if (r) r.oninput = () => { BD.edges.find(x => x.id === BD.sel.id).role = r.value; saveDraft(); cv.innerHTML = chenSVG(BD.nodes, BD.edges, { hits: true, selEdge: BD.sel.id }); };
+  const d = $("#i-del"); if (d) d.onclick = delSel;
+}
+function svgPt(ev) { const p = cv.createSVGPoint(); p.x = ev.clientX; p.y = ev.clientY; return p.matrixTransform(cv.getScreenCTM().inverse()); }
+let drag = null, raf = 0;
+cv.addEventListener("pointerdown", ev => {
+  const g = ev.target.closest("[data-node]"), he = ev.target.closest("[data-edge]");
+  BD.msg = "";
+  if (g && g.dataset.node) {
+    const id = g.dataset.node;
+    if (BD.mode === "link") {
+      if (!BD.from) BD.from = id;
+      else if (BD.from === id) BD.from = null;
+      else { addEdge(BD.from, id); BD.from = null; }
+      renderCanvas(); return;
+    }
+    const n = byId(id), pt = svgPt(ev);
+    BD.sel = { k: "n", id }; drag = { id, dx: pt.x - n.x, dy: pt.y - n.y, moved: false };
+    cv.setPointerCapture(ev.pointerId);
+  } else if (he) { BD.sel = { k: "e", id: he.dataset.edge }; }
+  else { BD.sel = null; BD.from = null; }
+  renderCanvas();
+});
+cv.addEventListener("pointermove", ev => {
+  if (!drag) return;
+  const pt = svgPt(ev), n = byId(drag.id);
+  n.x = Math.max(40, Math.min(860, pt.x - drag.dx)); n.y = Math.max(25, Math.min(535, pt.y - drag.dy)); drag.moved = true;
+  if (!raf) raf = requestAnimationFrame(() => { raf = 0; cv.innerHTML = chenSVG(BD.nodes, BD.edges, { hits: true, sel: drag ? drag.id : null }); });
+});
+const endDrag = () => { if (drag) { if (drag.moved) saveDraft(); drag = null; renderCanvas(); } };
+cv.addEventListener("pointerup", endDrag); cv.addEventListener("pointercancel", endDrag);
+function setMode(m) { BD.mode = m; BD.from = null; document.querySelectorAll("#tool button").forEach(b => b.classList.toggle("on", b.dataset.m === m)); renderCanvas(); }
+$("#tool").onclick = e => { const b = e.target.closest("button"); if (b) setMode(b.dataset.m); };
+$("#b-del").onclick = delSel;
+$("#sc-sel").onchange = e => loadScenario(e.target.value);
+document.addEventListener("keydown", e => {
+  if (e.target.matches("input, select, textarea")) return;
+  if (!$("#v-quiz").hidden) {
+    if (/^[1-5]$/.test(e.key) && QZ.q && !QZ.done && +e.key <= QZ.q.opts.length) answer(+e.key - 1);
+    else if (e.key === "Enter" && QZ.done && $("#q-next")) { e.preventDefault(); nextQ(); }
+    return;
+  }
+  if ($("#v-kur").hidden) return;
+  if (e.key === "Delete" || e.key === "Backspace") { e.preventDefault(); delSel(); }
+  else if (e.key === "c" || e.key === "C") setMode("link");
+  else if (e.key === "v" || e.key === "V") setMode("move");
+  else if (e.key === "Escape") { BD.from = null; BD.sel = null; BD.chip = null; renderBank(); renderCanvas(); }
+});
+
+/* ---- kontrol ---- */
+const isMany = c => c === "N" || c === "M";
+const sameCard = (u, x) => u === x || (isMany(u) && isMany(x));
+function check() {
+  const sc = BD.sc, res = [], U = BD.nodes;
+  const adj = id => BD.edges.filter(e => e.a === id || e.b === id).map(e => byId(e.a === id ? e.b : e.a)).filter(Boolean);
+  if (!U.length) return [{ ok: false, msg: "Henüz bir şey çizmedin. Kelime bankasından başla." }];
+  U.filter(n => sc.distract[n.label]).forEach(n => res.push({ ok: false, ids: [n.id], msg: `${n.label} diyagramda olmamalı.`, why: sc.distract[n.label] }));
+  // varlıklar ve ilişkiler
+  sc.nodes.filter(n => KIND(n[0]) !== "att").forEach(([t, name]) => {
+    const u = U.find(n => n.label === name);
+    if (!u) return res.push({ ok: false, msg: `${name} eksik.` });
+    if (KIND(u.t) !== KIND(t)) res.push({ ok: false, ids: [u.id], msg: `${name} bir ${SHAPES[t].toLocaleLowerCase("tr")} olmalı; sen ${SHAPES[u.t].toLocaleLowerCase("tr")} çizdin.`, why: TYPE_WHY[t] });
+    else if (u.t !== t) res.push({ ok: false, ids: [u.id], msg: `${name}: ${SHAPES[t].toLocaleLowerCase("tr")} (${SHAPE_DESC[t]}) olmalı.`, why: TYPE_WHY[t] });
+    else res.push({ ok: true, msg: `${name} doğru şekil: ${SHAPES[t].toLocaleLowerCase("tr")}.` });
+  });
+  // nitelikler: önce doğru yere bağlı olanları eşleştir, sonra kalanları
+  const exp = sc.nodes.filter(n => KIND(n[0]) === "att"), claimed = new Set(), pending = [];
+  exp.forEach(([t, name, , , owner, alt]) => {
+    let m = U.find(n => n.label === name && KIND(n.t) === "att" && !claimed.has(n.id) && adj(n.id).some(o => o.label === owner));
+    if (!m && alt) {
+      m = U.find(n => n.label === name && KIND(n.t) === "att" && !claimed.has(n.id) && adj(n.id).some(o => o.label === alt));
+      if (m) { claimed.add(m.id); res.push({ ok: true, msg: `${name} → ${alt} (kabul edilir).`, why: `1:N ilişkinin niteliği N tarafına (${alt}) taşınabilir. Chen'de ${owner} ilişkisine bağlamak daha açık bir okumadır.` }); return; }
+    }
+    if (!m) return pending.push([t, name, owner]);
+    claimed.add(m.id);
+    const kids = exp.filter(x => x[4] === name).map(x => x[1]);
+    const extra = adj(m.id).filter(o => o.label !== owner && !(KIND(o.t) === "att" && kids.includes(o.label)));
+    if (extra.length) res.push({ ok: false, ids: [m.id], msg: `${name} birden çok yere bağlı (${extra.map(o => o.label).join(", ")}). Bir nitelik tek yere bağlanır.` });
+    else if (m.t !== t) res.push({ ok: false, ids: [m.id], msg: `${name} (${owner}) ${SHAPES[t].toLocaleLowerCase("tr")} olmalı; sen ${SHAPES[m.t].toLocaleLowerCase("tr")} çizdin.`, why: TYPE_WHY[t] });
+    else res.push({ ok: true, msg: `${name} → ${owner}, ${SHAPES[t].toLocaleLowerCase("tr")}.` });
+  });
+  pending.forEach(([t, name, owner]) => {
+    const m = U.find(n => n.label === name && !claimed.has(n.id));
+    if (!m) return res.push({ ok: false, msg: `${name} (${owner} için) eksik.` });
+    claimed.add(m.id);
+    const to = adj(m.id);
+    if (!to.length) res.push({ ok: false, ids: [m.id], msg: `${name} hiçbir şeye bağlı değil. ${owner}'e bağla.` });
+    else res.push({ ok: false, ids: [m.id], msg: `${name} yanlış yere bağlı (${to.map(o => o.label).join(", ")}).`, why: `Neyi sabitlersem? Bu nitelik ${owner}'e aittir.` });
+  });
+  // ilişki uçları
+  Object.entries(sc.rels).forEach(([rn, ends]) => {
+    const r = U.find(n => n.label === rn && KIND(n.t) === "rel"); if (!r) return;
+    const es = BD.edges.filter(e => e.b === r.id && byId(e.a) && KIND(byId(e.a).t) === "ent").map(e => ({ e, ent: byId(e.a).label, used: false }));
+    ends.forEach(([ent, c, t, role]) => {
+      const pool = es.filter(x => !x.used && x.ent === ent);
+      const m = pool.find(x => x.e.c === c) || pool.find(x => sameCard(x.e.c, c)) || pool[0];
+      if (!m) return res.push({ ok: false, msg: `${rn} ile ${ent} arasında çizgi yok.` });
+      m.used = true;
+      const errs = [];
+      if (!sameCard(m.e.c, c)) errs.push(m.e.c ? `oran ${c === "M" ? "N (veya M)" : c} olmalı, sen ${m.e.c} yazdın` : `oran yazılmamış (${c === "M" ? "N veya M" : c} olmalı)`);
+      if (!!m.e.t !== !!t) errs.push(t ? "tam katılım: çift çizgi olmalı" : "kısmi katılım: tek çizgi olmalı");
+      if (role && !(m.e.role || "").trim()) errs.push(`rol adı yazılmalı (ör. ${role})`);
+      res.push(errs.length ? { ok: false, ids: [m.e.id], msg: `${rn} — ${ent} ucu: ${errs.join("; ")}.`, why: sc.why[rn] } : { ok: true, msg: `${rn} — ${ent} ucu doğru.` });
+    });
+    es.filter(x => !x.used).forEach(x => res.push({ ok: false, ids: [x.e.id], msg: `${rn}, ${x.ent} ile bağlı olmamalı.` }));
+  });
+  return res;
+}
+function showCheck() {
+  const res = check(), ok = res.filter(r => r.ok).length, all = res.length, pct = Math.round(ok / all * 100);
+  BD.bad = {}; res.forEach(r => { if (!r.ok && r.ids) r.ids.forEach(id => BD.bad[id] = "bad"); });
+  renderCanvas();
+  res.sort((a, b) => a.ok - b.ok);
+  const win = all && ok === all;
+  if (win && !BD.solved[BD.sc.id]) { BD.solved[BD.sc.id] = 1; store.set("solved", BD.solved); renderSide(); renderScores(); }
+  $("#fb").innerHTML = (win ? `<div class="win">Tebrikler! Diyagram tamamen doğru. Sıradaki senaryoya geç.</div>` : "") +
+    (win ? "" : `<div class="hintbox">Yanlış olan şekiller ve çizgiler çizimde <b>kırmızı</b> yanıyor. Düzelttikçe kırmızı kaybolur.</div>`) +
+    `<div><div class="fb-sum"><b>${ok} / ${all}</b><span class="prog"><i style="width:${pct}%"></i></span></div>
+    <ul class="fb-list">${res.map(r => `<li class="${r.ok ? "ok" : "bad"}"><span>${esc(r.msg)}${r.why ? `<small>${esc(r.why)}</small>` : ""}</span></li>`).join("")}</ul></div>`;
+}
+$("#b-check").onclick = showCheck;
+$("#b-hint").onclick = () => {
+  const h = BD.sc.hints, i = Math.min(BD.hintI, h.length - 1);
+  BD.hintI++;
+  const old = $("#fb .hintbox");
+  const box = `<div class="hintbox"><b>İpucu ${i + 1}/${h.length}:</b> ${esc(h[i])}</div>`;
+  if (old) old.outerHTML = box; else $("#fb").insertAdjacentHTML("afterbegin", box);
+};
+let solArm = 0, resetArm = 0;
+function loadSolution() {
+  const sc = BD.sc, ids = {};
+  BD.nodes = sc.nodes.map((n, i) => { const id = "n" + (i + 1); if (KIND(n[0]) !== "att" || sc.nodes.some(m => m[4] === n[1])) ids[n[1]] = id; return { id, t: n[0], label: n[1], x: n[2], y: n[3] }; });
+  BD.edges = []; let k = 1;
+  sc.nodes.forEach((n, i) => { if (n[4]) BD.edges.push({ id: "e" + k++, a: "n" + (i + 1), b: ids[n[4]], c: "", t: 0, role: "" }); });
+  Object.entries(sc.rels).forEach(([rn, ends]) => ends.forEach(([ent, c, t, role]) => BD.edges.push({ id: "e" + k++, a: ids[ent], b: ids[rn], c, t, role: role || "" })));
+  BD.seq = 1000; BD.sel = null; BD.from = null; BD.chip = null;
+  saveDraft(); renderBank(); renderCanvas();
+  $("#fb").innerHTML = `<div class="hintbox">Çözüm yüklendi. Şekillere ve çizgilere tıklayıp incele. Kendin denemek için <b>Sıfırla</b>'ya bas.</div>`;
+}
+$("#b-sol").onclick = () => {
+  const b = $("#b-sol");
+  if (!solArm) { solArm = 1; b.textContent = "Emin misin? Çizimin değişir"; setTimeout(() => { solArm = 0; b.textContent = "Çözümü göster"; }, 3000); return; }
+  solArm = 0; b.textContent = "Çözümü göster"; loadSolution();
+};
+$("#b-reset").onclick = () => {
+  const b = $("#b-reset");
+  if (!resetArm) { resetArm = 1; b.textContent = "Emin misin? Hepsi silinir"; setTimeout(() => { resetArm = 0; b.textContent = "Sıfırla"; }, 3000); return; }
+  resetArm = 0; b.textContent = "Sıfırla";
+  BD.nodes = []; BD.edges = []; BD.sel = null; BD.from = null; BD.chip = null; BD.hintI = 0;
+  saveDraft(); renderBank(); renderCanvas(); $("#fb").innerHTML = "";
+};
+
+/* ================= genel ================= */
+function renderScores() {
+  $("#sc-quiz").textContent = QZ.total;
+  $("#sc-kur").textContent = `${Object.keys(BD.solved).length}/${SC.length}`;
+}
+function show(v) {
+  if (!["start", "lab", "quiz", "kur"].includes(v)) v = "start";
+  ["start", "lab", "quiz", "kur"].forEach(x => $("#v-" + x).hidden = x !== v);
+  document.querySelectorAll(".tabs button").forEach(b => b.setAttribute("aria-selected", b.dataset.v === v ? "true" : "false"));
+  try { history.replaceState(null, "", "#" + v); } catch (e) {}
+  if (v === "kur") renderCanvas();
+}
+document.querySelector(".tabs").onclick = e => { const b = e.target.closest("button"); if (b) { show(b.dataset.v); window.scrollTo(0, 0); } };
+
+renderStart(); renderLab(false); renderFix();
+renderCats(); renderStats(); newRound();
+loadScenario(store.get("sc", "s0"));
+renderScores();
+show((location.hash || "").slice(1));
+</script>
+
+</html>

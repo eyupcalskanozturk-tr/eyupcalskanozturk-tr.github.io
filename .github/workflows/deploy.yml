@@ -33,6 +33,8 @@ jobs:
           cp -R css js assets _site/
           # Depodaki mevcut proje sayfasının adresini koru.
           if [ -d PROJE ]; then cp -R PROJE _site/; fi
+          # Veri Tabanı I · Chen notasyonu çalışma atölyesi
+          if [ -d chen-atolyesi ]; then cp -R chen-atolyesi _site/; fi
       - name: Dosyaları yükle
         uses: actions/upload-pages-artifact@v4
         with:
