@@ -1,0 +1,1542 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta property="og:title" content="IP2 Vize Kampı · Laravel hafta hafta">
+<meta property="og:description" content="İnternet Programcılığı II: HTTP, Composer, MVC, Laravel, migration, Eloquent ilişkileri, doğrulama ve Blade. Her haftanın sonunda cevaplı sınav soruları ve 56 soruluk test.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://eyupcalskanozturk-tr.github.io/laravel-vize/">
+<link rel="canonical" href="https://eyupcalskanozturk-tr.github.io/laravel-vize/">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>IP2 Vize Kampı</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="İnternet Programcılığı II (Laravel) vize hazırlığı: 1-7. hafta konu anlatımı, haftalık sınav soruları ve cevapları, 56 soruluk test.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: solda yapışkan hafta menüsü, sağda hafta kartları; her kartın sonunda o haftanın sınav blogu. Telefonda menü üstte yatay şerit. */
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --ink:#152033; --muted:#58657a; --line:#d9dfe8;
+  --accent:#1f5fd1; --accent-soft:#e3ecfb;
+  --hot:#b8560b; --hot-soft:#fdf0e3;
+  --ok:#1d7a4a; --ok-soft:#e2f4ea; --bad:#b42335; --bad-soft:#fbe6e9;
+  --note:#6b4fa3; --note-soft:#efe9f8;
+  --code-bg:#0f1a2b; --code-fg:#dbe5f5; --code-c:#7f93b3; --code-k:#ffcc66;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0d1420; --surface:#152032; --ink:#e4eaf4; --muted:#9aa8be; --line:#2a3850;
+    --accent:#7aa8ff; --accent-soft:#1c2c4a; --hot:#f0a05a; --hot-soft:#3a2614;
+    --ok:#5fd394; --ok-soft:#153526; --bad:#ff8a98; --bad-soft:#3d1820;
+    --note:#c3a8f5; --note-soft:#2a2140;
+    --code-bg:#08101c; --code-fg:#dbe5f5; --code-c:#7f93b3; --code-k:#ffcc66; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d1420; --surface:#152032; --ink:#e4eaf4; --muted:#9aa8be; --line:#2a3850;
+  --accent:#7aa8ff; --accent-soft:#1c2c4a; --hot:#f0a05a; --hot-soft:#3a2614;
+  --ok:#5fd394; --ok-soft:#153526; --bad:#ff8a98; --bad-soft:#3d1820;
+  --note:#c3a8f5; --note-soft:#2a2140;
+  --code-bg:#08101c; --code-fg:#dbe5f5; --code-c:#7f93b3; --code-k:#ffcc66; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.6;margin:0;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:0 48px}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+code,pre{font-family:var(--f-mono);font-size:.88em}
+p{margin:0}
+.wrap{max-width:1180px;margin:0 auto}
+
+header.top{padding-block:28px 20px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+header.top h1{font-size:clamp(28px,4.4vw,46px);font-weight:800;margin-top:6px}
+header.top h1 span{color:var(--accent)}
+.lede{color:var(--muted);max-width:66ch;margin-top:10px}
+.countdown{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 18px;text-align:center;min-width:150px}
+.countdown b{display:block;font-family:var(--f-display);font-size:44px;line-height:1;color:var(--hot);font-variant-numeric:tabular-nums}
+.countdown small{color:var(--muted);font-size:12.5px}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:14px;font-size:13px;color:var(--muted)}
+
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:600;letter-spacing:.04em;padding:2px 8px;border-radius:999px;white-space:nowrap;vertical-align:middle}
+.tag.hoca{background:var(--hot-soft);color:var(--hot)}
+.tag.vize{background:var(--bad-soft);color:var(--bad)}
+.tag.ek{background:var(--accent-soft);color:var(--accent)}
+
+.layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:32px;margin-top:24px;align-items:start}
+nav.toc{position:sticky;top:calc(env(safe-area-inset-top, 0px) + 16px);font-size:14px}
+nav.toc ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+nav.toc li a{display:flex;gap:8px;padding:6px 10px;border-radius:7px;color:var(--ink);text-decoration:none}
+nav.toc li a b{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-weight:400;padding-top:2px;min-width:22px}
+nav.toc li a:hover,nav.toc li a.on{background:var(--accent-soft);color:var(--accent)}
+nav.toc .sep{margin:10px 10px 4px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+
+main{display:flex;flex-direction:column;gap:22px;min-width:0}
+section.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:24px clamp(16px,3vw,30px);scroll-margin-top:16px;min-width:0}
+.whead{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-bottom:6px}
+.wno{font-family:var(--f-display);font-weight:800;font-size:15px;color:var(--accent);letter-spacing:.04em;text-transform:uppercase}
+.wdate{font-size:13px;color:var(--muted)}
+section.card h2{font-size:clamp(22px,2.6vw,28px);font-weight:700;width:100%}
+.wtags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 14px}
+section.card h3{font-size:18px;font-weight:700;margin:24px 0 8px;padding-top:14px;border-top:1px solid var(--line)}
+section.card h4{font-size:15.5px;font-weight:700;margin:16px 0 6px}
+.prose{display:flex;flex-direction:column;gap:10px;max-width:76ch}
+ul.tight,ol.tight{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.goals{background:var(--bg);border-radius:8px;padding:12px 16px;font-size:14.5px}
+.goals b{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+
+.tbl{overflow-x:auto;margin:8px 0;border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--bg);font-weight:600}
+tr:last-child td{border-bottom:0}
+td code{white-space:nowrap}
+.k{font-family:var(--f-mono);font-weight:600;font-variant-numeric:tabular-nums}
+.c2xx{color:var(--ok)} .c3xx{color:var(--accent)} .c4xx{color:var(--hot)} .c5xx{color:var(--bad)}
+
+pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;margin:8px 0;line-height:1.55;font-size:13.5px}
+pre .c{color:var(--code-c);font-style:italic}
+pre .f{color:var(--code-k)}
+pre .h{display:block;color:var(--code-c);font-size:12px;margin-bottom:6px;border-bottom:1px dashed #2c3d58;padding-bottom:4px}
+:not(pre)>code{background:var(--accent-soft);color:var(--ink);padding:1px 5px;border-radius:4px}
+
+.box{border-radius:8px;padding:12px 14px;font-size:14.5px;display:flex;flex-direction:column;gap:6px}
+.box.ezber{background:var(--hot-soft);border-left:4px solid var(--hot)}
+.box.tuzak{background:var(--bad-soft);border-left:4px solid var(--bad)}
+.box.ipucu{background:var(--ok-soft);border-left:4px solid var(--ok)}
+.box.not{background:var(--note-soft);border-left:4px solid var(--note)}
+.box > b:first-child{font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.box.ezber > b:first-child{color:var(--hot)} .box.tuzak > b:first-child{color:var(--bad)} .box.ipucu > b:first-child{color:var(--ok)} .box.not > b:first-child{color:var(--note)}
+.box.not pre{background:transparent;color:var(--ink);padding:0;margin:0;font-size:13px;white-space:pre-wrap}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:8px 0}
+.grid2 > *{min-width:0}
+
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0;font-size:13.5px}
+.flow span{background:var(--accent-soft);color:var(--accent);padding:5px 10px;border-radius:6px;font-weight:600}
+.flow i{color:var(--muted);font-style:normal}
+
+/* Doğru mu yanlış mı */
+.dy{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:8px 0}
+.dy div{border:1px dashed var(--line);border-radius:8px;padding:10px 12px;font-size:14.5px;display:flex;flex-direction:column;gap:6px}
+.dy div q{font-weight:600;quotes:"“" "”"}
+.dy div span{color:var(--muted);font-size:13.5px}
+.dy div span::before{content:"✕ Yanlış · ";color:var(--bad);font-weight:700}
+
+/* Sınav blogu */
+.exam{margin-top:26px;border:2px solid var(--hot);border-radius:12px;padding:18px clamp(14px,2.4vw,22px);background:linear-gradient(var(--hot-soft),var(--surface) 120px)}
+.exam > h3{border-top:0;margin:0 0 4px;padding:0;color:var(--hot);font-size:19px}
+.exam > p{color:var(--muted);font-size:14px;margin-bottom:8px}
+details.oq{border:1px solid var(--line);border-radius:8px;padding:0 14px;margin:8px 0;background:var(--surface)}
+details.oq summary{cursor:pointer;padding:11px 0;font-weight:600;list-style:none;display:flex;gap:10px;align-items:baseline}
+details.oq summary::-webkit-details-marker{display:none}
+details.oq summary::before{content:"+";font-family:var(--f-mono);color:var(--accent);width:14px;flex:none}
+details.oq[open] summary::before{content:"–"}
+details.oq summary .tag{margin-left:auto;flex:none}
+details.oq .ans{padding:0 0 14px 24px;display:flex;flex-direction:column;gap:8px}
+
+.qbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.score{font-family:var(--f-display);font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
+.score small{font-family:var(--f-body);font-size:13px;color:var(--muted);font-weight:400}
+button.btn{font:inherit;font-size:14px;font-weight:600;padding:8px 14px;border-radius:7px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+button.btn:hover{border-color:var(--accent);color:var(--accent)}
+.filters{display:flex;flex-wrap:wrap;gap:6px}
+.filters button{font:inherit;font-size:13px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer}
+.filters button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.q{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:10px 0}
+.q .qt{font-weight:600;display:flex;gap:10px}
+.q .qt .n{font-family:var(--f-mono);color:var(--muted);font-weight:400;flex:none}
+.q .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px;margin-top:10px}
+.q .opts button{font:inherit;font-size:14px;text-align:left;padding:8px 12px;border-radius:7px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;min-width:0;overflow-wrap:anywhere}
+.q .opts button:hover:not(:disabled){border-color:var(--accent)}
+.q .opts button.right{background:var(--ok-soft);border-color:var(--ok);color:var(--ok);font-weight:600}
+.q .opts button.wrong{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.q .opts button:disabled{cursor:default}
+.q .why{margin-top:10px;font-size:14px;color:var(--muted)}
+
+.plan{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.day{border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:6px}
+.day .d{font-family:var(--f-display);font-weight:700;font-size:16px}
+.day .d small{display:block;font-family:var(--f-body);font-size:12.5px;color:var(--muted);font-weight:400}
+.day.today{border-color:var(--hot);box-shadow:0 0 0 1px var(--hot) inset}
+.day.exam-day{background:var(--hot-soft);border-color:var(--hot)}
+.day ul{margin:0;padding-left:18px;font-size:14px}
+footer.foot{margin-top:28px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:14px}
+
+@media (max-width:860px){
+  header.top{grid-template-columns:1fr}
+  .countdown{justify-self:start}
+  .layout{grid-template-columns:minmax(0,1fr);gap:16px}
+  nav.toc{position:static}
+  nav.toc ol{flex-direction:row;overflow-x:auto;gap:4px;padding-bottom:6px}
+  nav.toc li a{white-space:nowrap}
+  nav.toc .sep{display:none}
+}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div>
+    <div class="eyebrow">ÇOMÜ · Çanakkale Teknik Bilimler MYO · İnternet Programcılığı II</div>
+    <h1>Laravel vize kampı: <span>hafta hafta</span></h1>
+    <p class="lede">Dersin sunumları sırasıyla, 1. haftadan 7. haftaya. Her hafta önce konuyu baştan anlatıyor, sonra hocanın "doğru mu yanlış mı" iddialarını, en sonda da <b>o haftadan çıkabilecek sınav sorularını cevaplarıyla</b> veriyor. Laravel'i hiç bilmeyen biri de baştan okuyarak öğrenebilsin diye yazıldı.</p>
+    <div class="legend">
+      <span><span class="tag hoca">Vize listesi</span> hocanın son derste verdiği sınav konuları</span>
+      <span><span class="tag vize">Derste "sınavda çıkar"</span> derste özellikle söylendi</span>
+      <span><span class="tag ek">Değerlendirme</span> sunumdaki hafta sonu soruları</span>
+    </div>
+  </div>
+  <div class="countdown" aria-live="polite"><b id="days">–</b><small id="daysLabel">gün kaldı</small></div>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="Haftalar">
+  <ol>
+    <li class="sep">Başlamadan</li>
+    <li><a href="#liste"><b>★</b>Vize konu listesi</a></li>
+    <li class="sep">Haftalar</li>
+    <li><a href="#h1"><b>01</b>Web nasıl çalışır?</a></li>
+    <li><a href="#h2"><b>02</b>PHP nesneler, Composer</a></li>
+    <li><a href="#h3"><b>03</b>Laravel'e giriş, rotalar</a></li>
+    <li><a href="#h4"><b>04</b>Controller, view, Blade</a></li>
+    <li><a href="#h5"><b>05</b>Migration, Eloquent</a></li>
+    <li><a href="#h6"><b>06</b>Form, doğrulama, CSRF</a></li>
+    <li><a href="#h7"><b>07</b>Eloquent ilişkileri</a></li>
+    <li class="sep">Pratik</li>
+    <li><a href="#ornek"><b>✎</b>Baştan sona örnek</a></li>
+    <li><a href="#komut"><b>⌘</b>Komut ezber tablosu</a></li>
+    <li><a href="#test"><b>✓</b>Test (56 soru)</a></li>
+    <li><a href="#plan"><b>→</b>Çalışma planı</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<!-- VİZE LİSTESİ -->
+<section class="card" id="liste">
+  <div class="whead"><span class="wno">Başlamadan</span></div>
+  <h2>Hocanın verdiği vize konuları ve hangi haftada oldukları</h2>
+  <div class="prose" style="margin-top:10px"><p>Son derste hoca sınav konularını şöyle sıraladı. Sağ sütun, konunun bu sayfada hangi haftada anlatıldığını gösteriyor. Hafta sırasıyla okursan hepsini bir kez görmüş olursun.</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Hocanın dediği</th><th>Ne bilmen gerekiyor</th><th>Hafta</th></tr></thead>
+    <tbody>
+      <tr><td>HTTP metotları: GET, POST…</td><td>Metotların niyeti, GET ile POST farkı</td><td><a href="#h1">1</a>, <a href="#h6">6</a></td></tr>
+      <tr><td>Durum kodları: 404, 200, 300…</td><td>Sınıflar (1xx–5xx) ve sık kodlar</td><td><a href="#h1">1</a></td></tr>
+      <tr><td>Composer komutları, ezberle</td><td>create-project, require, install, update, dump-autoload</td><td><a href="#h2">2</a>, <a href="#h3">3</a></td></tr>
+      <tr><td>vendor klasörü ve kilit dosyasının adı</td><td><code>vendor/</code>, <code>composer.lock</code>, <code>composer.json</code></td><td><a href="#h2">2</a></td></tr>
+      <tr><td>MVC genel nedir</td><td>Model, View, Controller görevleri</td><td><a href="#h2">2</a>, <a href="#h3">3</a></td></tr>
+      <tr><td>Laravel genel yapısı: web, view…</td><td>Klasörler, routes/web.php, resources/views, public</td><td><a href="#h3">3</a>, <a href="#h4">4</a></td></tr>
+      <tr><td>Veritabanı, migration komutları ve tanımları</td><td>make:migration, make:model -m, migrate, rollback, up/down</td><td><a href="#h5">5</a></td></tr>
+      <tr><td>Eloquent ilişkileri: hasMany, belongsTo</td><td>Hangi model hangi metodu yazar, foreignId</td><td><a href="#h7">7</a></td></tr>
+      <tr><td>Validasyonlar</td><td>validate(), kurallar, hata gösterme</td><td><a href="#h6">6</a></td></tr>
+      <tr><td>Blade, layout kullanımı</td><td>{{ }}, @foreach, @extends/@section/@yield</td><td><a href="#h4">4</a></td></tr>
+      <tr><td>Veriyi controller'dan gönderme, compact</td><td>view('ad', compact('x')) ve eşdeğerleri</td><td><a href="#h4">4</a>, <a href="#h5">5</a></td></tr>
+    </tbody>
+  </table></div>
+  <div class="box ipucu"><b>Proje</b><p>Dersin bütün haftaları tek bir uygulama üzerinden ilerliyor: <b>etkinlik ve atölye kayıt sistemi</b>. Ziyaretçi etkinlikleri listeler, katılımcı kaydolur, yönetici etkinlik açar, kontenjan dolunca kayıt kapanır. Örneklerdeki <code>Event</code>, <code>Category</code>, "Web atölyesi" bu projeden.</p></div>
+</section>
+
+<!-- ======================= HAFTA 1 ======================= -->
+<section class="card" id="h1">
+  <div class="whead"><span class="wno">1. Hafta</span><span class="wdate">18 Eylül 2026</span></div>
+  <h2>Web nasıl çalışır?</h2>
+  <div class="wtags"><span class="tag hoca">Vize: HTTP metotları</span><span class="tag hoca">Vize: durum kodları</span></div>
+  <div class="goals"><b>Sunumdaki hedefler</b>Bir adresin DNS → TCP → TLS → HTTP yolculuğunu anlatmak · istek ve yanıtı satır satır okumak · yöntemi ve durum kodunu işin anlamına göre seçmek · POST formunu PRG düzenine çevirmek · PHP'nin sunucuda, JavaScript'in tarayıcıda çalıştığını göstermek · oturumla istekler arasında bilgi taşımak.</div>
+
+  <h3>1.1 Adresin yolculuğu</h3>
+  <div class="prose">
+    <p><b>İstemci (client)</b> isteği başlatan taraftır (tarayıcı, curl). <b>Sunucu (server)</b> isteği karşılayıp yanıt üretendir. Bunlar makine değil <b>rol</b>dür: aynı bilgisayar hem istemci hem sunucu olabilir.</p>
+    <p><b>Web sunucusu</b> (nginx, Apache) HTTP isteklerini kabul eder, resim/CSS gibi statik dosyaları verir, <code>.php</code> isteklerini <b>PHP yorumlayıcısına</b> devreder. PHP yorumlayıcısı dosyayı çalıştırıp çıktıyı üretir. Geliştirmede <code>php -S localhost:8000</code> (ya da Laravel'de <code>php artisan serve</code>) ikisinin işini birlikte görür.</p>
+  </div>
+  <h4>Bir URL'nin parçaları</h4>
+  <pre>https://www.comu.edu.tr:443/index.php?ad=Web#kayit
+└─┬─┘   └──────┬──────┘ └┬┘ └───┬───┘ └──┬─┘ └─┬─┘
+ şema        host      port   yol     sorgu  parçacık (fragment)</pre>
+  <div class="prose">
+    <p><b>Origin</b> = şema + host + port. <code>localhost:8000</code> ile <code>127.0.0.1:8000</code> aynı makine olsa da host farklı olduğu için <b>farklı origin</b>dir; birinde oluşan çerez ötekine gönderilmez.</p>
+    <p>Sunucuya giden: <code>GET /index.php?ad=Web</code>. <b><code>#kayit</code> sunucuya hiç gitmez</b>, tarayıcıda kalır.</p>
+  </div>
+  <h4>Katmanlar ve hata nerede?</h4>
+  <div class="tbl"><table>
+    <thead><tr><th>Adım</th><th>Ne yapar?</th><th>Bozulursa tarayıcı ne der?</th></tr></thead>
+    <tbody>
+      <tr><td>DNS</td><td>Adı IP adresine çevirir</td><td><code>ERR_NAME_NOT_RESOLVED</code> (sunucuya hiç gidilmedi)</td></tr>
+      <tr><td>TCP</td><td>O IP'nin portuna bağlantı açar (http 80, https 443, geliştirme 8000)</td><td><code>ERR_CONNECTION_REFUSED</code> (o port dinlenmiyor, sunucu kapalı)</td></tr>
+      <tr><td>TLS</td><td>Bağlantıyı şifreler, sertifikayla kimliği doğrular (https)</td><td><code>NET::ERR_CERT_...</code></td></tr>
+      <tr><td>HTTP</td><td>İstek ve yanıt konuşulur</td><td>Durum kodu görünür: 404, 500…</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box ezber"><b>Kural</b><p>Ekranda bir durum kodu (404, 500) varsa bütün katmanlar çalışmış, istek sunucuya ulaşmıştır. Kod yoksa sorun daha aşağıdadır: DNS, TCP ya da TLS.</p></div>
+
+  <h3>1.2 İstek ve yanıt</h3>
+  <div class="prose"><p>Bir HTTP isteği de yanıtı da <b>üç parçadır</b>: ilk satır, başlıklar (headers), boş satırdan sonra isteğe bağlı gövde (body).</p></div>
+  <div class="grid2">
+  <pre><span class="h">istek (form gönderilince)</span>POST /kayit.php HTTP/1.1       <span class="c">← istek satırı</span>
+Host: 127.0.0.1:8000            <span class="c">← başlıklar</span>
+Content-Type: application/x-www-form-urlencoded
+
+ad=Ay%C5%9Fe                    <span class="c">← gövde</span></pre>
+  <pre><span class="h">yanıt</span>HTTP/1.1 200 OK                 <span class="c">← durum satırı</span>
+Content-Type: text/html; charset=UTF-8
+
+&lt;!doctype html&gt; ...            <span class="c">← gövde</span></pre>
+  </div>
+  <div class="prose"><p>Formun <code>action</code> özniteliği yolu, <code>method</code> özniteliği yöntemi verir, her alanın <code>name</code>'i verinin adı olur. <b><code>name</code>'i olmayan alan gönderilmez</b>. HTTP'de her değer metin gelir: formdaki 20, PHP'ye <code>"20"</code> olarak ulaşır.</p></div>
+
+  <h4>HTTP metotları <span class="tag hoca">Vize</span></h4>
+  <div class="prose"><p>Metot, istemcinin kaynak üzerinde <b>ne yapmak istediğini</b> söyleyen kelimedir. Bir niyettir, izin değil: yetkiyi sunucu ayrıca denetler.</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Metot</th><th>Niyet</th><th>Etkinlik sisteminde</th></tr></thead>
+    <tbody>
+      <tr><td class="k">GET</td><td>Okuma. Sunucudaki veriyi değiştirmez (<b>güvenli</b> metot)</td><td>Etkinlik listesi, ayrıntı, arama</td></tr>
+      <tr><td class="k">POST</td><td>Yeni işlem başlatma, kayıt oluşturma</td><td>Etkinliğe kaydolma, giriş</td></tr>
+      <tr><td class="k">PUT / PATCH</td><td>Var olan kaynağı güncelleme</td><td>Etkinliği düzenleme</td></tr>
+      <tr><td class="k">DELETE</td><td>Silme</td><td>Etkinliği kaldırma</td></tr>
+    </tbody>
+  </table></div>
+  <h4>GET ile POST farkı</h4>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>GET</th><th>POST</th></tr></thead>
+    <tbody>
+      <tr><td>Veri nerede?</td><td>URL'nin sorgusunda: <code>/ara?q=web</code>, gövde yok</td><td>İsteğin gövdesinde, URL'de görünmez</td></tr>
+      <tr><td>Görünürlük</td><td>Adres çubuğu, geçmiş, sunucu kayıtları</td><td>Görünmez ama şifreli de değildir; gizlilik için HTTPS gerekir</td></tr>
+      <tr><td>Yer imi / paylaşma</td><td>Olur</td><td>Olmaz</td></tr>
+      <tr><td>Ne için?</td><td>Okuma, listeleme, arama</td><td>Kayıt, giriş, veri değiştiren her iş</td></tr>
+      <tr><td>Düz PHP</td><td><code>$_GET['ad']</code></td><td><code>$_POST['ad']</code></td></tr>
+    </tbody>
+  </table></div>
+  <div class="box tuzak"><b>Neden yan etkili iş GET olmaz?</b><p>GET adresi yer imine eklenir, paylaşılır, tarayıcı önceden getirebilir, arama motoru botu ziyaret eder. "Kaydol" ya da "sil" işini bir GET bağlantısına koyarsan biri bir gün niyet etmeden yapar. Şifre asla GET ile gönderilmez. <b>HTML formu yalnızca GET ve POST gönderebilir.</b></p></div>
+
+  <h4>Durum kodları <span class="tag hoca">Vize</span></h4>
+  <div class="prose"><p>Sunucunun isteği nasıl sonuçlandırdığını söyleyen <b>üç basamaklı sayı</b>. İlk basamak sınıfı verir:</p></div>
+  <div class="flow"><span>1xx bilgi</span><span style="color:var(--ok);background:var(--ok-soft)">2xx başarı</span><span>3xx yönlendirme</span><span style="color:var(--hot);background:var(--hot-soft)">4xx istemci hatası</span><span style="color:var(--bad);background:var(--bad-soft)">5xx sunucu hatası</span></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Kod</th><th>Ad</th><th>Ne zaman? (dersteki örnek)</th></tr></thead>
+    <tbody>
+      <tr><td class="k c2xx">200</td><td>OK</td><td>Liste başarıyla geldi. Boş liste de 200'dür</td></tr>
+      <tr><td class="k c2xx">201</td><td>Created</td><td>Yeni kayıt oluşturuldu (API)</td></tr>
+      <tr><td class="k c3xx">301</td><td>Moved Permanently</td><td>http://www.comu.edu.tr kalıcı olarak https'ye taşındı</td></tr>
+      <tr><td class="k c3xx">302</td><td>Found</td><td>Geçici yönlendirme. Laravel <code>redirect()</code> ve doğrulama hatasında forma dönüş</td></tr>
+      <tr><td class="k c3xx">303</td><td>See Other</td><td>Form gönderiminden sonra "sonucu şu adreste GET ile iste" (PRG)</td></tr>
+      <tr><td class="k c4xx">401</td><td>Unauthorized</td><td>Giriş yapılmamış, kimlik yok</td></tr>
+      <tr><td class="k c4xx">403</td><td>Forbidden</td><td>Kimlik var, yetki yok</td></tr>
+      <tr><td class="k c4xx">404</td><td>Not Found</td><td>Böyle bir etkinlik / yol yok</td></tr>
+      <tr><td class="k c4xx">405</td><td>Method Not Allowed</td><td>Yol var ama yöntem uygun değil (GET/POST karışmış)</td></tr>
+      <tr><td class="k c4xx">409</td><td>Conflict</td><td>Kontenjan dolu ya da aynı kişi zaten kayıtlı</td></tr>
+      <tr><td class="k c4xx">419</td><td>Page Expired</td><td>Laravel'e özel: formda CSRF belirteci yok (6. hafta)</td></tr>
+      <tr><td class="k c4xx">422</td><td>Unprocessable Content</td><td>Form alanı kurala uymuyor (ad boş)</td></tr>
+      <tr><td class="k c5xx">500</td><td>Internal Server Error</td><td>Sunucuda PHP kodu hata verdi; terminale bak</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="box ezber"><b>Ezber cümlesi</b><p><b>2</b> tamam · <b>3</b> şuraya git · <b>4</b> sen hatalısın · <b>5</b> ben hatalıyım. 404 ve 422'de düzeltme isteği gönderende, 500'de sunucudadır.</p></div>
+    <div class="box tuzak"><b>409 ile 422'yi karıştırma</b><p>422: isteğin kendisi kurala uymuyor (ad boş), kullanıcı düzeltip tekrar gönderebilir. 409: istek doğru yazılmış ama kaynağın şu anki durumuyla çelişiyor (kontenjan dolu).</p></div>
+  </div>
+  <h4>Yönlendirme ve PRG (Post/Redirect/Get)</h4>
+  <div class="prose">
+    <p><b>Sorun:</b> POST ile kayıt yapan sayfayı yenilersen tarayıcı formu yeniden gönderir, kayıt iki kez yazılır.</p>
+    <p><b>Çözüm PRG:</b> POST'u işleyen kod sayfa üretmez, <code>303</code> ve <code>Location</code> başlığıyla yönlendirir; tarayıcı sonuç sayfasını ayrı bir GET ile ister. Yenileme artık zararsız GET'i tekrarlar. Girdi geçersizse yönlendirilmez, form 422 ile tekrar gösterilir.</p>
+  </div>
+  <pre>header('Location: /kayit.php?durum=alindi', true, 303);
+exit;   <span class="c">// yönlendirmeden sonra sayfa üretmeyi durdur</span>
+<span class="c">// Network panelinde kanıt: POST /kayit.php · 303  →  GET /kayit.php?durum=alindi · 200</span></pre>
+
+  <h3>1.3 Sunucu ve tarayıcı</h3>
+  <div class="prose">
+    <p><b>PHP sunucuda, JavaScript tarayıcıda çalışır.</b> İki ayrı makine, iki ayrı zaman. PHP'deki <code>$kapasite</code> ile JavaScript'teki <code>kapasite</code> aynı değişken değildir; değer ancak HTML ya da JSON metni olarak aktarılır.</p>
+    <p><b>Paylaşımsız çalışma (shared-nothing):</b> PHP her isteği baştan çalıştırır; istek bitince değişkenler silinir. Bu yüzden <code>$sayac++</code> yazan sayfa her yenilemede "1" der. HTTP <b>durum bilgisizdir</b> (stateless).</p>
+    <p><b>Çerez taşır, oturum saklar:</b> <code>session_start()</code> ile sunucu veriyi <code>$_SESSION</code>'da saklar ve tarayıcıya yalnız oturum kimliğini çerezle (<code>PHPSESSID</code>) verir. Her istekte çerez geri gelir, sunucu seni tanır. Gizli pencerede çerez olmadığı için sayaç yine 1'den başlar.</p>
+  </div>
+
+  <h4>Hocanın "Doğru mu, yanlış mı?" iddiaları</h4>
+  <div class="dy">
+    <div><q>PHP'deki $kapasite ile JavaScript'teki kapasite aynı değişkendir.</q><span>İki ayrı makine, iki ayrı zaman. Değer ancak HTML ya da JSON metni olarak aktarılır.</span></div>
+    <div><q>Dinamik sayfa, JavaScript'li sayfa demektir.</q><span>Dinamik, her istekte yeniden üretilen demektir. PHP saati her istekte yazar; JavaScript gerekmez.</span></div>
+  </div>
+
+  <div class="exam">
+    <h3>1. haftanın sınav soruları</h3>
+    <p>Önce kendin cevapla, sonra aç. Vize listesindeki HTTP metotları ve durum kodları bu haftadan.</p>
+    <details class="oq"><summary>GET ve POST metotlarını karşılaştırınız. <span class="tag hoca">Vize</span></summary><div class="ans"><p>GET veriyi URL'nin sorgusunda taşır (<code>?ad=Eyüp</code>), adres çubuğunda ve geçmişte görünür, yer imine eklenebilir; okuma, listeleme, arama için kullanılır ve sunucuda değişiklik yapmamalıdır. POST veriyi isteğin gövdesinde taşır, URL'de görünmez, yer imine eklenemez; kayıt, giriş gibi veri değiştiren işlerde kullanılır. Şifre asla GET ile gönderilmez. PHP'de <code>$_GET</code> / <code>$_POST</code>, Laravel'de <code>Route::get</code> / <code>Route::post</code>.</p></div></details>
+    <details class="oq"><summary>HTTP durum kodlarının sınıflarını yazınız. 200, 301, 404, 500 ne demektir? <span class="tag hoca">Vize</span></summary><div class="ans"><p>1xx bilgi, 2xx başarı, 3xx yönlendirme, 4xx istemci hatası, 5xx sunucu hatası. 200 OK (istek başarılı), 301 Moved Permanently (kalıcı taşındı), 404 Not Found (bulunamadı), 500 Internal Server Error (sunucuda kod hatası).</p></div></details>
+    <details class="oq"><summary>Web sunucusu ile PHP yorumlayıcısının görevlerini ayırın. php -S hangisinin işini görür? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>Web sunucusu HTTP isteklerini kabul eder, statik dosyaları verir ve PHP isteklerini yorumlayıcıya devreder (nginx, Apache). PHP yorumlayıcısı <code>.php</code> dosyasını çalıştırıp çıktıyı üretir. <code>php -S</code>, PHP'nin yerleşik geliştirme sunucusudur: web sunucusunun işini görür ve PHP'yi de kendisi çalıştırır. Yalnız geliştirme içindir.</p></div></details>
+    <details class="oq"><summary>http://127.0.0.1:8000/index.php?ad=Web#kayit adresinin hangi parçaları sunucuya gider, hangisi gitmez? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>Şema, host ve port bağlantıyı kurmak için kullanılır (<code>Host: 127.0.0.1:8000</code> başlığıyla da gider). İstek satırında yol ve sorgu gider: <code>GET /index.php?ad=Web HTTP/1.1</code>. <code>#kayit</code> parçacığı sunucuya gitmez, tarayıcıda kalır.</p></div></details>
+    <details class="oq"><summary>https://www.comu.edu.tr açılırken HTTP isteğinden önce hangi üç adım olur? Her birinde hangi hata görülür? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>1) DNS: ad IP'ye çevrilir; hata <code>ERR_NAME_NOT_RESOLVED</code>. 2) TCP: 443 portuna bağlantı açılır; hata <code>ERR_CONNECTION_REFUSED</code>. 3) TLS: bağlantı şifrelenir, sertifika doğrulanır; hata <code>NET::ERR_CERT_...</code>. Bu hatalarda durum kodu yoktur, çünkü HTTP'ye hiç gelinmemiştir.</p></div></details>
+    <details class="oq"><summary>Etkinliğe kayıt yaptıran bir GET bağlantısı hangi sorunu doğurur? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>GET güvenli kabul edilir: yer imine eklenir, paylaşılır, tarayıcı önceden getirebilir, botlar ziyaret eder. Kayıt GET ile yapılırsa biri niyet etmeden kayıt olur, kontenjan düşer. Yan etkili iş POST (ya da PUT, PATCH, DELETE) ile yapılır.</p></div></details>
+    <details class="oq"><summary>Kontenjan dolu olduğu için reddedilen kayıt hangi kodu almalı? Boş adla gönderilenden farkı nedir? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>409 Conflict. Boş ad 422 alır: orada istek kurala uymuyor, kullanıcı düzeltip gönderebilir. 409'da istek doğru ama kaynağın durumu (dolu kontenjan) izin vermiyor.</p></div></details>
+    <details class="oq"><summary>PRG düzeni hangi sorunu çözer? Network panelinde hangi iki satırla kanıtlanır? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>Sayfa yenilenince POST'un tekrar gönderilip kaydın çift yazılmasını önler. Kanıt: önce <code>POST /kayit.php · 303</code>, ardından <code>GET /kayit.php?durum=alindi · 200</code>.</p></div></details>
+    <details class="oq"><summary>Oturumlu sayaç neden artar? Gizli pencerede ve localhost ile açınca neden 1'den başlar? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>Sayı sunucuda <code>$_SESSION</code>'da saklanır; tarayıcı oturum kimliğini çerezle her istekte geri gönderir, sunucu aynı oturumu bulur. Gizli pencerede çerez yoktur, yeni oturum açılır. <code>localhost</code> ile <code>127.0.0.1</code> farklı host (farklı origin) olduğu için çerez gönderilmez, yine yeni oturum başlar.</p></div></details>
+  </div>
+</section>
+
+<!-- ======================= HAFTA 2 ======================= -->
+<section class="card" id="h2">
+  <div class="whead"><span class="wno">2. Hafta</span><span class="wdate">25 Eylül 2026</span></div>
+  <h2>PHP'de nesneler ve Composer</h2>
+  <div class="wtags"><span class="tag hoca">Vize: Composer komutları</span><span class="tag hoca">Vize: vendor ve composer.lock</span><span class="tag hoca">Vize: MVC</span></div>
+  <div class="goals"><b>Sunumdaki hedefler</b>Sınıf yazıp <code>new</code> ile nesne oluşturmak · kurucu ve <code>private</code> ile kuralı nesneye koymak · istisnayı <code>try/catch</code> ile yakalamak · <code>::</code>, kapanış, <code>extends</code>, <code>implements</code> yazımlarını okumak · ad alanı, otomatik yükleme ve Composer ile proje kurmak · sayfayı model, görünüm, denetleyici diye ayırmak.</div>
+  <div class="box not"><b>Derste alınan not</b><pre>Sınıf ve Nesne – class Etkinlik { ... }
+Yapıcı metot PHP; __construct => yapıcı, kurucu metot
+declare(strict_types=1); == veri tipini zorunlu kılmak
+Static(::) nedir
+PSR-4'ü bil
+Composer nedir, composer.lock nedir, Laravel nedir</pre></div>
+
+  <h3>2.1 Kural nesnede</h3>
+  <div class="prose">
+    <p><b>Sınıf</b> bir kalıptır; <b>nesne</b> o kalıptan <code>new</code> ile üretilen örnektir. Metodun içindeki <code>$this</code> metodu çağıran nesnenin kendisidir; üyelere <code>-&gt;</code> ile erişilir.</p>
+  </div>
+  <pre>&lt;?php
+declare(strict_types=1);   <span class="c">// tür bildirimlerini katı yapar; dosyanın ilk ifadesi olmalı</span>
+
+class Etkinlik
+{
+    public function __construct(        <span class="c">// kurucu (yapıcı) metot: new anında kendiliğinden çalışır</span>
+        public string $baslik,          <span class="c">// PHP 8 kısa yazımı: özelliği tanımlar ve değeri atar</span>
+        public int $kapasite,
+        private int $kayitli = 0         <span class="c">// private: dışarıdan değiştirilemez</span>
+    ) {
+        if ($kapasite &lt; 1) {
+            throw new InvalidArgumentException('Kapasite en az 1 olmalı.');   <span class="c">// istisna</span>
+        }
+    }
+
+    public function kalan(): int
+    {
+        return $this-&gt;kapasite - $this-&gt;kayitli;
+    }
+
+    public function kaydet(): void       <span class="c">// $kayitli'ya yalnız bu metot dokunur: kapsülleme</span>
+    {
+        if ($this-&gt;kalan() === 0) {
+            throw new RuntimeException('Kontenjan doldu.');
+        }
+        $this-&gt;kayitli++;
+    }
+}
+
+$e = new Etkinlik('Tanışma', 30);
+echo $e-&gt;kalan();   <span class="c">// 30</span>
+
+try {
+    $e-&gt;kaydet();
+} catch (RuntimeException $hata) {
+    echo $hata-&gt;getMessage();
+}</pre>
+  <div class="tbl"><table>
+    <thead><tr><th>Kavram</th><th>Açıklama</th></tr></thead>
+    <tbody>
+      <tr><td><b>Kapsülleme</b></td><td>Nesnenin durumuna yalnız kendi metotlarıyla dokunulması. <code>$kayitli</code> public olsaydı dışarıdan <code>$e-&gt;kayitli = 999</code> yazılıp kapasite aşılabilirdi.</td></tr>
+      <tr><td><b>strict_types=1</b></td><td>Normalde PHP <code>"5"</code> metnini sessizce 5'e çevirir. strict_types açıkken yanlış türde değer <code>TypeError</code> fırlatır. Yalnız o dosyayı etkiler.</td></tr>
+      <tr><td><b>Tür ≠ kural</b></td><td><code>int $kapasite</code> yalnız tam sayı mı diye bakar; <code>-5</code> de tam sayıdır. "En az 1" kuralı ayrıca yazılır.</td></tr>
+      <tr><td><b>İstisna</b></td><td>Geçersiz durumu reddetmek: <code>throw</code> ile fırlatılır, <code>try / catch</code> ile yakalanır.</td></tr>
+      <tr><td><b>Nesne paylaşılır, dizi kopyalanır</b></td><td><code>$ikinci = $web;</code> ile iki değişken <b>aynı nesneyi</b> gösterir; birinden yapılan değişiklik ötekini etkiler. Dizi olsaydı kopyalanırdı, etkilemezdi.</td></tr>
+    </tbody>
+  </table></div>
+  <h4>Erişim belirleyiciler</h4>
+  <div class="tbl"><table>
+    <thead><tr><th>Belirleyici</th><th>Kim erişebilir?</th></tr></thead>
+    <tbody><tr><td><code>private</code></td><td>Yalnız bu sınıf</td></tr><tr><td><code>protected</code></td><td>Bu sınıf ve ondan türeyenler</td></tr><tr><td><code>public</code></td><td>Herkes</td></tr></tbody>
+  </table></div>
+
+  <h3>2.2 Dosya, paket, sayfa</h3>
+  <h4>static ve :: operatörü</h4>
+  <div class="prose"><p><code>static</code> üye ve sabitler nesneye değil <b>sınıfın kendisine</b> aittir; nesne oluşturmadan <code>::</code> (kapsam çözümleme operatörü) ile erişilir. <code>-&gt;</code> nesnenin üyesine, <code>::</code> sınıfın üyesine erişir. Static metodun içinde <code>$this</code> kullanılamaz. Laravel'de çok görülür: <code>Route::get()</code>, <code>Event::all()</code>, <code>EventController::class</code>.</p></div>
+  <pre>class Etkinlik
+{
+    public const EN_AZ_KAPASITE = 1;     <span class="c">// sınıf sabiti</span>
+    public static int $toplam = 0;       <span class="c">// bütün nesneler paylaşır</span>
+
+    public function __construct(public string $baslik) { self::$toplam++; }
+}
+new Etkinlik('Tanışma'); new Etkinlik('Atölye');
+echo Etkinlik::$toplam;            <span class="c">// 2</span>
+echo Etkinlik::EN_AZ_KAPASITE;     <span class="c">// 1</span>
+<span class="c">// self:: aynı sınıf, parent:: üst sınıf (ör. parent::__construct())</span></pre>
+  <div class="tbl"><table>
+    <thead><tr><th>Yazım</th><th>Anlamı</th></tr></thead>
+    <tbody>
+      <tr><td><b>Kalıtım</b> <code>extends</code></td><td>Sınıf başka bir sınıftan türer, özellik ve metotlarını devralır: <code>class EventController extends Controller</code>, <code>class Event extends Model</code></td></tr>
+      <tr><td><b>Arayüz</b> <code>implements</code></td><td>Sınıfın hangi metotları yazacağını söyleyen sözleşme: <code>class Etkinlik implements Ozetlenebilir</code></td></tr>
+      <tr><td><b>Kapanış</b> (closure)</td><td>Adsız fonksiyon: <code>function () { ... }</code>. 3. haftada rotalarda kullanılır.</td></tr>
+      <tr><td><b>Ad alanı</b> <code>namespace</code></td><td>Sınıf adlarını benzersiz yapan mantıksal adres: <code>App\Models\Event</code>. Ad çakışmasını önler, dosya yüklemez.</td></tr>
+      <tr><td><b>use</b></td><td>Kısa adı tam ada eşler (<code>use App\Models\Event;</code>). <b>Dosya yüklemez.</b></td></tr>
+      <tr><td><b>Otomatik yükleme</b></td><td>Sınıf ilk kullanıldığı anda dosyasının kendiliğinden yüklenmesi; her dosyaya <code>require</code> yazmak gerekmez.</td></tr>
+    </tbody>
+  </table></div>
+  <h4>PSR-4</h4>
+  <div class="prose"><p><b>PSR</b> (PHP Standards Recommendation), PHP projelerinin uyumlu çalışması için yayımlanan önerilerdir. <b>PSR-4</b> otomatik yükleme standardıdır: <b>namespace klasör yoluna, sınıf adı dosya adına</b> karşılık gelir. Eşleme <code>composer.json</code>'da yazılır.</p></div>
+  <pre>"autoload": { "psr-4": { "App\\": "app/" } }
+
+App\Models\Event                       →  app/Models/Event.php
+App\Http\Controllers\EventController   →  app/Http/Controllers/EventController.php
+<span class="c">// Büyük-küçük harf dahil birebir aynı olmalı (Windows ayırmaz, Linux sunucu ayırır)</span></pre>
+
+  <h4>Composer nedir? <span class="tag hoca">Vize</span></h4>
+  <div class="prose">
+    <p><b>Paket</b>, ad ve sürüm numarasıyla yayımlanan yeniden kullanılabilir koddur (ör. <code>nesbot/carbon</code>). <b>Bağımlılık</b>, projenin çalışmak için ihtiyaç duyduğu pakettir.</p>
+    <p><b>Composer, PHP'nin bağımlılık (paket) yöneticisidir.</b> Projenin istediği paketleri, onların bağımlılıklarını ve birbiriyle uyumlu sürümlerini bulur, <b><code>vendor/</code></b> klasörüne indirir ve otomatik yükleyiciyi (<code>vendor/autoload.php</code>) üretir. Paketlerin yayımlandığı merkezi katalog <b>Packagist</b>'tir (packagist.org). Laravel'in kendisi de bir Composer paketidir.</p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Komut</th><th>Ne yapar?</th></tr></thead>
+    <tbody>
+      <tr><td><code>composer -v</code> / <code>-V</code> / <code>--version</code></td><td>Kurulu mu? <code>-V</code> yalnız sürümü yazar</td></tr>
+      <tr><td><code>composer init</code></td><td>Boş klasörde <code>composer.json</code> oluşturur</td></tr>
+      <tr><td><code>composer create-project laravel/laravel</code></td><td>Hazır proje şablonundan yeni proje kurar (3. hafta)</td></tr>
+      <tr><td><code>composer require nesbot/carbon</code></td><td>Paketi bulur, <code>composer.json</code>'a yazar, <code>vendor/</code>'a indirir, <code>composer.lock</code>'u yazar</td></tr>
+      <tr><td><code>composer install</code></td><td><code>composer.lock</code>'taki <b>birebir aynı</b> sürümleri kurar</td></tr>
+      <tr><td><code>composer update</code></td><td>Sürüm aralıkları içinde yeni sürümleri seçer ve <b>lock'u yeniden yazar</b></td></tr>
+      <tr><td><code>composer remove paket/adi</code></td><td>Paketi kaldırır</td></tr>
+      <tr><td><code>composer dump-autoload</code></td><td>PSR-4 eşlemesi değişince otomatik yükleyiciyi yeniden üretir</td></tr>
+    </tbody>
+  </table></div>
+  <h4>composer.json, composer.lock ve vendor <span class="tag hoca">Vize</span></h4>
+  <div class="grid2">
+    <div class="box ezber"><b>Ezberle</b><p>Paketlerin kurulduğu klasör: <b><code>vendor/</code></b><br>Kilit dosyası: <b><code>composer.lock</code></b><br>Bildirim (istek) dosyası: <b><code>composer.json</code></b></p></div>
+    <div class="box ipucu"><b>npm ile aynı mantık</b><p><code>composer.json</code> ↔ <code>package.json</code><br><code>composer.lock</code> ↔ <code>package-lock.json</code><br><code>vendor/</code> ↔ <code>node_modules/</code><br>Packagist ↔ npm registry</p></div>
+  </div>
+  <div class="prose">
+    <p><b>composer.json</b> isteği yazar: hangi paketi hangi <b>sürüm aralığında</b> istiyorsun (<code>"nesbot/carbon": "^3.14"</code>). <b>composer.lock</b> sonucu yazar: kurulan her paketin, bağımlılıkların bağımlılıkları dahil, <b>kesin sürümünü</b> (<code>3.14.0</code>). Böylece projeyi kuran herkes ve sunucu aynı sürümü kurar, "bende çalışıyordu" sorunu olmaz. Lock elle düzenlenmez.</p>
+    <p><b>Teslim kuralı:</b> kod + <code>composer.json</code> + <code>composer.lock</code> verilir; <b><code>vendor/</code> verilmez</b> (Git'e de eklenmez), çünkü <code>composer install</code> onu lock dosyasından aynen yeniden kurar. <code>vendor/</code> içindeki bir dosyayı düzeltmek de yanlıştır: sonraki kurulum siler.</p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Kısıt</th><th>Anlamı</th></tr></thead>
+    <tbody><tr><td><code>^3.14</code></td><td>3.14 ve üzeri, 4.0'dan küçük</td></tr><tr><td><code>~3.14.0</code></td><td>3.14.0 ve üzeri, 3.15'ten küçük</td></tr><tr><td><code>3.14.0</code></td><td>Yalnız bu sürüm</td></tr></tbody>
+  </table></div>
+  <div class="prose"><p>Sürüm biçimi ANA.ARA.YAMA: yama hata düzeltir, ara sürüm geriye uyumlu yenilik getirir, ana sürüm uyumu bozabilir. Bu haftanın paketi <b>Carbon</b> (tarih/saat). <code>Carbon</code> değişebilir (mutable), <code>CarbonImmutable</code> her işlemde yeni nesne döndürür; derste hep <code>CarbonImmutable</code> kullanılır, saat UTC saklanıp İstanbul saatiyle gösterilir.</p></div>
+
+  <h4>MVC nedir? <span class="tag hoca">Vize</span></h4>
+  <div class="prose"><p>1. haftanın sayfasında veri, kural, istek işleme ve HTML aynı dosyadaydı. <b>MVC (Model-View-Controller)</b> kodu üç sorumluluğa böler:</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Katman</th><th>Görevi</th><th>Laravel'de</th></tr></thead>
+    <tbody>
+      <tr><td><b>Model</b></td><td>Veri ve verinin kuralları. HTML bilmez.</td><td><code>app/Models</code></td></tr>
+      <tr><td><b>View</b> (görünüm)</td><td>Kullanıcıya gidecek çıktıyı (HTML) üretir. Verinin nereden geldiğini bilmez, kural uygulamaz, kendisine verileni gösterir.</td><td><code>resources/views</code></td></tr>
+      <tr><td><b>Controller</b> (denetleyici)</td><td>İsteği karşılar, Model'den veriyi ister, hangi view'ın gösterileceğine karar verir.</td><td><code>app/Http/Controllers</code></td></tr>
+    </tbody>
+  </table></div>
+  <div class="flow"><span>İstek</span><i>→</i><span>Route</span><i>→</i><span>Controller</span><i>⇄</i><span>Model ⇄ Veritabanı</span><i>→</i><span>View</span><i>→</i><span>HTML yanıt</span></div>
+  <div class="box ezber"><b>Derste söylenen cümle</b><p>"İstek önce <b>Controller</b>'a gelir, Controller <b>Model</b>'e erişir (çift taraflı), sonra sonucu <b>View</b>'a verir. Controller mantıksal işler, Model veri katmanı, View görüntü katmanı."</p></div>
+
+  <h4>Hocanın "Doğru mu, yanlış mı?" iddiaları</h4>
+  <div class="dy">
+    <div><q>use Ders\Etkinlik; satırı sınıfın dosyasını yükler.</q><span>use yalnız kısa adı tam ada eşler. Dosyayı otomatik yükleyici, sınıf ilk kullanıldığında yükler.</span></div>
+    <div><q>int $kapasite yazdım; kapasite artık doğru olur.</q><span>Tür bildirimi biçimi denetler; −5 de tam sayıdır. İş kuralı ayrıca yazılır.</span></div>
+  </div>
+
+  <div class="exam">
+    <h3>2. haftanın sınav soruları</h3>
+    <p>Composer, vendor, composer.lock ve MVC vize listesinde. Derste "Composer nedir, composer.lock nedir, Laravel nedir" diye ödev verildi.</p>
+    <details class="oq"><summary>Composer nedir? Temel komutlarını yazınız. <span class="tag hoca">Vize</span></summary><div class="ans"><p>Composer, PHP'nin bağımlılık yöneticisidir. Projenin ihtiyaç duyduğu paketleri uyumlu sürümleriyle Packagist'ten indirip <code>vendor/</code> klasörüne kurar ve PSR-4 otomatik yükleyiciyi üretir. Komutlar: <code>composer require paket/adi</code> (paket ekler), <code>composer install</code> (lock'taki sürümleri kurar), <code>composer update</code> (yükseltir, lock'u yeniler), <code>composer dump-autoload</code> (otomatik yükleyiciyi yeniden üretir), <code>composer create-project laravel/laravel</code> (proje kurar).</p></div></details>
+    <details class="oq"><summary>composer.lock nedir? composer.json'dan farkı nedir? <span class="tag hoca">Vize</span></summary><div class="ans"><p><code>composer.json</code> istenen paketleri ve sürüm aralıklarını yazar (<code>^7.0</code>). <code>composer.lock</code> Composer'ın paket kurduktan sonra oluşturduğu kilit dosyasıdır; kurulan her paketin ve bağımlılıklarının kesin sürümünü kaydeder (<code>7.9.2</code>). Amacı her ortamda birebir aynı kurulumun yapılmasıdır. <code>composer install</code> lock'u okur, <code>composer update</code> lock'u yeniden yazar. Elle düzenlenmez, Git'e eklenir.</p></div></details>
+    <details class="oq"><summary>composer.lock teslim edilmezse ne kaybolur? vendor/ neden teslim edilmez? <span class="tag hoca">Vize</span></summary><div class="ans"><p>Lock olmazsa kesin sürümler kaybolur; başka makinede <code>composer install</code> sürüm aralığı içinde farklı (daha yeni) sürümler kurabilir, kod orada bozulabilir. <code>vendor/</code> teslim edilmez çünkü <code>composer install</code> onu lock dosyasından birebir yeniden kurar; ayrıca büyüktür ve içindeki dosyalar elle değiştirilmez.</p></div></details>
+    <details class="oq"><summary>MVC nedir? Katmanlarını açıklayınız. <span class="tag hoca">Vize</span></summary><div class="ans"><p>MVC uygulamayı üç katmana ayıran mimaridir. Controller mantıksal işleri yapar: isteği karşılar, Model'den veriyi ister, sonucu View'a verir. Model veri katmanıdır: veritabanındaki veriyi okur ve yazar; Controller ile Model arasındaki iletişim çift yönlüdür. View görüntü katmanıdır: gelen veriyi HTML olarak gösterir. Laravel'de sırasıyla <code>app/Http/Controllers</code>, <code>app/Models</code>, <code>resources/views</code> klasörlerindedir.</p></div></details>
+    <details class="oq"><summary>Laravel nedir? <span class="tag vize">Ödev sorusu</span></summary><div class="ans"><p>Laravel, PHP ile yazılmış, açık kaynaklı, MVC mimarisini kullanan bir web uygulama çatısıdır (framework). Taylor Otwell tarafından 2011'de geliştirildi. Yönlendirme, veritabanı, oturum, doğrulama gibi ortak işleri hazır sunar; Composer ile kurulur ve PSR-4 kullanır.</p></div></details>
+    <details class="oq"><summary>PSR-4 nedir? <span class="tag vize">Ödev sorusu</span></summary><div class="ans"><p>PSR-4, PHP-FIG'in otomatik yükleme standardıdır: sınıfın namespace'i klasör yoluna, sınıf adı dosya adına karşılık gelir. Böylece <code>require</code> yazmadan sınıf kullanıldığı anda dosyası bulunup yüklenir. Ör. <code>App\Models\Event</code> → <code>app/Models/Event.php</code>. Eşleme <code>composer.json</code>'ın <code>autoload</code> bölümündedir.</p></div></details>
+    <details class="oq"><summary>static ve :: nedir? Etkinlik::EN_AZ_KAPASITE ile $web-&gt;kalan() neden farklı işleç kullanır? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p><code>static</code> üyeler ve sabitler sınıfa aittir, nesne oluşturmadan <code>::</code> ile erişilir. <code>EN_AZ_KAPASITE</code> sınıf sabitidir, bu yüzden <code>Etkinlik::</code>. <code>kalan()</code> bir nesnenin metodudur, o nesnenin verisiyle çalışır, bu yüzden <code>$web-&gt;</code>.</p></div></details>
+    <details class="oq"><summary>__construct nedir? declare(strict_types=1) ne işe yarar? <span class="tag ek">Derste</span></summary><div class="ans"><p><code>__construct</code> yapıcı (kurucu) metottur: nesne <code>new</code> ile oluşturulduğu anda kendiliğinden çalışır ve başlangıç değerlerini atar. <code>declare(strict_types=1)</code> dosyada tür bildirimlerini katı yapar: int bekleyen yere <code>"5"</code> verilirse sessizce çevirmez, <code>TypeError</code> fırlatır. Dosyanın ilk ifadesi olmalıdır.</p></div></details>
+    <details class="oq"><summary>$ikinci = $web; satırından sonra $ikinci-&gt;kaydet() $web'i etkiler mi? $web bir dizi olsaydı? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>Etkiler: nesneler paylaşılır, iki değişken aynı nesneyi gösterir. Dizi olsaydı atamada kopyalanırdı, <code>$web</code> etkilenmezdi.</p></div></details>
+    <details class="oq"><summary>use Ders\Etkinlik; ne yapar, ne yapmaz? Ders\Rapor\Ozet hangi dosyada aranır? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>use kısa adı tam ada eşler; dosya yüklemez. <code>Ders\</code> öneki <code>src/</code>'ye bağlıysa <code>Ders\Rapor\Ozet</code> → <code>src/Rapor/Ozet.php</code>.</p></div></details>
+  </div>
+</section>
+
+<!-- ======================= HAFTA 3 ======================= -->
+<section class="card" id="h3">
+  <div class="whead"><span class="wno">3. Hafta</span><span class="wdate">2 Ekim 2026</span></div>
+  <h2>Laravel'e giriş ve yönlendirme</h2>
+  <div class="wtags"><span class="tag hoca">Vize: Laravel genel yapısı</span><span class="tag vize">Derste: kurulum adımları vize sorusu</span></div>
+  <div class="goals"><b>Sunumdaki hedefler</b>Çerçevenin ne yaptığını ve neyi sana bıraktığını söylemek · Laravel'i kurup dizinlerini görevine göre okumak · değeri <code>.env</code>'e, okunuşunu <code>config()</code>'e bağlamak · isteğin yaşam döngüsünü izlemek · parametreli, kısıtlı, isimli rotalar yazmak · aynı durum kodunun farklı nedenlerini ayırmak.</div>
+  <div class="box not"><b>Derste alınan not</b><pre>Laravel'i Composer ile yükleme – VİZE SORUSU
+Sınavda çıkabilecek: laravel/laravel nedir? Neden öyle yapıyoruz?
+Laravel dosya yapısını incele, açıkla
+Neden css, js public altında değil? = sınav sorusu ihtimal
+Routes = rotalar web.php'de tanımlanır (çok önemli)</pre></div>
+
+  <h3>3.1 Çerçeve ve proje</h3>
+  <div class="prose">
+    <p><b>Çerçeve (framework)</b>, bir uygulama türünün tekrar eden işlerini hazır yapan ve <b>senin kodunu kendisi çağıran</b> kod bütünüdür. <b>Kütüphaneyi sen çağırırsın</b> (Carbon), <b>çerçeve seni çağırır</b> (Laravel). Laravel isteği okur, yükler, hata yanıtı üretir; hangi adresin hangi kodu çalıştıracağı ve kontenjan gibi iş kuralları senindir.</p>
+  </div>
+  <h4>Laravel'i Composer ile kurmak <span class="tag vize">Vize sorusu</span></h4>
+  <pre><span class="c">1. Proje için klasör oluştur (ör. C:\projeler), cmd'yi o klasörde aç</span>
+<span class="f">composer -v</span>                              <span class="c">2. Composer kurulu mu?</span>
+<span class="f">composer create-project laravel/laravel</span>   <span class="c">3. Laravel'i kur (laravel klasörüne)</span>
+<span class="f">cd laravel</span>                               <span class="c">4. Proje klasörüne gir</span>
+<span class="f">php artisan serve</span>                        <span class="c">5. Çalıştır → http://127.0.0.1:8000 (durdur: Ctrl+C)</span>
+<span class="c">6. PhpStorm → File → Open → laravel klasörünü seç</span>
+<span class="c">// Klasör adı vermek için: composer create-project laravel/laravel etkinlik-sistemi</span></pre>
+  <div class="box tuzak"><b>Yaygın yanlış</b><p><code>php artisan server</code> diye bir komut yok, doğrusu <b><code>php artisan serve</code></b>. Yanlış yazılırsa <i>Command "server" is not defined</i> hatası çıkar. <code>php artisan serve</code> yalnız geliştirme içindir.</p></div>
+  <h4>laravel/laravel nedir? Neden create-project? <span class="tag vize">Vize sorusu</span></h4>
+  <div class="prose">
+    <p>Composer paket adları <b>yayıncı/paket</b> biçimindedir: ilk <code>laravel</code> yayıncı, ikinci <code>laravel</code> paket.</p>
+    <ul class="tight">
+      <li><code>laravel/laravel</code>: <b>uygulama iskeleti</b>. Klasör yapısı, ayar dosyaları, örnek rota, karşılama sayfası hazır gelen başlangıç projesi. Senin kodunu yazacağın proje.</li>
+      <li><code>laravel/framework</code>: <b>çatının kendisi</b> (Route, Eloquent, Blade sınıfları). İskeletin bağımlılığıdır, <code>vendor/laravel/framework</code>'e kurulur, elle değiştirilmez.</li>
+    </ul>
+    <p>Henüz proje olmadığı için <code>require</code> değil <code>create-project</code> kullanılır. Tek komutta: iskeleti yeni klasöre kopyalar → <code>composer install</code> ile paketleri kurar → <code>.env.example</code>'dan <code>.env</code> oluşturur → <code>APP_KEY</code> üretir → varsayılan tabloları kurar. Herkes aynı yapıda, çalışmaya hazır bir projeyle başlar.</p>
+  </div>
+  <h4>Laravel klasör yapısı <span class="tag hoca">Vize</span></h4>
+  <div class="tbl"><table>
+    <thead><tr><th>Klasör / dosya</th><th>Görevi</th></tr></thead>
+    <tbody>
+      <tr><td><b><code>public/</code></b></td><td><b>Belge kökü, dışarıdan erişilebilen tek klasör.</b> Her istek <code>public/index.php</code>'den girer.</td></tr>
+      <tr><td><b><code>routes/web.php</code></b></td><td>Adresleri koda bağlayan tanımlar (çok önemli). Artisan komutları <code>console.php</code>'de.</td></tr>
+      <tr><td><code>app/</code></td><td>Uygulamanın sınıfları (<code>App\</code> ad alanı): <code>Http/Controllers</code>, <code>Models</code></td></tr>
+      <tr><td><b><code>resources/</code></b></td><td><code>views</code> (Blade şablonları), <code>css</code>, <code>js</code> (kaynak dosyalar)</td></tr>
+      <tr><td><code>config/</code></td><td>Yapılandırma dosyaları</td></tr>
+      <tr><td><code>database/</code></td><td>migrations, seeders, factories, <code>database.sqlite</code></td></tr>
+      <tr><td><b><code>storage/</code></b></td><td>Saklanan dosyalar (<code>app/public</code> herkese açık, <code>app/private</code> gizli), <code>logs/laravel.log</code>, önbellek</td></tr>
+      <tr><td><code>tests/</code></td><td>Otomatik testler (Feature, Unit) · <code>php artisan test</code></td></tr>
+      <tr><td><code>bootstrap/</code>, <code>vendor/</code></td><td>Uygulamanın açılışı · Composer paketleri (elle düzenlenmez)</td></tr>
+      <tr><td><code>.env</code></td><td>Bu makineye özgü değerler (DB şifresi, <code>APP_KEY</code>); gizli, Git'e eklenmez</td></tr>
+      <tr><td><code>artisan</code></td><td>Laravel'in komut satırı aracı</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose"><p><b>Belge kökü proje kökü değildir.</b> Sunucunun kökü <code>public/</code>'e ayarlandığı için <code>/.env</code> ya da <code>/composer.json</code> istenince 404 gelir; proje dosyalarının hiçbirinin adresi yoktur.</p></div>
+  <h4>CSS ve JS neden public değil resources'ta? <span class="tag vize">Sınav ihtimali</span></h4>
+  <div class="prose"><p><code>resources</code> altındakiler <b>ham kaynak dosyalardır</b>, tarayıcıya doğrudan gitmez. <b>Vite</b> onları birleştirir, küçültür, <code>public/build</code>'e yazar; tarayıcıya yalnız derlenmiş hâli gider. <code>public</code>'teki her dosya URL ile açılabildiği için oraya yalnız yayına hazır dosyalar konur. View'lar da sunucuda PHP ile işlendiği için <code>resources</code>'tadır: kaynak kod dışarı sızmaz, <b>HTML ile PHP iç içe yazılmaz</b>, görünüm ile mantık ayrı kalır.</p></div>
+  <h4>.env ve config</h4>
+  <div class="tbl"><table>
+    <thead><tr><th>Değer</th><th>Anlamı</th></tr></thead>
+    <tbody>
+      <tr><td><code>APP_ENV=local</code></td><td>Ortamın adı</td></tr>
+      <tr><td><code>APP_KEY=base64:…</code></td><td>Şifreleme anahtarı; kurulumda üretilir, başka projeye kopyalanmaz</td></tr>
+      <tr><td><code>APP_DEBUG=true</code></td><td>Hata ayrıntısı. Geliştirmede true, <b>yayında mutlaka false</b>; açık kalırsa ziyaretçi yığın izini ve ayarları görür</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose"><p>Kod değeri <code>config('app.name')</code> ile okur, <code>env()</code> yalnız config dosyalarında kullanılır. <code>.env</code> değiştiği hâlde eski değer görünüyorsa yapılandırma önbelleğidir: <code>php artisan config:clear</code>.</p></div>
+
+  <h3>3.2 İstekten yanıta</h3>
+  <h4>İsteğin yaşam döngüsü</h4>
+  <div class="flow"><span>public/index.php</span><i>→</i><span>uygulama kurulur (autoload, servis sağlayıcılar)</span><i>→</i><span>middleware</span><i>→</i><span>rota eşlenir</span><i>→</i><span>eylem çalışır (senin kodun)</span><i>→</i><span>yanıt middleware'den geri</span></div>
+  <div class="prose"><p>Bir adımda durursa sonrakiler hiç çalışmaz. <b>Middleware (ara katman)</b>, isteğin rotadan önce, yanıtın dönerken geçtiği katmandır: boşlukları kırpmak, oturumu başlatmak, "bu isteğe izin var mı?" sorusu. "Bu istekte hangi etkinlik gösterilecek?" ise rotanın işidir. <code>web.php</code>'deki her rota <code>web</code> middleware grubundan geçer.</p></div>
+  <h4>Rotalar (routes/web.php)</h4>
+  <pre><span class="h">routes/web.php</span>use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+
+<span class="c">// Derste yazılan ilk rota (kapanışla)</span>
+Route::get('/deneme', function () {
+    return 'Merhaba Dünya';       <span class="c">// derste echo yazıldı; Laravel'de return tercih edilir</span>
+});
+
+<span class="c">// Rota parametresi ve kısıt</span>
+Route::get('/events/{id}', function (int $id) {
+    $titles = [1 =&gt; 'Web atölyesi', 2 =&gt; 'Veri atölyesi'];
+    if (! array_key_exists($id, $titles)) {
+        abort(404);               <span class="c">// biçim doğru, kayıt yok</span>
+    }
+    return $titles[$id];
+})-&gt;whereNumber('id')-&gt;name('events.show');   <span class="c">// yalnız rakam eşleşir; rotaya ad</span>
+
+<span class="c">// Sorgu dizgisi: /search?q=veri</span>
+Route::get('/search', function (Request $request) {
+    return 'Aranan: ' . $request-&gt;query('q', '');
+});
+
+<span class="c">// Adresi addan üretmek ve yönlendirmek</span>
+route('events.show', ['id' =&gt; 2]);         <span class="c">// http://127.0.0.1:8000/events/2</span>
+Route::get('/', fn () =&gt; redirect()-&gt;route('events.index'));   <span class="c">// 302</span></pre>
+  <div class="grid2">
+    <div class="box ezber"><b>İki 404, iki ayrı adım</b><p><code>/events/abc</code>: rota eşleşmedi (whereNumber), kod hiç çalışmadı. <code>/events/9</code>: rota eşleşti, kod <code>abort(404)</code> dedi. Hiç yanıt yoksa (<i>Failed to connect</i>) sunucu kapalıdır. <code>whereNumber</code> biçimi denetler, kaydın varlığını değil.</p></div>
+    <div class="box ezber"><b>Artisan</b><p><code>php artisan route:list</code> bütün rotaları adlarıyla listeler. Yalnız GET tanımlı adrese POST gelirse <b>405</b>. Çözüm <code>Route::any</code> değil, niyete uygun yöntemi seçmektir.</p></div>
+  </div>
+
+  <h4>Hocanın "Doğru mu, yanlış mı?" iddiaları</h4>
+  <div class="dy">
+    <div><q>whereNumber('id') yazdım; bu kimlikte bir etkinlik olduğu kesin.</q><span>Kısıt biçimi denetler. Varlık eylemin içinde ayrıca denetlenir.</span></div>
+    <div><q>405 alıyorum; Route::any yazarsam sorun çözülür.</q><span>405 doğru bilgiyi veriyor: bu adres bu yöntemle kullanılmıyor. Niyete uygun yöntemi seçin.</span></div>
+  </div>
+
+  <div class="exam">
+    <h3>3. haftanın sınav soruları</h3>
+    <p>Derste ilk üç soru için açıkça "vize sorusu / sınavda çıkabilir" dendi.</p>
+    <details class="oq"><summary>Laravel'i Composer ile kurma adımlarını yazınız. <span class="tag vize">Vize sorusu</span></summary><div class="ans"><p>1) Proje için bir klasör oluşturulur, komut istemi (cmd) bu klasörde açılır. 2) <code>composer -v</code> ile Composer'ın kurulu olduğu kontrol edilir. 3) <code>composer create-project laravel/laravel</code> ile Laravel kurulur; proje <code>laravel</code> klasörüne oluşur. 4) <code>cd laravel</code> ile proje klasörüne girilir. 5) <code>php artisan serve</code> ile proje çalıştırılır, <code>http://127.0.0.1:8000</code> adresinden açılır. 6) Proje PhpStorm'da File &gt; Open ile açılarak geliştirilir.</p></div></details>
+    <details class="oq"><summary>laravel/laravel nedir? Neden bu şekilde kuruyoruz? <span class="tag vize">Vize sorusu</span></summary><div class="ans"><p>Composer paket adları yayıncı/paket biçimindedir; ilk laravel yayıncıyı, ikincisi paketi gösterir. <code>laravel/laravel</code> Laravel'in uygulama iskeletidir: klasör yapısı, ayar dosyaları ve örnek sayfası hazır gelen başlangıç projesi. Çatının kendisi ayrı bir pakettir (<code>laravel/framework</code>) ve iskeletin bağımlılığı olarak vendor'a kurulur. Henüz proje olmadığı için <code>require</code> değil <code>create-project</code> kullanılır; bu komut iskeleti yeni klasöre kopyalar, paketleri kurar, <code>.env</code> dosyasını ve <code>APP_KEY</code>'i oluşturur. Tek komutla, herkeste aynı yapıda, çalışmaya hazır proje elde edilir.</p></div></details>
+    <details class="oq"><summary>Laravel klasör yapısını açıklayınız. <span class="tag hoca">Vize</span></summary><div class="ans"><p><b>public</b>: dışarıdan erişilebilen tek klasör, uygulama <code>index.php</code> ile başlar. <b>resources</b>: CSS ve JS kaynak dosyaları ile Blade view'ları. <b>routes</b>: rotalar; tarayıcı rotaları <code>web.php</code>'de. <b>storage</b>: saklanan dosyalar (public ve private), loglar, önbellek. <b>tests</b>: otomatik testler. <b>app</b>: Controller ve Model'ler. <b>config</b>: ayarlar. <b>database</b>: migration'lar. <b>vendor</b>: Composer paketleri. <b>.env</b>: ortam ayarları.</p></div></details>
+    <details class="oq"><summary>CSS ve JS dosyaları neden public değil de resources klasöründedir? <span class="tag vize">Sınav ihtimali</span></summary><div class="ans"><p>resources altındaki CSS ve JS ham kaynak dosyalardır. Vite bunları birleştirip küçültür ve sonucu <code>public/build</code>'e yazar; tarayıcıya yalnız derlenmiş hâli gider. public'teki her dosya URL ile açılabildiği için oraya yalnız yayına hazır dosyalar konur. View'lar da sunucuda PHP ile işlendiği için resources'tadır; böylece kaynak kod dışarı sızmaz, HTML ile PHP iç içe yazılmaz, görünüm ile mantık ayrı tutulur.</p></div></details>
+    <details class="oq"><summary>Kütüphane ile çerçeveyi ayırın. Carbon hangisidir, Laravel hangisi? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>Kütüphaneyi siz çağırırsınız; çerçeve sizin kodunuzu çağırır. Carbon kütüphanedir, Laravel çerçevedir.</p></div></details>
+    <details class="oq"><summary>Yeni bir adres eklenecek, bir hata kaydı aranacak, bir paket kurulacak. Hangi klasör/dosyalara bakarsınız? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>Adres: <code>routes/web.php</code>. Hata kaydı: <code>storage/logs/laravel.log</code>. Paket: <code>composer require</code> ile; <code>composer.json</code>, <code>composer.lock</code> güncellenir, paket <code>vendor/</code>'a kurulur.</p></div></details>
+    <details class="oq"><summary>.env değişti ama uygulama eski değeri gösteriyor. İlk neye bakarsınız? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>Yapılandırma önbelleğine: <code>php artisan config:clear</code>. Uygulama kodunda <code>env()</code> değil <code>config()</code> yazılır, çünkü yapılandırma önbelleğe alındığında <code>.env</code> okunmaz.</p></div></details>
+    <details class="oq"><summary>APP_DEBUG neden geliştirmede açık, yayında kapalıdır? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>Geliştirici hatanın ayrıntısını (yığın izi, istek başlıkları) görmek ister. Yayında açık kalırsa ziyaretçi dosya yollarını, kodu, ayarları görür; bu güvenlik açığıdır. Yayında kullanıcı yalnız genel hata sayfası görmelidir.</p></div></details>
+    <details class="oq"><summary>İsteğin yaşam döngüsünü sırayla yazın. 404 veren adreste eylemdeki satır neden hiç çalışmamış olabilir? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>public/index.php → uygulama kurulur (autoload, servis sağlayıcılar) → middleware → rota eşlenir → eylem çalışır → yanıt middleware üzerinden geri döner. Rota eşleşmediyse 404 rota adımında üretilir ve eyleme hiç gelinmez.</p></div></details>
+    <details class="oq"><summary>/events/abc ile /events/9 aynı 404'ü veriyor. Hangisinde eylem çalıştı? POST /events neden 405 alır? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p><code>/events/9</code>'da eylem çalıştı ve <code>abort(404)</code> dedi. <code>/events/abc</code> <code>whereNumber</code>'a takıldı, rota eşleşmedi, eylem çalışmadı. <code>/events</code> yalnız GET ile tanımlı olduğu için POST 405 alır.</p></div></details>
+  </div>
+</section>
+
+<!-- ======================= HAFTA 4 ======================= -->
+<section class="card" id="h4">
+  <div class="whead"><span class="wno">4. Hafta</span><span class="wdate">9 Ekim 2026</span></div>
+  <h2>Controller, view ve Blade</h2>
+  <div class="wtags"><span class="tag hoca">Vize: Blade, layout</span><span class="tag hoca">Vize: veriyi controller'dan gönderme</span><span class="tag hoca">Vize: Laravel yapısı (view)</span></div>
+  <div class="goals"><b>Sunumdaki hedefler</b><code>make:controller</code> ile controller üretip rotayı action'a bağlamak · resource controller'ın yedi action'ını okumak · view'a veri gönderip Blade ile sayfa yazmak · kullanıcı metnini kaçışla yazmak, <code>{!! !!}</code>'in neden kullanılmadığını açıklamak · sayfaları layout'tan türetmek, tekrar eden parçayı component'e ayırmak.</div>
+  <div class="box not"><b>Derste alınan not</b><pre>Controller oluşturma: php artisan make:controller ...
+dd(); → nedir
+SÜPER GLOBAL NEDİR ÖĞREN · GET POST request öğren
+Storage::get('...json'); = soruları çeker, Laravel'e özel
+Ödev: quiz sistemini geliştir, puanlama</pre></div>
+
+  <h3>4.1 Controller ve view</h3>
+  <div class="prose"><p><b>Controller</b>, bir kaynağa (ör. etkinlikler) gelen istekleri public metotlarıyla karşılayan sınıftır. Rotaya bağlanan her metoda <b>action</b> denir. Kural: <b>controller ne gösterileceğine karar verir, nasıl görüneceğine değil.</b> Arama kuralı controller'da, başlığın rengi view'da çözülür.</p></div>
+  <pre>php artisan make:controller QuizController          <span class="c"># app/Http/Controllers/QuizController.php</span>
+php artisan make:controller EventController --resource   <span class="c"># 7 boş metot (-r)</span></pre>
+  <div class="box tuzak"><b>Not düzeltmesi</b><p><code>make:controller</code> komutun adıdır; arkasından gelen ad senin verdiğin sınıf adıdır (<code>QuizController</code>, <code>OgrenciController</code>). Ad büyük harfle başlar, <code>Controller</code> ile biter. Aynı adla ikinci kez üretilmez: <i>Controller already exists</i>.</p></div>
+  <pre><span class="h">routes/web.php</span>use App\Http\Controllers\EventController;
+
+Route::get('/events', [EventController::class, 'index'])-&gt;name('events.index');
+<span class="c">// dizinin 1. elemanı controller sınıfı, 2. elemanı action adı</span>
+
+Route::resource('events', EventController::class)-&gt;only(['index', 'show']);   <span class="c">// yalnız yazılanları aç</span></pre>
+  <h4>Resource controller: yedi action</h4>
+  <div class="tbl"><table>
+    <thead><tr><th>Yöntem</th><th>URI</th><th>Action</th><th>Rota adı</th><th>İş</th></tr></thead>
+    <tbody>
+      <tr><td>GET</td><td>/events</td><td>index</td><td>events.index</td><td>Listeler</td></tr>
+      <tr><td>GET</td><td>/events/create</td><td>create</td><td>events.create</td><td>Yeni kayıt formunu gösterir</td></tr>
+      <tr><td>POST</td><td>/events</td><td>store</td><td>events.store</td><td>Formdan geleni saklar</td></tr>
+      <tr><td>GET</td><td>/events/{event}</td><td>show</td><td>events.show</td><td>Birini gösterir</td></tr>
+      <tr><td>GET</td><td>/events/{event}/edit</td><td>edit</td><td>events.edit</td><td>Düzenleme formu</td></tr>
+      <tr><td>PUT/PATCH</td><td>/events/{event}</td><td>update</td><td>events.update</td><td>Günceller</td></tr>
+      <tr><td>DELETE</td><td>/events/{event}</td><td>destroy</td><td>events.destroy</td><td>Siler</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose"><p>Bu dört temel işleme <b>CRUD</b> denir: Create, Read, Update, Delete. Aynı adres farklı yöntemle farklı action'a gider: <code>/events</code>'e GET liste, POST kayıt.</p></div>
+
+  <h4>View'a veri göndermek ve compact() <span class="tag hoca">Vize</span></h4>
+  <div class="prose"><p><b>View</b>, <code>resources/views</code> altındaki <code>.blade.php</code> dosyasıdır. <code>view('events.index')</code> → <code>resources/views/events/index.blade.php</code> (nokta klasör ayırır, uzantı yazılmaz). <b>Dizinin anahtarı, view'daki değişkenin adıdır.</b></p></div>
+  <pre><span class="h">app/Http/Controllers/EventController.php</span>public function index()
+{
+    $events = Event::all();
+    $baslik = 'Etkinlikler';
+
+    return view('events.index', compact('events', 'baslik'));
+}
+
+<span class="c">// Şu üçü AYNI işi yapar: view'da $events olarak kullanılır</span>
+return view('events.index', compact('events'));
+return view('events.index', ['events' =&gt; $events]);
+return view('events.index')-&gt;with('events', $events);
+
+<span class="c">// Farklı adla göndermek: ['liste' =&gt; $events]  → view'da $liste</span></pre>
+  <div class="grid2">
+    <div class="box ezber"><b>compact nedir?</b><p>PHP fonksiyonu. Adı verilen değişkenlerden dizi kurar: <b>anahtar değişkenin adı, değer değişkenin kendisi</b>. Derste "aynı isimlerse direkt beni kullan" diye anlatıldı.</p></div>
+    <div class="box tuzak"><b>compact tuzakları</b><p>Tırnak içine <code>$</code> konmaz: <code>compact('events')</code>. Ad birebir aynı olmalı; yanlışsa <i>Undefined variable</i>. Controller <code>['item' =&gt; …]</code> gönderip view <code>$event</code> okursa hata alırsın: view'ın girdisi bir sözleşmedir.</p></div>
+  </div>
+  <h4>dd(), süper globaller, Request ve Storage <span class="tag ek">Derste</span></h4>
+  <div class="tbl"><table>
+    <thead><tr><th>Yazım</th><th>Ne yapar?</th></tr></thead>
+    <tbody>
+      <tr><td><code>dd($x)</code></td><td><b>dump and die</b>: değişkeni ekrana döker ve programı durdurur. <code>dump($x)</code> döker ama devam eder. İş bitince silinir.</td></tr>
+      <tr><td>Süper globaller</td><td>PHP'nin her yerden (fonksiyon içinden bile) erişilen hazır dizileri, <code>$_</code> ile başlar: <code>$_GET</code>, <code>$_POST</code>, <code>$_REQUEST</code>, <code>$_SERVER</code>, <code>$_SESSION</code>, <code>$_COOKIE</code>, <code>$_FILES</code>, <code>$_ENV</code>, <code>$GLOBALS</code></td></tr>
+      <tr><td><code>$request-&gt;input('ad')</code></td><td>Laravel'de <code>$_GET</code>/<code>$_POST</code> yerine. URL'den ya da formdan okur. <code>query()</code> yalnız URL, <code>post()</code> yalnız form. İkinci parametre varsayılan: <code>input('ad', 'Misafir')</code></td></tr>
+      <tr><td><code>Storage::get('sorular.json')</code></td><td>Laravel'e özel dosya okuma; <code>storage/app/private</code>'tan metin döner. <code>json_decode($json, true)</code> diziye çevirir. Kısa yol <code>Storage::json('sorular.json')</code></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>4.2 Blade şablonları <span class="tag hoca">Vize</span></h3>
+  <div class="prose"><p><b>Blade</b>, Laravel'in şablon motorudur. <code>.blade.php</code> dosyası sunucuda düz PHP'ye derlenir (<code>storage/framework/views</code>); tarayıcıya yalnız üretilen HTML gider. Değişiklik görünmüyorsa <code>php artisan view:clear</code>.</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Yazım</th><th>Ne yapar?</th></tr></thead>
+    <tbody>
+      <tr><td><code>{{ $ad }}</code></td><td>Değeri <b>kaçışlı</b> yazar (<code>&lt;</code> → <code>&amp;lt;</code>). Arkada <code>htmlspecialchars</code>. XSS'i önler.</td></tr>
+      <tr><td><code>{!! $html !!}</code></td><td><b>Ham çıktı</b>, kaçış yok. Kullanıcıdan gelen hiçbir değer bununla yazılmaz.</td></tr>
+      <tr><td><code>{{-- yorum --}}</code></td><td>Blade yorumu; HTML yorumunun aksine tarayıcıya gitmez</td></tr>
+      <tr><td><code>@if … @elseif … @else … @endif</code></td><td>Koşul. <code>@unless</code> = koşul doğru değilse</td></tr>
+      <tr><td><code>@foreach ($events as $event) … @endforeach</code></td><td>Döngü. İçinde <code>$loop-&gt;iteration</code> (1'den), <code>$loop-&gt;index</code> (0'dan), <code>$loop-&gt;first</code>, <code>$loop-&gt;last</code>, <code>$loop-&gt;count</code></td></tr>
+      <tr><td><code>@forelse … @empty … @endforelse</code></td><td>Liste boşsa <code>@empty</code> kısmını bir kez yazar. Boş liste hata değildir: 200 ve "Henüz etkinlik yok"</td></tr>
+      <tr><td><code>@include('ornek.iletisim', ['email' =&gt; '…'])</code></td><td>Başka bir view parçasını o noktaya ekler</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box tuzak"><b>XSS (siteler arası betik çalıştırma)</b><p>Kullanıcının verdiği metnin sayfada kod olarak çalışması. <code>?q=&lt;script&gt;alert(1)&lt;/script&gt;</code> isteğinde <code>{{ $q }}</code> metni harf olarak gösterir, <code>{!! $q !!}</code> betiği çalıştırır. Saldırganın uygulamaya bir şey kaydetmesine gerek yoktur; hazırladığı linki göndermesi yeter. Öznitelik değeri hep çift tırnakla yazılır: <code>value="{{ $q }}"</code>.</p></div>
+
+  <h3>4.3 Layout ve component <span class="tag hoca">Vize</span></h3>
+  <div class="prose"><p>Her view'da aynı iskelet (doctype, head, menü) tekrar ediyordu. <b>Layout</b>, birden çok sayfanın paylaştığı dış iskelettir; bir kez <code>resources/views/layouts/app.blade.php</code>'ye yazılır. Derste kullanılan yol <b>şablon kalıtımıdır</b> (template inheritance).</p></div>
+  <div class="grid2">
+  <pre><span class="h">resources/views/layouts/app.blade.php</span>&lt;!doctype html&gt;
+&lt;html lang="tr"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;@yield('title', 'Etkinlikler')&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;...menü...&lt;/header&gt;
+  &lt;main&gt;
+    @yield('content')
+  &lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+  <pre><span class="h">resources/views/events/show.blade.php</span>@extends('layouts.app')
+
+@section('title', $event-&gt;title)
+
+@section('content')
+  &lt;h1&gt;{{ $event-&gt;title }}&lt;/h1&gt;
+  &lt;p&gt;Kapasite: {{ $event-&gt;capacity }}&lt;/p&gt;
+  &lt;a href="{{ route('events.index') }}"&gt;
+    Listeye dön
+  &lt;/a&gt;
+@endsection</pre>
+  </div>
+  <div class="grid2">
+    <div class="box ezber"><b>Üç direktif</b><p><code>@yield('content')</code> layout'ta <b>boşluk açar</b> · <code>@extends('layouts.app')</code> sayfa layout'u <b>seçer</b> · <code>@section('content') … @endsection</code> boşluğu <b>doldurur</b>. Tek satır için kısa biçim: <code>@section('title', 'Liste')</code>. Menüye link eklemek için tek dosya, layout değişir.</p></div>
+    <div class="box tuzak"><b>Sessiz hata</b><p><code>@section('contents')</code> yazılırsa hata çıkmaz, 200 gelir ama <code>&lt;main&gt;</code> boş kalır: layout <code>content</code> adında bir bölüm bekliyor. Ad birebir aynı olmalı.</p></div>
+  </div>
+  <h4>Component layout (Laravel belgesinin birinci yolu)</h4>
+  <pre><span class="h">resources/views/components/layout.blade.php</span>&lt;html&gt;&lt;head&gt;&lt;title&gt;{{ $title ?? 'Etkinlikler' }}&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;&lt;main&gt;{{ $slot }}&lt;/main&gt;&lt;/body&gt;&lt;/html&gt;
+
+<span class="h">sayfada</span>&lt;x-layout&gt;
+    &lt;x-slot:title&gt;Hakkında&lt;/x-slot&gt;     <span class="c">{{-- adlı slot → $title --}}</span>
+    &lt;h1&gt;Etkinlik Sistemi&lt;/h1&gt;           <span class="c">{{-- varsayılan slot → $slot --}}</span>
+&lt;/x-layout&gt;</pre>
+  <div class="prose">
+    <p><code>{{ $slot }}</code>, <code>@yield('content')</code>'in yaptığını yapar. Aynı sayfada iki yol karıştırılmaz.</p>
+    <p><b>Component</b>, sayfanın içinde tekrar kullanılan, kendi girdisini alan parçadır (bir kart): <code>resources/views/components/event-card.blade.php</code> → <code>&lt;x-event-card :event="$event" /&gt;</code>. Baştaki <code>:</code> değerin PHP ifadesi olduğunu söyler; silinirse <code>"$event"</code> düz metin olarak gider.</p>
+  </div>
+
+  <h4>Hocanın "Doğru mu, yanlış mı?" iddiaları</h4>
+  <div class="dy">
+    <div><q>Resource controller'ı ürettim; liste, kayıt ve silme artık çalışıyor.</q><span>Yedi boş metot üretilir, davranışı sen yazarsın. Boş action hata vermeden boş bir 200 döndürür.</span></div>
+    <div><q>Blade tarayıcıda çalışır.</q><span>Blade sunucuda PHP'ye derlenir; tarayıcıya yalnız üretilen HTML gider.</span></div>
+    <div><q>Boş liste bir hatadır; 404 döndürülmelidir.</q><span>Kaynak vardır, içi boştur. Yanıt 200 ve tasarlanmış bir boş durumdur.</span></div>
+  </div>
+
+  <div class="exam">
+    <h3>4. haftanın sınav soruları</h3>
+    <p>Blade, layout ve compact vize listesinde.</p>
+    <details class="oq"><summary>Controller'dan view'a veri göndermenin yollarını yazınız. compact ne işe yarar? <span class="tag hoca">Vize</span></summary><div class="ans"><p><code>view('events.index', compact('events'))</code>, <code>view('events.index', ['events' =&gt; $events])</code>, <code>view('events.index')-&gt;with('events', $events)</code>. compact, adı verilen değişkenlerden, anahtarı değişkenin adı ve değeri değişkenin kendisi olan bir dizi kurar; view'da aynı adla (<code>$events</code>) kullanılır.</p></div></details>
+    <details class="oq"><summary>Blade'de layout nasıl kullanılır? @yield, @extends, @section'ı açıklayınız. <span class="tag hoca">Vize</span></summary><div class="ans"><p>Ortak iskelet bir kez <code>layouts/app.blade.php</code>'ye yazılır. Layout'ta <code>@yield('content')</code> bir boşluk tanımlar. Sayfa <code>@extends('layouts.app')</code> ile layout'u seçer, <code>@section('content') … @endsection</code> ile boşluğu doldurur. Böylece menü tek dosyada değişir ve bütün sayfalara yansır. section ve yield adları aynı olmalıdır; component yolunda aynı işi <code>{{ $slot }}</code> yapar.</p></div></details>
+    <details class="oq"><summary>{{ $q }} ile {!! $q !!} aynı isteğe neden farklı sayfa üretir? XSS için saldırganın uygulamaya bir şey kaydetmesi gerekir mi? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p><code>{{ }}</code> özel karakterleri kaçırır, metin harf olarak görünür. <code>{!! !!}</code> ham yazar; içinde <code>&lt;script&gt;</code> varsa çalışır. Gerekmez: hazırladığı adresi birine göndermesi yeter, betik o kişinin tarayıcısında uygulamanın sayfasının parçası olarak çalışır.</p></div></details>
+    <details class="oq"><summary>Controller oluşturma komutu nedir? make:controller EventController --resource ne üretir? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p><code>php artisan make:controller EventController</code>, <code>app/Http/Controllers/EventController.php</code>'yi üretir. <code>--resource</code> ile içinde gövdesi boş yedi metot gelir: index, create, store, show, edit, update, destroy. Boş action 200 ve boş gövde döndürdüğü için çalışmayan sayfa çalışıyor gibi görünür; bu yüzden derste yazılmayan beş metot silindi.</p></div></details>
+    <details class="oq"><summary>Başlık rengi ve arama kuralı değişecek. Hangisi view'a, hangisi controller'a gider? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>Başlık rengi "nasıl görünecek" sorusudur → view. Arama kuralı "ne gösterilecek" sorusudur → controller. Route dosyası adres ya da adresin bağlandığı action değişince değişir.</p></div></details>
+    <details class="oq"><summary>PUT /events/3 ve GET /events/3/edit hangi action'a gider, rota adları nedir? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>PUT /events/3 → <code>update</code>, rota adı <code>events.update</code>. GET /events/3/edit → <code>edit</code>, rota adı <code>events.edit</code>.</p></div></details>
+    <details class="oq"><summary>@section('contents') yazıldığında sayfa neden boş görünür ve hata verilmez? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>Layout <code>@yield('content')</code> ile <code>content</code> adlı bölüm bekler; sayfa başka adda bölüm verdiği için beklenen bölüm hiç verilmemiş olur. <code>@yield</code> verilmeyen bölüm için boş yazar, bu bir hata sayılmaz.</p></div></details>
+    <details class="oq"><summary>dd() nedir? <span class="tag vize">Derste</span></summary><div class="ans"><p>dump and die: verilen değişkeni ekrana döker ve programı o satırda durdurur. Değişkenin içinde gerçekten ne olduğunu görmek için kullanılır; <code>dump()</code> döker ama devam eder.</p></div></details>
+  </div>
+</section>
+
+<!-- ======================= HAFTA 5 ======================= -->
+<section class="card" id="h5">
+  <div class="whead"><span class="wno">5. Hafta</span><span class="wdate">16 Ekim 2026</span></div>
+  <h2>Migration, model ve Eloquent</h2>
+  <div class="wtags"><span class="tag hoca">Vize: migration komutları ve tanımları</span><span class="tag vize">Derste: make:model -m sorulabilir</span></div>
+  <div class="goals"><b>Sunumdaki hedefler</b>Veritabanı katmanını <code>make:model -mfs</code> ile başlatıp migration ile tablo kurmak · sütun türü ve değiştirici seçmek, migration komutlarının farkını söylemek · Eloquent modelini, mass assignment'ı ve cast'i açıklamak, Tinker'da CRUD yapmak · query builder, route model binding, sayfalama · factory ve seeder.</div>
+  <div class="box not"><b>Derste alınan not</b><pre>php artisan make:migration create_students_table
+php artisan make:model Student -m (hem model hem migration) — SINAVDA SORULABİLİR
+php artisan migrate · Geri almak için: php artisan migrate:rollback
+$students = Student::all();
+compact = aynı isimlerse direkt beni kullan</pre></div>
+
+  <h3>5.1 Tablo ve migration</h3>
+  <div class="prose">
+    <p>Kalıcı veri <b>veritabanında</b>, tablolarda durur. Her satırı <b>birincil anahtar</b> (<code>id</code>) tanır. Uygulamanın hangi veritabanına bağlanacağı <b><code>.env</code></b>'dedir: Laravel 13'te varsayılan <code>DB_CONNECTION=sqlite</code>; MySQL için <code>DB_CONNECTION=mysql</code>, <code>DB_DATABASE</code>, <code>DB_USERNAME</code>, <code>DB_PASSWORD</code>.</p>
+    <p><b>Migration</b>, veritabanı tablosunu SQL yerine <b>PHP koduyla</b> tanımlayan dosyadır; tablonun kurulum tarifi. Herkes aynı migration'ları çalıştırınca aynı tabloyu elde eder, bu yüzden <b>veritabanının sürüm kontrolü</b> gibidir. Dosyalar <code>database/migrations/</code>'tadır, adlarının başındaki tarih-saat çalışma sırasını belirler.</p>
+  </div>
+  <pre>php artisan make:migration create_students_table   <span class="c"># yalnız migration</span>
+php artisan make:model Student -m                  <span class="c"># model + migration birlikte (-m = --migration)</span>
+php artisan make:model Event -mfs                  <span class="c"># model + migration + factory + seeder</span></pre>
+  <div class="tbl"><table>
+    <thead><tr><th>Seçenek</th><th>Model ile birlikte üretir</th></tr></thead>
+    <tbody><tr><td><code>-m</code></td><td>migration</td></tr><tr><td><code>-c</code> / <code>-mc</code></td><td>controller / migration + controller</td></tr><tr><td><code>-f</code> · <code>-s</code></td><td>factory · seeder</td></tr><tr><td><code>-a</code></td><td>hepsi (migration, seeder, factory, policy, resource controller, form request)</td></tr></tbody>
+  </table></div>
+  <pre><span class="h">database/migrations/2026_10_16_101500_create_students_table.php</span>return new class extends Migration          <span class="c">// adı olmayan (anonim) sınıf</span>
+{
+    public function up(): void              <span class="c">// php artisan migrate ÇALIŞINCA: tabloyu kurar</span>
+    {
+        Schema::create('students', function (Blueprint $table) {
+            $table-&gt;id();                                <span class="c">// BIGINT UNSIGNED, otomatik artan, PK</span>
+            $table-&gt;string('name');                      <span class="c">// VARCHAR(255)</span>
+            $table-&gt;string('title', 120);                <span class="c">// VARCHAR(120)</span>
+            $table-&gt;char('student_no', 7)-&gt;unique();     <span class="c">// CHAR(7), benzersiz</span>
+            $table-&gt;text('description');                 <span class="c">// uzun metin</span>
+            $table-&gt;unsignedInteger('capacity')-&gt;default(20);
+            $table-&gt;decimal('fee', 8, 2);                <span class="c">// DECIMAL(8,2)</span>
+            $table-&gt;boolean('active');
+            $table-&gt;date('birth_date')-&gt;nullable();      <span class="c">// boş olabilir</span>
+            $table-&gt;dateTime('starts_at')-&gt;index();
+            $table-&gt;timestamps();                        <span class="c">// created_at, updated_at</span>
+        });
+    }
+
+    public function down(): void            <span class="c">// migrate:rollback ÇALIŞINCA: up()'ı geri alır</span>
+    {
+        Schema::dropIfExists('students');
+    }
+};</pre>
+  <div class="prose"><p>Değiştiriciler: <code>-&gt;nullable()</code> boş (NULL) olabilir · <code>-&gt;default(x)</code> varsayılan · <code>-&gt;unique()</code> benzersiz · <code>-&gt;index()</code> indeks. <code>nullable()</code> yazılmayan sütun boş bırakılamaz.</p></div>
+  <h4>Migration komutları <span class="tag hoca">Vize</span></h4>
+  <div class="tbl"><table>
+    <thead><tr><th>Komut</th><th>Ne yapar?</th></tr></thead>
+    <tbody>
+      <tr><td><code>php artisan migrate</code></td><td>Bekleyen migration'ların <b><code>up()</code></b>'ını sırayla çalıştırır, tablolar oluşur. Hepsi aynı <b>batch</b>'e yazılır.</td></tr>
+      <tr><td><code>php artisan migrate:rollback</code></td><td><b>Son batch</b>'in <b><code>down()</code></b> metotlarını ters sırayla çalıştırır. Yalnız sonuncusu: <code>--step=1</code></td></tr>
+      <tr><td><code>php artisan migrate:status</code></td><td>Her dosyanın durumu: <code>[batch] Ran</code> ya da <code>Pending</code></td></tr>
+      <tr><td><code>php artisan migrate:reset</code></td><td>Bütün migration'ları geri alır</td></tr>
+      <tr><td><code>php artisan migrate:refresh</code></td><td>Hepsini geri alır, yeniden çalıştırır</td></tr>
+      <tr><td><code>php artisan migrate:fresh</code></td><td>Bütün tabloları siler, baştan çalıştırır (tüm veri gider). <code>--seed</code> ile seeder'ları da çalıştırır</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="box ezber"><b>Batch</b><p>Tek bir <code>migrate</code> çağrısında birlikte uygulanan migration'ların kümesi. <code>migrations</code> tablosunda numarayla tutulur; rollback batch batch geri alır. Bu tablo sayesinde ikinci <code>migrate</code> aynı tabloyu tekrar kurmaya çalışmaz.</p></div>
+    <div class="box tuzak"><b>Not düzeltmesi</b><p>"DB'ye bağlamak için migrate" değil: <code>migrate</code> bağlantı kurmaz, <b>tabloları oluşturur</b>. Bağlantı <code>.env</code>'dedir; değiştirince <code>php artisan config:clear</code>.</p></div>
+  </div>
+  <h4>Şemayı değiştirmek</h4>
+  <div class="prose"><p>Uygulanmış bir migration dosyasını değiştirip <code>migrate</code> demek işe yaramaz (<i>Nothing to migrate</i>). Her şema değişikliği <b>yeni bir migration</b>dır. Var olan tabloya sütun eklemek için <code>Schema::create</code> değil <code>Schema::table</code> kullanılır. Dolu tabloya eklenen sütun <code>nullable()</code> ya da <code>default()</code> almalıdır, yoksa eski satırlar ne yazacağını bilemez.</p></div>
+  <pre>php artisan make:migration add_poster_path_to_events_table
+
+Schema::table('events', function (Blueprint $table) {          <span class="c">// up()</span>
+    $table-&gt;string('poster_path')-&gt;nullable();
+});
+Schema::table('events', fn (Blueprint $table) =&gt; $table-&gt;dropColumn('poster_path'));   <span class="c">// down()</span></pre>
+
+  <h3>5.2 Model ve sorgu</h3>
+  <div class="prose">
+    <p><b>ORM</b> (object-relational mapping), tablo satırlarını nesne olarak okuyup yazmayı sağlayan katmandır; Laravel'inki <b>Eloquent</b>'tir. <b>Model</b> bir tabloyu temsil eden sınıftır: sınıf tablo, her nesne bir satır, sütunlar nesnenin özellikleri. <code>::</code> sınıfa (tabloya) sorar: <code>Event::find(2)</code>; <code>-&gt;</code> nesneye (satıra) sorar: <code>$event-&gt;title</code>.</p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Model (tekil, büyük harf)</th><th>Tablo (çoğul, küçük harf)</th></tr></thead>
+    <tbody><tr><td>Student</td><td>students</td></tr><tr><td>Event</td><td>events</td></tr><tr><td>Category</td><td>categories</td></tr><tr><td>Person</td><td>people</td></tr><tr><td>Ogrenci</td><td>ogrencis (Türkçe tuzağı: <code>protected $table = 'ogrenciler';</code>)</td></tr></tbody>
+  </table></div>
+  <pre><span class="h">app/Models/Student.php</span>namespace App\Models;
+use Illuminate\Database\Eloquent\Model;
+
+class Student extends Model
+{
+    protected $fillable = ['name', 'email'];   <span class="c">// toplu yazılabilecek sütunlar</span>
+    <span class="c">// Laravel 13 kitabındaki yazımı: #[Fillable(['name', 'email'])] sınıfın üstünde</span>
+}</pre>
+  <div class="prose"><p><b>Mass assignment</b> (toplu atama), sütunları bir diziyle bir kerede doldurmaktır: <code>Student::create([...])</code>, <code>$s-&gt;update([...])</code>. Yazılabilecek sütunlar <code>$fillable</code> / <code>#[Fillable]</code> listesindedir; listede olmayan anahtar (ör. formdan sızdırılan <code>id</code>) sessizce yok sayılır. Bu bir izin listesidir, <b>doğrulama değildir</b>. <b>Cast</b>, sütunun okunurken çevrileceği türdür: <code>'starts_at' =&gt; 'immutable_datetime'</code>.</p></div>
+  <h4>CRUD ve sorgular</h4>
+  <div class="tbl"><table>
+    <thead><tr><th>Çağrı</th><th>Döndürdüğü</th></tr></thead>
+    <tbody>
+      <tr><td><code>Student::all()</code></td><td>Bütün satırlar, <b>Collection</b> (SQL: <code>SELECT * FROM students</code>)</td></tr>
+      <tr><td><code>Student::find(3)</code></td><td>Model ya da <b>null</b></td></tr>
+      <tr><td><code>Student::findOrFail(9)</code></td><td>Yoksa <b>404</b> (ModelNotFoundException)</td></tr>
+      <tr><td><code>Student::where('age', '&gt;', 20)-&gt;orderBy('name')-&gt;get()</code></td><td>Collection; eşleşme yoksa <b>boş collection</b> (null değil)</td></tr>
+      <tr><td><code>Student::where('email', $e)-&gt;first()</code></td><td>Tek model ya da null</td></tr>
+      <tr><td><code>Student::count()</code></td><td>Tam sayı</td></tr>
+      <tr><td><code>Student::create([...])</code></td><td>Kaydedilmiş yeni model</td></tr>
+      <tr><td><code>$s-&gt;update([...])</code> ya da <code>$s-&gt;name = 'Ali'; $s-&gt;save();</code></td><td>true</td></tr>
+      <tr><td><code>$s-&gt;delete()</code></td><td>true</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose"><p><b>Tinker</b> (<code>php artisan tinker</code>) komut satırında Eloquent denemeyi sağlar; orada modeli tam adıyla yaz: <code>App\Models\Event::count()</code>. Eloquent değerleri <b>bağlı parametreyle</b> gönderir, bu yüzden <code>where('title', $q)</code> SQL enjeksiyonuna karşı güvenlidir; <code>whereRaw</code>'a metin birleştirmek değildir.</p></div>
+  <h4>Tablodan sayfaya: oluşturma aşamaları</h4>
+  <ol class="tight">
+    <li><code>php artisan make:model Student -m</code> → model ve migration</li>
+    <li>Migration'ın <code>up()</code>'ına sütunları yaz</li>
+    <li><code>php artisan migrate</code> → tablo kurulur</li>
+    <li>Controller'da veriyi çek: <code>$students = Student::all();</code></li>
+    <li>View'a gönder: <code>return view('students.index', compact('students'));</code></li>
+    <li>Blade'de göster: <code>@foreach ($students as $student) {{ $student-&gt;name }} @endforeach</code></li>
+  </ol>
+  <h4>Route model binding ve sayfalama</h4>
+  <pre>Route::get('/events/{event}', [EventController::class, 'show']);
+
+public function show(Event $event)        <span class="c">// parametre adı rotadakiyle AYNI: Laravel satırı kendisi bulur</span>
+{
+    return view('events.show', ['event' =&gt; $event]);   <span class="c">// satır yoksa metot hiç çalışmaz, 404</span>
+}
+
+'events' =&gt; Event::query()-&gt;paginate(6)-&gt;withQueryString();   <span class="c">// sayfalama: /events?page=2</span>
+<span class="c">// view: {{ $events-&gt;total() }} bütün eşleşenler · {{ $events-&gt;links() }} sayfa bağlantıları</span></pre>
+
+  <h3>5.3 Factory ve seeder</h3>
+  <div class="prose"><p><b>Seeder</b> belirli bir başlangıç verisini yazar (<code>database/seeders</code>, <code>run()</code>, <code>php artisan db:seed</code>). <b>Factory</b> her sütunun nasıl doldurulacağını kurallarla tarif edip istenen sayıda rastgele model üretir (<code>database/factories</code>, <code>definition()</code>, <code>fake()</code>): <code>Event::factory()-&gt;count(10)-&gt;create()</code>. Veri migration ve seeder'la yeniden kurulabilmelidir: <code>migrate:fresh --seed</code>.</p></div>
+
+  <h4>Hocanın "Doğru mu, yanlış mı?" iddiaları</h4>
+  <div class="dy">
+    <div><q>Migration dosyasını değiştirdim ve migrate dedim; tablo da değişti.</q><span>Uygulanmış dosya yeniden çalışmaz: Nothing to migrate. Her şema değişikliği yeni bir migration'dır.</span></div>
+    <div><q>get() eşleşme bulamazsa null döndürür.</q><span>Boş bir collection döndürür; null döndürebilenler find() ve first()'tür.</span></div>
+    <div><q>Eloquent kullanıyorum; hiçbir sorgum enjeksiyona açık olamaz.</q><span>Değerler bağlanır; ama whereRaw içine birleştirilen metin ve kullanıcının seçtiği sütun adı bağlanmaz.</span></div>
+  </div>
+
+  <div class="exam">
+    <h3>5. haftanın sınav soruları</h3>
+    <p>Migration komutları ve tanımları vize listesinde; <code>make:model -m</code> için derste "sınavda sorulabilir" dendi.</p>
+    <details class="oq"><summary>Migration nedir? Model ve migration'ı birlikte oluşturan, tabloyu kuran ve geri alan komutlar nelerdir? <span class="tag hoca">Vize</span></summary><div class="ans"><p>Migration, veritabanı tablolarını SQL yerine PHP koduyla tanımlayan dosyadır; veritabanının sürüm kontrolü gibidir. <code>up()</code> tabloyu oluşturur, <code>down()</code> geri alır. Komutlar: <code>php artisan make:migration create_students_table</code>, <code>php artisan make:model Student -m</code> (model + migration), <code>php artisan migrate</code> (up çalışır, tablolar kurulur), <code>php artisan migrate:rollback</code> (son batch'in down'u çalışır).</p></div></details>
+    <details class="oq"><summary>php artisan make:model Student -m ne yapar? <span class="tag vize">Derste</span></summary><div class="ans"><p>İki dosya birden üretir: <code>app/Models/Student.php</code> (model) ve <code>database/migrations/..._create_students_table.php</code> (migration). <code>-m</code>, <code>--migration</code>'ın kısaltmasıdır. Tablo adı model adının İngilizce çoğulu olur: <code>students</code>.</p></div></details>
+    <details class="oq"><summary>migrate:rollback ile migrate:fresh nasıl ayrılır? Batch neyi belirler? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>rollback yalnız son batch'in <code>down()</code> metotlarını çalıştırır. fresh bütün tabloları siler ve bütün migration'ları baştan çalıştırır; bütün veri gider. Batch, tek bir migrate çağrısıyla birlikte uygulanan migration'lardır; rollback'in neyi geri alacağını belirler.</p></div></details>
+    <details class="oq"><summary>Uygulanmış bir migration'a sütun eklemek neden işe yaramaz? Doğrusu nedir? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>Laravel o dosyayı <code>migrations</code> tablosunda çalışmış olarak görür ve tekrar çalıştırmaz. Doğrusu yeni bir migration yazmaktır (<code>make:migration add_x_to_events_table</code>, içinde <code>Schema::table</code>). Dolu tabloya eklenen sütun, eski satırların değeri olmadığı için <code>nullable()</code> ya da <code>default()</code> alır.</p></div></details>
+    <details class="oq"><summary>make:model Event -mfs hangi dört dosyayı üretir? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>Model (<code>app/Models/Event.php</code>), migration (<code>database/migrations/..._create_events_table.php</code>), factory (<code>database/factories/EventFactory.php</code>), seeder (<code>database/seeders/EventSeeder.php</code>).</p></div></details>
+    <details class="oq"><summary>Event::find(9), findOrFail(9) ve where('category','Mobil')-&gt;get() ne döndürür? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p><code>find(9)</code> kayıt yoksa null; üzerinde özellik okunursa 500. <code>findOrFail(9)</code> kayıt yoksa ModelNotFoundException, istekte 404. <code>get()</code> eşleşme yoksa boş collection; döngü hiç dönmez.</p></div></details>
+    <details class="oq"><summary>#[Fillable] / $fillable nedir ve ne değildir? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>Mass assignment (create/update ile toplu yazma) sırasında hangi sütunların yazılabileceğini söyleyen izin listesidir; listede olmayan alan yok sayılır. Doğrulama değildir: <code>capacity</code> listede diye <code>-1</code> geçerli olmaz, kuralı doğrulama verir.</p></div></details>
+    <details class="oq"><summary>show(Event $event) yerine show(Event $item) yazılırsa ne olur? Factory ile seeder farkı? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>Route model binding parametre adının rotadaki <code>{event}</code> ile aynı olmasını ister; <code>$item</code> ile bağlama yapılmaz, boş model gelir ve sayfa hata verir. Seeder belirli başlangıç verisini yazar; factory kurallarla istenen sayıda rastgele veri üretir.</p></div></details>
+  </div>
+</section>
+
+<!-- ======================= HAFTA 6 ======================= -->
+<section class="card" id="h6">
+  <div class="whead"><span class="wno">6. Hafta</span><span class="wdate">23 Ekim 2026</span></div>
+  <h2>Formlar, doğrulama ve dosya yükleme</h2>
+  <div class="wtags"><span class="tag hoca">Vize: validasyonlar</span><span class="tag hoca">Vize: HTTP metotları (PUT/DELETE)</span></div>
+  <div class="goals"><b>Sunumdaki hedefler</b>Yazma action'larını (<code>create</code>, <code>store</code>, <code>edit</code>, <code>update</code>, <code>destroy</code>) tek form view'ıyla yazmak · CSRF'yi, <code>@csrf</code> ve <code>@method</code>'u açıklamak · girdiyi sunucuda doğrulayıp hataları ve eski değerleri forma getirmek, kuralları form request'te toplamak · dosyayı içeriğine göre denetleyip diske kaydetmek.</div>
+  <div class="box not"><b>Derste alınan not</b><pre>CSRF Protection
+Laravel – Validation: json, min, max, not_in, email, boolean, in, between,
+gt, lte, array, in_array, after, before, file, size, mimes, exists, unique
+Hocanın form adımları: make:controller ComuController → Route::get('/comu', ..., 'index')
+→ ComuController@index → comu klasörü → index.blade.php → make:model Faculty -m
+Ödev: Eloquent Relationships, hasOne'dan aşağı incele</pre></div>
+
+  <h3>6.1 Formdan kayıt</h3>
+  <div class="prose">
+    <p><b>Yeni kayıt iki istektir:</b> <code>GET /events/create</code> formu gösterir (<code>create</code>), <code>POST /events</code> kaydeder (<code>store</code>). Düzenlemede <code>edit</code> ve <code>update</code>, silmede <code>destroy</code> çalışır. <code>Route::resource</code> tek satırda yedi rotayı açar.</p>
+    <p>Yazma action'ı sayfa göstermez, <b>yönlendirir</b> (1. haftanın PRG'si). Mesaj <b>flash data</b> olarak taşınır: oturuma yalnız bir sonraki istek için yazılır, okununca silinir.</p>
+  </div>
+  <pre>return redirect()-&gt;route('events.show', $event)-&gt;with('status', 'Etkinlik oluşturuldu.');
+
+<span class="c">{{-- layout'ta --}}</span>
+@if (session('status'))
+    &lt;p class="alert alert-success"&gt;{{ session('status') }}&lt;/p&gt;
+@endif</pre>
+  <h4>CSRF nedir?</h4>
+  <div class="prose"><p><b>CSRF (Cross-Site Request Forgery, siteler arası istek sahteciliği)</b>: başka bir sitenin, oturum açmış kullanıcının tarayıcısı üzerinden senin uygulamana istek göndermesi. Laravel veriyi değiştiren her istekte (POST, PUT, PATCH, DELETE) gizli bir <code>_token</code> bekler. <b><code>@csrf</code></b> bu gizli alanı forma ekler. Belirteç yoksa ya da tutmazsa yanıt <b>419 Page Expired</b>.</p></div>
+  <h4>Method spoofing: formun gönderemediği yöntemler</h4>
+  <div class="prose"><p>HTML formu yalnız GET ve POST gönderir. PUT, PATCH, DELETE için form POST gönderir, asıl yöntem gizli <code>_method</code> alanında bildirilir; <b><code>@method('PUT')</code></b> bu alanı ekler. Unutulursa <b>405</b>. Silmeyi bir bağlantıyla (GET) yapmak işe yaramaz.</p></div>
+  <pre>&lt;form method="POST" action="{{ route('events.update', $event) }}"&gt;
+    @csrf               <span class="c">{{-- &lt;input type="hidden" name="_token" value="..."&gt; --}}</span>
+    @method('PUT')      <span class="c">{{-- &lt;input type="hidden" name="_method" value="PUT"&gt; --}}</span>
+    ...
+&lt;/form&gt;
+
+&lt;form method="POST" action="{{ route('events.destroy', $event) }}"&gt;
+    @csrf
+    @method('DELETE')
+    &lt;button&gt;Etkinliği sil&lt;/button&gt;
+&lt;/form&gt;</pre>
+
+  <h3>6.2 Doğrulama <span class="tag hoca">Vize</span></h3>
+  <div class="prose"><p><b>Doğrulama (validation)</b>, gelen alanların kabul edilebilir olup olmadığını istek işlenmeden önce <b>sunucuda</b> denetlemektir. Formdaki <code>required</code>, <code>maxlength</code> kullanıcının tarayıcısında çalışır; geliştirici araçlarıyla silinebilir ya da istek curl ile doğrudan gönderilebilir. İkisini birlikte yazarız ama yalnız sunucudakine güveniriz.</p></div>
+  <pre><span class="h">EventController@store</span>public function store(Request $request)
+{
+    $data = $request-&gt;validate([
+        'title'    =&gt; ['required', 'string', 'max:120'],
+        'capacity' =&gt; ['required', 'integer', 'min:1', 'max:500'],
+        'category' =&gt; ['required', 'in:Web,Veri'],
+        'email'    =&gt; ['required', 'email', 'unique:users,email'],
+    ]);
+    <span class="c">// eski yazım da çalışır: 'title' =&gt; 'required|string|max:120'</span>
+
+    $event = Event::create($data);          <span class="c">// $data yalnız kuralı yazılmış alanları içerir</span>
+    return redirect()-&gt;route('events.show', $event)-&gt;with('status', 'Kaydedildi');
+}</pre>
+  <h4>Hocanın saydığı kurallar</h4>
+  <div class="tbl"><table>
+    <thead><tr><th>Kural</th><th>Anlamı</th><th>Örnek</th></tr></thead>
+    <tbody>
+      <tr><td><code>required</code> · <code>nullable</code></td><td>Gönderilmiş ve boş değil · boş (null) olabilir</td><td><code>'poster' =&gt; 'nullable'</code></td></tr>
+      <tr><td><code>string</code> · <code>integer</code> · <code>numeric</code></td><td>Metin · tam sayı · sayı</td><td>kontenjan "on beş" olamaz</td></tr>
+      <tr><td><code>min:n</code> · <code>max:n</code></td><td>Sayıda değer, metinde karakter, dosyada KB. Bu yüzden yanına tür kuralı yazılır</td><td><code>'max:120'</code></td></tr>
+      <tr><td><code>between:a,b</code></td><td>Aralıkta (değer / uzunluk / boyut)</td><td><code>'between:1,500'</code></td></tr>
+      <tr><td><code>size:n</code></td><td>Tam olarak n</td><td><code>'tc' =&gt; 'size:11'</code></td></tr>
+      <tr><td><code>gt:alan</code> · <code>lte:alan</code></td><td>Diğer alandan büyük (greater than) · küçük veya eşit (less than or equal)</td><td><code>'kayitli' =&gt; 'lte:kapasite'</code></td></tr>
+      <tr><td><code>in:a,b</code> · <code>not_in:a,b</code></td><td>Listeden biri olmalı · listeden biri olmamalı</td><td><code>'in:Web,Veri'</code></td></tr>
+      <tr><td><code>email</code></td><td>Geçerli e-posta</td><td></td></tr>
+      <tr><td><code>boolean</code></td><td>true, false, 1, 0, "1", "0"</td><td><code>'active' =&gt; 'boolean'</code></td></tr>
+      <tr><td><code>json</code></td><td>Geçerli JSON metni</td><td></td></tr>
+      <tr><td><code>array</code> · <code>in_array:alan.*</code></td><td>Dizi olmalı · değer başka bir dizi alanında bulunmalı</td><td><code>'secilen' =&gt; 'in_array:secenekler.*'</code></td></tr>
+      <tr><td><code>date</code> · <code>date_format:Y-m-d\TH:i</code></td><td>Geçerli tarih · bu biçimde tarih</td><td></td></tr>
+      <tr><td><code>after:x</code> · <code>before:x</code></td><td>Verilen tarihten sonra · önce</td><td><code>'after:now'</code>, <code>'before:2030-01-01'</code></td></tr>
+      <tr><td><code>file</code> · <code>image</code></td><td>Yüklenmiş dosya · resim</td><td></td></tr>
+      <tr><td><code>mimes:jpg,png</code> · <code>mimetypes:image/jpeg</code></td><td>Dosya türü (MIME types); içerikten bakılır</td><td><code>'mimes:jpg,jpeg,png,webp'</code></td></tr>
+      <tr><td><code>exists:tablo,sütun</code></td><td>Değer tabloda <b>var olmalı</b></td><td><code>'exists:categories,id'</code></td></tr>
+      <tr><td><code>unique:tablo,sütun</code></td><td>Değer tabloda <b>olmamalı</b> (benzersiz)</td><td><code>'unique:users,email'</code></td></tr>
+    </tbody>
+  </table></div>
+  <h4>Kural çiğnenince ne olur?</h4>
+  <div class="prose"><p><code>validate</code> bir istisna fırlatır; action'ın geri kalanı çalışmaz, kayıt yazılmaz. Laravel kullanıcıyı <b>forma geri yönlendirir (302)</b>; hata mesajları ve formun değerleri oturuma bir kerelik yazılır. İstek JSON bekliyorsa yönlendirmez, <b>422</b> ve hata listesi döner.</p></div>
+  <pre>&lt;input name="title" value="{{ old('title', $event-&gt;title) }}"&gt;     <span class="c">{{-- eski girdi varsa onu, yoksa kayıtlı değeri --}}</span>
+@error('title') &lt;small&gt;{{ $message }}&lt;/small&gt; @enderror          <span class="c">{{-- bu alanın hatası varsa --}}</span>
+
+@if ($errors-&gt;any())                                                <span class="c">{{-- formun üstünde hata özeti --}}</span>
+    &lt;ul&gt;@foreach ($errors-&gt;all() as $error) &lt;li&gt;{{ $error }}&lt;/li&gt; @endforeach&lt;/ul&gt;
+@endif</pre>
+  <h4>Form request</h4>
+  <pre>php artisan make:request EventRequest       <span class="c"># app/Http/Requests/EventRequest.php</span>
+
+class EventRequest extends FormRequest
+{
+    public function authorize(): bool { return true; }   <span class="c">// üretilen hâli false: değiştirilmezse her istek 403!</span>
+    public function rules(): array
+    {
+        return ['title' =&gt; ['required', 'string', 'max:120']];
+    }
+}
+
+public function store(EventRequest $request)              <span class="c">// kurallar store ve update'te tek yerde</span>
+{
+    Event::create($request-&gt;validated());                 <span class="c">// all() değil validated()</span>
+}</pre>
+  <div class="box tuzak"><b>validated() ile all() farkı</b><p><code>$request-&gt;all()</code> isteğin her şeyini taşır: <code>_token</code>, <code>_method</code> ve geliştirici araçlarıyla eklenmiş uydurma alanlar. <code>$request-&gt;validated()</code> yalnız kuralı yazılmış ve kuraldan geçmiş alanları verir. Kayda yalnız o gider.</p></div>
+
+  <h3>6.3 Dosya yükleme</h3>
+  <div class="prose"><p>Form <code>method="post"</code> ve <b><code>enctype="multipart/form-data"</code></b> taşır, alanın türü <code>file</code> olur. enctype unutulursa yalnız dosyanın adı gider. Sunucuda <code>$request-&gt;file('poster')</code>. <code>store('posters', 'public')</code> dosyayı <code>storage/app/public/posters</code>'a üretilmiş bir adla kaydeder, yolunu döndürür; tabloya bu yol yazılır. Web sunucusu yalnız <code>public</code>'i sunduğu için <code>php artisan storage:link</code> ile <code>public/storage</code> bağlantısı kurulur.</p></div>
+
+  <h4>Hocanın "Doğru mu, yanlış mı?" iddiaları</h4>
+  <div class="dy">
+    <div><q>Formda required ve accept varsa sunucuda kural gerekmez.</q><span>Tarayıcı kısıtları kullanıcıya yardımdır; geliştirici araçlarıyla ya da elle gönderilen bir POST ile atlanır. Kararı sunucudaki kural verir.</span></div>
+    <div><q>@csrf isteği gönderenin bu işi yapmaya yetkili olduğunu denetler.</q><span>Yalnız formun bizim sayfamızdan, aynı oturumdan geldiğini ayırır; kimin hangi işi yapabileceği ayrı bir karardır.</span></div>
+    <div><q>Modelde #[Fillable] varken $request-&gt;all() ile kaydetmek güvenlidir.</q><span>İzin listesi alanın bu formdan gelmesinin doğru olup olmadığını bilmez. Kayda validated() gider.</span></div>
+  </div>
+
+  <div class="exam">
+    <h3>6. haftanın sınav soruları</h3>
+    <p>Validasyon vize listesinde. Hocanın tahtada saydığı kurallar yukarıdaki tabloda.</p>
+    <details class="oq"><summary>Bir öğrenci formunu doğrulayan store metodu yazınız (ad zorunlu, en çok 100 karakter; e-posta benzersiz; yaş 18–60). <span class="tag hoca">Vize</span></summary><div class="ans"><pre>public function store(Request $request)
+{
+    $data = $request-&gt;validate([
+        'name'  =&gt; ['required', 'string', 'max:100'],
+        'email' =&gt; ['required', 'email', 'unique:students,email'],
+        'age'   =&gt; ['required', 'integer', 'between:18,60'],
+    ]);
+    Student::create($data);
+    return redirect()-&gt;route('students.index')-&gt;with('status', 'Kaydedildi');
+}</pre></div></details>
+    <details class="oq"><summary>Doğrulama başarısız olduğunda Laravel ne yapar? Eski değer ve mesaj view'a nasıl ulaşır? <span class="tag hoca">Vize</span></summary><div class="ans"><p>Action'ın geri kalanı çalışmaz, kayıt yazılmaz; kullanıcı 302 ile formun sayfasına geri yönlendirilir. Hata mesajları ve gönderilen değerler oturuma bir kerelik (flash) yazılır. View'da eski değer <code>old('alan')</code>, mesaj <code>@error('alan') {{ $message }} @enderror</code> ya da <code>$errors</code> ile okunur. JSON isteyen istemciye 422 ve hata listesi döner.</p></div></details>
+    <details class="oq"><summary>unique ile exists, in ile not_in kurallarının farkı nedir? <span class="tag hoca">Vize</span></summary><div class="ans"><p><code>unique:tablo,sütun</code> değerin tabloda olmamasını (benzersiz, ör. e-posta), <code>exists:tablo,sütun</code> değerin tabloda var olmasını (ör. seçilen kategori kimliği) ister. <code>in:a,b</code> değer listeden biri olmalı, <code>not_in:a,b</code> listeden biri olmamalı der.</p></div></details>
+    <details class="oq"><summary>CSRF nedir, Laravel'de nasıl korunur? @csrf unutulursa ne olur? <span class="tag vize">Derste</span></summary><div class="ans"><p>CSRF (Cross-Site Request Forgery), başka bir sitenin oturum açmış kullanıcı adına uygulamaya istek göndermesidir. Laravel veri değiştiren her istekte gizli bir <code>_token</code> bekler; <code>@csrf</code> bu gizli alanı forma ekler. Unutulursa istek reddedilir ve 419 Page Expired sayfası çıkar.</p></div></details>
+    <details class="oq"><summary>Formda required varken sunucuda neden yine kural yazarız? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>Tarayıcıdaki kısıt kullanıcının tarayıcısında çalışır; geliştirici araçlarıyla silinebilir, istek curl gibi araçlarla doğrudan gönderilebilir. Kaydın geçerliliğine sunucudaki kural karar verir.</p></div></details>
+    <details class="oq"><summary>HTML formu bir güncellemeyi nasıl PUT olarak bildirir? @method unutulursa ne olur? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>Form <code>method="POST"</code> ile gönderilir, içine <code>@method('PUT')</code> yazılır; bu gizli <code>_method=PUT</code> alanını ekler ve Laravel isteği PUT rotasına eşler (method spoofing). Unutulursa POST o adreste tanımlı olmadığı için 405 alınır.</p></div></details>
+    <details class="oq"><summary>Formdan yeni bir kayıt neden iki istekle oluşur? name ve id öznitelikleri nasıl ayrılır? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>Önce <code>GET /events/create</code> formu gösterir, sonra <code>POST /events</code> formdan geleni kaydeder (ardından yönlendirir). <code>name</code> sunucuya giden verinin adıdır; <code>id</code> sayfa içindir (label, CSS, JS). name'i olmayan alan gönderilmez.</p></div></details>
+    <details class="oq"><summary>make:request ile üretilen sınıf olduğu gibi kullanılırsa ne olur? validated() ile all() neden aynı değildir? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p><code>authorize()</code> false döndürdüğü için her istek 403 alır, geçersiz form bile hata mesajı yerine 403 görür. <code>all()</code> isteğin her alanını (belirteç, _method, uydurulmuş alanlar) taşır; <code>validated()</code> yalnız kuralı yazılmış ve geçmiş alanları. #[Fillable] yalnız sütun izin listesidir, alanın bu formdan gelmesinin doğru olup olmadığını bilmez.</p></div></details>
+    <details class="oq"><summary>Dosya yüklemede enctype unutulursa ne olur? storage:link ne işe yarar? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>enctype yoksa form <code>x-www-form-urlencoded</code> gider ve yalnız dosyanın adı ulaşır, doğrulama "resim olmalı" der. <code>storage:link</code>, <code>public/storage</code>'da <code>storage/app/public</code>'i gösteren bağlantı kurar; böylece public diske yazılan afişler URL ile açılabilir.</p></div></details>
+  </div>
+</section>
+
+<!-- ======================= HAFTA 7 ======================= -->
+<section class="card" id="h7">
+  <div class="whead"><span class="wno">7. Hafta</span><span class="wdate">6. haftanın ödevi ve sunumun 7. haftası</span></div>
+  <h2>Eloquent ilişkileri ve eager loading</h2>
+  <div class="wtags"><span class="tag hoca">Vize: Eloquent ilişkileri (hasMany, belongsTo)</span><span class="tag ek">Ödev: hasOne'dan aşağı incele</span></div>
+  <div class="goals"><b>Sunumdaki hedefler</b>İki tablo arasındaki ilişkiyi, ilişki türlerini ve yabancı anahtarı açıklamak; bir-çok ilişkiyi migration'dan forma kurmak · çok-çok ilişkiyi ara tabloyla kurup <code>attach</code>, <code>detach</code>, <code>sync</code> ile yönetmek · N+1 sorununu gösterip eager loading ile çözmek.</div>
+
+  <h3>7.1 Bir-çok ilişki</h3>
+  <div class="prose">
+    <p>Kategori adı her etkinlik satırına metin olarak yazılınca "Web", "web", "WEB" gibi farklı yazımlar oluşur. Çözüm, kategoriyi ayrı tabloya taşıyıp etkinlikten kimliğiyle göstermektir. <b>İlişki</b>, iki tablonun satırları arasındaki, kimlikle (id) kurulan bağdır. Türünü belirleyen soru iki tarafta <b>kaç satır</b> olabileceğidir (kardinalite).</p>
+    <p><b>Bağı "çok" taraf taşır.</b> Bir kategoride çok etkinlik, bir etkinliğin tek kategorisi varsa kimlik sütunu etkinlik tablosuna yazılır: <code>events.category_id</code>. Tersini yapmaya çalışsan iki etkinliği tek hücreye sığdıramazdın.</p>
+  </div>
+  <div class="box ezber"><b>Altın kural</b><p><b>Yabancı anahtarı (…_id sütununu) taşıyan model <code>belongsTo</code> yazar.</b> Karşı taraf bir tane varsa <code>hasOne</code>, çok varsa <code>hasMany</code> yazar. Çok-çok ilişkide bağ üçüncü (ara) tabloda durur ve iki taraf da <code>belongsToMany</code> yazar.</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Tür</th><th>Örnek</th><th>Bağ nerede?</th><th>Eloquent metotları</th></tr></thead>
+    <tbody>
+      <tr><td>Bire bir (one-to-one)</td><td>Kullanıcının tek profili</td><td><code>profiles.user_id</code> (unique)</td><td>User: <code>hasOne</code> · Profile: <code>belongsTo</code></td></tr>
+      <tr><td>Bire çok (one-to-many)</td><td>Kategorinin çok etkinliği</td><td><code>events.category_id</code></td><td>Category: <code>hasMany</code> · Event: <code>belongsTo</code></td></tr>
+      <tr><td>Çoka çok (many-to-many)</td><td>Etkinliğin çok katılımcısı, kullanıcının çok etkinliği</td><td>Ara tablo <code>event_user</code></td><td>İkisinde de <code>belongsToMany</code></td></tr>
+      <tr><td>Aracılı (has many through)</td><td>Fakültenin bölümler üzerinden öğrencileri</td><td>Aracı tablo</td><td><code>hasManyThrough</code></td></tr>
+    </tbody>
+  </table></div>
+  <h4>Yabancı anahtar ve silme politikası</h4>
+  <pre>$table-&gt;foreignId('category_id')-&gt;nullable()-&gt;constrained()-&gt;restrictOnDelete();
+<span class="c">// foreignId('category_id') → büyük, eksi olmayan tam sayı sütun (id() ile aynı tür)</span>
+<span class="c">// nullable()               → boş kalabilir (constrained'dan ÖNCE yazılır)</span>
+<span class="c">// constrained()            → yabancı anahtar; tabloyu addan çıkarır: category_id → categories.id</span>
+<span class="c">// restrictOnDelete()       → bu kategoriyi gösteren etkinlik varken kategori silinemez</span>
+<span class="c">// ad kalıba uymuyorsa:     $table-&gt;foreignId('owner_id')-&gt;constrained('users');</span></pre>
+  <div class="prose"><p><b>Yabancı anahtar</b>, sütunun değerinin başka tablonun birincil anahtarında bulunmak zorunda olduğunu veritabanına bildiren kısıttır; olmayan kimlik yazılmak istenirse veritabanı reddeder.</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Yazım</th><th>Gösterilen satır silinmek istenince</th><th>Derste</th></tr></thead>
+    <tbody>
+      <tr><td><code>restrictOnDelete()</code></td><td>Onu gösteren satır varsa silme reddedilir</td><td>kategori</td></tr>
+      <tr><td><code>cascadeOnDelete()</code></td><td>Onu gösteren satırlar da silinir</td><td>katılım ara tablosu</td></tr>
+      <tr><td><code>nullOnDelete()</code></td><td>Gösteren satırlarda yabancı anahtar null olur (sütun nullable olmalı)</td><td></td></tr>
+    </tbody>
+  </table></div>
+  <h4>İlişki metotları: belongsTo ve hasMany</h4>
+  <div class="grid2">
+  <pre><span class="h">app/Models/Category.php</span>use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Category extends Model
+{
+    protected $fillable = ['name'];
+
+    <span class="c">// Bir kategorinin ÇOK etkinliği vardır</span>
+    public function events(): HasMany
+    {
+        return $this-&gt;hasMany(Event::class);
+    }
+}</pre>
+  <pre><span class="h">app/Models/Event.php</span>use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class Event extends Model
+{
+    protected $fillable = ['title', 'category_id'];
+
+    <span class="c">// Etkinlik BİR kategoriye aittir (category_id bu tabloda)</span>
+    public function category(): BelongsTo
+    {
+        return $this-&gt;belongsTo(Category::class);
+    }
+}</pre>
+  </div>
+  <div class="prose"><p>Laravel sütun adını gelenekten çıkarır: <code>belongsTo</code> metot adına <code>_id</code> ekler (<code>category()</code> → <code>category_id</code>). Uymuyorsa ikinci argüman: <code>belongsTo(User::class, 'owner_id')</code>.</p></div>
+  <pre>$event = Event::find(1);
+$event-&gt;category_id;      <span class="c">// 1        → sütunun kendisi, bir sayı</span>
+$event-&gt;category;         <span class="c">// Category → parantezsiz: ilişki ÖZELLİĞİ, ilişkili model (ya da null)</span>
+$event-&gt;category();       <span class="c">// BelongsTo → parantezli: ilişki METODU, çalışmamış sorgu</span>
+$event-&gt;category-&gt;name;   <span class="c">// "Web"</span>
+
+Category::find(1)-&gt;events;                                       <span class="c">// Collection</span>
+Category::find(1)-&gt;events()-&gt;where('capacity', '&gt;', 10)-&gt;count(); <span class="c">// koşul gerekiyorsa metot</span>
+
+{{ $event-&gt;category?-&gt;name ?? 'Kategorisiz' }}   <span class="c">{{-- kategori null olabilirse --}}</span></pre>
+  <div class="grid2">
+    <div class="box tuzak"><b>Kartta model yazdırmak</b><p><code>{{ $event-&gt;category }}</code> yazarsan hata çıkmaz ama ekranda <code>{"id":1,"name":"Web",…}</code> görünür. Ad için <code>-&gt;name</code> okunur. Kategori null ise <code>-&gt;name</code> 500 verir: <code>?-&gt;</code> ve <code>??</code> kullan.</p></div>
+    <div class="box ezber"><b>exists kuralı yine gerekir</b><p>Formdaki seçim kutusunun değeri geliştirici araçlarıyla değiştirilebilir. <code>'category_id' =&gt; ['required', 'exists:categories,id']</code> yazılmazsa olmayan kimlik yabancı anahtara çarpar, kullanıcı 500 görür.</p></div>
+  </div>
+
+  <h4>hasOne ve hasManyThrough (ödev)</h4>
+  <pre>class User extends Model {
+    public function profile(): HasOne { return $this-&gt;hasOne(Profile::class); }       <span class="c">// tek model ya da null</span>
+}
+class Profile extends Model {
+    public function user(): BelongsTo { return $this-&gt;belongsTo(User::class); }
+}
+<span class="c">// profiles migration: $table-&gt;foreignId('user_id')-&gt;unique()-&gt;constrained()-&gt;cascadeOnDelete();</span>
+
+class Faculty extends Model {
+    public function departments(): HasMany { return $this-&gt;hasMany(Department::class); }
+    public function students(): HasManyThrough                                         <span class="c">// fakülte → bölümler → öğrenciler</span>
+    {
+        return $this-&gt;hasManyThrough(Student::class, Department::class);
+    }
+}</pre>
+  <div class="prose"><p><b>hasOne ile hasMany farkı</b>: tablodaki kısıt (<code>user_id</code> unique) ve dönen değer. hasOne tek model ya da null, hasMany collection verir.</p></div>
+
+  <h3>7.2 Çok-çok ilişki</h3>
+  <div class="prose"><p>Bir etkinliğe çok kişi kaydolur, bir kişi çok etkinliğe kaydolur. Katılımcıları virgüllü metinde (<code>'2,5,7'</code>) tutmak ilişki değildir: veritabanı kimlikleri tanımaz, kısıt koyamaz. Bağ <b>ara tabloda</b> (pivot) durur. Adı iki modelin tekil adlarının alfabetik birleşimidir: <code>event_user</code> (sütunlar <code>event_id</code>, <code>user_id</code>).</p></div>
+  <pre>class Event extends Model {
+    public function participants(): BelongsToMany { return $this-&gt;belongsToMany(User::class); }
+}
+class User extends Model {
+    public function events(): BelongsToMany { return $this-&gt;belongsToMany(Event::class); }
+}
+
+$event-&gt;participants()-&gt;attach($userId);       <span class="c">// bağ ekle</span>
+$event-&gt;participants()-&gt;detach($userId);       <span class="c">// bağı kaldır</span>
+$event-&gt;participants()-&gt;sync([1, 2, 3]);       <span class="c">// listeyi tam bu yap (listede olmayanı kaldırır)</span>
+$event-&gt;participants()-&gt;syncWithoutDetaching([1]);   <span class="c">// ekler, kaldırmaz</span></pre>
+
+  <h3>7.3 Eager loading ve N+1</h3>
+  <div class="prose"><p>Listede her kartta <code>$event-&gt;category-&gt;name</code> okunursa: 1 sorgu etkinlikler + her etkinlik için 1 kategori sorgusu = <b>N+1 sorgu</b> (lazy loading). Sekiz etkinlikte 9 sorgu. <b>Eager loading</b> ilişkiyi önceden, toplu getirir: <code>Event::with('category')-&gt;get()</code> → 2 sorgu (ikincisi <code>where id in (…)</code>), satır sayısından bağımsız. JOIN yapmaz. Yalnız saymak için <code>withCount('participants')</code> → <code>$event-&gt;participants_count</code>.</p></div>
+
+  <h4>Hocanın "Doğru mu, yanlış mı?" iddiaları</h4>
+  <div class="dy">
+    <div><q>Formda seçim kutusu varsa exists kuralı gerekmez.</q><span>Seçeneğin değeri geliştirici araçlarıyla değiştirilebilir; kural yoksa olmayan kimlik yabancı anahtara çarpar ve kullanıcı 500 görür.</span></div>
+    <div><q>Ara tablodaki benzersiz çift kontenjanın aşılmasını engeller.</q><span>Yalnız aynı kişinin aynı etkinliğe ikinci kez yazılmasını engeller; kaç kişinin yazıldığına bakmaz.</span></div>
+    <div><q>with('category') etkinlik ve kategori tablolarını bir JOIN ile birleştirir.</q><span>Ayrı ve toplu bir sorgu çalıştırır: where "id" in (1, 2). Sorgu sayısı ilişki sayısına bağlıdır.</span></div>
+  </div>
+
+  <div class="exam">
+    <h3>7. haftanın sınav soruları</h3>
+    <p>Eloquent ilişkileri (hasMany, belongsTo) vize listesinde. Kâğıda model ve migration yazdırma ihtimali yüksek.</p>
+    <details class="oq"><summary>Faculty ile Department arasında bire-çok ilişkiyi migration ve modellerle yazınız. <span class="tag hoca">Vize</span></summary><div class="ans"><p>Yabancı anahtar çok tarafta durur: <code>departments</code> tablosuna eklenir.</p><pre><span class="c">// create_departments_table migration'ı, up() içinde</span>
+$table-&gt;foreignId('faculty_id')-&gt;constrained()-&gt;cascadeOnDelete();
+
+class Faculty extends Model {
+    public function departments() { return $this-&gt;hasMany(Department::class); }
+}
+class Department extends Model {
+    public function faculty() { return $this-&gt;belongsTo(Faculty::class); }
+}</pre><p>Kullanım: <code>$faculty-&gt;departments</code> (collection), <code>$department-&gt;faculty-&gt;name</code> (tek model).</p></div></details>
+    <details class="oq"><summary>Bir-çok ilişkide kimlik sütunu neden "çok" tarafın tablosuna yazılır? Hangi taraf belongsTo, hangisi hasMany yazar? <span class="tag hoca">Vize</span></summary><div class="ans"><p>Bir hücreye tek değer yazılır. Çok taraftaki her satır yalnız bir "bir" satırını gösterir, bu yüzden <code>events.category_id</code> her etkinlikte tek bir değerdir. Tersi (kategoride etkinlik kimlikleri) tek hücreye birden çok değer gerektirirdi. Yabancı anahtarı taşıyan model (Event) <code>belongsTo</code>, karşı taraf (Category) <code>hasMany</code> yazar.</p></div></details>
+    <details class="oq"><summary>hasOne, hasMany, belongsTo ve belongsToMany ne zaman kullanılır? <span class="tag hoca">Vize</span></summary><div class="ans"><p><code>belongsTo</code>: yabancı anahtarı taşıyan modelde ("aittir"). <code>hasOne</code>: karşı tabloda kendisini gösteren en çok bir satır varsa (kullanıcının profili). <code>hasMany</code>: karşı tabloda çok satır varsa (kategorinin etkinlikleri). <code>belongsToMany</code>: çoka çok ilişkide iki tarafta da, bağ ara tablodadır (etkinlik–katılımcı).</p></div></details>
+    <details class="oq"><summary>foreignId('category_id')-&gt;nullable()-&gt;constrained()-&gt;restrictOnDelete() satırının her parçası ne söyler? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p><code>foreignId</code> büyük, eksi olmayan tam sayı sütunu açar; <code>nullable</code> boş kalabileceğini söyler; <code>constrained</code> sütunu <code>categories.id</code>'ye yabancı anahtar yapar; <code>restrictOnDelete</code> onu gösteren etkinlik varken kategorinin silinmesini reddeder. Ara tabloda <code>cascadeOnDelete</code> seçilir, çünkü kullanıcı silinince katılım bağlarının anlamı kalmaz.</p></div></details>
+    <details class="oq"><summary>$event-&gt;category, $event-&gt;category() ve $event-&gt;category_id ne döndürür? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p><code>category_id</code> sütunun değeri (sayı). <code>category</code> ilişkili Category modeli ya da null. <code>category()</code> henüz çalışmamış ilişki nesnesi (BelongsTo); üzerine koşul eklenebilir. Kartta <code>{{ $event-&gt;category }}</code> yazılırsa modelin JSON metni görünür.</p></div></details>
+    <details class="oq"><summary>Formda seçim kutusu ve tabloda yabancı anahtar varken exists:categories,id neden yine gerekir? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>Seçeneğin değeri tarayıcıda değiştirilebilir. Kural yoksa olmayan kimlik veritabanına gider, yabancı anahtar reddeder ve kullanıcı 500 görür. exists ile forma anlaşılır bir hata mesajıyla dönülür.</p></div></details>
+    <details class="oq"><summary>sync([1]) ile syncWithoutDetaching([1]) ne yapar? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p><code>sync([1])</code> ara tabloyu tam bu listeye eşitler: 1 yoksa ekler, listede olmayan diğer bağları kaldırır. <code>syncWithoutDetaching([1])</code> yalnız ekler, var olanları kaldırmaz.</p></div></details>
+    <details class="oq"><summary>Sekiz etkinlikli liste lazy loading'de kaç, with('category') ile kaç sorgu gönderir? <span class="tag ek">Değerlendirme</span></summary><div class="ans"><p>Lazy loading: 1 (etkinlikler) + 8 (her etkinliğin kategorisi) = 9 sorgu, buna N+1 sorunu denir. <code>with('category')</code>: 2 sorgu (etkinlikler + kategoriler <code>where id in (…)</code>). <code>with</code> ilişkili modelleri getirir, <code>withCount</code> yalnız sayar.</p></div></details>
+  </div>
+</section>
+
+<!-- ======================= ÖRNEK ======================= -->
+<section class="card" id="ornek">
+  <div class="whead"><span class="wno">Pratik</span></div>
+  <h2>Baştan sona örnek: hocanın ÇOMÜ formu</h2>
+  <div class="prose" style="margin-top:8px"><p>6. haftada hoca: <code>make:controller ComuController</code> → <code>/comu</code> rotası → <code>index</code> metodu → <code>comu</code> klasörü → <code>index.blade.php</code> → <code>make:model Faculty -m</code>. Bütün haftaları birleştiren tam hâli aşağıda. Kapat, kâğıda yazmayı dene, sonra karşılaştır.</p></div>
+  <pre><span class="h">1) Terminal (hafta 3, 4, 5)</span>php artisan make:controller ComuController
+php artisan make:model Faculty -m
+<span class="c"># migration'a sütunları yaz, sonra:</span>
+php artisan migrate</pre>
+  <pre><span class="h">2) database/migrations/xxxx_create_faculties_table.php → up() (hafta 5)</span>Schema::create('faculties', function (Blueprint $table) {
+    $table-&gt;id();
+    $table-&gt;string('name')-&gt;unique();
+    $table-&gt;string('dean')-&gt;nullable();
+    $table-&gt;timestamps();
+});</pre>
+  <pre><span class="h">3) app/Models/Faculty.php (hafta 5, 7)</span>class Faculty extends Model
+{
+    protected $fillable = ['name', 'dean'];
+
+    public function departments()
+    {
+        return $this-&gt;hasMany(Department::class);
+    }
+}</pre>
+  <pre><span class="h">4) routes/web.php (hafta 3)</span>use App\Http\Controllers\ComuController;
+
+Route::get('/comu', [ComuController::class, 'index'])-&gt;name('comu.index');
+Route::post('/comu', [ComuController::class, 'store'])-&gt;name('comu.store');</pre>
+  <pre><span class="h">5) app/Http/Controllers/ComuController.php (hafta 4, 6)</span>namespace App\Http\Controllers;
+
+use App\Models\Faculty;
+use Illuminate\Http\Request;
+
+class ComuController extends Controller
+{
+    public function index()
+    {
+        $faculties = Faculty::all();
+        return view('comu.index', compact('faculties'));
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request-&gt;validate([
+            'name' =&gt; ['required', 'string', 'max:150', 'unique:faculties,name'],
+            'dean' =&gt; ['nullable', 'string', 'max:100'],
+        ]);
+        Faculty::create($data);
+        return redirect()-&gt;route('comu.index')-&gt;with('status', 'Fakülte eklendi');
+    }
+}</pre>
+  <pre><span class="h">6) resources/views/comu/index.blade.php (hafta 4, 6)</span>@extends('layouts.app')
+
+@section('title', 'Fakülteler')
+
+@section('content')
+    @if (session('status'))
+        &lt;p&gt;{{ session('status') }}&lt;/p&gt;
+    @endif
+
+    &lt;form method="POST" action="{{ route('comu.store') }}"&gt;
+        @csrf
+        &lt;input name="name" value="{{ old('name') }}" placeholder="Fakülte adı"&gt;
+        @error('name') &lt;small&gt;{{ $message }}&lt;/small&gt; @enderror
+        &lt;input name="dean" value="{{ old('dean') }}" placeholder="Dekan"&gt;
+        &lt;button&gt;Ekle&lt;/button&gt;
+    &lt;/form&gt;
+
+    &lt;ul&gt;
+    @forelse ($faculties as $faculty)
+        &lt;li&gt;{{ $loop-&gt;iteration }}. {{ $faculty-&gt;name }}&lt;/li&gt;
+    @empty
+        &lt;li&gt;Henüz fakülte yok.&lt;/li&gt;
+    @endforelse
+    &lt;/ul&gt;
+@endsection</pre>
+</section>
+
+<!-- ======================= KOMUT ======================= -->
+<section class="card" id="komut">
+  <div class="whead"><span class="wno">Pratik</span></div>
+  <h2>Komut ezber tablosu</h2>
+  <div class="tbl" style="margin-top:12px"><table>
+    <thead><tr><th>Komut</th><th>İş</th><th>Hafta</th></tr></thead>
+    <tbody>
+      <tr><td colspan="3"><b>Composer</b></td></tr>
+      <tr><td><code>composer -v</code></td><td>Kurulu mu, sürüm</td><td>2–3</td></tr>
+      <tr><td><code>composer create-project laravel/laravel ad</code></td><td>Laravel projesi kur</td><td>3</td></tr>
+      <tr><td><code>composer require paket/adi</code></td><td>Paket ekle</td><td>2</td></tr>
+      <tr><td><code>composer install</code></td><td>Lock'taki sürümleri kur</td><td>2</td></tr>
+      <tr><td><code>composer update</code></td><td>Yükselt, lock'u yenile</td><td>2</td></tr>
+      <tr><td><code>composer remove paket/adi</code></td><td>Paket kaldır</td><td>2</td></tr>
+      <tr><td><code>composer dump-autoload</code></td><td>Otomatik yükleyiciyi yeniden üret</td><td>2</td></tr>
+      <tr><td colspan="3"><b>Artisan: çalıştırma ve üretme</b></td></tr>
+      <tr><td><code>php artisan serve</code></td><td>Geliştirme sunucusu (127.0.0.1:8000)</td><td>3</td></tr>
+      <tr><td><code>php artisan route:list</code></td><td>Bütün rotalar</td><td>3</td></tr>
+      <tr><td><code>php artisan config:clear</code></td><td>Yapılandırma önbelleğini temizle</td><td>3</td></tr>
+      <tr><td><code>php artisan make:controller XController</code> (<code>-r</code>)</td><td>Controller (resource: 7 metot)</td><td>4</td></tr>
+      <tr><td><code>php artisan view:clear</code></td><td>Derlenmiş Blade'leri sil</td><td>4</td></tr>
+      <tr><td><code>php artisan make:model X -m</code> / <code>-mfs</code></td><td>Model + migration (/ + factory + seeder)</td><td>5</td></tr>
+      <tr><td><code>php artisan make:migration create_xs_table</code></td><td>Migration</td><td>5</td></tr>
+      <tr><td><code>php artisan make:seeder</code> · <code>make:factory</code></td><td>Seeder · factory</td><td>5</td></tr>
+      <tr><td><code>php artisan tinker</code></td><td>Komut satırında Eloquent denemesi</td><td>5</td></tr>
+      <tr><td><code>php artisan make:request XRequest</code></td><td>Form request</td><td>6</td></tr>
+      <tr><td><code>php artisan storage:link</code></td><td><code>public/storage</code> bağlantısı</td><td>6</td></tr>
+      <tr><td colspan="3"><b>Artisan: veritabanı</b></td></tr>
+      <tr><td><code>php artisan migrate</code></td><td>up() çalışır, tablolar oluşur</td><td>5</td></tr>
+      <tr><td><code>php artisan migrate:rollback</code></td><td>Son batch geri alınır (down())</td><td>5</td></tr>
+      <tr><td><code>php artisan migrate:status</code></td><td>Ran / Pending, batch</td><td>5</td></tr>
+      <tr><td><code>php artisan migrate:reset</code> · <code>refresh</code> · <code>fresh</code></td><td>Hepsini geri al · geri al + çalıştır · tabloları sil + baştan</td><td>5</td></tr>
+      <tr><td><code>php artisan db:seed</code> · <code>migrate:fresh --seed</code></td><td>Başlangıç verisi</td><td>5</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ======================= TEST ======================= -->
+<section class="card" id="test">
+  <div class="whead"><span class="wno">Pratik</span></div>
+  <h2>Test</h2>
+  <div class="prose" style="margin:8px 0 12px"><p>Bir seçeneğe tıkla; doğru cevap ve kısa açıklaması hemen altında çıkar. Haftaya göre süzebilirsin.</p></div>
+  <div class="qbar">
+    <div class="score" id="score">0 / 0 <small>doğru</small></div>
+    <div class="filters" id="filters" role="group" aria-label="Hafta filtresi"></div>
+    <button class="btn" id="reset" type="button">Sıfırla ve karıştır</button>
+  </div>
+  <div id="quiz"></div>
+</section>
+
+<!-- ======================= PLAN ======================= -->
+<section class="card" id="plan">
+  <div class="whead"><span class="wno">Pratik</span></div>
+  <h2>5 günlük çalışma planı</h2>
+  <div class="plan" style="margin-top:12px">
+    <div class="day" data-date="2026-10-31"><div class="d">31 Ekim Cumartesi<small>Hafta 1 ve 2</small></div><ul><li>HTTP, durum kodları</li><li>Composer, vendor, lock, MVC</li><li>Testte 1. ve 2. hafta</li></ul></div>
+    <div class="day" data-date="2026-11-01"><div class="d">1 Kasım Pazar<small>Hafta 3</small></div><ul><li>Kurulum adımlarını 3 kez kâğıda yaz</li><li>Klasör yapısı, rotalar</li><li>3. haftanın sınav soruları</li></ul></div>
+    <div class="day" data-date="2026-11-02"><div class="d">2 Kasım Pazartesi<small>Hafta 4 ve 5</small></div><ul><li>Controller, compact, Blade, layout</li><li>Migration komutları ve tablosu</li><li>Bilgisayarda make:model -m, migrate, rollback dene</li></ul></div>
+    <div class="day" data-date="2026-11-03"><div class="d">3 Kasım Salı<small>Hafta 6 ve 7</small></div><ul><li>Validasyon kuralları, CSRF, @method</li><li>Faculty–Department ilişkisini kâğıda yaz</li><li>6. ve 7. haftanın soruları</li></ul></div>
+    <div class="day" data-date="2026-11-04"><div class="d">4 Kasım Çarşamba<small>Birleştir</small></div><ul><li>ÇOMÜ örneğini baştan sona kâğıda yaz</li><li>Testin tamamı, yanlışları tekrar oku</li><li>Kırmızı "Vize" etiketli soruları sesli cevapla</li></ul></div>
+    <div class="day exam-day" data-date="2026-11-05"><div class="d">5 Kasım Perşembe<small>Sınav günü</small></div><ul><li>Sabah: turuncu ezber kutuları</li><li>Komut ezber tablosuna son bakış</li></ul></div>
+  </div>
+</section>
+
+<footer class="foot"><a href="../">← Eyüp Çalışkanöztürk</a> · Dersin sunumları, ders kitabı ve derste alınan notlardan derlenmiş bir öğrenci çalışma notudur. Kod örnekleri Laravel 13 üzerine yazılmıştır.</footer>
+</main>
+</div>
+</div>
+
+<script>
+(function(){
+  var exam = new Date(2026, 10, 5);
+  var now = new Date(); var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  var d = Math.round((exam - today) / 86400000);
+  var daysEl = document.getElementById('days'), lbl = document.getElementById('daysLabel');
+  if (d > 0) { daysEl.textContent = d; lbl.textContent = 'gün kaldı · 5 Kasım'; }
+  else if (d === 0) { daysEl.textContent = 'Bugün'; lbl.textContent = 'sınav günü, başarılar'; }
+  else { daysEl.textContent = '✓'; lbl.textContent = 'sınav geçti'; }
+  var iso = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+  document.querySelectorAll('.day').forEach(function(el){ if (el.dataset.date === iso) el.classList.add('today'); });
+
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) links.forEach(function(a){ a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+      });
+    }, {rootMargin: '-20% 0px -70% 0px'});
+    document.querySelectorAll('section.card').forEach(function(s){ io.observe(s); });
+  }
+
+  // [hafta, soru, seçenekler, doğru indeks, açıklama]
+  var Q = [
+    [1,'Şifre içeren bir giriş formu hangi metotla gönderilmelidir?',['GET','POST','HEAD','Fark etmez'],1,'GET veriyi URL\'ye yazar; şifre geçmişte ve kayıtlarda kalır. Veri gönderen işler POST ile yapılır.'],
+    [1,'HTML formu doğrudan hangi metotları gönderebilir?',['GET ve POST','GET, POST, PUT','Hepsini','Yalnız POST'],0,'Formlar yalnız GET ve POST gönderir. PUT/DELETE için Laravel\'de @method kullanılır.'],
+    [1,'404 durum kodu ne anlama gelir?',['Sunucu hatası','Bulunamadı','Yetkisiz','Yönlendirme'],1,'404 Not Found: istek sunucuya ulaştı ama böyle bir yol ya da kayıt yok.'],
+    [1,'3xx ile başlayan durum kodları hangi sınıftır?',['Başarı','İstemci hatası','Yönlendirme','Bilgi'],2,'301, 302, 303: hepsi "şu adrese git" der ve Location başlığı taşır.'],
+    [1,'PHP kodunda hata olduğunda sunucu hangi kodu döner?',['200','404','422','500'],3,'500 Internal Server Error: hata sunucuda.'],
+    [1,'Kontenjanı dolu etkinliğe kayıt isteği hangi kodu almalı?',['422','409','404','500'],1,'409 Conflict: istek doğru ama kaynağın durumu çelişiyor. Boş ad ise 422.'],
+    [1,'http://127.0.0.1:8000/index.php?ad=Web#kayit adresinin hangi parçası sunucuya GİTMEZ?',['/index.php','?ad=Web','#kayit','127.0.0.1'],2,'Parçacık (#kayit) tarayıcıda kalır.'],
+    [1,'PRG düzeni hangi sorunu çözer?',['Sayfanın yavaş açılması','Yenilemede formun tekrar gönderilmesi','Şifrenin görünmesi','404 hatası'],1,'POST sonrası 303 ile yönlendirip sonucu GET ile göstermek, yenilemede çift kaydı önler.'],
+    [1,'Ekranda ERR_NAME_NOT_RESOLVED görülüyorsa sorun hangi katmandadır?',['HTTP','DNS','TLS','PHP'],1,'Ad IP\'ye çevrilemedi; sunucuya hiç gidilmedi.'],
+    [2,'composer.lock dosyasındaki birebir aynı sürümleri kuran komut hangisidir?',['composer update','composer install','composer require','composer dump-autoload'],1,'install lock\'u okur; update yükseltir ve lock\'u yeniden yazar.'],
+    [2,'Var olan projeye yeni paket eklemek için hangi komut kullanılır?',['composer install paket','composer add paket','composer require paket/adi','composer create-project paket'],2,'require paketi composer.json\'a yazar, kurar, lock\'u günceller.'],
+    [2,'Composer paketleri hangi klasöre kurar?',['node_modules','vendor','packages','lib'],1,'vendor/. Elle değiştirilmez, Git\'e eklenmez.'],
+    [2,'Hangisi teslim edilmez / Git\'e eklenmez?',['composer.json','composer.lock','vendor/','routes/web.php'],2,'vendor composer install ile lock\'tan yeniden kurulur.'],
+    [2,'Composer paketleri varsayılan olarak hangi depodan indirir?',['npm registry','Packagist','PECL','GitHub Packages'],1,'Packagist (packagist.org).'],
+    [2,'composer.json\'da "^3.14" ne demektir?',['Yalnız 3.14.0','3.14 ve üzeri, 4.0\'dan küçük','3.14 ve altı','En son sürüm'],1,'Şapka en soldaki sıfır olmayan basamağı sabit tutar.'],
+    [2,'MVC\'de veritabanı ile konuşan veri katmanı hangisidir?',['Controller','View','Model','Route'],2,'Model veri, Controller mantık, View görüntü.'],
+    [2,'Static bir üyeye nasıl erişilir?',['$nesne->uye','Sinif::uye','Sinif->uye','$this::uye'],1,':: kapsam çözümleme operatörü; static üye sınıfa aittir.'],
+    [2,'use App\\Models\\Event; satırı ne yapar?',['Dosyayı yükler','Kısa adı tam ada eşler','Sınıfı oluşturur','Paketi kurar'],1,'use dosya yüklemez; dosyayı otomatik yükleyici sınıf ilk kullanıldığında yükler.'],
+    [2,'PSR-4\'e göre App\\Models\\Event sınıfı hangi dosyadadır?',['app/Event.php','app/Models/Event.php','models/event.php','src/App/Event.php'],1,'Namespace klasöre, sınıf adı dosya adına karşılık gelir.'],
+    [3,'Laravel projesi kurmak için doğru komut hangisidir?',['composer require laravel/laravel','composer create-project laravel/laravel','php artisan new laravel','composer install laravel'],1,'Henüz proje yokken create-project kullanılır.'],
+    [3,'"laravel/laravel" adındaki ilk "laravel" neyi gösterir?',['Paket adını','Yayıncıyı','Sürümü','Klasörü'],1,'Biçim yayıncı/paket.'],
+    [3,'Projeyi çalıştıran komut hangisidir?',['php artisan server','php artisan serve','php artisan run','composer serve'],1,'php artisan serve. "server" yazarsan Command "server" is not defined.'],
+    [3,'Laravel\'de tarayıcı rotaları hangi dosyada tanımlanır?',['routes/api.php','routes/console.php','routes/web.php','app/routes.php'],2,'routes/web.php.'],
+    [3,'Dışarıdan erişilebilen tek klasör hangisidir?',['resources','public','storage','app'],1,'Her istek public/index.php\'den girer.'],
+    [3,'.env değişti ama eski değer görünüyor. Hangi komut?',['php artisan migrate','php artisan config:clear','composer update','php artisan serve'],1,'Yapılandırma önbelleği temizlenir.'],
+    [3,'Yalnız GET tanımlı /events adresine POST gelirse?',['404','405','419','500'],1,'405 Method Not Allowed.'],
+    [3,'whereNumber(\'id\') neyi denetler?',['Kaydın varlığını','Parametrenin biçimini (rakam)','Kullanıcının yetkisini','Veritabanı bağlantısını'],1,'Biçimi denetler; varlık eylemin içinde ayrıca denetlenir.'],
+    [4,'QuizController oluşturan komut hangisidir?',['php artisan make:controller QuizController','php artisan new:controller Quiz','composer make:controller QuizController','php artisan controller QuizController'],0,'make:controller komut, QuizController senin verdiğin sınıf adı.'],
+    [4,'make:controller EventController --resource kaç metot üretir?',['3','5','7','0'],2,'index, create, store, show, edit, update, destroy.'],
+    [4,'dd() fonksiyonunun açılımı nedir?',['debug die','dump and die','data display','die debug'],1,'Değişkeni döker ve programı durdurur.'],
+    [4,'return view(\'list\', compact(\'students\')); ifadesinin eşdeğeri hangisidir?',['view(\'list\', [\'$students\'])','view(\'list\', [\'students\' => $students])','view(\'list\', $students)','view(\'list\')->compact($students)'],1,'compact: anahtar değişkenin adı, değer değişkenin kendisi.'],
+    [4,'view(\'students.index\') hangi dosyayı açar?',['resources/views/students.index.php','resources/views/students/index.blade.php','app/Views/students/index.php','public/students/index.html'],1,'Nokta klasör ayırır, .blade.php yazılmaz.'],
+    [4,'Layout\'ta boşluk açan direktif hangisidir?',['@section','@extends','@yield','@include'],2,'@yield boşluk açar, @extends layout seçer, @section doldurur.'],
+    [4,'{{ $x }} ile {!! $x !!} arasındaki fark nedir?',['Fark yok','İlki kaçışlı, ikincisi ham yazar','İlki ham, ikincisi kaçışlı','İkincisi yorumdur'],1,'{{ }} htmlspecialchars\'tan geçirir; {!! !!} kullanıcı verisinde kullanılmaz (XSS).'],
+    [4,'Boş bir etkinlik listesi hangi kodla dönmelidir?',['404','204','200','500'],2,'Kaynak var, içi boş: 200 ve tasarlanmış boş durum (@forelse … @empty).'],
+    [5,'Model ve migration\'ı birlikte oluşturan komut hangisidir?',['php artisan make:model Student -c','php artisan make:model Student -m','php artisan make:migration Student -m','php artisan make:model Student --db'],1,'-m = --migration.'],
+    [5,'php artisan migrate çalışınca migration\'ın hangi metodu çalışır?',['down()','create()','up()','run()'],2,'up() kurar, down() rollback\'te geri alır.'],
+    [5,'Son migrate işlemini geri alan komut hangisidir?',['php artisan migrate:undo','php artisan migrate:rollback','php artisan migrate:back','php artisan rollback'],1,'Son batch\'in down() metotları çalışır.'],
+    [5,'Bütün tabloları silip migration\'ları baştan çalıştıran komut?',['migrate:fresh','migrate:status','migrate:rollback','migrate:install'],0,'Tüm veri gider.'],
+    [5,'Student modelinin varsayılan tablo adı nedir?',['student','Students','students','student_table'],2,'Model tekil, tablo çoğul ve küçük harf.'],
+    [5,'Student::where(\'age\', \'>\', 90)->get() eşleşme bulamazsa ne döner?',['null','false','Boş collection','404'],2,'get() boş collection döner; null döndürebilenler find() ve first().'],
+    [5,'Student::create([...]) ile yazılabilecek sütunları modelde ne belirler?',['$table','$fillable','$hidden','$casts'],1,'Mass assignment izin listesi.'],
+    [5,'Uygulanmış bir migration dosyasına sütun ekleyip migrate dersen?',['Tablo güncellenir','Nothing to migrate, değişmez','Tablo silinir','Hata verir, veri gider'],1,'Her şema değişikliği yeni bir migration\'dır (Schema::table).'],
+    [6,'Laravel\'de formda @csrf unutulursa hangi kod alınır?',['403','404','419','500'],2,'419 Page Expired.'],
+    [6,'Laravel\'de güncelleme formunda PUT göndermek için forma ne eklenir?',['method="PUT"','@method(\'PUT\')','@put','@csrf(\'PUT\')'],1,'form method="POST" kalır, içine @method(\'PUT\'). Unutulursa 405.'],
+    [6,'E-postanın users tablosunda benzersiz olmasını sağlayan kural?',['exists:users,email','unique:users,email','distinct:email','email:unique'],1,'unique: tabloda olmamalı. exists: tabloda olmalı.'],
+    [6,'\'category\' => \'in:Web,Veri\' ne demektir?',['Web ve Veri dışında olmalı','Web veya Veri olmalı','İkisini de içermeli','Dizi olmalı'],1,'in: listeden biri. not_in: listeden biri olmamalı.'],
+    [6,'Doğrulama başarısız olunca (normal form isteği) Laravel ne yapar?',['500 hata sayfası','Kaydı yine yazar','Forma geri yönlendirir, hataları oturuma koyar','Boş sayfa'],2,'302 ile forma döner; old() ve $errors ile okunur. JSON istekte 422.'],
+    [6,'make:request ile üretilen sınıfta authorize() değiştirilmezse?',['Her istek 403 alır','Her istek geçer','419 alınır','Kurallar çalışmaz ama kayıt yazılır'],0,'Üretilen hâli false döndürür.'],
+    [6,'Dosya yükleme formunda unutulmaması gereken öznitelik?',['action="upload"','enctype="multipart/form-data"','method="GET"','accept="*"'],1,'Yoksa yalnız dosyanın adı gider.'],
+    [7,'Category hasMany Event ise Event modelinde hangi metot yazılır?',['hasOne','hasMany','belongsTo','belongsToMany'],2,'Yabancı anahtarı (category_id) taşıyan model belongsTo yazar.'],
+    [7,'Etkinlik–katılımcı gibi çoka çok ilişkide hangi metot kullanılır?',['hasMany','belongsToMany','hasOne','hasManyThrough'],1,'İki taraf da belongsToMany; bağ ara tabloda (event_user).'],
+    [7,'departments tablosunda fakülteye yabancı anahtar nasıl yazılır?',['$table->integer(\'faculty\')','$table->foreignId(\'faculty_id\')->constrained()','$table->belongsTo(\'faculties\')','$table->key(\'faculty_id\')'],1,'constrained() addan faculties.id\'yi çıkarır.'],
+    [7,'$category->events (parantezsiz) ne döndürür?',['Sorgu nesnesi','Tek model','Etkinliklerin collection\'ı','Etkinlik sayısı'],2,'Parantezsiz: ilişkili veri. Parantezli events(): koşul eklenebilen sorgu.'],
+    [7,'8 etkinlikli listede her kartta kategori okunursa (lazy loading) kaç sorgu gider?',['1','2','8','9'],3,'1 + 8 = 9 (N+1). with(\'category\') ile 2.'],
+    [7,'Kullanılan bir kategorinin silinmesini reddeden silme politikası?',['cascadeOnDelete()','nullOnDelete()','restrictOnDelete()','dropOnDelete()'],2,'restrict: gösteren satır varsa silme reddedilir.']
+  ];
+  var cats = [0,1,2,3,4,5,6,7];
+  var current = 0, order = [], answered = {};
+  var quizEl = document.getElementById('quiz'), scoreEl = document.getElementById('score'), filtersEl = document.getElementById('filters');
+
+  function shuffle(a){ for (var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; } return a; }
+  function reorder(){ order = shuffle(Q.map(function(_,i){return i;})).sort(function(a,b){ return Q[a][0]-Q[b][0]; }); answered = {}; }
+  function visible(i){ return current===0 || Q[i][0]===current; }
+  function updateScore(){
+    var ids = order.filter(visible);
+    var done = ids.filter(function(i){ return i in answered; });
+    var ok = done.filter(function(i){ return answered[i]===Q[i][3]; }).length;
+    scoreEl.innerHTML = '';
+    scoreEl.appendChild(document.createTextNode(ok + ' / ' + done.length + ' '));
+    var s = document.createElement('small'); s.textContent = 'doğru · ' + ids.length + ' soru'; scoreEl.appendChild(s);
+  }
+  function render(){
+    quizEl.innerHTML = '';
+    var n = 0;
+    order.forEach(function(i){
+      if (!visible(i)) return; var q = Q[i]; n++;
+      var box = document.createElement('div'); box.className='q';
+      var t = document.createElement('div'); t.className='qt';
+      var num = document.createElement('span'); num.className='n'; num.textContent = String(n).padStart(2,'0');
+      var txt = document.createElement('span'); txt.textContent = q[1];
+      var tg = document.createElement('span'); tg.className='tag ek'; tg.textContent=q[0]+'. hafta'; tg.style.marginLeft='auto';
+      t.appendChild(num); t.appendChild(txt); t.appendChild(tg); box.appendChild(t);
+      var opts = document.createElement('div'); opts.className='opts';
+      var why = document.createElement('div'); why.className='why';
+      var btns = q[2].map(function(o, k){
+        var b = document.createElement('button'); b.type='button'; b.textContent = String.fromCharCode(65+k) + ') ' + o;
+        b.addEventListener('click', function(){ answer(i, k, btns, why); });
+        opts.appendChild(b); return b;
+      });
+      box.appendChild(opts); box.appendChild(why);
+      if (i in answered) paint(i, answered[i], btns, why);
+      quizEl.appendChild(box);
+    });
+    updateScore();
+  }
+  function paint(i, k, btns, why){
+    var q = Q[i];
+    btns.forEach(function(b, j){ b.disabled = true; if (j===q[3]) b.classList.add('right'); else if (j===k) b.classList.add('wrong'); });
+    why.textContent = (k===q[3] ? 'Doğru. ' : 'Yanlış. Doğru cevap ' + String.fromCharCode(65+q[3]) + '. ') + q[4];
+  }
+  function answer(i, k, btns, why){ if (i in answered) return; answered[i]=k; paint(i,k,btns,why); updateScore(); }
+  cats.forEach(function(c){
+    var b = document.createElement('button'); b.type='button'; b.textContent = c===0 ? 'Hepsi' : c+'. hafta'; if (c===current) b.classList.add('on');
+    b.addEventListener('click', function(){ current=c; Array.prototype.forEach.call(filtersEl.children, function(x){ x.classList.toggle('on', x===b); }); render(); });
+    filtersEl.appendChild(b);
+  });
+  document.getElementById('reset').addEventListener('click', function(){ reorder(); render(); });
+  reorder(); render();
+})();
+</script>
+
+</body>
+</html>

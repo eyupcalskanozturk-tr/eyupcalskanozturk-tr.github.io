@@ -35,6 +35,8 @@ jobs:
           if [ -d PROJE ]; then cp -R PROJE _site/; fi
           # Veri Tabanı I · Chen notasyonu çalışma atölyesi
           if [ -d chen-atolyesi ]; then cp -R chen-atolyesi _site/; fi
+          # İnternet Programcılığı II · Laravel vize çalışma notu
+          if [ -d laravel-vize ]; then cp -R laravel-vize _site/; fi
       - name: Dosyaları yükle
         uses: actions/upload-pages-artifact@v4
         with:

@@ -219,6 +219,16 @@
       label: "Ders aracı",
       demo: "chen-atolyesi/",
       source: "https://github.com/eyupcalskanozturk-tr/eyupcalskanozturk-tr.github.io/tree/main/chen-atolyesi"
+    },
+    {
+      name: "IP2 Vize Kampı",
+      description: "İnternet Programcılığı II için Laravel'i hafta hafta anlatan çalışma notu: HTTP, Composer, MVC, migration, Eloquent ilişkileri, doğrulama ve Blade; her haftanın sonunda cevaplı sınav soruları ve test.",
+      tags: ["Laravel", "PHP"],
+      art: "{ L }",
+      label: "Ders notu",
+      cta: "Notları aç ↗",
+      demo: "laravel-vize/",
+      source: "https://github.com/eyupcalskanozturk-tr/eyupcalskanozturk-tr.github.io/tree/main/laravel-vize"
     }
   ]);
   function featuredCard(item) {
@@ -231,7 +241,7 @@
     tags.setAttribute("aria-label", "Teknolojiler ve konular");
     item.tags.forEach((tag) => tags.append(element("li", "", tag)));
     const links = element("div", "project-links");
-    const open = element("a", "", "Atölyeyi aç ↗");
+    const open = element("a", "", item.cta || "Atölyeyi aç ↗");
     open.href = item.demo;
     links.append(open, externalLink("Kaynak kod ↗", item.source));
     body.append(element("h3", "", item.name), element("p", "", item.description), tags, links);
