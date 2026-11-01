@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#0b0b09">
+  <meta name="theme-color" content="#1b1016">
   <title>Eyüp Çalışkanöztürk | Full-Stack Developer</title>
   <meta name="description" content="Eyüp Çalışkanöztürk — Çanakkale'de full-stack developer. Canlıdaki müşteri siteleri, TEKYAZ IT masaüstü uygulaması, ders araçları ve GitHub projeleri.">
   <link rel="canonical" href="https://eyupcalskanozturk-tr.github.io/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="tr_TR">
   <meta property="og:title" content="Eyüp Çalışkanöztürk | Full-Stack Developer">
-  <meta property="og:description" content="Veritabanından yayına, uçtan uca web ve masaüstü yazılımları. Beş müşteri sitesi şu an canlıda.">
+  <meta property="og:description" content="Veritabanından yayına, uçtan uca web ve masaüstü yazılımları. Sitenin rengi Çanakkale'nin gökyüzüyle değişir.">
   <meta property="og:url" content="https://eyupcalskanozturk-tr.github.io/">
   <meta property="og:image" content="https://avatars.githubusercontent.com/u/239019993?v=4">
   <meta property="og:image:alt" content="Eyüp Çalışkanöztürk'ün GitHub profil fotoğrafı">
@@ -37,21 +37,22 @@
         <a href="#about" class="nav-link"><span>Hakkımda</span></a>
         <a href="#repos" class="nav-link"><span>Depolar</span></a>
         <a href="#contact" class="nav-link"><span>İletişim</span></a>
+        <button class="term-btn" type="button" data-terminal hidden aria-keyshortcuts="/" title="Terminali aç ( / tuşu )"><span aria-hidden="true">›_</span><span class="term-btn-label">terminal</span></button>
       </nav>
     </div>
   </header>
 
   <main id="main">
-    <!-- Hero -->
+    <!-- Hero: soyadın harfleri Çanakkale'nin canlı gökyüzüne açılan bir pencere -->
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="wrap">
         <div class="hero-top">
           <p class="hero-role"><span class="led" aria-hidden="true"></span>Full-stack developer<br>Çanakkale, Türkiye</p>
-          <p class="hero-clock mono"><span id="clock">--:--</span> yerel saat</p>
+          <p class="hero-sky mono" id="sky-state">Çanakkale · 40.15°K 26.41°D</p>
         </div>
         <h1 id="hero-title" class="hero-name" aria-label="Eyüp Çalışkanöztürk">
           <span class="line" aria-hidden="true"><span class="fit">EYÜP</span></span>
-          <span class="line" aria-hidden="true"><span class="fit">ÇALIŞKANÖZTÜRK</span></span>
+          <span class="line" aria-hidden="true"><span class="fit sky-fill sky-letters">ÇALIŞKAN<br class="name-break">ÖZTÜRK</span></span>
         </h1>
         <div class="hero-bottom">
           <p class="hero-lede">Veritabanından yayına, <em>canlıya çıkan</em> web siteleri ve masaüstü araçları geliştiriyorum.</p>
@@ -60,11 +61,19 @@
             <span aria-hidden="true">↓</span>
           </a>
         </div>
+        <div class="sky-dial" id="sky-dial" hidden>
+          <label class="sky-caption" for="sky-time">Harflerin içindeki gökyüzü, şu an Çanakkale'nin gökyüzü. <b>Kaydır, günü değiştir.</b></label>
+          <div class="sky-range">
+            <input id="sky-time" type="range" min="0" max="1435" step="5" value="720">
+            <div class="sky-hours" aria-hidden="true"><span>00</span><span>06</span><span>12</span><span>18</span><span>24</span></div>
+          </div>
+          <button id="sky-now" class="sky-now" type="button" disabled>● canlı</button>
+        </div>
       </div>
     </section>
 
     <!-- Teknoloji şeridi -->
-    <div class="marquee" aria-label="Kullandığım teknolojiler: PHP, MySQL, C#, .NET 8, WPF, JavaScript, TypeScript, Next.js, React, Node.js, Laravel, Three.js, Tailwind">
+    <div class="marquee" aria-label="Kullandığım teknolojiler: PHP, MySQL, C#, .NET 8, WPF, Next.js, TypeScript, Node.js, Laravel, Three.js">
       <div class="marquee-track" aria-hidden="true">
         <span>PHP</span><i>✦</i><span>MySQL</span><i>✦</i><span>C# .NET 8</span><i>✦</i><span>WPF</span><i>✦</i><span>Next.js</span><i>✦</i><span>TypeScript</span><i>✦</i><span>Node.js</span><i>✦</i><span>Laravel</span><i>✦</i><span>Three.js</span><i>✦</i>
         <span>PHP</span><i>✦</i><span>MySQL</span><i>✦</i><span>C# .NET 8</span><i>✦</i><span>WPF</span><i>✦</i><span>Next.js</span><i>✦</i><span>TypeScript</span><i>✦</i><span>Node.js</span><i>✦</i><span>Laravel</span><i>✦</i><span>Three.js</span><i>✦</i>
@@ -78,7 +87,7 @@
         <p class="mono" id="board-summary" role="status">7 proje · 5'i canlıda</p>
       </div>
       <ul class="work-list" id="work-list">
-        <li class="work-row" data-preview="tekyaz">
+        <li class="work-row">
           <div class="row-inner">
             <h3>TEKYAZ IT</h3>
             <p class="row-kind">Masaüstü · WPF / .NET 8</p>
@@ -86,7 +95,7 @@
           </div>
           <p class="row-desc">USB bellekten kurulumsuz çalışan IT terminali. 9 ayrı IT iş akışını tek uygulamada topluyor: envanter takibi, PDF rapor üretimi, Wi-Fi otomatik bağlantı, Google Sheets senkronu ve daha fazlası.</p>
         </li>
-        <li class="work-row" data-preview="hukuk">
+        <li class="work-row">
           <div class="row-inner">
             <h3>İdeal Hukuk Kulübü</h3>
             <p class="row-kind">Kulüp sitesi · PHP / Three.js</p>
@@ -94,35 +103,35 @@
           </div>
           <p class="row-desc">Üniversite hukuk kulübü için tanıtım sitesi. Three.js ile hareket eden adalet terazisi, veritabanından beslenen duyuru sistemi.</p>
         </li>
-        <li class="work-row" data-preview="efomat">
+        <li class="work-row">
           <a class="row-inner" href="https://efomat.com" target="_blank" rel="noopener noreferrer">
             <h3>efomat.com</h3>
             <p class="row-kind">Matbaa / baskı · PHP / MySQL</p>
             <p class="row-status mono state" data-url="https://efomat.com"><span class="dot"></span><span class="state-text">canlı</span> <span aria-hidden="true">↗</span></p>
           </a>
         </li>
-        <li class="work-row" data-preview="matbaakent">
+        <li class="work-row">
           <a class="row-inner" href="https://matbaakent.com" target="_blank" rel="noopener noreferrer">
             <h3>matbaakent.com</h3>
             <p class="row-kind">Matbaa / baskı · PHP / MySQL</p>
             <p class="row-status mono state" data-url="https://matbaakent.com"><span class="dot"></span><span class="state-text">canlı</span> <span aria-hidden="true">↗</span></p>
           </a>
         </li>
-        <li class="work-row" data-preview="bedirhan">
+        <li class="work-row">
           <a class="row-inner" href="https://bedirhanikincielspot.com" target="_blank" rel="noopener noreferrer">
             <h3>bedirhanikincielspot.com</h3>
             <p class="row-kind">İkinci el ticaret · PHP / MySQL</p>
             <p class="row-status mono state" data-url="https://bedirhanikincielspot.com"><span class="dot"></span><span class="state-text">canlı</span> <span aria-hidden="true">↗</span></p>
           </a>
         </li>
-        <li class="work-row" data-preview="sehitlik">
+        <li class="work-row">
           <a class="row-inner" href="https://canakkalesehitlik.com" target="_blank" rel="noopener noreferrer">
             <h3>canakkalesehitlik.com</h3>
             <p class="row-kind">Turizm · PHP / MySQL</p>
             <p class="row-status mono state" data-url="https://canakkalesehitlik.com"><span class="dot"></span><span class="state-text">canlı</span> <span aria-hidden="true">↗</span></p>
           </a>
         </li>
-        <li class="work-row" data-preview="on7">
+        <li class="work-row">
           <a class="row-inner" href="https://on7reklam.com" target="_blank" rel="noopener noreferrer">
             <h3>on7reklam.com</h3>
             <p class="row-kind">Reklam ajansı · PHP / MySQL</p>
@@ -148,7 +157,7 @@
     <!-- Hakkımda: kaydırdıkça yanan metin -->
     <section class="section wrap about" id="about" aria-labelledby="about-title">
       <h2 id="about-title" class="section-label-only">Hakkımda</h2>
-      <p class="statement" id="statement">Bilgisayar Programcılığı öğrencisiyim ve freelance olarak üretim ortamına çıkan projeler geliştiriyorum. Veritabanı şeması, backend, admin paneli, arayüz, yayın ve güvenlik; hepsi tek elden. Benim için bir proje, canlıya çıkana kadar bitmiş sayılmaz.</p>
+      <p class="statement" id="statement" data-highlight="canlıya">Bilgisayar Programcılığı öğrencisiyim ve freelance olarak üretim ortamına çıkan projeler geliştiriyorum. Veritabanı şeması, backend, admin paneli, arayüz, yayın ve güvenlik; hepsi tek elden. Benim için bir proje, canlıya çıkana kadar bitmiş sayılmaz.</p>
       <div class="services">
         <article>
           <h3>Kurumsal web siteleri</h3>
@@ -196,8 +205,8 @@
       <a class="text-link" href="https://github.com/eyupcalskanozturk-tr?tab=repositories" target="_blank" rel="noopener noreferrer">Tüm depolar ↗</a>
     </section>
 
-    <!-- İletişim -->
-    <section class="contact" id="contact" aria-labelledby="contact-title">
+    <!-- İletişim: sayfa yine Çanakkale gökyüzüyle kapanır -->
+    <section class="contact sky-fill" id="contact" aria-labelledby="contact-title">
       <div class="wrap">
         <p class="contact-kicker"><span class="led" aria-hidden="true"></span>Yeni projelere açığım</p>
         <h2 id="contact-title" class="contact-title">Birlikte<br>çalışalım<span class="gold">.</span></h2>
@@ -205,36 +214,55 @@
           <a class="big-mail" id="email-link" href="mailto:eyupcalskanofficial@gmail.com">eyupcalskanofficial@gmail.com</a>
           <a class="orb magnetic" href="#contact-form-wrap"><span>Mesaj<br>yaz</span></a>
         </div>
-        <div class="contact-grid" id="contact-form-wrap">
-          <ul class="socials">
-            <li><a id="github-link" href="https://github.com/eyupcalskanozturk-tr" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
-            <li><a id="linkedin-link" href="https://www.linkedin.com/in/eyüp-çalişkanöztürk-413208273" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></li>
-            <li><a href="https://instagram.com/eyupcalskanozturk" target="_blank" rel="noopener noreferrer">Instagram ↗</a></li>
-          </ul>
-          <form id="contact-form" class="contact-form" aria-describedby="form-note">
-            <fieldset id="form-fields" disabled>
-              <legend class="sr-only">İletişim mesajı</legend>
-              <div class="field"><label for="name">Adın</label><input id="name" name="name" autocomplete="name" placeholder="Sana nasıl hitap edeyim?" required minlength="2" maxlength="80"></div>
-              <div class="field"><label for="email">E-posta adresin</label><input id="email" name="email" type="email" autocomplete="email" placeholder="ornek@eposta.com" required maxlength="160"></div>
-              <div class="field field-wide"><label for="message">Mesajın</label><textarea id="message" name="message" rows="4" placeholder="Ne yapmak istiyorsun, ne zamana?" required minlength="10" maxlength="2000"></textarea></div>
-              <div class="honeypot" aria-hidden="true"><label for="website">Bu alanı boş bırak</label><input id="website" name="_gotcha" tabindex="-1" autocomplete="off"></div>
-              <button id="submit-button" class="btn" type="submit">E-posta taslağı oluştur</button>
-            </fieldset>
-            <p class="form-note mono" id="form-note">E-posta uygulaman açılır. Mesajı oradan sen gönderirsin.</p>
-            <p id="form-status" class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
-            <noscript><p class="form-note">Form için JavaScript gerekli. Yukarıdaki e-posta adresini kullanabilirsin.</p></noscript>
-          </form>
-        </div>
-        <footer class="site-footer">
-          <p class="mono">© <span id="year">2026</span> Eyüp Çalışkanöztürk</p>
-          <p class="mono">Çanakkale · <span id="clock-footer">--:--</span></p>
-          <div class="footer-actions">
-            <button id="motion-toggle" class="link-btn" type="button" aria-pressed="false" hidden>Hareketi durdur</button>
-            <a href="#top" class="mono">Başa dön ↑</a>
+        <div class="contact-panel" id="contact-form-wrap">
+          <div class="contact-grid">
+            <ul class="socials">
+              <li><a id="github-link" href="https://github.com/eyupcalskanozturk-tr" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
+              <li><a id="linkedin-link" href="https://www.linkedin.com/in/eyüp-çalişkanöztürk-413208273" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></li>
+              <li><a href="https://instagram.com/eyupcalskanozturk" target="_blank" rel="noopener noreferrer">Instagram ↗</a></li>
+            </ul>
+            <form id="contact-form" class="contact-form" aria-describedby="form-note">
+              <fieldset id="form-fields" disabled>
+                <legend class="sr-only">İletişim mesajı</legend>
+                <div class="field"><label for="name">Adın</label><input id="name" name="name" autocomplete="name" placeholder="Sana nasıl hitap edeyim?" required minlength="2" maxlength="80"></div>
+                <div class="field"><label for="email">E-posta adresin</label><input id="email" name="email" type="email" autocomplete="email" placeholder="ornek@eposta.com" required maxlength="160"></div>
+                <div class="field field-wide"><label for="message">Mesajın</label><textarea id="message" name="message" rows="4" placeholder="Ne yapmak istiyorsun, ne zamana?" required minlength="10" maxlength="2000"></textarea></div>
+                <div class="honeypot" aria-hidden="true"><label for="website">Bu alanı boş bırak</label><input id="website" name="_gotcha" tabindex="-1" autocomplete="off"></div>
+                <button id="submit-button" class="btn" type="submit">E-posta taslağı oluştur</button>
+              </fieldset>
+              <p class="form-note mono" id="form-note">E-posta uygulaman açılır. Mesajı oradan sen gönderirsin.</p>
+              <p id="form-status" class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
+              <noscript><p class="form-note">Form için JavaScript gerekli. Yukarıdaki e-posta adresini kullanabilirsin.</p></noscript>
+            </form>
           </div>
-        </footer>
+          <footer class="site-footer">
+            <p class="mono">© <span id="year">2026</span> Eyüp Çalışkanöztürk · Çanakkale <span id="clock-footer">--:--</span></p>
+            <p class="mono term-hint" data-terminal-hint hidden>Bu sitede gizli bir terminal var. <kbd>/</kbd> tuşuna bas.</p>
+            <div class="footer-actions">
+              <button id="motion-toggle" class="link-btn" type="button" aria-pressed="false" hidden>Hareketi durdur</button>
+              <a href="#top" class="mono">Başa dön ↑</a>
+            </div>
+          </footer>
+        </div>
       </div>
     </section>
   </main>
+
+  <!-- Gizli terminal: "/" tuşu, Ctrl+K ya da üstteki ›_ düğmesi açar -->
+  <dialog class="terminal" id="terminal" aria-labelledby="term-title">
+    <div class="term-bar">
+      <span class="term-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      <h2 id="term-title">eyup@canakkale: ~</h2>
+      <button type="button" class="term-close" id="term-close" aria-label="Terminali kapat">esc</button>
+    </div>
+    <div class="term-body" id="term-body">
+      <div class="term-out" id="term-out" role="log" aria-live="polite"></div>
+      <form class="term-line" id="term-form" autocomplete="off">
+        <label for="term-input"><span class="term-prompt">eyup@canakkale:~$</span><span class="sr-only">Terminal komutu</span></label>
+        <input id="term-input" name="command" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" enterkeyhint="send">
+      </form>
+    </div>
+    <canvas class="term-matrix" id="term-matrix" aria-hidden="true"></canvas>
+  </dialog>
 </body>
 </html>
