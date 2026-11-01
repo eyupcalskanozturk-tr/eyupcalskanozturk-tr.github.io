@@ -8,10 +8,13 @@
     email: "eyupcalskanofficial@gmail.com",
     linkedin: "https://www.linkedin.com/in/eyüp-çalişkanöztürk-413208273",
     formspreeEndpoint: "",
-    maxProjects: 6
+    maxRepos: 6,
+    timeZone: "Europe/Istanbul"
   });
   const $ = (selector) => document.querySelector(selector);
+  const $$ = (selector) => [...document.querySelectorAll(selector)];
   const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
   let reducedMotion = motionPreference.matches;
   let userPaused = false;
   try { userPaused = localStorage.getItem("portfolio-motion") === "paused"; } catch { /* Depolama isteğe bağlıdır. */ }
@@ -31,42 +34,11 @@
     if (text !== undefined) node.textContent = text;
     return node;
   }
-  function externalLink(label, href) {
-    const link = element("a", "", label);
-    link.href = href;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    return link;
-  }
-  async function fetchWithTimeout(url, options = {}) {
+  async function fetchWithTimeout(url, options = {}, ms = 12000) {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 12000);
+    const timeout = setTimeout(() => controller.abort(), ms);
     try { return await fetch(url, { ...options, signal: controller.signal }); }
     finally { clearTimeout(timeout); }
-  }
-
-  function initNavigation() {
-    const button = $(".menu-toggle");
-    const nav = $("#navigation");
-    const desktop = window.matchMedia("(min-width: 900px)");
-    function setOpen(open) {
-      button.setAttribute("aria-expanded", String(open));
-      nav.classList.toggle("is-open", open);
-    }
-    button.hidden = false;
-    document.documentElement.classList.add("nav-ready");
-    button.addEventListener("click", () => setOpen(button.getAttribute("aria-expanded") !== "true"));
-    nav.addEventListener("click", (event) => { if (event.target.closest("a")) setOpen(false); });
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && button.getAttribute("aria-expanded") === "true") {
-        setOpen(false);
-        button.focus();
-      }
-    });
-    document.addEventListener("click", (event) => {
-      if (!event.target.closest(".site-header")) setOpen(false);
-    });
-    desktop.addEventListener("change", () => setOpen(false));
   }
 
   function initMotion() {
@@ -85,189 +57,193 @@
       try { localStorage.setItem("portfolio-motion", userPaused ? "paused" : "running"); } catch { /* Tercih bu oturumda uygulanır. */ }
       update();
     });
-    motionPreference.addEventListener("change", (event) => {
-      reducedMotion = event.matches;
-      update();
-    });
+    motionPreference.addEventListener("change", (event) => { reducedMotion = event.matches; update(); });
     document.addEventListener("visibilitychange", update);
     update();
   }
 
-  function initTyping() {
-    const target = $("#typed-role");
-    const roles = ["Full-Stack Developer", "Bilgisayar Programcılığı Öğrencisi", "Web Geliştirici"];
-    let role = 0, position = roles[0].length, deleting = true, timer;
-    function tick() {
-      if (motionPaused()) return;
-      position += deleting ? -1 : 1;
-      target.textContent = roles[role].slice(0, position);
-      let delay = deleting ? 35 : 70;
-      if (position === 0) { deleting = false; role = (role + 1) % roles.length; delay = 250; }
-      else if (position === roles[role].length && !deleting) { deleting = true; delay = 2000; }
-      timer = setTimeout(tick, delay);
+  function initClock() {
+    const targets = [$("#clock"), $("#clock-footer")].filter(Boolean);
+    let format;
+    try { format = new Intl.DateTimeFormat("tr-TR", { hour: "2-digit", minute: "2-digit", timeZone: CONFIG.timeZone }); }
+    catch { return; }
+    const tick = () => { const now = format.format(new Date()); targets.forEach((t) => { t.textContent = now; }); };
+    tick();
+    setInterval(tick, 30000);
+  }
+
+  // Dev ismi kapsayıcının genişliğine tam oturt: en uzun satır genişliği doldurur.
+  function initFitText() {
+    const lines = $$(".hero-name .fit");
+    const box = $(".hero-name");
+    if (!lines.length || !box) return;
+    function fit() {
+      lines.forEach((line) => { line.style.fontSize = "100px"; });
+      const widest = Math.max(...lines.map((line) => line.scrollWidth));
+      const available = box.clientWidth;
+      if (!widest || !available) return;
+      const size = Math.min(100 * available / widest, window.innerHeight * 0.36);
+      lines.forEach((line) => { line.style.fontSize = `${size.toFixed(2)}px`; });
     }
-    function restart() {
-      clearTimeout(timer);
-      target.textContent = roles[0];
-      role = 0; position = roles[0].length; deleting = true;
-      if (!motionPaused()) timer = setTimeout(tick, 2000);
-    }
-    document.addEventListener("motionchange", restart);
-    restart();
+    fit();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+    let frame;
+    window.addEventListener("resize", () => { cancelAnimationFrame(frame); frame = requestAnimationFrame(fit); }, { passive: true });
   }
 
   function initReveal() {
+    const targets = $$(".section-label, .work-row, .services article, .tool-list li, .repo-list, .contact-title, .contact-row");
+    targets.forEach((target) => target.classList.add("reveal"));
     if (!("IntersectionObserver" in window) || motionPaused()) return;
-    const targets = document.querySelectorAll(".reveal");
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(({ isIntersecting, target }) => {
         if (isIntersecting) { target.classList.remove("is-pending"); observer.unobserve(target); }
       });
-    }, { threshold: 0.08 });
+    }, { threshold: 0.12 });
     targets.forEach((target) => {
       if (target.getBoundingClientRect().top > innerHeight) target.classList.add("is-pending");
       observer.observe(target);
     });
     document.addEventListener("motionchange", (event) => {
-      if (event.detail) {
-        targets.forEach((target) => target.classList.remove("is-pending"));
-        observer.disconnect();
-      }
+      if (event.detail) { targets.forEach((target) => target.classList.remove("is-pending")); observer.disconnect(); }
     });
   }
 
-  function initParticles() {
-    const canvas = $("#particles");
-    const context = canvas.getContext("2d");
-    if (!context) return;
-    let width, height, points = [], frame = 0, previous = 0;
-    function resize() {
-      width = innerWidth; height = innerHeight;
-      const scale = Math.min(devicePixelRatio || 1, 2);
-      canvas.width = Math.round(width * scale); canvas.height = Math.round(height * scale);
-      context.setTransform(scale, 0, 0, scale, 0, 0);
-      points = Array.from({ length: Math.min(42, Math.ceil(width * height / 26000)) }, () => ({
-        x: Math.random() * width, y: Math.random() * height,
-        vx: (Math.random() - .5) * .012, vy: (Math.random() - .5) * .012
-      }));
-    }
-    function draw(time) {
-      if (motionPaused()) return;
-      frame = requestAnimationFrame(draw);
-      if (time - previous < 40) return; // Yaklaşık 25 FPS; arka plan için yeterli.
-      const delta = Math.min(time - previous, 80);
-      previous = time;
-      context.clearRect(0, 0, width, height);
-      points.forEach((point, index) => {
-        point.x = (point.x + point.vx * delta + width) % width;
-        point.y = (point.y + point.vy * delta + height) % height;
-        context.fillStyle = "rgba(233,189,105,.5)";
-        context.beginPath(); context.arc(point.x, point.y, 1.2, 0, Math.PI * 2); context.fill();
-        for (let next = index + 1; next < points.length; next++) {
-          const other = points[next];
-          const distance = Math.hypot(point.x - other.x, point.y - other.y);
-          if (distance < 140) {
-            context.strokeStyle = `rgba(233,189,105,${.13 * (1 - distance / 140)})`;
-            context.beginPath(); context.moveTo(point.x, point.y); context.lineTo(other.x, other.y); context.stroke();
-          }
-        }
-      });
-    }
+  // Hakkımda metni: kaydırdıkça kelime kelime yanar. Metin bölünse de okunuşu aynı kalır.
+  function initStatement() {
+    const statement = $("#statement");
+    if (!statement) return;
+    const words = statement.textContent.trim().split(/\s+/);
+    statement.replaceChildren(...words.flatMap((word, index) => {
+      const span = element("span", "w", word);
+      return index < words.length - 1 ? [span, document.createTextNode(" ")] : [span];
+    }));
+    const spans = $$("#statement .w");
+    let ticking = false;
     function update() {
-      cancelAnimationFrame(frame);
-      context.clearRect(0, 0, width, height);
-      previous = performance.now();
-      if (!motionPaused()) frame = requestAnimationFrame(draw);
+      ticking = false;
+      if (motionPaused()) { spans.forEach((s) => s.classList.add("on")); return; }
+      const rect = statement.getBoundingClientRect();
+      const start = innerHeight * 0.85, end = innerHeight * 0.35;
+      const progress = Math.min(1, Math.max(0, (start - rect.top) / (rect.height + start - end)));
+      const lit = Math.round(progress * spans.length);
+      spans.forEach((span, index) => span.classList.toggle("on", index < lit));
     }
-    resize(); update();
-    window.addEventListener("resize", resize, { passive: true });
-    document.addEventListener("motionchange", update);
+    const request = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+    window.addEventListener("scroll", request, { passive: true });
+    window.addEventListener("resize", request, { passive: true });
+    document.addEventListener("motionchange", request);
+    update();
   }
 
-  function projectCard(repo, index) {
-    const card = element("article", "project-card glass");
-    const art = element("div", `project-art art-${index % 3}`);
-    art.setAttribute("aria-hidden", "true");
-    art.append(element("span", "", ["{ * }", "< / >", "( ui )"][index % 3]), element("small", "", repo.language || "Kod & fikir"));
-    const body = element("div", "project-body");
-    const descriptions = {
-      "gold-password-generator": "Parola üretimi ve güç kontrolünü altın-siyah bir arayüzde birleştiren web aracı.",
-      "Eyup-Challenge": "GitHub'da paylaştığım TypeScript çalışma deposu.",
-      "funnyofcomu": "HTML tabanlı web çalışmam. Dosyaları ve geliştirmeleri GitHub'da inceleyebilirsin.",
-      "eyupcalskanozturk-tr.github.io": "Kişisel portfolyomun kaynak kodları ve web denemelerim."
-    };
-    const tags = element("ul", "tags");
-    tags.setAttribute("aria-label", "Teknolojiler ve konular");
-    const topics = Array.isArray(repo.topics) ? repo.topics.filter((topic) => typeof topic === "string").slice(0, 2) : [];
-    [...new Set([repo.language || "GitHub", ...topics])].forEach((tag) => tags.append(element("li", "", tag)));
-    const links = element("div", "project-links");
-    links.append(externalLink("Kaynak kod ↗", webURL(repo.html_url)));
-    const demo = webURL(repo.homepage);
-    if (demo) links.append(externalLink("Canlı demo ↗", demo));
-    body.append(element("h3", "", repo.name), element("p", "", descriptions[repo.name] || repo.description || "Kaynak kodları ve güncel geliştirmeler GitHub deposunda."), tags, links);
-    card.append(art, body);
-    return card;
-  }
-
-  // Depo olmayan, bu sitede yayınlanan çalışmalar; API listesinin önünde her zaman görünür.
-  const FEATURED = Object.freeze([
-    {
-      name: "Chen Atölyesi",
-      description: "Veri Tabanı I için ER modeli ve Chen notasyonunu uygulamalı öğreten atölye: adım adım çözümlü örnek, alıştırmalar ve otomatik kontrollü diyagram kurma.",
-      tags: ["HTML", "Veri tabanı"],
-      art: "[ ◇ ]",
-      label: "Ders aracı",
-      demo: "chen-atolyesi/",
-      source: "https://github.com/eyupcalskanozturk-tr/eyupcalskanozturk-tr.github.io/tree/main/chen-atolyesi"
-    },
-    {
-      name: "IP2 Vize Kampı",
-      description: "İnternet Programcılığı II için Laravel'i hafta hafta anlatan çalışma notu: HTTP, Composer, MVC, migration, Eloquent ilişkileri, doğrulama ve Blade; her haftanın sonunda cevaplı sınav soruları ve test.",
-      tags: ["Laravel", "PHP"],
-      art: "{ L }",
-      label: "Ders notu",
-      cta: "Notları aç ↗",
-      demo: "laravel-vize/",
-      source: "https://github.com/eyupcalskanozturk-tr/eyupcalskanozturk-tr.github.io/tree/main/laravel-vize"
+  // İş satırlarının üzerine gelince imleci yumuşakça takip eden önizleme kartı.
+  function initPreview() {
+    const preview = $("#preview");
+    const strip = $("#preview-strip");
+    const rows = $$(".work-row");
+    if (!preview || !strip || !rows.length) return;
+    let x = innerWidth / 2, y = innerHeight / 2, tx = x, ty = y, scale = 0, targetScale = 0, frame = 0;
+    function draw() {
+      const ease = motionPaused() ? 1 : 0.14;
+      x += (tx - x) * ease; y += (ty - y) * ease; scale += (targetScale - scale) * (motionPaused() ? 1 : 0.16);
+      preview.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%) scale(${scale.toFixed(3)})`;
+      if (Math.abs(tx - x) > 0.3 || Math.abs(ty - y) > 0.3 || Math.abs(targetScale - scale) > 0.002) frame = requestAnimationFrame(draw);
+      else frame = 0;
     }
-  ]);
-  function featuredCard(item) {
-    const card = element("article", "project-card glass");
-    const art = element("div", "project-art art-2");
-    art.setAttribute("aria-hidden", "true");
-    art.append(element("span", "", item.art), element("small", "", item.label));
-    const body = element("div", "project-body");
-    const tags = element("ul", "tags");
-    tags.setAttribute("aria-label", "Teknolojiler ve konular");
-    item.tags.forEach((tag) => tags.append(element("li", "", tag)));
-    const links = element("div", "project-links");
-    const open = element("a", "", item.cta || "Atölyeyi aç ↗");
-    open.href = item.demo;
-    links.append(open, externalLink("Kaynak kod ↗", item.source));
-    body.append(element("h3", "", item.name), element("p", "", item.description), tags, links);
-    card.append(art, body);
-    return card;
+    const kick = () => { if (!frame) frame = requestAnimationFrame(draw); };
+    rows.forEach((row, index) => {
+      row.addEventListener("mouseenter", () => {
+        if (!finePointer.matches) return;
+        strip.style.transform = `translateY(${-index * 100}%)`;
+        targetScale = 1; kick();
+      });
+    });
+    $("#work-list").addEventListener("mouseleave", () => { targetScale = 0; kick(); });
+    window.addEventListener("mousemove", (event) => { tx = event.clientX; ty = event.clientY; if (targetScale) kick(); }, { passive: true });
+    window.addEventListener("scroll", () => { if (targetScale && !$("#work-list").matches(":hover")) { targetScale = 0; kick(); } }, { passive: true });
   }
 
-  async function loadProjects() {
+  // Manyetik öğeler imlece doğru hafifçe çekilir.
+  function initMagnetic() {
+    $$(".magnetic").forEach((item) => {
+      item.addEventListener("pointermove", (event) => {
+        if (!finePointer.matches || motionPaused()) return;
+        const rect = item.getBoundingClientRect();
+        const dx = event.clientX - (rect.left + rect.width / 2);
+        const dy = event.clientY - (rect.top + rect.height / 2);
+        item.style.transform = `translate(${dx * 0.3}px, ${dy * 0.3}px)`;
+      });
+      item.addEventListener("pointerleave", () => { item.style.transform = ""; });
+    });
+  }
+
+  // Canlı ölçüm: no-cors istek tamamlanırsa site erişilebilirdir. Ulaşılamazsa "ölçülemedi" yazılır.
+  function initStatus() {
+    const cells = $$(".state[data-url]");
+    const summary = $("#board-summary");
+    if (!cells.length || !window.fetch) return;
+    function set(cell, state, text) { cell.dataset.state = state; cell.querySelector(".state-text").textContent = text; }
+    async function measure(cell) {
+      const url = webURL(cell.dataset.url);
+      if (!url) return null;
+      set(cell, "checking", "ölçülüyor");
+      const started = performance.now();
+      try {
+        await fetchWithTimeout(url, { mode: "no-cors", cache: "no-store", credentials: "omit", referrerPolicy: "no-referrer" }, 8000);
+        const ms = Math.round(performance.now() - started);
+        set(cell, "live", `canlı · ${ms} ms`);
+        return ms;
+      } catch { set(cell, "unknown", "ölçülemedi"); return null; }
+    }
+    Promise.all(cells.map(measure)).then((results) => {
+      const live = results.filter((value) => value !== null);
+      summary.textContent = live.length
+        ? `7 proje · ${live.length}/${cells.length} site şu an yanıt veriyor`
+        : "7 proje · 5'i canlıda";
+    });
+  }
+
+  const REPO_NOTES = Object.freeze({
+    "gold-password-generator": "Parola üretimi ve güç kontrolünü altın-siyah bir arayüzde birleştiren web aracı.",
+    "Eyup-Challenge": "TypeScript çalışma deposu.",
+    "funnyofcomu": "HTML tabanlı web çalışmam.",
+    "eyupcalskanozturk-tr.github.io": "Bu sitenin kaynak kodu: portfolyo, Chen Atölyesi ve IP2 Vize Kampı."
+  });
+  function repoRow(repo) {
+    const item = element("li");
+    const link = element("a");
+    link.href = webURL(repo.html_url);
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    const description = REPO_NOTES[repo.name] || (typeof repo.description === "string" && repo.description) || "Kaynak kodu ve güncel geliştirmeler GitHub'da.";
+    link.append(
+      element("span", "repo-name", repo.name),
+      element("span", "repo-desc", description),
+      element("span", "repo-lang mono", typeof repo.language === "string" ? repo.language : "—")
+    );
+    item.append(link);
+    return item;
+  }
+
+  async function loadRepos() {
     const status = $("#project-status");
     const retry = $("#retry-projects");
-    const grid = $("#project-grid");
+    const list = $("#repo-list");
     retry.hidden = true;
-    grid.setAttribute("aria-busy", "true");
-    status.textContent = "GitHub projeleri güncelleniyor…";
+    list.setAttribute("aria-busy", "true");
+    status.textContent = "GitHub depoları güncelleniyor…";
     try {
       const response = await fetchWithTimeout(`https://api.github.com/users/${encodeURIComponent(CONFIG.github)}/repos?sort=updated&per_page=100`, { headers: { Accept: "application/vnd.github+json" } });
       if (!response.ok) throw new Error(`GitHub: ${response.status}`);
       const data = await response.json();
       if (!Array.isArray(data)) throw new Error("Geçersiz depo yanıtı");
-      const repos = data.filter((repo) => repo && typeof repo.name === "string" && !repo.fork && !repo.archived && !repo.private && repo.name.toLowerCase() !== CONFIG.github.toLowerCase() && webURL(repo.html_url)).slice(0, Math.max(0, CONFIG.maxProjects - FEATURED.length));
-      grid.replaceChildren(...FEATURED.map(featuredCard), ...repos.map(projectCard));
-      status.textContent = repos.length ? "GitHub'daki güncel, herkese açık projelerim. Fork ve arşiv depoları gösterilmez." : "Henüz gösterilecek herkese açık bir proje yok. Yeni çalışmalar burada görünecek.";
+      const repos = data.filter((repo) => repo && typeof repo.name === "string" && !repo.fork && !repo.archived && !repo.private && repo.name.toLowerCase() !== CONFIG.github.toLowerCase() && webURL(repo.html_url)).slice(0, CONFIG.maxRepos);
+      if (repos.length) list.replaceChildren(...repos.map(repoRow));
+      status.textContent = repos.length ? "GitHub'dan canlı · son güncellenenler" : "Henüz herkese açık depo yok";
     } catch {
-      status.textContent = "GitHub'a şu an ulaşılamıyor. Mevcut proje listesi korunuyor; daha sonra yeniden deneyebilirsin.";
+      status.textContent = "GitHub'a ulaşılamadı; kayıtlı liste";
       retry.hidden = false;
-    } finally { grid.setAttribute("aria-busy", "false"); }
+    } finally { list.setAttribute("aria-busy", "false"); }
   }
 
   function initContact() {
@@ -283,7 +259,7 @@
     $("#linkedin-link").href = webURL(CONFIG.linkedin);
     $("#form-fields").disabled = false;
     if (useFormspree) {
-      button.textContent = "Mesajı gönder ↗";
+      button.textContent = "Mesajı gönder";
       $("#form-note").textContent = "Mesajın ve e-posta adresin Formspree üzerinden iletilir.";
     }
     const defaultLabel = button.textContent;
@@ -334,12 +310,15 @@
   }
 
   $("#year").textContent = new Date().getFullYear();
-  initNavigation();
   initMotion();
-  initTyping();
+  initClock();
+  initFitText();
   initReveal();
-  initParticles();
+  initStatement();
+  initPreview();
+  initMagnetic();
+  initStatus();
   initContact();
-  $("#retry-projects").addEventListener("click", loadProjects);
-  loadProjects();
+  $("#retry-projects").addEventListener("click", loadRepos);
+  loadRepos();
 })();
