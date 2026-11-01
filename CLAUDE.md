@@ -1,6 +1,6 @@
 # Eyüp'ün portfolyosu — proje hafızası
 
-Eyüp Çalışkanöztürk'ün kişisel sitesi: https://eyupcalskanozturk-tr.github.io (GitHub Pages). Türkçe; derleme adımı yok, düz HTML/CSS/JavaScript (`index.html`, `css/style.css`, `js/main.js`, `assets/`). Alt sayfalar: `chen-atolyesi/`, `laravel-vize/`, `PROJE/`.
+Eyüp Çalışkanöztürk'ün kişisel sitesi: https://eyupcalskanozturk-tr.github.io (GitHub Pages). Türkçe; derleme adımı yok, düz HTML/CSS/JavaScript (`index.html`, `css/style.css`, `js/main.js`, `assets/`). Alt sayfalar: `chen-atolyesi/`, `laravel-vize/`, `python-vize/`, `PROJE/`.
 
 Kullanıcıya "Başkan" ya da Eyüp diye hitap et. Koyu tema, altın ve neon vurgular, glassmorphism ve terminal estetiğini sever.
 
@@ -9,6 +9,10 @@ Kullanıcıya "Başkan" ya da Eyüp diye hitap et. Koyu tema, altın ve neon vur
 - `portfolyo-tasarim-dili` — tasarım dili ve kod haritası. Siteye dokunan her işten önce oku.
 - `portfolyo-onizleme` — değişiklikten sonra ekran görüntüsü ve otomatik kontroller (`.claude/skills/portfolyo-onizleme/scripts/shoot.cjs`).
 - `portfolyo-yayin` — dal, PR, onaylı merge ve Pages yayını; `deploy.yml` kopyalama listesi tuzağı.
+
+## Araçlar
+
+- `python-vize/` sayfasındaki çıktılar, adım adım izler ve test cevapları elle yazılmaz: `.claude/araclar/python-vize-iz.py` sayfadaki kodları gerçek Python'da çalıştırıp `id="izler"` bloğuna yazar ve kodlu soruları doğrular. Sayfada bir kodu ya da soruyu değiştirince `python3 -I .claude/araclar/python-vize-iz.py --vt <vt.db>` ile yeniden üret. `vt.db` repoda yok (kişisel veri içerebilir); verilmezse veritabanı programlarının eski izleri korunur.
 
 ## Değişmez kurallar
 
