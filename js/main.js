@@ -564,6 +564,7 @@
         "  saat              Çanakkale'de saat ve güneşin konumu",
         "  neofetch          sistem bilgisi",
         "  cmatrix           Türkçe matrix yağmuru (durdurmak için bir tuşa bas)",
+        "  oyna              GitHub profilimde bota karşı Dörtlü oyna",
         "  iletisim          e-posta ve bağlantılar",
         "  temizle · cikis   ekranı temizle · terminali kapat (Esc)"
       ]),
@@ -626,6 +627,11 @@
         printLink("linkedin   ", "linkedin.com/in/eyüp-çalişkanöztürk", webURL(CONFIG.linkedin));
         printLink("instagram  ", "@eyupcalskanozturk", "https://instagram.com/eyupcalskanozturk");
       },
+      oyna: () => {
+        printAll(["GitHub profilimde bota karşı Dörtlü oynayabilirsin.", "Tahtada bir sütuna tıkla, açılan sayfada Create'e bas; bot birkaç saniyede cevap verir."], "accent");
+        printLink("tahta      ", `github.com/${CONFIG.github}`, `https://github.com/${CONFIG.github}`);
+        print("Bot 6 hamle ileriyi düşünür ama yenilebilir. Bol şans!", "dim");
+      },
       github: () => { window.open(`https://github.com/${CONFIG.github}`, "_blank", "noopener"); print("GitHub yeni sekmede açıldı."); },
       whoami: () => print("ziyaretci — ama bir mesajla müşteri olabilirsin → iletisim"),
       sudo: () => printAll(["[sudo] eyup için parola: ********", "sudo: Yetki reddedildi. Root erişimi için önce bir proje konuşalım → iletisim"], "err"),
@@ -633,7 +639,7 @@
       temizle: () => out.replaceChildren(),
       cikis: () => close()
     };
-    const ALIASES = { help: "yardim", "?": "yardim", about: "hakkimda", projects: "isler", projeler: "isler", contact: "iletisim", mail: "iletisim", clear: "temizle", cls: "temizle", exit: "cikis", quit: "cikis", sky: "gokyuzu", time: "saat", date: "saat", tarih: "saat", matrix: "cmatrix", dir: "ls" };
+    const ALIASES = { help: "yardim", "?": "yardim", about: "hakkimda", projects: "isler", projeler: "isler", contact: "iletisim", mail: "iletisim", clear: "temizle", cls: "temizle", exit: "cikis", quit: "cikis", sky: "gokyuzu", time: "saat", date: "saat", tarih: "saat", matrix: "cmatrix", dir: "ls", dortlu: "oyna", oyun: "oyna", play: "oyna", game: "oyna" };
 
     function run(raw) {
       const text = raw.trim();
