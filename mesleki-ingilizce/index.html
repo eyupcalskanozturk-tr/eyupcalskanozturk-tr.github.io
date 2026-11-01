@@ -1,0 +1,972 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mesleki İngilizce Vize</title>
+<meta name="description" content="Mesleki Yabancı Dil (İngilizce) vize hazırlığı: 3. ve 4. hafta sunumları cümle cümle Türkçe karşılıklarıyla, dokununca anlamı çıkan terimler, sesli okuma, cümle kalıpları, What is...? soruları, kelime kartları, çeviri pratiği ve test.">
+<meta name="theme-color" content="#0a0d12">
+<meta property="og:title" content="Mesleki İngilizce Vize · cümle cümle">
+<meta property="og:description" content="The System Unit ve Input konuları: her cümlenin Türkçesi, terim sözlüğü, sesli okuma, kelime kartları, çeviri pratiği ve test.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://eyupcalskanozturk-tr.github.io/mesleki-ingilizce/">
+<link rel="canonical" href="https://eyupcalskanozturk-tr.github.io/mesleki-ingilizce/">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,300..900;1,62..125,300..900&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Mesleki İngilizce vize. Okuma bölümleri, sözlük, kalıplar ve sorular id="veri" bloğundan çizilir.
+   Veriyi değiştirince .claude/araclar/ingilizce-dogrula.py ile kontrol et. */
+:root{
+  color-scheme:dark;
+  --bg:#0a0d12; --panel:#10151c; --glass:rgba(16,21,28,.74); --raise:rgba(255,255,255,.035);
+  --line:rgba(255,255,255,.085); --line-2:rgba(255,255,255,.16);
+  --ink:#e8ecf2; --soft:#d3d9e2; --muted:#a1abb9; --dim:#717c8c;
+  --gold:#e6b443; --gold-2:#f4d27e; --gold-soft:rgba(230,180,67,.12);
+  --mint:#5eeaa8; --mint-soft:rgba(94,234,168,.1);
+  --cyan:#71d0ff; --cyan-soft:rgba(113,208,255,.1);
+  --red:#ff7b86; --red-soft:rgba(255,123,134,.1);
+  --violet:#c4a7ff; --violet-soft:rgba(196,167,255,.1);
+  --term-bg:#06080b;
+  --f-head:"Archivo", system-ui, "Segoe UI", sans-serif;
+  --f-body:"Archivo", system-ui, "Segoe UI", sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Consolas, "Courier New", monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.62;
+  padding:0 max(16px,env(safe-area-inset-right,0px)) 56px max(16px,env(safe-area-inset-left,0px))}
+body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:radial-gradient(58rem 34rem at 92% -10%,rgba(230,180,67,.15),transparent 62%),
+             radial-gradient(44rem 30rem at -12% 28%,rgba(113,208,255,.08),transparent 60%),
+             radial-gradient(48rem 34rem at 62% 118%,rgba(94,234,168,.06),transparent 62%)}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.55;
+  background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:32px 32px;-webkit-mask-image:linear-gradient(#000,transparent 75%);mask-image:linear-gradient(#000,transparent 75%)}
+a{color:var(--gold-2);text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{color:var(--gold)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
+p{margin:0}
+code{font-family:var(--f-mono);font-size:.875em}
+.skip{position:absolute;left:12px;top:-60px;background:var(--gold);color:#16110a;padding:8px 14px;border-radius:8px;font-weight:700;z-index:20;text-decoration:none}
+.skip:focus{top:12px}
+
+header.top{max-width:1240px;margin:0 auto;padding:30px 0 24px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:28px;align-items:end}
+.crumb{font-family:var(--f-mono);font-size:12.5px;color:var(--dim);margin-bottom:16px;overflow-wrap:anywhere}
+.crumb a{color:var(--muted);text-decoration:none}
+.crumb a:hover{color:var(--gold)}
+h1{font-family:var(--f-head);font-weight:900;font-variation-settings:"wdth" 68;font-size:clamp(46px,7.6vw,100px);line-height:.88;letter-spacing:-.005em;margin:0;text-wrap:balance}
+h1 .vz{color:var(--gold)}
+h1 .cur{display:inline-block;width:.42em;height:.085em;margin-left:.06em;background:var(--gold);vertical-align:baseline}
+.lede{color:var(--soft);max-width:64ch;margin-top:18px;font-size:17px}
+.stats{display:flex;flex-wrap:wrap;gap:6px 18px;margin:18px 0 0;padding:0;list-style:none;font-family:var(--f-mono);font-size:12.5px;color:var(--dim)}
+.stats b{color:var(--ink);font-weight:500}
+.exam-card{background:var(--glass);-webkit-backdrop-filter:blur(18px) saturate(140%);backdrop-filter:blur(18px) saturate(140%);border:1px solid var(--line);border-radius:18px;padding:16px 18px 14px;min-width:230px;display:grid;gap:4px;box-shadow:0 20px 50px -30px rgba(0,0,0,.8)}
+.exam-card .lbl{font-family:var(--f-mono);font-size:11.5px;color:var(--dim)}
+.exam-card #gun{font-family:var(--f-head);font-weight:900;font-variation-settings:"wdth" 68;font-size:58px;line-height:.92;color:var(--gold);font-variant-numeric:tabular-nums}
+.exam-card small{color:var(--muted);font-size:13px;min-height:1.4em}
+.exam-card label{display:flex;align-items:center;gap:8px;margin-top:8px;font-family:var(--f-mono);font-size:12px;color:var(--dim)}
+.exam-card input{flex:1;min-width:0;font:inherit;font-size:13px;color:var(--ink);background:var(--term-bg);border:1px solid var(--line-2);border-radius:8px;padding:6px 8px;color-scheme:dark}
+
+.toolbar{max-width:1240px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;justify-content:space-between;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--muted)}
+.legend > span{display:inline-flex;align-items:center;gap:8px}
+.tool-btns{display:flex;flex-wrap:wrap;gap:8px}
+.toggle{font:inherit;font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:10px;padding:7px 12px 7px 8px;border-radius:999px;border:1px solid var(--line-2);background:var(--raise);color:var(--ink);cursor:pointer;min-height:40px}
+.toggle .sw{width:34px;height:20px;border-radius:999px;background:rgba(255,255,255,.12);position:relative;flex:none;transition:background .2s}
+.toggle .sw::after{content:"";position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:var(--muted);transition:transform .2s,background .2s}
+.toggle[aria-pressed="true"]{border-color:rgba(230,180,67,.5)}
+.toggle[aria-pressed="true"] .sw{background:var(--gold-soft)}
+.toggle[aria-pressed="true"] .sw::after{transform:translateX(14px);background:var(--gold)}
+.toggle small{font-family:var(--f-mono);font-size:11.5px;color:var(--dim);font-weight:400}
+
+.tag{display:inline-flex;align-items:center;gap:4px;font-family:var(--f-mono);font-size:11px;font-weight:500;line-height:1.5;padding:1px 8px;border-radius:999px;white-space:nowrap;vertical-align:middle;border:1px solid transparent}
+.tag.h{background:var(--gold-soft);color:var(--gold-2);border-color:rgba(230,180,67,.26)}
+.tag.ek{background:var(--cyan-soft);color:var(--cyan);border-color:rgba(113,208,255,.24)}
+.tag.on{background:var(--mint-soft);color:var(--mint);border-color:rgba(94,234,168,.26)}
+
+.layout{max-width:1240px;margin:24px auto 0;display:grid;grid-template-columns:240px minmax(0,1fr);gap:28px;align-items:start}
+nav.tree{position:sticky;top:16px;background:var(--glass);-webkit-backdrop-filter:blur(18px) saturate(140%);backdrop-filter:blur(18px) saturate(140%);border:1px solid var(--line);border-radius:18px;padding:12px 8px;max-height:calc(100vh - 32px);overflow:auto;font-size:14px}
+.tree-root{font-family:var(--f-mono);font-size:12px;color:var(--dim);margin:2px 10px 8px}
+nav.tree ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+nav.tree a{display:grid;grid-template-columns:16px minmax(0,1fr);gap:8px;align-items:baseline;padding:7px 10px;border-radius:10px;color:var(--ink);text-decoration:none}
+nav.tree a i{font-style:normal;font-family:var(--f-mono);font-size:12px;color:var(--dim)}
+nav.tree a b{display:block;font-family:var(--f-mono);font-weight:500;font-size:13.5px}
+nav.tree a small{display:block;color:var(--dim);font-size:12px;line-height:1.35;margin-top:1px}
+nav.tree a:hover{background:var(--raise)}
+nav.tree a.on{background:var(--gold-soft);color:var(--gold-2)}
+nav.tree a.on i,nav.tree a.on small{color:var(--gold)}
+nav.tree .sep{height:1px;background:var(--line);margin:8px 10px}
+
+main{display:flex;flex-direction:column;gap:22px;min-width:0}
+section.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:26px clamp(16px,3vw,36px) 30px;scroll-margin-top:16px;min-width:0;
+  box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 30px 70px -40px rgba(0,0,0,.7)}
+.path{font-family:var(--f-mono);font-size:13px;color:var(--dim);display:flex;flex-wrap:wrap;gap:2px 8px;align-items:baseline}
+.path b{color:var(--gold);font-weight:500;margin-left:-8px}
+.path .cmd{color:var(--mint)}
+section.card h2{font-family:var(--f-head);font-weight:800;font-variation-settings:"wdth" 76;font-size:clamp(28px,3.5vw,44px);line-height:1;margin:8px 0 12px;text-wrap:balance}
+section.card h2 .trb{display:block;font-size:.5em;font-weight:600;font-variation-settings:"wdth" 90;color:var(--muted);margin-top:8px}
+.prose{display:flex;flex-direction:column;gap:10px;max-width:72ch;color:var(--soft)}
+.prose b,.box b,.goal b{color:var(--ink)}
+.goal{background:var(--raise);border:1px solid var(--line);border-radius:12px;padding:12px 16px;font-size:15px;color:var(--muted);max-width:76ch}
+ol.tight,ul.tight{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.box{border-radius:12px;padding:12px 16px;font-size:15px;display:flex;flex-direction:column;gap:6px;margin:12px 0;border:1px solid;color:var(--soft);min-width:0}
+.box > b:first-child{font-family:var(--f-mono);font-size:12px;font-weight:500}
+.box.ezber{background:var(--gold-soft);border-color:rgba(230,180,67,.28)}
+.box.ezber > b:first-child{color:var(--gold)}
+.box.ipucu{background:var(--mint-soft);border-color:rgba(94,234,168,.24)}
+.box.ipucu > b:first-child{color:var(--mint)}
+.box.not{background:var(--violet-soft);border-color:rgba(196,167,255,.24)}
+.box.not > b:first-child{color:var(--violet)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0 14px;margin:4px 0}
+.grid2 > *{min-width:0}
+
+/* Ortak düğmeler */
+.btn{font:inherit;font-size:14px;font-weight:600;padding:7px 14px;border-radius:10px;border:1px solid var(--line-2);background:rgba(255,255,255,.04);color:var(--ink);cursor:pointer;min-height:40px;display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
+.btn:hover:not(:disabled){border-color:rgba(230,180,67,.55);color:var(--gold-2)}
+.btn.primary{background:var(--gold);border-color:var(--gold);color:#17110a}
+.btn.primary:hover:not(:disabled){background:var(--gold-2);border-color:var(--gold-2);color:#17110a}
+.btn:disabled{opacity:.4;cursor:default}
+.chip{font-family:var(--f-mono);font-size:12px;color:var(--muted);background:transparent;border:1px solid var(--line-2);border-radius:999px;padding:3px 11px;cursor:pointer;min-height:32px}
+.chip:hover{color:var(--ink);border-color:rgba(255,255,255,.3)}
+.chip.on,.chip[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#17110a}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.ses{font:inherit;display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:12px;color:var(--cyan);background:var(--cyan-soft);border:1px solid rgba(113,208,255,.25);border-radius:999px;padding:3px 10px 3px 8px;cursor:pointer;min-height:30px;vertical-align:middle}
+.ses:hover{border-color:var(--cyan)}
+.ses.yok{display:none}
+.ses svg{width:15px;height:15px;flex:none}
+.ses.ikon{padding:0;width:32px;height:32px;justify-content:center}
+
+/* Okuma */
+.bolum{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);scroll-margin-top:16px}
+.bolum > h3{font-family:var(--f-head);font-weight:750;font-variation-settings:"wdth" 86;font-size:23px;line-height:1.2;margin:0 0 10px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+.bolum > h3 .no{font-family:var(--f-mono);font-size:13px;font-weight:500;color:var(--gold)}
+.bolum > h3 .trb{font-family:var(--f-body);font-size:15px;font-weight:500;color:var(--muted)}
+.bolum > h3 .ses{margin-left:auto}
+.ozet{background:var(--violet-soft);border:1px solid rgba(196,167,255,.22);border-radius:12px;padding:10px 14px;font-size:15px;color:var(--soft);max-width:80ch;margin:0 0 12px}
+.ozet b{display:block;font-family:var(--f-mono);font-size:12px;font-weight:500;color:var(--violet);margin-bottom:2px}
+.para{margin:14px 0 0;display:flex;flex-direction:column;gap:2px;max-width:86ch}
+.para > h4{font-family:var(--f-head);font-weight:700;font-variation-settings:"wdth" 90;font-size:17px;margin:12px 0 4px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+.para > h4 .trb{font-family:var(--f-body);font-size:14px;font-weight:500;color:var(--muted)}
+.cumle{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;padding:7px 10px;border-radius:10px;border:1px solid transparent}
+.cumle:hover{background:rgba(255,255,255,.02);border-color:var(--line)}
+.cumle .en{font-size:17px;line-height:1.65;color:var(--ink)}
+.cumle .cb{display:flex;gap:6px;align-items:flex-start;padding-top:2px}
+.cumle .tr{grid-column:1/-1;color:var(--gold-2);font-size:15.5px;line-height:1.55;border-left:2px solid var(--gold);padding:2px 0 2px 12px;margin:4px 0 2px}
+.cumle.ek .en{color:var(--soft);font-style:italic}
+.trb-btn{font-family:var(--f-mono);font-size:12px;font-weight:500;color:var(--gold-2);background:var(--gold-soft);border:1px solid rgba(230,180,67,.3);border-radius:8px;min-width:40px;min-height:32px;cursor:pointer}
+.trb-btn[aria-expanded="true"]{background:var(--gold);color:#17110a;border-color:var(--gold)}
+.terim{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;text-decoration:underline dotted;text-decoration-color:rgba(230,180,67,.75);text-underline-offset:4px;text-decoration-thickness:1.5px;border-radius:3px}
+.terim:hover,.terim[aria-expanded="true"]{color:var(--gold-2);background:var(--gold-soft)}
+.ornek-terim{color:var(--ink);text-decoration:underline dotted;text-decoration-color:rgba(230,180,67,.75);text-underline-offset:4px;text-decoration-thickness:1.5px}
+.mini-tr{font-family:var(--f-mono);font-size:11px;color:var(--gold-2);background:var(--gold-soft);border:1px solid rgba(230,180,67,.3);border-radius:6px;padding:0 6px}
+
+/* Terim kutusu */
+#pop{position:absolute;z-index:30;width:min(320px,calc(100vw - 32px));background:rgba(16,21,28,.96);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid rgba(230,180,67,.45);border-radius:14px;padding:12px 14px;box-shadow:0 24px 60px -20px rgba(0,0,0,.85)}
+#pop .p-en{display:flex;align-items:center;gap:10px;justify-content:space-between}
+#pop .p-en b{font-size:19px;font-weight:700;color:var(--gold-2)}
+#pop .p-tr{font-size:16px;margin-top:4px;color:var(--ink)}
+#pop .p-alt{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:center}
+
+/* Kalıplar */
+.kalip{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:12px 0;background:rgba(255,255,255,.015)}
+.kalip > b{font-family:var(--f-mono);font-size:14px;font-weight:500;color:var(--gold-2)}
+.kalip > p{color:var(--soft);font-size:15px;margin:4px 0 8px;max-width:76ch}
+.kalip ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.kalip li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;padding:8px 10px;border-radius:10px;background:var(--raise)}
+.kalip li .en{font-size:16px}
+.kalip li .tr{grid-column:1/-1;color:var(--gold-2);font-size:14.5px}
+
+/* Kelime kartları */
+.kart-alan{display:grid;gap:12px;max-width:620px;margin:12px 0}
+.kart{position:relative;min-height:220px;border-radius:18px;cursor:pointer;perspective:1200px;outline-offset:4px}
+.kart .yuz{position:absolute;inset:0;border-radius:18px;border:1px solid var(--line-2);padding:18px 20px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;text-align:center;-webkit-backface-visibility:hidden;backface-visibility:hidden;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.kart .on-yuz{background:linear-gradient(160deg,rgba(230,180,67,.16),rgba(16,21,28,.9) 60%)}
+.kart .arka{background:linear-gradient(160deg,rgba(94,234,168,.12),rgba(16,21,28,.92) 60%);transform:rotateY(180deg)}
+.kart.cevrik .on-yuz{transform:rotateY(-180deg)}
+.kart.cevrik .arka{transform:rotateY(0)}
+.kart .kh{position:absolute;top:12px;left:16px;font-family:var(--f-mono);font-size:11.5px;color:var(--dim)}
+.kart .k-en{font-family:var(--f-head);font-weight:800;font-variation-settings:"wdth" 80;font-size:clamp(28px,5vw,40px);line-height:1.05;color:var(--ink)}
+.kart .k-tr{font-family:var(--f-head);font-weight:750;font-variation-settings:"wdth" 86;font-size:clamp(22px,4vw,30px);color:var(--mint)}
+.kart .k-ornek{font-size:14.5px;color:var(--soft);max-width:52ch}
+.kart .k-ornek mark{background:var(--gold-soft);color:var(--gold-2);border-radius:4px;padding:0 3px}
+.kart .k-ipucu{position:absolute;bottom:10px;font-family:var(--f-mono);font-size:11px;color:var(--dim)}
+.kart-btn{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.kart-ilerleme{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
+.kart-ilerleme .bar{flex:1 1 160px;height:6px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}
+.kart-ilerleme .bar i{display:block;height:100%;width:0;background:var(--mint);transition:width .3s}
+.mini{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:7px;padding:3px 9px;cursor:pointer;min-height:28px}
+.mini:hover{color:var(--gold-2);border-color:rgba(230,180,67,.4)}
+
+/* Sözlük */
+.sozluk-ust{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin:18px 0 8px}
+.sozluk-ust input{flex:1 1 240px;min-width:0;font:inherit;font-size:15px;color:var(--ink);background:var(--term-bg);border:1px solid var(--line-2);border-radius:10px;padding:8px 12px}
+.tbl{overflow:auto;max-height:520px;border:1px solid var(--line);border-radius:12px;background:rgba(0,0,0,.18)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:7px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{position:sticky;top:0;font-family:var(--f-mono);font-size:11.5px;font-weight:500;color:var(--dim);background:#121821;z-index:1}
+tr:last-child td{border-bottom:0}
+td.s-en{font-weight:600;color:var(--ink)}
+td.s-en .yildiz{color:var(--gold);margin-left:4px}
+td.s-h{font-family:var(--f-mono);font-size:12px;color:var(--dim);white-space:nowrap}
+
+/* Soru-cevap */
+details.oq{border:1px solid var(--line);border-radius:12px;margin:8px 0;background:rgba(255,255,255,.015)}
+details.oq > summary{cursor:pointer;padding:12px 14px;list-style:none;display:flex;gap:10px;align-items:baseline}
+details.oq > summary::-webkit-details-marker{display:none}
+details.oq > summary::before{content:"+";font-family:var(--f-mono);color:var(--gold);width:14px;flex:none}
+details.oq[open] > summary::before{content:"−"}
+details.oq summary .q-en{font-weight:600;font-size:16.5px}
+details.oq summary .q-tr{display:block;font-size:13.5px;color:var(--muted);font-weight:400}
+details.oq summary .tag{margin-left:auto;flex:none}
+details.oq .ans{padding:0 14px 14px 38px;display:flex;flex-direction:column;gap:8px}
+details.oq .ans .en{font-size:16px;color:var(--ink)}
+details.oq .ans .tr{color:var(--gold-2);font-size:15px;border-left:2px solid var(--gold);padding-left:12px}
+
+/* Çeviri pratiği */
+.ceviri-alan{display:grid;gap:10px;max-width:760px;margin-top:12px;border:1px solid rgba(230,180,67,.22);border-radius:16px;padding:16px;background:linear-gradient(180deg,rgba(230,180,67,.06),rgba(0,0,0,.1) 70%)}
+.c-en{font-size:19px;line-height:1.6;color:var(--ink)}
+.c-ust{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;font-family:var(--f-mono);font-size:12px;color:var(--dim)}
+.ceviri-alan textarea{width:100%;min-height:96px;resize:vertical;background:var(--term-bg);color:var(--ink);border:1px solid var(--line-2);border-radius:10px;padding:10px 12px;font:inherit;font-size:16px;line-height:1.5}
+.c-model{border-left:2px solid var(--gold);padding:4px 0 4px 12px;color:var(--gold-2);font-size:16px}
+.c-btn{display:flex;flex-wrap:wrap;gap:8px}
+.c-skor{font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+
+/* Test */
+.qbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin:14px 0}
+.score{font-family:var(--f-head);font-weight:850;font-variation-settings:"wdth" 72;font-size:34px;line-height:1;font-variant-numeric:tabular-nums;color:var(--gold)}
+.score small{font-family:var(--f-body);font-size:13px;color:var(--muted);font-weight:400}
+.test-turler{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.q{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:10px 0;background:rgba(255,255,255,.015)}
+.q .qt{display:flex;gap:10px;align-items:baseline}
+.q .qt .n{font-family:var(--f-mono);color:var(--dim);flex:none}
+.q .qt .metin{font-weight:600;font-size:16.5px}
+.q .qt .metin .bosluk{display:inline-block;min-width:4.5em;border-bottom:2px solid var(--gold);margin:0 2px}
+.q .qt .tag{margin-left:auto;flex:none}
+.q .q-tr{margin-top:6px;color:var(--gold-2);font-size:14.5px;border-left:2px solid var(--gold);padding-left:10px}
+.q .q-ara{display:flex;gap:6px;margin-top:8px}
+.q .opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
+.q .opts button{font:inherit;font-size:15px;text-align:left;padding:9px 12px;border-radius:10px;border:1px solid var(--line-2);background:rgba(255,255,255,.03);color:var(--ink);cursor:pointer;min-width:0;overflow-wrap:anywhere;display:flex;gap:8px;align-items:flex-start;min-height:44px}
+.q .opts button .k{font-family:var(--f-mono);color:var(--dim);flex:none}
+.q .opts button:hover:not(:disabled){border-color:rgba(230,180,67,.55)}
+.q .opts button.right{background:var(--mint-soft);border-color:var(--mint);color:var(--mint)}
+.q .opts button.wrong{background:var(--red-soft);border-color:var(--red);color:var(--red)}
+.q .opts button:disabled{cursor:default}
+.q .why{margin-top:10px;font-size:14.5px;color:var(--muted)}
+.q .why b{color:var(--ink)}
+#quiz .bos{color:var(--muted);padding:12px 0}
+
+/* Plan */
+.plan{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:14px}
+.day{border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:6px;background:rgba(255,255,255,.02)}
+.day .d{font-family:var(--f-head);font-weight:800;font-variation-settings:"wdth" 80;font-size:19px;line-height:1.15}
+.day .d small{display:block;font-family:var(--f-mono);font-size:11.5px;color:var(--dim);font-weight:400;margin-top:3px}
+.day.today{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold) inset}
+.day.today .d small{color:var(--gold)}
+.day.exam-day{background:var(--gold-soft);border-color:rgba(230,180,67,.45)}
+.day ul{margin:0;padding-left:18px;font-size:14px;color:var(--soft);display:flex;flex-direction:column;gap:3px}
+footer.foot{margin-top:28px;color:var(--dim);font-size:13px;border-top:1px solid var(--line);padding-top:14px}
+
+@media (max-width:900px){
+  header.top{grid-template-columns:minmax(0,1fr);gap:18px;padding-top:22px}
+  .exam-card{grid-template-columns:auto minmax(0,1fr);align-items:center;column-gap:14px}
+  .exam-card .lbl,.exam-card label{grid-column:1/-1}
+  .exam-card #gun{font-size:48px}
+  .layout{grid-template-columns:minmax(0,1fr);gap:14px;margin-top:14px}
+  nav.tree{position:static;max-height:none;padding:6px;border-radius:14px}
+  .tree-root,nav.tree .sep{display:none}
+  nav.tree ol{flex-direction:row;overflow-x:auto;gap:4px;scrollbar-width:thin}
+  nav.tree li{flex:none}
+  nav.tree a{white-space:nowrap;grid-template-columns:auto auto;gap:6px}
+  nav.tree a small{display:none}
+}
+@media (max-width:640px){
+  body{font-size:15.5px}
+  section.card{border-radius:16px;padding:20px 14px 24px}
+  .cumle{padding:7px 4px;grid-template-columns:minmax(0,1fr)}
+  .cumle .cb{order:2}
+  .cumle .tr{order:3}
+  .cumle .en{font-size:16.5px}
+  .bolum > h3 .ses{margin-left:0}
+  details.oq .ans{padding-left:14px}
+  .q{padding:12px}
+  .q .opts{grid-template-columns:minmax(0,1fr)}
+  .kart-btn{grid-template-columns:1fr 1fr}
+  .kart-btn #k-cevir{grid-column:1/-1;order:-1}
+}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+@media print{
+  body{background:#fff;color:#000;padding:0;font-size:11pt}
+  body::before,body::after,nav.tree,.toolbar,.exam-card,.cb,.ses,#kelimeler,#ceviri,#test,.skip,#pop{display:none!important}
+  .layout{display:block;margin:0}
+  section.card,.ozet,.kalip,details.oq{background:#fff!important;border-color:#bbb!important;box-shadow:none!important;color:#000!important}
+  .cumle .tr{display:block!important;color:#333!important}
+  .cumle .en,.prose,.ozet,.kalip li .tr,details.oq .ans .tr{color:#000!important}
+  h1,h1 .vz{color:#000}
+  .terim{text-decoration:none;color:#000}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#icerik">İçeriğe geç</a>
+<header class="top">
+  <div>
+    <p class="crumb"><a href="../">eyupcalskanozturk-tr.github.io</a> / mesleki-ingilizce / Mesleki Yabancı Dil</p>
+    <h1>Mesleki İngilizce <span class="vz">vize</span><span class="cur" aria-hidden="true"></span></h1>
+    <p class="lede">Mesleki Yabancı Dil dersinin 3. ve 4. hafta sunumları, cümle cümle. Her İngilizce cümlenin yanında <b>TR</b> düğmesi var: önce kendin anlamaya çalış, sonra Türkçesine bak. Altı noktalı kelimelere dokununca anlamı çıkar; <b>dinle</b> düğmesi doğru okunuşunu seslendirir. Sonunda sınav tipi sorular, kelime kartları, çeviri pratiği ve test var.</p>
+    <ul class="stats">
+      <li><b data-say="cumle">–</b> cümle</li>
+      <li><b data-say="terim">–</b> terim</li>
+      <li><b data-say="soru">–</b> “What is…?” sorusu</li>
+      <li><b data-say="test">–</b> test sorusu</li>
+    </ul>
+  </div>
+  <aside class="exam-card" aria-labelledby="sinav-lbl">
+    <span class="lbl" id="sinav-lbl">sınav günü</span>
+    <b id="gun" aria-live="polite">–</b>
+    <small id="gun-etiket">tarihi gir, geri sayım başlasın</small>
+    <label>tarih <input type="date" id="sinav-tarih"></label>
+  </aside>
+</header>
+
+<div class="toolbar">
+  <div class="legend">
+    <span><span class="ornek-terim" lang="en">motherboard</span> dokun, anlamı çıksın</span>
+    <span><span class="mini-tr">TR</span> cümlenin Türkçesi</span>
+    <span><span class="tag ek">ek</span> sunumda yalnız başlık var, açıklama ek</span>
+  </div>
+  <div class="tool-btns">
+    <button class="toggle" id="tr-hepsi" type="button" aria-pressed="false"><span class="sw" aria-hidden="true"></span>Bütün Türkçeler <small>göster</small></button>
+    <button class="toggle" id="ses-yavas" type="button" aria-pressed="false" hidden><span class="sw" aria-hidden="true"></span>Yavaş oku <small>ses</small></button>
+  </div>
+</div>
+
+<div class="layout">
+<nav class="tree" aria-label="İçindekiler">
+  <p class="tree-root" aria-hidden="true">▾ MeslekiYabanciDil</p>
+  <ol>
+    <li><a href="#nasil"><i>★</i><span><b>Nasıl çalışılır</b><small>önce burayı oku</small></span></a></li>
+    <li><a href="#h3"><i>▸</i><span><b>3. hafta</b><small>The System Unit</small></span></a></li>
+    <li><a href="#h4"><i>▸</i><span><b>4. hafta</b><small>Input</small></span></a></li>
+    <li class="sep" aria-hidden="true"></li>
+    <li><a href="#kaliplar"><i>#</i><span><b>Cümle kalıpları</b><small>cümleyi çözmenin yolu</small></span></a></li>
+    <li><a href="#kelimeler"><i>◆</i><span><b>Kelime kartları</b><small>ve sözlük</small></span></a></li>
+    <li><a href="#sorular"><i>?</i><span><b>What is…?</b><small>tanım soruları</small></span></a></li>
+    <li><a href="#ceviri"><i>✎</i><span><b>Çeviri pratiği</b><small>cümle çevir, kontrol et</small></span></a></li>
+    <li><a href="#test"><i>✓</i><span><b>Test</b><small>4 soru tipi</small></span></a></li>
+    <li><a href="#plan"><i>→</i><span><b>Çalışma planı</b><small>4 gün + sınav sabahı</small></span></a></li>
+  </ol>
+</nav>
+
+<main id="icerik">
+<noscript><div class="box not"><b>› JavaScript kapalı</b><p>Bu sayfanın metinleri ve soruları JavaScript ile çiziliyor; lütfen açık bir tarayıcıda dene.</p></div></noscript>
+
+<section class="card" id="nasil" aria-labelledby="nasil-t">
+  <div class="path"><span>~/MeslekiYabanciDil</span><span class="cmd">$ cat oku-beni.txt</span></div>
+  <h2 id="nasil-t">Nasıl çalışılır</h2>
+  <div class="prose">
+    <p>Drive klasöründe iki sunum var: <b>3. hafta · The System Unit</b> (bilgisayar kasası ve içindekiler) ve <b>4. hafta · Input</b> (giriş aygıtları). İkisi de bir bilgisayar ders kitabından alınmış İngilizce paragraflar. Sınavın biçimini bilmiyoruz; bu sayfa üç olası soru tipine hazırlıyor: terimin anlamı, “What is …?” tanım soruları ve cümle çevirisi.</p>
+  </div>
+  <div class="grid2">
+    <div class="box ipucu"><b>✓ her bölümde</b><ol class="tight">
+      <li>Mor kutudaki Türkçe özeti oku; konuyu kafanda kur.</li>
+      <li>İngilizce cümleyi oku. Altı noktalı kelimeye dokun, anlamına bak.</li>
+      <li>Cümleyi kendin anlamaya çalış, sonra <b>TR</b> ile kontrol et.</li>
+      <li><b>dinle</b> ile sesli dinle, cümleyi bir kez de sen yüksek sesle oku.</li>
+    </ol></div>
+    <div class="box ezber"><b># bitirince</b><ol class="tight">
+      <li><b>Cümle kalıpları</b>: uzun cümleleri parçalara ayırmayı öğren.</li>
+      <li><b>Kelime kartları</b>: ★ işaretli temel terimlerden başla.</li>
+      <li><b>What is…?</b>: cevabı önce kendin söyle, sonra aç.</li>
+      <li><b>Çeviri pratiği</b> ve <b>Test</b>: yanlışlarını tekrar et.</li>
+    </ol></div>
+  </div>
+  <div class="box not"><b>› sesli okuma</b><p>Ses, tarayıcının kendi İngilizce sesiyle çalar; internet gerekmez. Telefonda sessiz modu kapat. Hiç ses gelmiyorsa tarayıcıda İngilizce ses paketi yüklü olmayabilir; Chrome ve Safari'de genellikle hazır gelir.</p></div>
+</section>
+
+<!-- ======================= 3. HAFTA ======================= -->
+<section class="card week" id="h3" aria-labelledby="h3-t">
+  <div class="path"><span>~/MeslekiYabanciDil/</span><b>3. hafta.pptx</b></div>
+  <h2 id="h3-t"><span lang="en">The System Unit</span><span class="trb">Sistem birimi ve içindekiler</span></h2>
+  <p class="goal" data-hedef="3"></p>
+  <div class="okuma" data-hafta="3"></div>
+</section>
+
+<!-- ======================= 4. HAFTA ======================= -->
+<section class="card week" id="h4" aria-labelledby="h4-t">
+  <div class="path"><span>~/MeslekiYabanciDil/</span><b>4. hafta.pptx</b></div>
+  <h2 id="h4-t"><span lang="en">Input</span><span class="trb">Girdi ve giriş aygıtları</span></h2>
+  <p class="goal" data-hedef="4"></p>
+  <div class="okuma" data-hafta="4"></div>
+</section>
+
+<!-- ======================= KALIPLAR ======================= -->
+<section class="card" id="kaliplar" aria-labelledby="kaliplar-t">
+  <div class="path"><span>~/MeslekiYabanciDil/</span><b>kaliplar.md</b></div>
+  <h2 id="kaliplar-t">Cümle kalıpları<span class="trb">Uzun cümleleri parçalara ayırmanın yolu</span></h2>
+  <div class="prose"><p>Sunumlardaki cümleler aynı birkaç kalıbı tekrar tekrar kullanıyor. Kalıbı tanıyınca uzun bir cümle de çözülüyor. Örneklerin hepsi sunumlardan.</p></div>
+  <div id="kalip-liste"></div>
+</section>
+
+<!-- ======================= KELİMELER ======================= -->
+<section class="card" id="kelimeler" aria-labelledby="kelimeler-t">
+  <div class="path"><span>~/MeslekiYabanciDil/</span><b>kartlar</b></div>
+  <h2 id="kelimeler-t">Kelime kartları<span class="trb">Karta dokun ya da boşluk tuşuna bas: arkasında Türkçesi ve sunumdaki cümle var</span></h2>
+  <div class="chips" id="kart-filtre" role="group" aria-label="Deste"></div>
+  <div class="kart-alan">
+    <div class="kart" id="kart" tabindex="0" role="button" aria-label="Kartı çevir">
+      <div class="yuz on-yuz"><span class="kh" id="kart-kh"></span><b class="k-en" id="kart-en" lang="en"></b><span id="kart-ses"></span><span class="k-ipucu">çevirmek için dokun · boşluk</span></div>
+      <div class="yuz arka" aria-live="polite"><b class="k-tr" id="kart-tr"></b><p class="k-ornek" id="kart-ornek" lang="en"></p></div>
+    </div>
+    <div class="kart-btn">
+      <button class="btn" id="k-tekrar" type="button">↺ Tekrar sor</button>
+      <button class="btn" id="k-cevir" type="button">Çevir</button>
+      <button class="btn primary" id="k-bildim" type="button">✓ Biliyorum</button>
+    </div>
+    <div class="kart-ilerleme"><span id="kart-sayac">–</span><span class="bar" aria-hidden="true"><i id="kart-bar"></i></span><button class="mini" id="k-sifirla" type="button">ilerlemeyi sıfırla</button></div>
+  </div>
+  <div class="sozluk-ust">
+    <label for="sozluk-ara" class="mono" style="font-family:var(--f-mono);font-size:12px;color:var(--dim)">sözlükte ara</label>
+    <input id="sozluk-ara" type="search" placeholder="İngilizce ya da Türkçe yaz: port, bellek…" autocomplete="off">
+    <span id="sozluk-say" style="font-family:var(--f-mono);font-size:12px;color:var(--dim)"></span>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>İngilizce</th><th>Türkçe</th><th>Hafta</th><th><span hidden>Dinle</span></th></tr></thead>
+    <tbody id="sozluk-liste"></tbody>
+  </table></div>
+</section>
+
+<!-- ======================= WHAT IS ======================= -->
+<section class="card" id="sorular" aria-labelledby="sorular-t">
+  <div class="path"><span>~/MeslekiYabanciDil/</span><b>sorular.txt</b></div>
+  <h2 id="sorular-t">What is…? soruları<span class="trb">Cevaplar sunumdaki cümlelerin aynısı; sınavda bu cümleleri yazabilmek yeter</span></h2>
+  <div class="prose"><p>Soruyu oku, cevabı önce kendin söyle ya da kâğıda yaz, sonra aç. İngilizce cevabın altında Türkçesi var.</p></div>
+  <div class="chips" id="soru-filtre" role="group" aria-label="Hafta filtresi" style="margin-top:12px"></div>
+  <div id="soru-liste"></div>
+</section>
+
+<!-- ======================= ÇEVİRİ ======================= -->
+<section class="card" id="ceviri" aria-labelledby="ceviri-t">
+  <div class="path"><span>~/MeslekiYabanciDil/</span><b>ceviri</b></div>
+  <h2 id="ceviri-t">Çeviri pratiği<span class="trb">Cümleyi Türkçeye çevir, sonra benimkiyle karşılaştır</span></h2>
+  <div class="prose"><p>Çeviri birebir aynı olmak zorunda değil; anlamı doğru verdiysen “Anladım” de. “Zorlandım” dediğin cümleler daha sık karşına çıkar. Sayılar yalnız bu tarayıcıda saklanır.</p></div>
+  <div class="ceviri-alan">
+    <div class="c-ust"><div class="chips" id="c-filtre" role="group" aria-label="Hafta filtresi"></div><span id="c-kaynak"></span></div>
+    <p class="c-en" id="c-en" lang="en"></p>
+    <div><span id="c-ses"></span></div>
+    <label for="c-giris" style="font-family:var(--f-mono);font-size:12px;color:var(--dim)">senin çevirin</label>
+    <textarea id="c-giris" placeholder="Türkçesini buraya yaz…" spellcheck="false"></textarea>
+    <div class="c-btn"><button class="btn primary" id="c-goster" type="button">Çeviriyi göster</button><button class="btn" id="c-sonraki" type="button">Sonraki cümle →</button></div>
+    <div id="c-model" hidden>
+      <p class="c-model" id="c-model-tr"></p>
+      <div class="c-btn" style="margin-top:8px"><button class="btn" id="c-anladim" type="button">✓ Anladım</button><button class="btn" id="c-zor" type="button">↺ Zorlandım</button></div>
+    </div>
+    <p class="c-skor" id="c-skor"></p>
+  </div>
+</section>
+
+<!-- ======================= TEST ======================= -->
+<section class="card" id="test" aria-labelledby="test-t">
+  <div class="path"><span>~/MeslekiYabanciDil/</span><b>test</b><span class="cmd">$ başla</span></div>
+  <h2 id="test-t">Test<span class="trb">Kelime, boşluk doldurma, doğru-yanlış ve tanım soruları</span></h2>
+  <div class="prose"><p>Bir şıkka tıkla; doğru cevap ve kısa açıklaması hemen altında çıkar. Soruyu anlamadıysan <b>TR</b> düğmesiyle Türkçesine bak. Kelime soruları her karıştırmada sözlükten yeniden seçilir.</p></div>
+  <div class="test-turler chips" id="test-tur" role="group" aria-label="Soru tipi"></div>
+  <div class="qbar">
+    <div class="score" id="score" aria-live="polite">0 / 0 <small>doğru</small></div>
+    <div class="chips" id="test-hafta" role="group" aria-label="Hafta filtresi"></div>
+    <button class="btn" id="reset" type="button">Sıfırla ve karıştır</button>
+  </div>
+  <div id="quiz"></div>
+</section>
+
+<!-- ======================= PLAN ======================= -->
+<section class="card" id="plan" aria-labelledby="plan-t">
+  <div class="path"><span>~/MeslekiYabanciDil/</span><b>plan.txt</b></div>
+  <h2 id="plan-t">Çalışma planı</h2>
+  <div class="prose"><p>Dört gün ve sınav sabahı. Üstteki kutuya sınav tarihini girersen her güne tarih yazılır ve bugün işaretlenir; tarih yalnız bu tarayıcıda saklanır.</p></div>
+  <div class="plan" id="plan-gunler">
+    <div class="day" data-once="4"><div class="d">1. gün<small data-etiket="3. hafta, ilk yarı">3. hafta, ilk yarı</small></div><ul><li>3.1–3.6: kasa, anakart, işlemci, veri, bellek, RAM</li><li>Her bölümde özet, sonra cümleler</li><li>Kartlarda ★ temel, 3. hafta</li></ul></div>
+    <div class="day" data-once="3"><div class="d">2. gün<small data-etiket="3. hafta, ikinci yarı">3. hafta, ikinci yarı</small></div><ul><li>3.7–3.11: önbellek, yuvalar, portlar, güç kaynağı</li><li>Cümle kalıpları bölümünün tamamı</li><li>What is…? 3. hafta</li></ul></div>
+    <div class="day" data-once="2"><div class="d">3. gün<small data-etiket="4. hafta">4. hafta</small></div><ul><li>4.1–4.9: giriş aygıtları</li><li>Kartlarda 4. hafta</li><li>What is…? 4. hafta</li></ul></div>
+    <div class="day" data-once="1"><div class="d">4. gün<small data-etiket="tekrar">tekrar</small></div><ul><li>Çeviri pratiği: 20 cümle</li><li>Testin dört tipi, sonra Yanlışlarım</li><li>Kartlarda bilmediklerim</li></ul></div>
+    <div class="day exam-day" data-once="0"><div class="d">Sınav sabahı<small data-etiket="son bakış">son bakış</small></div><ul><li>What is…? cevaplarını sesli oku</li><li>Sayılar: 8 bit, 256, 127, 6–8 USB, AC → DC</li><li>Bölüm özetleri</li></ul></div>
+  </div>
+</section>
+
+<footer class="foot"><a href="../">← Eyüp Çalışkanöztürk</a> · Mesleki Yabancı Dil dersinin 3. ve 4. hafta sunumlarından hazırlanmış öğrenci çalışma notu. İngilizce metinler sunumlardan birebir alındı; sunumdaki şekil numaraları (Figure 4-1 vb.) kaynak kitaba aittir. Türkçe karşılıklar, özetler ve “ek” işaretli açıklamalar çalışma kolaylığı için yazıldı.</footer>
+</main>
+</div>
+
+<div id="pop" role="dialog" aria-label="Terim" hidden>
+  <div class="p-en"><b id="pop-en" lang="en"></b><span id="pop-ses"></span></div>
+  <p class="p-tr" id="pop-tr"></p>
+  <div class="p-alt"><span class="tag h" id="pop-h"></span><span class="tag on" id="pop-yildiz" hidden>★ temel terim</span><button class="mini" id="pop-kapat" type="button">kapat</button></div>
+</div>
+<script type="application/json" id="veri">{"haftalar":[{"no":3,"en":"The System Unit","tr":"Sistem birimi ve içindekiler","dosya":"3. hafta.pptx","hedef":"Bilgisayar kasasının içindeki parçaları İngilizce adlarıyla tanımak ve \"X is a Y that ...\" biçimindeki tanım cümlelerini Türkçeye çevirebilmek.","bolumler":[{"id":"b3-1","en":"The System Unit","tr":"Sistem birimi (kasa)","ozet":"Sistem birimi, veriyi işleyen elektronik parçaları içinde taşıyan ve onları koruyan kasadır. Klavye, fare, yazıcı gibi aygıtlar kasanın dışında durur ve kabloyla portlara takılır. Adaptör kartları (ses kartı, ekran kartı) anakarta yeni bağlantı ve işlev ekler.","p":[[["Whether you are a home user or a business user, you most likely will purchase a new computer or upgrade an existing computer at some time in the future.","İster ev kullanıcısı ister iş kullanıcısı olun, büyük olasılıkla ileride bir gün yeni bir bilgisayar satın alacak ya da mevcut bir bilgisayarı yükselteceksiniz."],["Thus, you should understand the purpose of each component in a computer.","Bu nedenle bir bilgisayardaki her bileşenin amacını anlamalısınız."],["As Chapter 1 discussed, a computer includes devices used for input, processing, output, storage, and communications.","1. bölümde anlatıldığı gibi bir bilgisayar; giriş, işleme, çıkış, depolama ve iletişim için kullanılan aygıtlar içerir."],["Many of these components are part of the system unit.","Bu bileşenlerin çoğu sistem biriminin parçasıdır."]],[["The system unit is a case that contains electronic components of the computer used to process data.","Sistem birimi, bilgisayarın veri işlemek için kullanılan elektronik bileşenlerini içeren bir kasadır."],["System units are available in a variety of shapes and sizes.","Sistem birimleri çeşitli şekil ve boyutlarda bulunur."],["The case of the system unit is made of metal or plastic and protects the internal electronic components from damage.","Sistem biriminin kasası metal ya da plastikten yapılır ve içteki elektronik bileşenleri hasara karşı korur."],["All computers and mobile devices have a system unit (Figure 4-1).","Bütün bilgisayarların ve mobil aygıtların bir sistem birimi vardır (Şekil 4-1)."]],[["On desktop personal computers, the electronic components and most storage devices are part of the system unit.","Masaüstü kişisel bilgisayarlarda elektronik bileşenler ve depolama aygıtlarının çoğu sistem biriminin parçasıdır."],["Other devices, such as the keyboard, mouse, microphone, monitor, printer, USB flash drive, scanner, Web cam, and speakers, normally occupy space outside the system unit.","Klavye, fare, mikrofon, monitör, yazıcı, USB bellek, tarayıcı, web kamerası ve hoparlör gibi diğer aygıtlar normalde sistem biriminin dışında yer kaplar."],["An all-in-one desktop personal computer is an exception, which houses the monitor and the system unit in the same case.","Hepsi bir arada masaüstü bilgisayar bir istisnadır: monitörü ve sistem birimini aynı kasada barındırır."],["On most notebook computers, including netbooks, the keyboard and pointing device often occupy the area on the top of the system unit, and the display attaches to the system unit by hinges.","Netbook'lar dahil çoğu dizüstü bilgisayarda klavye ve işaretleme aygıtı genellikle sistem biriminin üst kısmında yer alır; ekran ise sistem birimine menteşelerle bağlanır."]],[["Adapter cards are circuit boards that provide connections and functions not built into the motherboard or expand on the capability of features integrated into the motherboard.","Adaptör kartları, anakartta yerleşik olmayan bağlantı ve işlevleri sağlayan ya da anakarta tümleşik özelliklerin yeteneklerini genişleten devre kartlarıdır."],["For example, a sound card and a video card are two types of adapter cards found in some desktop personal computers today.","Örneğin ses kartı ve ekran kartı, günümüzde bazı masaüstü bilgisayarlarda bulunan iki tür adaptör kartıdır."]],[["Devices outside the system unit often attach to ports on the system unit by a connector on a cable.","Sistem biriminin dışındaki aygıtlar çoğunlukla bir kablonun ucundaki konnektörle sistem birimindeki portlara takılır."],["These devices may include a keyboard, mouse, microphone, monitor, printer, scanner, USB flash drive, card reader/writer, Web cam, and speakers.","Bu aygıtlar klavye, fare, mikrofon, monitör, yazıcı, tarayıcı, USB bellek, kart okuyucu/yazıcı, web kamerası ve hoparlörleri içerebilir."]]]},{"id":"b3-2","en":"The Motherboard","tr":"Anakart","ozet":"Anakart (diğer adı system board, sistem kartı) kasadaki ana devre kartıdır. İşlemci, bellek ve adaptör kartları onun üzerindeki yuvalara takılır; bazı parçalar ise doğrudan anakartın içine yerleşiktir.","p":[[["The motherboard, sometimes called a system board, is the main circuit board of the system unit.","Bazen sistem kartı da denen anakart, sistem biriminin ana devre kartıdır."],["Many electronic components attach to the motherboard; others are built into it.","Birçok elektronik bileşen anakarta takılır; diğerleri ise anakartın içine yerleşiktir."],["Figure 4-3 shows a photo of a current desktop personal computer motherboard and identifies its slots for adapter cards, the processor chip, and memory.","Şekil 4-3, güncel bir masaüstü bilgisayar anakartının fotoğrafını gösterir ve üzerindeki adaptör kartı yuvalarını, işlemci yongasını ve belleği tanıtır."],["Memory chips are installed on memory cards (modules) that fit in a slot on the motherboard.","Bellek yongaları, anakarttaki bir yuvaya oturan bellek kartlarına (modüllere) takılır."]]]},{"id":"b3-3","en":"Processor","tr":"İşlemci","ozet":"İşlemci (CPU, merkezi işlem birimi) komutları yorumlayıp yürüten parçadır; bilgisayarın gücünü en çok o belirler. İki birimi vardır: kontrol birimi işleri yönetir (trafik polisi gibi), ALU ise hesaplama ve karşılaştırma yapar.","p":[[["The processor, also called the central processing unit (CPU), interprets and carries out the basic instructions that operate a computer.","Merkezi işlem birimi (CPU) olarak da adlandırılan işlemci, bir bilgisayarı çalıştıran temel komutları yorumlar ve yürütür."],["The processor significantly impacts overall computing power and manages most of a computer’s operations.","İşlemci genel işlem gücünü önemli ölçüde etkiler ve bilgisayarın işlemlerinin çoğunu yönetir."],["On a personal computer, all functions of the processor usually are on a single chip.","Kişisel bilgisayarda işlemcinin bütün işlevleri genellikle tek bir yonga üzerindedir."],["Some computer and chip manufacturers use the term microprocessor to refer to a personal computer processor chip.","Bazı bilgisayar ve yonga üreticileri, kişisel bilgisayarın işlemci yongası için mikroişlemci terimini kullanır."]],[["Processors contain a control unit and an arithmetic logic unit (ALU).","İşlemciler bir kontrol birimi ve bir aritmetik mantık birimi (ALU) içerir."],["These two components work together to perform processing operations.","Bu iki bileşen işlem yapmak için birlikte çalışır."],["Figure 4-4 illustrates how other devices that are connected to the computer communicate with the processor to carry out a task.","Şekil 4-4, bilgisayara bağlı diğer aygıtların bir görevi yerine getirmek için işlemciyle nasıl iletişim kurduğunu gösterir."]],[["The control unit is the component of the processor that directs and coordinates most of the operations in the computer.","Kontrol birimi, işlemcinin bilgisayardaki işlemlerin çoğunu yönlendiren ve koordine eden bileşenidir."],["The control unit has a role much like a traffic cop: it interprets each instruction issued by a program and then initiates the appropriate action to carry out the instruction.","Kontrol biriminin rolü bir trafik polisininkine çok benzer: bir programın verdiği her komutu yorumlar, sonra o komutu yerine getirmek için uygun eylemi başlatır."]],[["The arithmetic logic unit (ALU), another component of the processor, performs arithmetic, comparison, and other operations.","İşlemcinin bir diğer bileşeni olan aritmetik mantık birimi (ALU) aritmetik, karşılaştırma ve diğer işlemleri gerçekleştirir."],["Arithmetic operations include basic calculations such as addition, subtraction, multiplication, and division.","Aritmetik işlemler toplama, çıkarma, çarpma ve bölme gibi temel hesaplamaları kapsar."]]]},{"id":"b3-4","en":"Data Representation","tr":"Verinin gösterimi","ozet":"Bilgisayar yalnız iki durumu tanır: açık (1) ve kapalı (0). Bu yüzden ikili sistem kullanır. En küçük veri birimi bittir; 8 bit bir bayt eder. Bir bayt 256 farklı karakteri gösterebilir (2⁸ = 256). Hangi 0-1 dizisinin hangi karakter olduğunu kodlama şeması belirler.","p":[[["To understand how a computer processes data, you should know how a computer represents data.","Bir bilgisayarın veriyi nasıl işlediğini anlamak için veriyi nasıl gösterdiğini (temsil ettiğini) bilmelisiniz."],["Most computers are digital.","Bilgisayarların çoğu sayısaldır (dijitaldir)."],["They recognize only two discrete states: on and off.","Yalnızca iki ayrık durumu tanırlar: açık ve kapalı."],["The two digits, 0 and 1, easily can represent these two states (Figure 4-6).","0 ve 1 rakamları bu iki durumu kolayca gösterebilir (Şekil 4-6)."],["The digit 0 represents the electronic state of off (absence of an electronic charge).","0 rakamı kapalı elektronik durumu (elektrik yükünün yokluğunu) gösterir."],["The digit 1 represents the electronic state of on (presence of an electronic charge).","1 rakamı açık elektronik durumu (elektrik yükünün varlığını) gösterir."]],[["The computer uses a binary system because it recognizes only two states.","Bilgisayar yalnızca iki durumu tanıdığı için ikili sistemi kullanır."],["The binary system is a number system that has just two unique digits, 0 and 1, called bits.","İkili sistem, bit denen yalnızca iki farklı rakamı (0 ve 1) olan bir sayı sistemidir."],["A bit (short for binary digit) is the smallest unit of data the computer can process.","Bit (binary digit, yani ikili basamak kısaltması), bilgisayarın işleyebildiği en küçük veri birimidir."],["By itself, a bit is not very informative.","Tek başına bir bit pek bilgi vermez."]],[["When 8 bits are grouped together as a unit, they form a byte.","8 bit bir birim olarak bir araya getirildiğinde bir bayt oluşturur."],["A byte provides enough different combinations of 0s and 1s to represent 256 individual characters.","Bir bayt, 256 ayrı karakteri gösterecek kadar farklı 0-1 birleşimi sağlar."],["These characters include numbers, uppercase and lowercase letters of the alphabet, punctuation marks, and others, such as the letters of the Greek alphabet.","Bu karakterler sayıları, alfabenin büyük ve küçük harflerini, noktalama işaretlerini ve Yunan alfabesinin harfleri gibi diğerlerini kapsar."],["The combinations of 0s and 1s that represent characters are defined by patterns called a coding scheme.","Karakterleri gösteren 0-1 birleşimleri, kodlama şeması denen kalıplarla tanımlanır."],["In one coding scheme, the number 4 is represented as 00110100, the number 6 as 00110110, and the capital letter E as 01000101.","Bir kodlama şemasında 4 sayısı 00110100, 6 sayısı 00110110, büyük E harfi ise 01000101 olarak gösterilir."]]]},{"id":"b3-5","en":"Memory","tr":"Bellek","ozet":"Bellek; işlemcinin yürüteceği komutları, bu komutların ihtiyaç duyduğu veriyi ve işlemin sonucunu (bilgiyi) tutar. Üç şey saklar: işletim sistemi ve sistem yazılımları, uygulama programları, işlenen veri. Hem programı hem veriyi saklamasına depolanmış program kavramı denir.","p":[[["Memory consists of electronic components that store instructions waiting to be executed by the processor, data needed by those instructions, and the results of processing the data (information).","Bellek; işlemci tarafından yürütülmeyi bekleyen komutları, bu komutların ihtiyaç duyduğu verileri ve verinin işlenmesiyle çıkan sonuçları (bilgiyi) saklayan elektronik bileşenlerden oluşur."]],[["Memory stores three basic categories of items: (1) the operating system and other system software that control or maintain the computer and its devices; (2) application programs that carry out a specific task such as word processing; and (3) the data being processed by the application programs and resulting information.","Bellek üç temel öğe kategorisi saklar: (1) bilgisayarı ve aygıtlarını denetleyen ya da bakımını yapan işletim sistemi ve diğer sistem yazılımları; (2) kelime işlem gibi belirli bir görevi yerine getiren uygulama programları; (3) uygulama programlarının işlediği veriler ve ortaya çıkan bilgi."],["This role of memory to store both data and programs is known as the stored program concept.","Belleğin hem veriyi hem programları saklama rolü depolanmış program kavramı olarak bilinir."]]]},{"id":"b3-6","en":"RAM","tr":"RAM (rastgele erişimli bellek)","ozet":"RAM ana bellektir; işlemci ondan okur, ona yazar. Uçucudur (volatile): elektrik gidince içindekiler silinir. Bu yüzden kaydetmek, yani RAM'deki bilgiyi sabit disk gibi kalıcı bir depolama aygıtına kopyalamak gerekir.","p":[[["Users typically are referring to RAM when discussing computer memory.","Kullanıcılar bilgisayar belleğinden bahsederken genellikle RAM'i kastederler."],["RAM (random access memory), also called main memory, consists of memory chips that can be read from and written to by the processor and other devices.","Ana bellek olarak da adlandırılan RAM (rastgele erişimli bellek), işlemci ve diğer aygıtlar tarafından okunabilen ve yazılabilen bellek yongalarından oluşur."]],[["Most RAM is volatile, which means it loses its contents when the power is removed from the computer.","RAM'in çoğu uçucudur; yani bilgisayarın elektriği kesildiğinde içeriğini kaybeder."],["For this reason, you must save any items you may need in the future.","Bu nedenle ileride ihtiyaç duyabileceğiniz her şeyi kaydetmelisiniz."],["Saving is the process of copying items from RAM to a storage device such as a hard disk.","Kaydetme, öğeleri RAM'den sabit disk gibi bir depolama aygıtına kopyalama işlemidir."]],[["RAM chips usually reside on a memory module, which is a small circuit board.","RAM yongaları genellikle küçük bir devre kartı olan bellek modülünün üzerinde bulunur."],["Memory slots on the motherboard hold memory modules (Figure 4-13).","Anakarttaki bellek yuvaları bellek modüllerini tutar (Şekil 4-13)."]]]},{"id":"b3-7","en":"Cache","tr":"Önbellek","ozet":"Önbellek (cache, 'keş' diye okunur) sık kullanılan komut ve verileri tutarak bilgisayarı hızlandırır. İki türü var: bellek önbelleği ve disk önbelleği. L1 işlemcinin içindedir, küçük ama en hızlısıdır; L2 biraz daha yavaş ama çok daha büyüktür.","p":[[["Most of today’s computers improve processing times with cache (pronounced cash).","Günümüz bilgisayarlarının çoğu işlem sürelerini önbellekle (cache, 'keş' diye okunur) kısaltır."],["Two types of cache are memory cache and disk cache.","İki önbellek türü bellek önbelleği ve disk önbelleğidir."],["Memory cache helps speed the processes of the computer because it stores frequently used instructions and data.","Bellek önbelleği sık kullanılan komut ve verileri sakladığı için bilgisayarın işlemlerini hızlandırmaya yardım eder."],["Most personal computers today have at least two types of memory cache: L1 cache and L2 cache.","Bugün çoğu kişisel bilgisayarda en az iki tür bellek önbelleği vardır: L1 önbellek ve L2 önbellek."]],[["L1 cache is built directly in the processor chip.","L1 önbellek doğrudan işlemci yongasının içine yerleşiktir."],["L1 cache usually has a very small capacity, ranging from 8 KB to 128 KB.","L1 önbelleğin kapasitesi genellikle çok küçüktür; 8 KB ile 128 KB arasında değişir."]],[["L2 cache is slightly slower than L1 cache but has a much larger capacity, ranging from 64 KB to 16 MB.","L2 önbellek L1'den biraz daha yavaştır ama kapasitesi çok daha büyüktür; 64 KB ile 16 MB arasında değişir."]]]},{"id":"b3-8","en":"Expansion Slots and Adapter Cards","tr":"Genişleme yuvaları ve adaptör kartları","ozet":"Genişleme yuvası, anakartta adaptör kartı takılan sokettir. Adaptör kartı (diğer adı expansion card, genişleme kartı) bir parçanın işlevini geliştirir ya da çevre birimlerine bağlantı sağlar. Çevre birimi (peripheral): kasaya bağlanan ve işlemcinin denetlediği aygıt; modem, disk sürücü, yazıcı, tarayıcı, klavye.","p":[[["An expansion slot is a socket on the motherboard that can hold an adapter card.","Genişleme yuvası, anakart üzerinde bir adaptör kartını tutabilen sokettir."],["An adapter card, sometimes called an expansion card, is a circuit board that enhances functions of a component of the system unit and/or provides connections to peripherals.","Bazen genişleme kartı da denen adaptör kartı, sistem biriminin bir bileşeninin işlevlerini geliştiren ve/veya çevre birimlerine bağlantı sağlayan bir devre kartıdır."],["A peripheral is a device that connects to the system unit and is controlled by the processor in the computer.","Çevre birimi, sistem birimine bağlanan ve bilgisayardaki işlemci tarafından denetlenen bir aygıttır."],["Examples of peripherals are modems, disk drives, printers, scanners, and keyboards.","Modemler, disk sürücüler, yazıcılar, tarayıcılar ve klavyeler çevre birimlerine örnektir."]]]},{"id":"b3-9","en":"Ports and Connectors","tr":"Portlar ve konnektörler","ozet":"Port, bir çevre biriminin kasaya takılıp veri alışverişi yaptığı noktadır; ses ve görüntü portlarına jak (jack) da denir. Konnektör kabloyu porta bağlayan uçtur: kablonun bir ucu kasadaki porta, diğer ucu çevre birimindeki porta takılır.","p":[[["A port is the point at which a peripheral attaches to or communicates with a system unit so that the peripheral can send data to or receive information from the computer.","Port, bir çevre biriminin bilgisayara veri gönderebilmesi ya da bilgisayardan bilgi alabilmesi için sistem birimine takıldığı ya da onunla iletişim kurduğu noktadır."],["An external device, such as a keyboard, monitor, printer, mouse, and microphone, often attaches by a cable to a port on the system unit.","Klavye, monitör, yazıcı, fare ve mikrofon gibi harici bir aygıt çoğunlukla bir kabloyla sistem birimindeki bir porta takılır."],["Instead of port, the term jack sometimes is used to identify audio and video ports.","Ses ve görüntü portları için bazen port yerine jak (jack) terimi kullanılır."],["The front and back of the system unit on a desktop personal computer contain many ports (Figure 4-20).","Masaüstü bilgisayarda sistem biriminin önünde ve arkasında birçok port bulunur (Şekil 4-20)."],["On notebook computers, including netbooks and Tablet PCs, the ports are on the back, front, and/or sides (Figure 4-21).","Netbook'lar ve tablet bilgisayarlar dahil dizüstü bilgisayarlarda portlar arkada, önde ve/veya yanlardadır (Şekil 4-21)."]],[["A connector joins a cable to a port.","Konnektör bir kabloyu bir porta bağlar."],["A connector at one end of a cable attaches to a port on the system unit, and a connector at the other end of the cable attaches to a port on the peripheral.","Kablonun bir ucundaki konnektör sistem birimindeki bir porta, diğer ucundaki konnektör ise çevre birimindeki bir porta takılır."]]]},{"id":"b3-10","en":"USB, FireWire and Other Ports","tr":"USB, FireWire ve diğer portlar","ozet":"USB (universal serial bus) tek bir konnektörle 127'ye kadar aygıt bağlayabilir; bilgisayarlarda genellikle 6–8 USB portu bulunur. FireWire (eski adı IEEE 1394) da USB gibi çok aygıt bağlar ama daha hızlı veri aktarımı isteyen aygıtlar içindir. Daha az görülen portlar: Bluetooth, SCSI, eSATA, IrDA, MIDI.","p":[[["A USB port, short for universal serial bus port, can connect up to 127 different peripherals together with a single connector.","Universal serial bus (evrensel seri veri yolu) portunun kısaltması olan USB portu, tek bir konnektörle 127'ye kadar farklı çevre birimini birbirine bağlayabilir."],["Devices that connect to a USB port include the following: mouse, printer, digital camera, scanner, speakers, portable media player, optical disc drive, smart phone, PDA, game console, and removable hard disk.","USB portuna bağlanan aygıtlar şunlardır: fare, yazıcı, dijital fotoğraf makinesi, tarayıcı, hoparlör, taşınabilir medya oynatıcı, optik disk sürücü, akıllı telefon, PDA (cep bilgisayarı), oyun konsolu ve çıkarılabilir sabit disk."],["Personal computers typically have six to eight USB ports on the front and/or back of the system unit.","Kişisel bilgisayarlarda genellikle sistem biriminin önünde ve/veya arkasında altı ile sekiz arası USB portu bulunur."],["USB ports on mobile devices usually are smaller than those on personal computers.","Mobil aygıtlardaki USB portları genellikle kişisel bilgisayarlardakilerden küçüktür."],["Figure 4-22 shows a variety of USB ports and connectors.","Şekil 4-22 çeşitli USB port ve konnektörlerini gösterir."]],[["Previously called an IEEE 1394 port, a FireWire port is similar to a USB port in that it can connect multiple types of devices that require faster data transmission speeds, such as digital video cameras, digital VCRs, color printers, scanners, digital cameras, and DVD drives, to a single connector.","Önceden IEEE 1394 portu denen FireWire portu, dijital video kamera, dijital video kaydedici, renkli yazıcı, tarayıcı, dijital fotoğraf makinesi ve DVD sürücü gibi daha yüksek veri aktarım hızı gerektiren birçok aygıtı tek bir konnektöre bağlayabilmesi bakımından USB portuna benzer."]],{"h":"Other Ports","htr":"Diğer portlar","c":[["Some ports not included in typical computers but sometimes used are Bluetooth, SCSI, eSATA, IrDA, and MIDI.","Tipik bilgisayarlarda bulunmayan ama bazen kullanılan bazı portlar Bluetooth, SCSI, eSATA, IrDA ve MIDI'dir."]]}]},{"id":"b3-11","en":"Power Supply","tr":"Güç kaynağı","ozet":"Duvar prizi alternatif akım (AC) verir ama bilgisayar doğru akım (DC) ister. Güç kaynağı AC'yi DC'ye dönüştürür ve içindeki fanla soğutulur. Not: metindeki 115–120 volt ABD prizleri içindir; Türkiye'de prizler yaklaşık 230 volttur.","p":[[["Many personal computers plug in standard wall outlets, which supply an alternating current (AC) of 115 to 120 volts.","Birçok kişisel bilgisayar, 115–120 voltluk alternatif akım (AC) veren standart duvar prizlerine takılır."],["This type of power is unsuitable for use with a computer, which requires a direct current (DC) ranging from 5 to more than 15 volts.","Bu tür akım bilgisayarda kullanıma uygun değildir; bilgisayar 5 volttan 15 voltun üzerine kadar değişen doğru akım (DC) ister."],["The power supply is the component of the system unit that converts the wall outlet AC power into DC power.","Güç kaynağı, sistem biriminin duvar prizinden gelen AC akımı DC akıma dönüştüren bileşenidir."]],[["Built into the power supply is a fan that keeps the power supply cool.","Güç kaynağının içinde onu serin tutan bir fan bulunur."],["Some have variable speed fans that change speed or stop running, depending on temperature in the system unit.","Bazılarında sistem birimindeki sıcaklığa göre hızını değiştiren ya da duran değişken hızlı fanlar vardır."]]]}]},{"no":4,"en":"Input","tr":"Girdi ve giriş aygıtları","dosya":"4. hafta.pptx","hedef":"Giriş aygıtlarını (klavye, fare, kalem, oyun kumandası, kamera, ses, video, tarayıcı) İngilizce tanımlarıyla öğrenmek ve \"the process of ...ing\" kalıbındaki tanımları çevirebilmek.","bolumler":[{"id":"b4-1","en":"What is Input?","tr":"Girdi nedir?","ozet":"Girdi (input), bilgisayarın belleğine girilen her türlü veri ve komuttur. Giriş aygıtı (input device) ise kullanıcının bu veri ve komutları girmesini sağlayan donanım parçasıdır.","p":[[["Input is any data and instructions entered into the memory of a computer.","Girdi, bir bilgisayarın belleğine girilen her türlü veri ve komuttur."],["As shown in Figure 5-1, people have a variety of options for entering data and instructions into a computer.","Şekil 5-1'de görüldüğü gibi insanların bilgisayara veri ve komut girmek için çeşitli seçenekleri vardır."]],[["An input device is any hardware component that allows users to enter data and instructions into a computer.","Giriş aygıtı, kullanıcıların bilgisayara veri ve komut girmesini sağlayan herhangi bir donanım bileşenidir."],["The following pages discuss a variety of input devices.","Sonraki sayfalarda çeşitli giriş aygıtları anlatılıyor."]]]},{"id":"b4-2","en":"Keyboard and Pointing Devices","tr":"Klavye ve işaretleme aygıtları","ozet":"En yaygın iki giriş aygıtı klavye ve faredir. Fare bir işaretleme aygıtıdır (pointing device), çünkü ekrandaki işaretçiyi (pointer) yönetir. İşaretçi, fareyi oynattıkça yeri ve şekli değişen küçük simgedir.","p":[[["Two of the more widely used input devices are the keyboard and the mouse.","En yaygın kullanılan giriş aygıtlarından ikisi klavye ve faredir."],["Most computers include a keyboard or keyboarding capabilities.","Çoğu bilgisayarda bir klavye ya da klavyeyle yazma imkânı bulunur."]],[["The mouse is a pointing device because it allows a user to control a pointer on the screen.","Fare bir işaretleme aygıtıdır, çünkü kullanıcının ekrandaki bir işaretçiyi kontrol etmesini sağlar."],["In a graphical user interface, a pointer is a small symbol on the screen whose location and shape change as a user moves a pointing device.","Grafik kullanıcı arayüzünde işaretçi, kullanıcı işaretleme aygıtını hareket ettirdikçe konumu ve şekli değişen, ekrandaki küçük bir simgedir."],["A pointing device can select text, graphics, and other objects; and click buttons, icons, links, and menu commands.","İşaretleme aygıtı metin, grafik ve diğer nesneleri seçebilir; düğmelere, simgelere, bağlantılara ve menü komutlarına tıklayabilir."]]]},{"id":"b4-3","en":"The Keyboard","tr":"Klavye","ozet":"Klavye, veri ve komut girmek için basılan tuşları içeren giriş aygıtıdır. Yazma alanında harfler, rakamlar ve noktalama işaretleri; çoğunun sağında sayısal tuş takımı (numeric keypad) vardır. Çoğu USB kablosuyla bağlanır, bazıları kablosuzdur.","p":[[["Many people use a keyboard as one of their input devices.","Birçok kişi klavyeyi giriş aygıtlarından biri olarak kullanır."],["A keyboard is an input device that contains keys users press to enter data and instructions into a computer.","Klavye, kullanıcıların bilgisayara veri ve komut girmek için bastığı tuşları içeren bir giriş aygıtıdır."]],[["All desktop computer keyboards have a typing area that includes the letters of the alphabet, numbers, punctuation marks, and other basic keys.","Bütün masaüstü bilgisayar klavyelerinde alfabenin harflerini, rakamları, noktalama işaretlerini ve diğer temel tuşları içeren bir yazma alanı vardır."],["Many desktop computer keyboards also have a numeric keypad on the right side of the keyboard.","Birçok masaüstü klavyesinde ayrıca klavyenin sağ tarafında bir sayısal tuş takımı bulunur."]],[["Desktop computer keyboards often attach via a cable to a USB port on the system unit.","Masaüstü klavyeleri çoğunlukla bir kabloyla sistem birimindeki bir USB portuna bağlanır."],["Some keyboards, however, do not have any wires connecting the keyboard to the system unit.","Ancak bazı klavyelerde klavyeyi sistem birimine bağlayan hiçbir kablo yoktur."]],[["Regardless of size, many keyboards have a rectangular shape with the keys aligned in straight, horizontal rows.","Boyutu ne olursa olsun birçok klavye, tuşları düz ve yatay sıralar hâlinde dizilmiş dikdörtgen bir şekle sahiptir."]]]},{"id":"b4-4","en":"Mouse","tr":"Fare","ozet":"Fare avuç içine oturan bir işaretleme aygıtıdır; fareyi oynattıkça ekrandaki işaretçi de oynar. Bugün çoğu fare optiktir: hareketini ışık yayıp algılayarak tespit eder. Bazıları optik algılayıcı, bazıları lazer kullanır.","p":[[["A mouse is a pointing device that fits comfortably under the palm of your hand.","Fare, avucunuzun altına rahatça oturan bir işaretleme aygıtıdır."],["With a mouse, users control the movement of the pointer.","Kullanıcılar fareyle işaretçinin hareketini kontrol eder."],["As you move a mouse, the pointer on the screen also moves.","Fareyi hareket ettirdikçe ekrandaki işaretçi de hareket eder."],["Generally, you use the mouse to move the pointer on the screen to an object such as a button, a menu, an icon, a link, or text.","Genellikle fareyi, ekrandaki işaretçiyi düğme, menü, simge, bağlantı ya da metin gibi bir nesnenin üzerine götürmek için kullanırsınız."]],[["Most desktop computer users today have some type of optical mouse, which uses devices that emit and sense light to detect the mouse’s movement.","Bugün masaüstü bilgisayar kullanıcılarının çoğunda bir tür optik fare vardır; optik fare, farenin hareketini tespit etmek için ışık yayan ve ışığı algılayan düzenekler kullanır."],["Some use optical sensors, and others use a laser.","Bazıları optik algılayıcı, diğerleri lazer kullanır."]]]},{"id":"b4-5","en":"Pen Input","tr":"Kalemle giriş","ozet":"Kalemle girişte stylus ya da dijital kalemle düz bir yüzeye dokunarak yazar, çizer ya da seçim yaparsın. Dijital kalem stylus'tan biraz büyüktür, silgi ve düğme gibi ek işlevleri vardır, çoğu basınca duyarlıdır. Dokunmatik ekranı olmayan bilgisayara grafik tablet bağlanır.","p":[[["With pen input, you touch a stylus or digital pen on a flat surface to write, draw, or make selections.","Kalemle girişte yazmak, çizmek ya da seçim yapmak için düz bir yüzeye stylus (ekran kalemi) ya da dijital kalemle dokunursunuz."],["The flat surface may be a screen on a monitor or mobile device, a signature capture pad, or a graphics tablet.","Bu düz yüzey bir monitörün ya da mobil aygıtın ekranı, bir imza alma pedi ya da bir grafik tablet olabilir."]],[["A digital pen, which is slightly larger than a stylus, typically provides more functionality than a stylus, featuring electronic erasers and programmable buttons.","Stylus'tan biraz daha büyük olan dijital kalem, elektronik silgileri ve programlanabilir düğmeleriyle genellikle stylus'tan daha fazla işlev sunar."],["Most digital pens, often simply called pens, are pressure-sensitive.","Çoğu zaman kısaca kalem denen dijital kalemlerin çoğu basınca duyarlıdır."]],[["To use pen input on a computer that does not have a touch screen, you can attach a graphics tablet to the computer.","Dokunmatik ekranı olmayan bir bilgisayarda kalemle giriş kullanmak için bilgisayara bir grafik tablet bağlayabilirsiniz."],["A graphics tablet is a flat, rectangular, electronic, plastic board.","Grafik tablet düz, dikdörtgen, elektronik, plastik bir levhadır."],["Architects, mapmakers, designers, artists, and home users create drawings and sketches by using a pressure-sensitive pen on a graphics tablet.","Mimarlar, harita yapımcıları, tasarımcılar, sanatçılar ve ev kullanıcıları grafik tablet üzerinde basınca duyarlı bir kalem kullanarak çizim ve taslaklar oluşturur."]]]},{"id":"b4-6","en":"Other Types of Input","tr":"Diğer giriş türleri","ozet":"Klavye, fare ve kalem dışında da giriş yolları var: akıllı telefon girişleri, oyun kumandaları, dijital fotoğraf makineleri, sesli giriş, video girişi, tarayıcılar ve okuma aygıtları, biyometrik giriş ve terminaller. Sunumda bunlar 1'den 6'ya numaralı başlıklarla anlatılıyor.","p":[[["In addition to the keyboard, mouse, and pointing devices just discussed, users have a variety of other options available to enter data and instructions into a computer.","Az önce anlatılan klavye, fare ve işaretleme aygıtlarına ek olarak kullanıcıların bilgisayara veri ve komut girmek için çeşitli başka seçenekleri de vardır."],["These include other input for smart phones, game controllers, digital cameras, voice input, video input, scanners and reading devices, biometric input, and terminals.","Bunlar akıllı telefonlar için diğer girişleri, oyun kumandalarını, dijital fotoğraf makinelerini, sesli girişi, video girişini, tarayıcıları ve okuma aygıtlarını, biyometrik girişi ve terminalleri kapsar."]],{"h":"1) Other Input for Smart Phones","htr":"1) Akıllı telefonlar için diğer girişler","ek":1,"c":[["Smart phones also accept input through a touch screen, an on-screen keyboard, voice and a stylus.","Akıllı telefonlar dokunmatik ekran, ekran klavyesi, ses ve stylus ile de girdi alır.",1]]}]},{"id":"b4-7","en":"Game Controllers and Digital Cameras","tr":"Oyun kumandaları ve dijital fotoğraf makineleri","ozet":"Oyun kumandası ekrandaki nesnelerin hareketini yönlendiren giriş aygıtıdır: gamepad, joystick, direksiyon, ışık tabancası, dans pedi, hareket algılayan kumandalar. Dijital fotoğraf makinesi görüntüyü film yerine sayısal olarak saklar.","p":[{"h":"2) Game Controllers","htr":"2) Oyun kumandaları","c":[["Video games and computer games use a game controller as the input device that directs movements and actions of on-screen objects (Figure 5-13).","Video oyunları ve bilgisayar oyunları, ekrandaki nesnelerin hareketlerini ve eylemlerini yönlendiren giriş aygıtı olarak oyun kumandası kullanır (Şekil 5-13)."],["Game controllers include gamepads, joysticks and wheels, light guns, dance pads, and a variety of motion-sensing controllers.","Oyun kumandaları arasında gamepad'ler, joystick'ler ve direksiyonlar, ışık tabancaları, dans pedleri ve çeşitli hareket algılayan kumandalar vardır."]]},{"h":"3) Digital Cameras","htr":"3) Dijital fotoğraf makineleri","c":[["A digital camera is a mobile device that allows users to take pictures and store the photographed images digitally, instead of on traditional film.","Dijital fotoğraf makinesi, kullanıcıların fotoğraf çekmesini ve çekilen görüntüleri geleneksel film yerine sayısal olarak saklamasını sağlayan mobil bir aygıttır."]]}]},{"id":"b4-8","en":"Voice and Video Input","tr":"Sesli giriş ve video girişi","ozet":"Sesli giriş (voice input) mikrofona konuşarak girdi vermektir; daha geniş kategorisi ses girişidir (audio input): konuşma, müzik, ses efekti. Video girişi hareketli görüntüyü yakalayıp diske kaydetmektir. Web kamerası (PC video camera) video ve fotoğraf çeker, görüntülü görüşme ve canlı yayın yapar.","p":[{"h":"4) Voice Input","htr":"4) Sesli giriş","c":[["Voice input is the process of entering input by speaking into a microphone.","Sesli giriş, mikrofona konuşarak girdi girme işlemidir."],["Voice input is part of a larger category of input called audio input.","Sesli giriş, ses girişi (audio input) denen daha geniş bir giriş kategorisinin parçasıdır."],["Audio input is the process of entering any sound into the computer such as speech, music, and sound effects.","Ses girişi, konuşma, müzik ve ses efektleri gibi herhangi bir sesi bilgisayara girme işlemidir."]]},{"h":"5) Video Input","htr":"5) Video girişi","c":[["Video input is the process of capturing full-motion images and storing them on a computer’s storage medium such as a hard disk or optical disc.","Video girişi, hareketli görüntüleri yakalayıp sabit disk ya da optik disk gibi bir bilgisayar depolama ortamında saklama işlemidir."],["A Web cam, also called a PC video camera, is a type of digital video camera that enables a home or small business user to capture video and still images, send e-mail messages with video attachments, add live images to instant messages, broadcast live images over the Internet, and make video telephone calls.","PC video kamerası olarak da adlandırılan web kamerası, ev ya da küçük işletme kullanıcısının video ve durağan görüntü yakalamasını, video ekli e-posta göndermesini, anlık mesajlara canlı görüntü eklemesini, internetten canlı görüntü yayınlamasını ve görüntülü telefon görüşmesi yapmasını sağlayan bir tür dijital video kameradır."]]}]},{"id":"b4-9","en":"Scanners and Reading Devices","tr":"Tarayıcılar ve okuma aygıtları","ozet":"Bazı giriş aygıtları veriyi doğrudan kaynak belgeden (verinin asıl, kâğıt üstündeki hâlinden) okuyarak zaman kazandırır. Sunumda optik tarayıcı, optik okuyucu (barkod okuyucu) ve biyometrik giriş yalnız başlık olarak geçiyor; altlarındaki kısa açıklamalar ek bilgidir.","p":[{"h":"6) Scanners and Reading Devices","htr":"6) Tarayıcılar ve okuma aygıtları","c":[["Some input devices save users time by capturing data directly from a source document, which is the original form of the data.","Bazı giriş aygıtları veriyi doğrudan kaynak belgeden, yani verinin asıl hâlinden alarak kullanıcılara zaman kazandırır."]]},{"h":"Optical Scanners","htr":"Optik tarayıcılar","ek":1,"c":[["An optical scanner is a light-sensing input device that reads printed text and pictures and turns them into a digital form the computer can process.","Optik tarayıcı, basılı metin ve resimleri okuyup bilgisayarın işleyebileceği sayısal biçime çeviren, ışığa duyarlı bir giriş aygıtıdır.",1]]},{"h":"Optical Readers (Bar Code Readers)","htr":"Optik okuyucular (barkod okuyucular)","ek":1,"c":[["A bar code reader is an optical reader that uses laser beams to read bar codes, the vertical lines printed on products.","Barkod okuyucu, ürünlerin üzerine basılı dikey çizgileri (barkodları) lazer ışınlarıyla okuyan bir optik okuyucudur.",1]]},{"h":"Biometric Input","htr":"Biyometrik giriş","ek":1,"c":[["Biometric input identifies a person by a physical feature, such as a fingerprint, face, voice or eye.","Biyometrik giriş bir kişiyi parmak izi, yüz, ses ya da göz gibi fiziksel bir özelliğinden tanır.",1]]}]}]}],"sozluk":[["system unit","sistem birimi (bilgisayar kasası)",3,1,"system units"],["home user","ev kullanıcısı",3,0,""],["business user","iş kullanıcısı",3,0,""],["purchase","satın almak",3,0,""],["upgrade","yükseltmek, parçasını yenilemek",3,0,""],["existing","mevcut, var olan",3,0,""],["purpose","amaç",3,0,""],["component","bileşen, parça",3,1,"components"],["device","aygıt, cihaz",3,1,"devices"],["processing","işleme",3,1,""],["output","çıktı",3,1,""],["storage","depolama",3,1,""],["communications","iletişim",3,0,""],["case","kasa",3,0,""],["process data","veri işlemek",3,0,"processes data"],["a variety of","çeşitli, türlü türlü",3,0,""],["made of","-den yapılmış",3,0,""],["protect","korumak",3,0,"protects"],["internal","iç, dahili",3,0,""],["damage","hasar, zarar",3,0,""],["mobile device","mobil aygıt",3,0,"mobile devices"],["desktop personal computer","masaüstü kişisel bilgisayar",3,0,"desktop personal computers"],["storage device","depolama aygıtı",3,1,"storage devices"],["microphone","mikrofon",3,0,""],["monitor","monitör, ekran",3,0,""],["printer","yazıcı",3,0,"printers"],["scanner","tarayıcı",3,0,"scanners"],["USB flash drive","USB bellek",3,0,""],["speakers","hoparlörler",3,0,""],["occupy space","yer kaplamak",3,0,""],["all-in-one","hepsi bir arada",3,0,""],["exception","istisna",3,0,""],["house (v.)","barındırmak, içine almak",3,0,"houses"],["notebook computer","dizüstü bilgisayar",3,0,"notebook computers"],["netbook","netbook (küçük, hafif dizüstü)",3,0,"netbooks"],["Tablet PC","tablet bilgisayar",3,0,"Tablet PCs"],["display","ekran",3,0,""],["hinge","menteşe",3,0,"hinges"],["adapter card","adaptör kartı",3,1,"adapter cards"],["circuit board","devre kartı",3,1,"circuit boards"],["built into","-e yerleşik, içine gömülü",3,0,"built in"],["motherboard","anakart",3,1,""],["expand","genişletmek",3,0,""],["capability","yetenek, kabiliyet",3,0,"capabilities"],["feature","özellik",3,0,"features"],["integrated","tümleşik, entegre",3,0,""],["sound card","ses kartı",3,1,""],["video card","ekran kartı",3,1,""],["port","port, bağlantı noktası",3,1,"ports"],["connector","konnektör, kablo ucu",3,1,"connectors"],["card reader/writer","kart okuyucu/yazıcı",3,0,""],["system board","sistem kartı (anakartın diğer adı)",3,1,""],["slot","yuva",3,1,"slots"],["chip","yonga, çip",3,1,"chips"],["memory","bellek",3,1,""],["memory module","bellek modülü",3,1,"memory modules|modules"],["install","takmak, kurmak",3,0,"installed"],["processor","işlemci",3,1,"processors"],["central processing unit (CPU)","merkezi işlem birimi",3,1,"central processing unit|CPU"],["interpret","yorumlamak",3,1,"interprets"],["carry out","yerine getirmek, yürütmek",3,1,"carries out"],["instruction","komut, talimat",3,1,"instructions"],["operate","çalıştırmak",3,0,""],["significantly","önemli ölçüde",3,0,""],["impact","etkilemek",3,0,"impacts"],["computing power","işlem gücü",3,0,""],["manage","yönetmek",3,0,"manages"],["single chip","tek yonga",3,0,""],["manufacturer","üretici",3,0,"manufacturers"],["microprocessor","mikroişlemci",3,1,""],["control unit","kontrol (denetim) birimi",3,1,""],["arithmetic logic unit (ALU)","aritmetik mantık birimi",3,1,"arithmetic logic unit|ALU"],["perform","gerçekleştirmek, yapmak",3,1,"performs"],["illustrate","göstermek, örneklemek",3,0,"illustrates"],["communicate","iletişim kurmak",3,0,""],["task","görev, iş",3,0,""],["direct","yönlendirmek",3,0,"directs"],["coordinate","koordine etmek, düzenlemek",3,0,"coordinates"],["traffic cop","trafik polisi",3,0,""],["issue (an instruction)","(komut) vermek",3,0,"issued"],["initiate","başlatmak",3,0,"initiates"],["appropriate","uygun",3,0,""],["comparison","karşılaştırma",3,1,""],["calculation","hesaplama",3,0,"calculations"],["addition","toplama",3,0,""],["subtraction","çıkarma",3,0,""],["multiplication","çarpma",3,0,""],["division","bölme",3,0,""],["data representation","veri gösterimi",3,1,""],["represent","göstermek, temsil etmek",3,1,"represents|represented"],["digital","sayısal, dijital",3,0,""],["recognize","tanımak",3,0,"recognizes"],["discrete states","ayrık (ayrı ayrı) durumlar",3,0,""],["digit","rakam",3,0,"digits"],["electronic charge","elektrik yükü",3,0,""],["absence","yokluk",3,0,""],["presence","varlık, bulunma",3,0,""],["binary system","ikili sistem",3,1,""],["unique","benzersiz, birbirinden farklı",3,0,""],["bit (binary digit)","bit, ikili basamak",3,1,"bits|bit|binary digit"],["informative","bilgi verici",3,0,""],["byte","bayt (8 bit)",3,1,""],["combination","birleşim, kombinasyon",3,0,"combinations"],["character","karakter",3,0,"characters"],["uppercase / lowercase","büyük harf / küçük harf",3,0,"uppercase|lowercase"],["punctuation marks","noktalama işaretleri",3,0,""],["coding scheme","kodlama şeması",3,1,""],["pattern","kalıp, örüntü",3,0,"patterns"],["execute","yürütmek, çalıştırmak",3,1,"executed"],["operating system","işletim sistemi",3,1,""],["system software","sistem yazılımı",3,0,""],["maintain","bakımını yapmak",3,0,""],["application program","uygulama programı",3,1,"application programs"],["word processing","kelime işlem (yazı programı)",3,0,""],["stored program concept","depolanmış program kavramı",3,1,""],["RAM (random access memory)","rastgele erişimli bellek",3,1,"random access memory|RAM"],["main memory","ana bellek",3,1,""],["volatile","uçucu (elektrik gidince silinen)",3,1,""],["contents","içerik",3,0,""],["save","kaydetmek",3,1,"saving"],["hard disk","sabit disk",3,1,""],["reside","bulunmak, yer almak",3,0,""],["memory slot","bellek yuvası",3,0,"memory slots"],["cache","önbellek ('keş' diye okunur)",3,1,""],["memory cache","bellek önbelleği",3,0,""],["disk cache","disk önbelleği",3,0,""],["frequently used","sık kullanılan",3,0,""],["L1 cache","L1 önbellek (işlemcinin içinde)",3,1,""],["L2 cache","L2 önbellek",3,1,""],["capacity","kapasite",3,0,""],["ranging from ... to","... ile ... arasında değişen",3,0,"ranging from"],["slightly","biraz, hafifçe",3,0,""],["expansion slot","genişleme yuvası",3,1,""],["socket","soket, yuva",3,0,""],["expansion card","genişleme kartı",3,1,""],["enhance","geliştirmek, güçlendirmek",3,0,"enhances"],["peripheral","çevre birimi",3,1,"peripherals"],["disk drive","disk sürücü",3,0,"disk drives"],["attach","takılmak, bağlanmak",3,1,"attaches"],["external device","harici aygıt",3,1,""],["send / receive","göndermek / almak",3,0,"send|receive"],["jack","jak (ses ve görüntü girişi)",3,0,""],["USB (universal serial bus)","evrensel seri veri yolu",3,1,"universal serial bus|USB port|USB ports"],["portable media player","taşınabilir medya oynatıcı",3,0,""],["optical disc drive","optik disk sürücü",3,0,""],["smart phone","akıllı telefon",3,0,"smart phones"],["PDA","cep bilgisayarı (PDA)",3,0,""],["game console","oyun konsolu",3,0,""],["removable hard disk","çıkarılabilir sabit disk",3,0,""],["FireWire port","FireWire portu (eski adı IEEE 1394)",3,1,""],["data transmission speed","veri aktarım hızı",3,0,"data transmission speeds"],["power supply","güç kaynağı",3,1,""],["wall outlet","duvar prizi",3,0,"wall outlets"],["alternating current (AC)","alternatif akım",3,1,"alternating current"],["direct current (DC)","doğru akım",3,1,"direct current"],["unsuitable","uygun olmayan",3,0,""],["require","gerektirmek, istemek",3,0,"requires"],["convert","dönüştürmek",3,1,"converts"],["fan","fan, pervane",3,0,"fans"],["variable speed","değişken hız",3,0,""],["temperature","sıcaklık",3,0,""],["input","girdi, giriş",4,1,""],["input device","giriş aygıtı",4,1,"input devices"],["hardware component","donanım bileşeni",4,1,""],["enter","girmek (bilgisayara yazmak)",4,1,"entered|entering"],["option","seçenek",4,0,"options"],["allow","sağlamak, izin vermek",4,1,"allows"],["widely used","yaygın olarak kullanılan",4,0,""],["keyboard","klavye",4,1,"keyboards"],["mouse","fare",4,1,""],["pointing device","işaretleme aygıtı",4,1,"pointing devices"],["pointer","işaretçi (ekrandaki ok)",4,1,""],["graphical user interface","grafik kullanıcı arayüzü (GUI)",4,1,""],["symbol","simge, sembol",4,0,""],["location","konum",4,0,""],["select","seçmek",4,0,""],["icon","simge (ikon)",4,0,"icons"],["link","bağlantı",4,0,"links"],["menu command","menü komutu",4,0,"menu commands"],["key","tuş",4,0,"keys"],["press","basmak",4,0,""],["typing area","yazma alanı",4,0,""],["numeric keypad","sayısal tuş takımı",4,1,""],["wire","kablo, tel",4,0,"wires"],["regardless of","-e bakılmaksızın, ne olursa olsun",4,0,""],["rectangular","dikdörtgen",4,0,""],["aligned","hizalanmış, dizilmiş",4,0,""],["horizontal rows","yatay sıralar",4,0,""],["palm of your hand","avuç içi",4,0,""],["movement","hareket",4,0,""],["optical mouse","optik fare",4,1,""],["emit","yaymak, saçmak",4,0,""],["sense","algılamak",4,0,""],["detect","tespit etmek, fark etmek",4,0,""],["optical sensor","optik algılayıcı",4,0,"optical sensors"],["laser","lazer",4,0,""],["pen input","kalemle giriş",4,1,""],["stylus","ekran kalemi (stylus)",4,1,""],["digital pen","dijital kalem",4,1,"digital pens"],["flat surface","düz yüzey",4,0,""],["make selections","seçim yapmak",4,0,""],["signature capture pad","imza alma pedi",4,0,""],["graphics tablet","grafik tablet",4,1,""],["functionality","işlevsellik",4,0,""],["electronic eraser","elektronik silgi",4,0,"electronic erasers"],["programmable","programlanabilir",4,0,""],["pressure-sensitive","basınca duyarlı",4,1,""],["touch screen","dokunmatik ekran",4,1,""],["sketch","taslak, eskiz",4,0,"sketches"],["game controller","oyun kumandası",4,1,"game controllers"],["on-screen objects","ekrandaki nesneler",4,0,""],["gamepad","oyun kolu (gamepad)",4,0,"gamepads"],["joystick","oyun çubuğu (joystick)",4,0,"joysticks"],["light gun","ışık tabancası",4,0,"light guns"],["dance pad","dans pedi",4,0,"dance pads"],["motion-sensing","hareket algılayan",4,0,""],["digital camera","dijital fotoğraf makinesi",4,1,"digital cameras"],["take pictures","fotoğraf çekmek",4,0,""],["traditional film","geleneksel film",4,0,""],["voice input","sesli giriş",4,1,""],["audio input","ses girişi",4,1,""],["sound effects","ses efektleri",4,0,""],["video input","video girişi",4,1,""],["capture","yakalamak, kaydetmek",4,0,"capturing"],["full-motion images","hareketli görüntüler",4,0,""],["storage medium","depolama ortamı",4,0,""],["optical disc","optik disk",4,0,""],["Web cam","web kamerası",4,1,""],["PC video camera","PC video kamerası",4,0,""],["still images","durağan (sabit) görüntüler",4,0,""],["attachment","ek (e-posta eki)",4,0,"attachments"],["instant message","anlık mesaj",4,0,"instant messages"],["broadcast","yayınlamak",4,0,""],["video telephone call","görüntülü telefon görüşmesi",4,0,"video telephone calls"],["save time","zaman kazandırmak",4,0,"save users time"],["source document","kaynak belge",4,1,""],["optical scanner","optik tarayıcı",4,1,"optical scanners"],["bar code reader","barkod okuyucu",4,1,"bar code readers"],["biometric input","biyometrik giriş",4,1,""],["terminal","terminal",4,0,"terminals"]],"kaliplar":[{"b":"also called · sometimes called · previously called","tr":"“... olarak da adlandırılan / bazen ... denen / önceden ... denen”. Bir terimin ikinci adını verir. Sınavda iki adı da bilmen gerekir: motherboard = system board, processor = CPU, RAM = main memory.","o":[["The processor, also called the central processing unit (CPU), interprets and carries out the basic instructions that operate a computer.","Merkezi işlem birimi (CPU) olarak da adlandırılan işlemci, bilgisayarı çalıştıran temel komutları yorumlar ve yürütür."],["The motherboard, sometimes called a system board, is the main circuit board of the system unit.","Bazen sistem kartı da denen anakart, sistem biriminin ana devre kartıdır."],["Previously called an IEEE 1394 port, a FireWire port is similar to a USB port.","Önceden IEEE 1394 portu denen FireWire portu USB portuna benzer."]]},{"b":"short for","tr":"“... kısaltması”. Kısaltmanın açılımını verir.","o":[["A bit (short for binary digit) is the smallest unit of data the computer can process.","Bit (binary digit kısaltması), bilgisayarın işleyebildiği en küçük veri birimidir."],["A USB port, short for universal serial bus port, can connect up to 127 different peripherals.","Universal serial bus portunun kısaltması olan USB portu 127'ye kadar farklı çevre birimi bağlayabilir."]]},{"b":"X is a Y that ...  (tanım cümlesi)","tr":"Sınavdaki “What is ...?” sorularının cevabı hep bu kalıptadır. Türkçede sıra tersine döner: önce açıklama (that'ten sonrası), sonra Y gelir. “X, ... olan bir Y'dir.”","o":[["A keyboard is an input device that contains keys users press to enter data and instructions into a computer.","Klavye, kullanıcıların veri ve komut girmek için bastığı tuşları içeren bir giriş aygıtıdır."],["A peripheral is a device that connects to the system unit and is controlled by the processor in the computer.","Çevre birimi, sistem birimine bağlanan ve işlemci tarafından denetlenen bir aygıttır."],["The system unit is a case that contains electronic components of the computer used to process data.","Sistem birimi, bilgisayarın veri işlemek için kullanılan elektronik bileşenlerini içeren bir kasadır."]]},{"b":"which · that · whose  (ilgi cümlesi)","tr":"Önceki ismi açıklar; Türkçede “-an/-en, -dığı” eki olur. “which means” = “yani”. “whose” = “-in ...ı/i” (sahiplik).","o":[["Most RAM is volatile, which means it loses its contents when the power is removed from the computer.","RAM'in çoğu uçucudur; yani elektrik kesildiğinde içeriğini kaybeder."],["A pointer is a small symbol on the screen whose location and shape change as a user moves a pointing device.","İşaretçi, kullanıcı işaretleme aygıtını oynattıkça konumu ve şekli değişen, ekrandaki küçük bir simgedir."],["Memory chips are installed on memory cards (modules) that fit in a slot on the motherboard.","Bellek yongaları, anakarttaki bir yuvaya oturan bellek kartlarına takılır."]]},{"b":"is / are + 3. hâl  (edilgen, passive)","tr":"İşi kimin yaptığı önemli olmadığında kullanılır. Türkçede “-ılır/-ilir, -nır/-nir” olur. “by” = “tarafından”.","o":[["The case of the system unit is made of metal or plastic.","Sistem biriminin kasası metal ya da plastikten yapılır."],["A peripheral is controlled by the processor in the computer.","Çevre birimi bilgisayardaki işlemci tarafından denetlenir."],["In one coding scheme, the number 4 is represented as 00110100.","Bir kodlama şemasında 4 sayısı 00110100 olarak gösterilir."]]},{"b":"consists of · contains · includes","tr":"“-den oluşur / içerir / kapsar”. Bir şeyin parçalarını sayarken kullanılır.","o":[["Memory consists of electronic components that store instructions waiting to be executed by the processor.","Bellek, işlemcinin yürütmesini bekleyen komutları saklayan elektronik bileşenlerden oluşur."],["Processors contain a control unit and an arithmetic logic unit (ALU).","İşlemciler bir kontrol birimi ve bir aritmetik mantık birimi içerir."],["Arithmetic operations include basic calculations such as addition, subtraction, multiplication, and division.","Aritmetik işlemler toplama, çıkarma, çarpma ve bölme gibi temel hesaplamaları kapsar."]]},{"b":"allows / enables someone to do","tr":"“birinin bir şey yapmasını sağlar”. Aygıtların ne işe yaradığını anlatan cümlelerde çok geçer.","o":[["An input device is any hardware component that allows users to enter data and instructions into a computer.","Giriş aygıtı, kullanıcıların bilgisayara veri ve komut girmesini sağlayan donanım bileşenidir."],["A digital camera allows users to take pictures and store the photographed images digitally.","Dijital fotoğraf makinesi kullanıcıların fotoğraf çekip görüntüleri sayısal olarak saklamasını sağlar."],["A Web cam enables a home or small business user to capture video and still images.","Web kamerası ev ya da küçük işletme kullanıcısının video ve durağan görüntü yakalamasını sağlar."]]},{"b":"such as · for example · including","tr":"“gibi / örneğin / dahil”. Örnek sayarken kullanılır; “such as” isimden sonra gelir.","o":[["Saving is the process of copying items from RAM to a storage device such as a hard disk.","Kaydetme, öğeleri RAM'den sabit disk gibi bir depolama aygıtına kopyalama işlemidir."],["For example, a sound card and a video card are two types of adapter cards.","Örneğin ses kartı ve ekran kartı iki tür adaptör kartıdır."],["On most notebook computers, including netbooks, the keyboard and pointing device often occupy the area on the top of the system unit.","Netbook'lar dahil çoğu dizüstü bilgisayarda klavye ve işaretleme aygıtı sistem biriminin üst kısmında yer alır."]]},{"b":"-er than · more ... than · slightly · much","tr":"Karşılaştırma: “-den daha”. “slightly” = biraz, “much” = çok daha.","o":[["L2 cache is slightly slower than L1 cache but has a much larger capacity.","L2 önbellek L1'den biraz daha yavaştır ama kapasitesi çok daha büyüktür."],["A digital pen, which is slightly larger than a stylus, typically provides more functionality than a stylus.","Stylus'tan biraz daha büyük olan dijital kalem genellikle stylus'tan daha fazla işlev sunar."],["USB ports on mobile devices usually are smaller than those on personal computers.","Mobil aygıtlardaki USB portları genellikle kişisel bilgisayarlardakilerden küçüktür."]]},{"b":"ranging from X to Y · up to · at least","tr":"“X ile Y arasında değişen / ...'e kadar / en az”. Sayı ve kapasite cümlelerinde geçer.","o":[["L1 cache usually has a very small capacity, ranging from 8 KB to 128 KB.","L1 önbelleğin kapasitesi genellikle çok küçüktür; 8 KB ile 128 KB arasında değişir."],["A USB port can connect up to 127 different peripherals together with a single connector.","USB portu tek konnektörle 127'ye kadar farklı çevre birimi bağlayabilir."],["Most personal computers today have at least two types of memory cache.","Bugün çoğu kişisel bilgisayarda en az iki tür bellek önbelleği vardır."]]},{"b":"the process of ...ing","tr":"“... -me/-ma işlemi”. Bir eylemi tanımlarken kullanılır; -ing'li fiil isim gibi davranır.","o":[["Saving is the process of copying items from RAM to a storage device such as a hard disk.","Kaydetme, öğeleri RAM'den sabit disk gibi bir depolama aygıtına kopyalama işlemidir."],["Voice input is the process of entering input by speaking into a microphone.","Sesli giriş, mikrofona konuşarak girdi girme işlemidir."],["Video input is the process of capturing full-motion images and storing them on a computer’s storage medium.","Video girişi, hareketli görüntüleri yakalayıp bilgisayarın depolama ortamında saklama işlemidir."]]},{"b":"because · for this reason · thus · however · regardless of · whether ... or","tr":"Bağlaçlar: “çünkü / bu nedenle / bu yüzden / ancak / ... ne olursa olsun / ister ... ister”.","o":[["The computer uses a binary system because it recognizes only two states.","Bilgisayar yalnız iki durumu tanıdığı için ikili sistem kullanır."],["For this reason, you must save any items you may need in the future.","Bu nedenle ileride ihtiyaç duyabileceğin her şeyi kaydetmelisin."],["Some keyboards, however, do not have any wires connecting the keyboard to the system unit.","Ancak bazı klavyelerde klavyeyi sistem birimine bağlayan kablo yoktur."],["Regardless of size, many keyboards have a rectangular shape.","Boyutu ne olursa olsun birçok klavye dikdörtgen biçimlidir."],["Whether you are a home user or a business user, you most likely will purchase a new computer.","İster ev kullanıcısı ister iş kullanıcısı ol, büyük olasılıkla yeni bir bilgisayar alacaksın."]]},{"b":"can · may · must · should","tr":"“-ebilir (yetenek) / -ebilir (olasılık) / -meli (zorunluluk) / -meli (tavsiye)”.","o":[["A pointing device can select text, graphics, and other objects.","İşaretleme aygıtı metin, grafik ve diğer nesneleri seçebilir."],["These devices may include a keyboard, mouse, microphone, monitor, printer, scanner.","Bu aygıtlar klavye, fare, mikrofon, monitör, yazıcı ve tarayıcıyı içerebilir."],["For this reason, you must save any items you may need in the future.","Bu nedenle ileride ihtiyaç duyabileceğin her şeyi kaydetmelisin."],["Thus, you should understand the purpose of each component in a computer.","Bu yüzden bilgisayardaki her bileşenin amacını anlamalısın."]]}],"sorular":[[3,"What is the system unit?","Sistem birimi nedir?","The system unit is a case that contains electronic components of the computer used to process data.","Sistem birimi, bilgisayarın veri işlemek için kullanılan elektronik bileşenlerini içeren bir kasadır."],[3,"What is the case of the system unit made of?","Sistem biriminin kasası neyden yapılır?","The case of the system unit is made of metal or plastic and protects the internal electronic components from damage.","Sistem biriminin kasası metal ya da plastikten yapılır ve içteki elektronik bileşenleri hasara karşı korur."],[3,"Which devices normally occupy space outside the system unit?","Hangi aygıtlar normalde sistem biriminin dışında yer kaplar?","Other devices, such as the keyboard, mouse, microphone, monitor, printer, USB flash drive, scanner, Web cam, and speakers, normally occupy space outside the system unit.","Klavye, fare, mikrofon, monitör, yazıcı, USB bellek, tarayıcı, web kamerası ve hoparlör gibi aygıtlar normalde sistem biriminin dışında yer kaplar."],[3,"What is an all-in-one desktop personal computer?","Hepsi bir arada masaüstü bilgisayar nedir?","An all-in-one desktop personal computer is an exception, which houses the monitor and the system unit in the same case.","Hepsi bir arada masaüstü bilgisayar bir istisnadır: monitörü ve sistem birimini aynı kasada barındırır."],[3,"What are adapter cards? Give two examples.","Adaptör kartları nedir? İki örnek verin.","Adapter cards are circuit boards that provide connections and functions not built into the motherboard or expand on the capability of features integrated into the motherboard. For example, a sound card and a video card are two types of adapter cards found in some desktop personal computers today.","Adaptör kartları, anakartta yerleşik olmayan bağlantı ve işlevleri sağlayan ya da anakarta tümleşik özellikleri genişleten devre kartlarıdır. Örneğin ses kartı ve ekran kartı iki tür adaptör kartıdır."],[3,"What is the motherboard?","Anakart nedir?","The motherboard, sometimes called a system board, is the main circuit board of the system unit.","Bazen sistem kartı da denen anakart, sistem biriminin ana devre kartıdır."],[3,"What is the processor (CPU)?","İşlemci (CPU) nedir?","The processor, also called the central processing unit (CPU), interprets and carries out the basic instructions that operate a computer.","Merkezi işlem birimi (CPU) olarak da adlandırılan işlemci, bir bilgisayarı çalıştıran temel komutları yorumlar ve yürütür."],[3,"What do processors contain?","İşlemciler neleri içerir?","Processors contain a control unit and an arithmetic logic unit (ALU). These two components work together to perform processing operations.","İşlemciler bir kontrol birimi ve bir aritmetik mantık birimi (ALU) içerir. Bu iki bileşen işlem yapmak için birlikte çalışır."],[3,"What does the control unit do?","Kontrol birimi ne yapar?","The control unit is the component of the processor that directs and coordinates most of the operations in the computer.","Kontrol birimi, işlemcinin bilgisayardaki işlemlerin çoğunu yönlendiren ve koordine eden bileşenidir."],[3,"What does the arithmetic logic unit (ALU) do?","Aritmetik mantık birimi (ALU) ne yapar?","The arithmetic logic unit (ALU), another component of the processor, performs arithmetic, comparison, and other operations.","İşlemcinin bir diğer bileşeni olan ALU aritmetik, karşılaştırma ve diğer işlemleri gerçekleştirir."],[3,"Why does the computer use a binary system?","Bilgisayar neden ikili sistem kullanır?","The computer uses a binary system because it recognizes only two states.","Bilgisayar yalnızca iki durumu tanıdığı için ikili sistemi kullanır."],[3,"What do the digits 0 and 1 represent?","0 ve 1 rakamları neyi gösterir?","The digit 0 represents the electronic state of off (absence of an electronic charge). The digit 1 represents the electronic state of on (presence of an electronic charge).","0 kapalı durumu (elektrik yükünün yokluğunu), 1 açık durumu (elektrik yükünün varlığını) gösterir."],[3,"What is a bit?","Bit nedir?","A bit (short for binary digit) is the smallest unit of data the computer can process.","Bit (ikili basamak), bilgisayarın işleyebildiği en küçük veri birimidir."],[3,"What is a byte?","Bayt nedir?","When 8 bits are grouped together as a unit, they form a byte. A byte provides enough different combinations of 0s and 1s to represent 256 individual characters.","8 bit bir birim olarak bir araya gelince bir bayt oluşturur. Bir bayt 256 ayrı karakteri gösterecek kadar farklı 0-1 birleşimi sağlar."],[3,"What is a coding scheme?","Kodlama şeması nedir?","The combinations of 0s and 1s that represent characters are defined by patterns called a coding scheme.","Karakterleri gösteren 0-1 birleşimleri kodlama şeması denen kalıplarla tanımlanır."],[3,"What is memory?","Bellek nedir?","Memory consists of electronic components that store instructions waiting to be executed by the processor, data needed by those instructions, and the results of processing the data (information).","Bellek; işlemcinin yürütmesini bekleyen komutları, bu komutların ihtiyaç duyduğu veriyi ve işlemenin sonucunu (bilgiyi) saklayan elektronik bileşenlerden oluşur."],[3,"What are the three basic categories of items that memory stores?","Bellek hangi üç temel öğe kategorisini saklar?","Memory stores three basic categories of items: (1) the operating system and other system software that control or maintain the computer and its devices; (2) application programs that carry out a specific task such as word processing; and (3) the data being processed by the application programs and resulting information.","(1) Bilgisayarı ve aygıtlarını denetleyen işletim sistemi ve sistem yazılımları; (2) kelime işlem gibi belirli bir görevi yapan uygulama programları; (3) işlenen veriler ve ortaya çıkan bilgi."],[3,"What is the stored program concept?","Depolanmış program kavramı nedir?","This role of memory to store both data and programs is known as the stored program concept.","Belleğin hem veriyi hem programları saklama rolüne depolanmış program kavramı denir."],[3,"What is RAM?","RAM nedir?","RAM (random access memory), also called main memory, consists of memory chips that can be read from and written to by the processor and other devices.","Ana bellek de denen RAM, işlemci ve diğer aygıtlar tarafından okunabilen ve yazılabilen bellek yongalarından oluşur."],[3,"What does volatile mean?","Volatile (uçucu) ne demek?","Most RAM is volatile, which means it loses its contents when the power is removed from the computer.","RAM'in çoğu uçucudur; yani bilgisayarın elektriği kesilince içeriğini kaybeder."],[3,"What is saving?","Kaydetme nedir?","Saving is the process of copying items from RAM to a storage device such as a hard disk.","Kaydetme, öğeleri RAM'den sabit disk gibi bir depolama aygıtına kopyalama işlemidir."],[3,"What is cache? What are the two types of cache?","Önbellek nedir? İki türü nedir?","Most of today’s computers improve processing times with cache (pronounced cash). Two types of cache are memory cache and disk cache.","Günümüz bilgisayarlarının çoğu işlem sürelerini önbellekle kısaltır. İki türü bellek önbelleği ve disk önbelleğidir."],[3,"What is the difference between L1 cache and L2 cache?","L1 ile L2 önbellek arasındaki fark nedir?","L1 cache is built directly in the processor chip. L1 cache usually has a very small capacity, ranging from 8 KB to 128 KB. L2 cache is slightly slower than L1 cache but has a much larger capacity, ranging from 64 KB to 16 MB.","L1 doğrudan işlemci yongasının içindedir ve kapasitesi çok küçüktür (8–128 KB). L2, L1'den biraz yavaştır ama kapasitesi çok daha büyüktür (64 KB–16 MB)."],[3,"What is an expansion slot?","Genişleme yuvası nedir?","An expansion slot is a socket on the motherboard that can hold an adapter card.","Genişleme yuvası, anakart üzerinde bir adaptör kartını tutabilen sokettir."],[3,"What is a peripheral? Give examples.","Çevre birimi nedir? Örnek verin.","A peripheral is a device that connects to the system unit and is controlled by the processor in the computer. Examples of peripherals are modems, disk drives, printers, scanners, and keyboards.","Çevre birimi, sistem birimine bağlanan ve bilgisayardaki işlemci tarafından denetlenen aygıttır. Modem, disk sürücü, yazıcı, tarayıcı ve klavye örnektir."],[3,"What is a port?","Port nedir?","A port is the point at which a peripheral attaches to or communicates with a system unit so that the peripheral can send data to or receive information from the computer.","Port, çevre biriminin bilgisayara veri gönderebilmesi ya da ondan bilgi alabilmesi için sistem birimine takıldığı ya da onunla iletişim kurduğu noktadır."],[3,"What is a connector?","Konnektör nedir?","A connector joins a cable to a port.","Konnektör bir kabloyu bir porta bağlar."],[3,"What is a USB port?","USB portu nedir?","A USB port, short for universal serial bus port, can connect up to 127 different peripherals together with a single connector.","Universal serial bus portunun kısaltması olan USB portu, tek bir konnektörle 127'ye kadar farklı çevre birimini bağlayabilir."],[3,"What is a FireWire port?","FireWire portu nedir?","Previously called an IEEE 1394 port, a FireWire port is similar to a USB port in that it can connect multiple types of devices that require faster data transmission speeds, such as digital video cameras, digital VCRs, color printers, scanners, digital cameras, and DVD drives, to a single connector.","Önceden IEEE 1394 portu denen FireWire portu, daha yüksek veri aktarım hızı isteyen birçok aygıtı (dijital video kamera, renkli yazıcı, tarayıcı, DVD sürücü gibi) tek konnektöre bağlayabilmesiyle USB portuna benzer."],[3,"What does the power supply do?","Güç kaynağı ne yapar?","The power supply is the component of the system unit that converts the wall outlet AC power into DC power.","Güç kaynağı, duvar prizinden gelen AC akımı DC akıma dönüştüren sistem birimi bileşenidir."],[4,"What is input?","Girdi nedir?","Input is any data and instructions entered into the memory of a computer.","Girdi, bilgisayarın belleğine girilen her türlü veri ve komuttur."],[4,"What is an input device?","Giriş aygıtı nedir?","An input device is any hardware component that allows users to enter data and instructions into a computer.","Giriş aygıtı, kullanıcıların bilgisayara veri ve komut girmesini sağlayan herhangi bir donanım bileşenidir."],[4,"Why is the mouse called a pointing device?","Fareye neden işaretleme aygıtı denir?","The mouse is a pointing device because it allows a user to control a pointer on the screen.","Fare bir işaretleme aygıtıdır, çünkü kullanıcının ekrandaki işaretçiyi kontrol etmesini sağlar."],[4,"What is a pointer?","İşaretçi nedir?","In a graphical user interface, a pointer is a small symbol on the screen whose location and shape change as a user moves a pointing device.","Grafik kullanıcı arayüzünde işaretçi, işaretleme aygıtı oynatıldıkça konumu ve şekli değişen, ekrandaki küçük simgedir."],[4,"What is a keyboard?","Klavye nedir?","A keyboard is an input device that contains keys users press to enter data and instructions into a computer.","Klavye, kullanıcıların bilgisayara veri ve komut girmek için bastığı tuşları içeren giriş aygıtıdır."],[4,"What is a mouse?","Fare nedir?","A mouse is a pointing device that fits comfortably under the palm of your hand.","Fare, avucunun altına rahatça oturan bir işaretleme aygıtıdır."],[4,"How does an optical mouse detect its movement?","Optik fare hareketini nasıl algılar?","Most desktop computer users today have some type of optical mouse, which uses devices that emit and sense light to detect the mouse’s movement.","Optik fare, hareketini tespit etmek için ışık yayan ve ışığı algılayan düzenekler kullanır."],[4,"What is pen input?","Kalemle giriş nedir?","With pen input, you touch a stylus or digital pen on a flat surface to write, draw, or make selections.","Kalemle girişte yazmak, çizmek ya da seçim yapmak için düz bir yüzeye stylus ya da dijital kalemle dokunursun."],[4,"What is the difference between a stylus and a digital pen?","Stylus ile dijital kalem arasındaki fark nedir?","A digital pen, which is slightly larger than a stylus, typically provides more functionality than a stylus, featuring electronic erasers and programmable buttons.","Dijital kalem stylus'tan biraz daha büyüktür ve elektronik silgi, programlanabilir düğme gibi özellikleriyle daha fazla işlev sunar."],[4,"What is a graphics tablet? Who uses it?","Grafik tablet nedir? Kimler kullanır?","A graphics tablet is a flat, rectangular, electronic, plastic board. Architects, mapmakers, designers, artists, and home users create drawings and sketches by using a pressure-sensitive pen on a graphics tablet.","Grafik tablet düz, dikdörtgen, elektronik, plastik bir levhadır. Mimarlar, harita yapımcıları, tasarımcılar, sanatçılar ve ev kullanıcıları üzerinde basınca duyarlı kalemle çizim yapar."],[4,"What are game controllers? Give examples.","Oyun kumandaları nedir? Örnek verin.","Video games and computer games use a game controller as the input device that directs movements and actions of on-screen objects (Figure 5-13). Game controllers include gamepads, joysticks and wheels, light guns, dance pads, and a variety of motion-sensing controllers.","Oyunlar, ekrandaki nesnelerin hareketlerini yönlendiren giriş aygıtı olarak oyun kumandası kullanır. Örnekler: gamepad, joystick, direksiyon, ışık tabancası, dans pedi, hareket algılayan kumandalar."],[4,"What is a digital camera?","Dijital fotoğraf makinesi nedir?","A digital camera is a mobile device that allows users to take pictures and store the photographed images digitally, instead of on traditional film.","Dijital fotoğraf makinesi, fotoğraf çekip görüntüleri geleneksel film yerine sayısal olarak saklamayı sağlayan mobil aygıttır."],[4,"What is voice input? What is audio input?","Sesli giriş ve ses girişi nedir?","Voice input is the process of entering input by speaking into a microphone. Voice input is part of a larger category of input called audio input. Audio input is the process of entering any sound into the computer such as speech, music, and sound effects.","Sesli giriş mikrofona konuşarak girdi girmektir; ses girişi denen daha geniş kategorinin parçasıdır. Ses girişi konuşma, müzik, ses efekti gibi her türlü sesi bilgisayara girmektir."],[4,"What is video input?","Video girişi nedir?","Video input is the process of capturing full-motion images and storing them on a computer’s storage medium such as a hard disk or optical disc.","Video girişi, hareketli görüntüleri yakalayıp sabit disk ya da optik disk gibi bir depolama ortamında saklama işlemidir."],[4,"What is a Web cam?","Web kamerası nedir?","A Web cam, also called a PC video camera, is a type of digital video camera that enables a home or small business user to capture video and still images, send e-mail messages with video attachments, add live images to instant messages, broadcast live images over the Internet, and make video telephone calls.","PC video kamerası da denen web kamerası; video ve durağan görüntü yakalamayı, video ekli e-posta göndermeyi, anlık mesajlara canlı görüntü eklemeyi, internetten canlı yayın yapmayı ve görüntülü görüşmeyi sağlayan bir dijital video kameradır."],[4,"What is a source document?","Kaynak belge nedir?","Some input devices save users time by capturing data directly from a source document, which is the original form of the data.","Kaynak belge verinin asıl (özgün) hâlidir; bazı giriş aygıtları veriyi doğrudan ondan alarak zaman kazandırır."]],"bosluk":[[3,"The ____ is a case that contains electronic components of the computer used to process data.","system unit",["motherboard","power supply","processor"],"Sistem birimi, bilgisayarın veri işlemek için kullanılan elektronik bileşenlerini içeren bir kasadır."],[3,"The case of the system unit is made of metal or ____ and protects the internal electronic components from damage.","plastic",["glass","paper","silicon"],"Kasa metal ya da plastikten yapılır ve içteki bileşenleri korur."],[3,"An all-in-one desktop personal computer is an ____, which houses the monitor and the system unit in the same case.","exception",["example","adapter","option"],"Hepsi bir arada bilgisayar bir istisnadır: monitör ve kasa aynı gövdededir."],[3,"On most notebook computers, including netbooks, the keyboard and pointing device often occupy the area on the top of the system unit, and the display attaches to the system unit by ____.","hinges",["cables","ports","slots"],"Dizüstülerde ekran sistem birimine menteşelerle bağlanır."],[3,"For example, a sound card and a video card are two types of ____ found in some desktop personal computers today.","adapter cards",["memory modules","processors","ports"],"Ses kartı ve ekran kartı iki tür adaptör kartıdır."],[3,"The motherboard, sometimes called a ____, is the main circuit board of the system unit.","system board",["sound card","control unit","memory card"],"Anakartın diğer adı sistem kartıdır (system board)."],[3,"Memory chips are installed on memory cards (modules) that fit in a ____ on the motherboard.","slot",["port","jack","case"],"Bellek kartları anakarttaki bir yuvaya (slot) oturur."],[3,"The processor, also called the ____, interprets and carries out the basic instructions that operate a computer.","central processing unit (CPU)",["arithmetic logic unit (ALU)","random access memory (RAM)","power supply"],"İşlemcinin diğer adı merkezi işlem birimidir (CPU)."],[3,"Processors contain a control unit and an ____.","arithmetic logic unit (ALU)",["expansion slot","memory cache","power supply"],"İşlemcinin iki parçası: kontrol birimi ve aritmetik mantık birimi."],[3,"The control unit has a role much like a ____.","traffic cop",["teacher","bus driver","police station"],"Kontrol biriminin rolü trafik polisine benzer."],[3,"Arithmetic operations include basic calculations such as addition, ____, multiplication, and division.","subtraction",["comparison","representation","storage"],"Aritmetik işlemler: toplama, çıkarma, çarpma, bölme."],[3,"Most computers are digital. They recognize only two discrete states: ____.","on and off",["up and down","high and low","yes and no"],"Bilgisayarlar yalnız iki durumu tanır: açık ve kapalı."],[3,"A bit (short for ____) is the smallest unit of data the computer can process.","binary digit",["basic integer","byte item","binary text"],"Bit, binary digit (ikili basamak) kısaltmasıdır."],[3,"When 8 bits are grouped together as a unit, they form a ____.","byte",["bit","chip","digit"],"8 bit bir bayt eder."],[3,"A byte provides enough different combinations of 0s and 1s to represent ____ individual characters.","256",["8","128","1024"],"Bir bayt 256 farklı karakter gösterebilir (2⁸ = 256)."],[3,"The combinations of 0s and 1s that represent characters are defined by patterns called a ____.","coding scheme",["binary system","control unit","memory cache"],"Karakterleri gösteren 0-1 kalıplarına kodlama şeması denir."],[3,"This role of memory to store both data and programs is known as the ____.","stored program concept",["coding scheme","binary system","main memory"],"Hem veri hem program saklamaya depolanmış program kavramı denir."],[3,"RAM (random access memory), also called ____, consists of memory chips that can be read from and written to by the processor and other devices.","main memory",["cache memory","system board","hard disk"],"RAM'in diğer adı ana bellektir (main memory)."],[3,"Most RAM is ____, which means it loses its contents when the power is removed from the computer.","volatile",["digital","portable","removable"],"RAM uçucudur: elektrik gidince içeriği silinir."],[3,"Saving is the process of copying items from RAM to a ____ such as a hard disk.","storage device",["memory cache","power supply","control unit"],"Kaydetme, RAM'den bir depolama aygıtına kopyalamaktır."],[3,"Memory cache helps speed the processes of the computer because it stores ____ instructions and data.","frequently used",["rarely used","deleted","external"],"Önbellek sık kullanılan komut ve verileri saklar."],[3,"L1 cache is built directly in the ____.","processor chip",["hard disk","power supply","USB port"],"L1 önbellek işlemci yongasının içindedir."],[3,"L2 cache is slightly ____ than L1 cache but has a much larger capacity, ranging from 64 KB to 16 MB.","slower",["faster","smaller","cheaper"],"L2, L1'den biraz yavaş ama çok daha büyüktür."],[3,"An expansion slot is a ____ on the motherboard that can hold an adapter card.","socket",["cable","fan","chip"],"Genişleme yuvası anakarttaki bir sokettir."],[3,"A ____ is a device that connects to the system unit and is controlled by the processor in the computer.","peripheral",["processor","motherboard","power supply"],"Çevre birimi kasaya bağlanan ve işlemcinin denetlediği aygıttır."],[3,"A ____ joins a cable to a port.","connector",["jack","slot","chip"],"Konnektör kabloyu porta bağlar."],[3,"A USB port, short for universal serial bus port, can connect up to ____ different peripherals together with a single connector.","127",["8","64","256"],"USB tek konnektörle 127'ye kadar aygıt bağlayabilir."],[3,"Previously called an IEEE 1394 port, a ____ is similar to a USB port.","FireWire port",["SCSI port","MIDI port","jack"],"IEEE 1394'ün yeni adı FireWire'dır."],[3,"The power supply is the component of the system unit that converts the wall outlet ____ power into DC power.","AC",["DC","USB","CPU"],"Güç kaynağı prizdeki AC'yi DC'ye çevirir."],[3,"Built into the power supply is a ____ that keeps the power supply cool.","fan",["chip","cache","socket"],"Güç kaynağının içinde onu serin tutan bir fan vardır."],[4,"Input is any data and instructions entered into the ____ of a computer.","memory",["monitor","printer","case"],"Girdi, bilgisayarın belleğine girilen veri ve komutlardır."],[4,"An ____ is any hardware component that allows users to enter data and instructions into a computer.","input device",["output device","storage device","adapter card"],"Giriş aygıtı veri ve komut girmeyi sağlayan donanımdır."],[4,"The mouse is a ____ because it allows a user to control a pointer on the screen.","pointing device",["storage device","output device","game console"],"Fare işaretleme aygıtıdır, çünkü işaretçiyi yönetir."],[4,"In a graphical user interface, a ____ is a small symbol on the screen whose location and shape change as a user moves a pointing device.","pointer",["key","port","stylus"],"İşaretçi, ekranda yeri ve şekli değişen küçük simgedir."],[4,"Many desktop computer keyboards also have a ____ on the right side of the keyboard.","numeric keypad",["typing area","touch screen","graphics tablet"],"Klavyenin sağında sayısal tuş takımı bulunur."],[4,"A mouse is a pointing device that fits comfortably under the ____.","palm of your hand",["keyboard","monitor","system unit"],"Fare avuç içine oturur."],[4,"Most desktop computer users today have some type of ____, which uses devices that emit and sense light to detect the mouse’s movement.","optical mouse",["digital pen","game controller","Web cam"],"Optik fare hareketini ışıkla algılar."],[4,"With pen input, you touch a ____ or digital pen on a flat surface to write, draw, or make selections.","stylus",["mouse","joystick","scanner"],"Kalemle girişte stylus ya da dijital kalem kullanılır."],[4,"Most digital pens, often simply called pens, are ____.","pressure-sensitive",["volatile","removable","motion-sensing"],"Dijital kalemlerin çoğu basınca duyarlıdır."],[4,"A ____ is a flat, rectangular, electronic, plastic board.","graphics tablet",["motherboard","keyboard","signature capture pad"],"Grafik tablet düz, dikdörtgen, plastik bir levhadır."],[4,"Game controllers include gamepads, joysticks and wheels, light guns, dance pads, and a variety of ____ controllers.","motion-sensing",["pressure-sensitive","volatile","optical"],"Hareket algılayan kumandalar da oyun kumandasıdır."],[4,"A digital camera is a mobile device that allows users to take pictures and store the photographed images digitally, instead of on ____.","traditional film",["a hard disk","the Internet","a scanner"],"Dijital makine görüntüyü film yerine sayısal saklar."],[4,"Voice input is the process of entering input by speaking into a ____.","microphone",["speaker","Web cam","keyboard"],"Sesli giriş mikrofona konuşarak yapılır."],[4,"Voice input is part of a larger category of input called ____.","audio input",["video input","pen input","biometric input"],"Sesli giriş, ses girişinin (audio input) parçasıdır."],[4,"A Web cam, also called a ____, is a type of digital video camera.","PC video camera",["digital camera","game controller","bar code reader"],"Web kamerasının diğer adı PC video kamerasıdır."],[4,"Some input devices save users time by capturing data directly from a ____, which is the original form of the data.","source document",["storage medium","hard disk","graphics tablet"],"Kaynak belge verinin asıl hâlidir."]],"dy":[[3,"All computers and mobile devices have a system unit.","Bütün bilgisayarların ve mobil aygıtların bir sistem birimi vardır.",true,"Metin aynen bunu söylüyor: All computers and mobile devices have a system unit."],[3,"The keyboard and the mouse are normally inside the system unit.","Klavye ve fare normalde sistem biriminin içindedir.",false,"Klavye, fare, yazıcı gibi aygıtlar normalde sistem biriminin dışında yer kaplar (occupy space outside)."],[3,"An all-in-one computer houses the monitor and the system unit in the same case.","Hepsi bir arada bilgisayar monitörü ve sistem birimini aynı kasada barındırır.",true,"Bu yüzden all-in-one bir istisnadır (exception)."],[3,"A sound card is a type of adapter card.","Ses kartı bir tür adaptör kartıdır.",true,"Ses kartı ve ekran kartı iki tür adaptör kartıdır."],[3,"The motherboard is also called the system board.","Anakarta sistem kartı da denir.",true,"The motherboard, sometimes called a system board..."],[3,"The control unit performs arithmetic operations such as addition and division.","Kontrol birimi toplama ve bölme gibi aritmetik işlemleri yapar.",false,"Aritmetik işlemleri ALU yapar. Kontrol birimi işlemleri yönlendirir ve koordine eder."],[3,"The control unit has a role much like a traffic cop.","Kontrol biriminin rolü trafik polisine çok benzer.",true,"Her komutu yorumlar ve uygun eylemi başlatır."],[3,"Most computers recognize three states: on, off and standby.","Bilgisayarların çoğu üç durum tanır: açık, kapalı ve bekleme.",false,"Yalnız iki durum tanırlar: on ve off (açık ve kapalı)."],[3,"The digit 1 represents the presence of an electronic charge.","1 rakamı elektrik yükünün varlığını gösterir.",true,"1 = on (yük var), 0 = off (yük yok)."],[3,"A byte is the smallest unit of data the computer can process.","Bayt, bilgisayarın işleyebildiği en küçük veri birimidir.",false,"En küçük birim bittir (bit). Bayt 8 bittir."],[3,"A byte is made of 8 bits.","Bir bayt 8 bitten oluşur.",true,"When 8 bits are grouped together as a unit, they form a byte."],[3,"A byte can represent 256 individual characters.","Bir bayt 256 ayrı karakteri gösterebilir.",true,"2⁸ = 256 farklı 0-1 birleşimi vardır."],[3,"RAM keeps its contents when the power is removed.","RAM elektrik kesilince içeriğini korur.",false,"RAM'in çoğu uçucudur (volatile): elektrik kesilince içeriğini kaybeder."],[3,"Saving is copying items from RAM to a storage device such as a hard disk.","Kaydetme, öğeleri RAM'den sabit disk gibi bir depolama aygıtına kopyalamaktır.",true,"Saving is the process of copying items from RAM to a storage device."],[3,"L1 cache is slower than L2 cache.","L1 önbellek L2'den daha yavaştır.",false,"Tersi: L2, L1'den biraz daha yavaştır. L1 daha hızlı ama küçüktür."],[3,"L1 cache is built directly in the processor chip.","L1 önbellek doğrudan işlemci yongasının içindedir.",true,"L1 cache is built directly in the processor chip."],[3,"An adapter card is sometimes called an expansion card.","Adaptör kartına bazen genişleme kartı denir.",true,"An adapter card, sometimes called an expansion card..."],[3,"Printers, scanners and keyboards are examples of peripherals.","Yazıcılar, tarayıcılar ve klavyeler çevre birimlerine örnektir.",true,"Örnekler: modemler, disk sürücüler, yazıcılar, tarayıcılar, klavyeler."],[3,"A connector joins a cable to a port.","Konnektör bir kabloyu bir porta bağlar.",true,"A connector joins a cable to a port."],[3,"A USB port can connect up to 127 different peripherals with a single connector.","USB portu tek konnektörle 127'ye kadar çevre birimi bağlayabilir.",true,"Sayıyı ezberle: 127."],[3,"Personal computers typically have only one USB port.","Kişisel bilgisayarlarda genellikle tek bir USB portu vardır.",false,"Genellikle altı ile sekiz arası USB portu vardır."],[3,"A FireWire port was previously called an IEEE 1394 port.","FireWire portunun eski adı IEEE 1394 portudur.",true,"Previously called an IEEE 1394 port, a FireWire port..."],[3,"The power supply converts DC power into AC power.","Güç kaynağı DC akımı AC akıma dönüştürür.",false,"Tersi: prizdeki AC'yi bilgisayarın istediği DC'ye dönüştürür."],[3,"A computer requires direct current (DC).","Bilgisayar doğru akım (DC) ister.",true,"Bilgisayar 5 volttan 15 voltun üzerine kadar DC ister; prizdeki AC ona uygun değildir."],[4,"Input is any data and instructions entered into the memory of a computer.","Girdi, bilgisayarın belleğine girilen her türlü veri ve komuttur.",true,"Tanımın aynısı."],[4,"The mouse is a pointing device.","Fare bir işaretleme aygıtıdır.",true,"Çünkü ekrandaki işaretçiyi kontrol eder."],[4,"All keyboards must be connected to the system unit with a cable.","Bütün klavyeler sistem birimine kabloyla bağlanmak zorundadır.",false,"Bazı klavyelerde hiç kablo yoktur (do not have any wires)."],[4,"A numeric keypad is usually on the left side of the keyboard.","Sayısal tuş takımı genellikle klavyenin sol tarafındadır.",false,"Sağ tarafındadır (on the right side)."],[4,"An optical mouse uses light to detect its movement.","Optik fare hareketini ışıkla algılar.",true,"Işık yayan ve algılayan düzenekler kullanır."],[4,"A stylus is slightly larger than a digital pen.","Stylus dijital kalemden biraz daha büyüktür.",false,"Tersi: dijital kalem stylus'tan biraz daha büyüktür."],[4,"Most digital pens are pressure-sensitive.","Dijital kalemlerin çoğu basınca duyarlıdır.",true,"Most digital pens... are pressure-sensitive."],[4,"You can attach a graphics tablet to a computer that does not have a touch screen.","Dokunmatik ekranı olmayan bir bilgisayara grafik tablet bağlayabilirsin.",true,"Kalemle giriş için grafik tablet takılır."],[4,"A digital camera stores images on traditional film.","Dijital fotoğraf makinesi görüntüleri geleneksel filme kaydeder.",false,"Görüntüleri film yerine sayısal (digitally) olarak saklar."],[4,"Voice input is part of a larger category called audio input.","Sesli giriş, ses girişi denen daha geniş bir kategorinin parçasıdır.",true,"Voice input → audio input'un parçası."],[4,"A Web cam can only take still images.","Web kamerası yalnızca durağan görüntü çekebilir.",false,"Video da yakalar, görüntülü görüşme ve canlı yayın da yapar."],[4,"A source document is the original form of the data.","Kaynak belge verinin asıl hâlidir.",true,"...a source document, which is the original form of the data."]],"tanim":[[3,"a case that contains electronic components of the computer used to process data","system unit",["motherboard","power supply","adapter card"],"veri işlemek için kullanılan elektronik bileşenleri içeren kasa"],[3,"circuit boards that provide connections and functions not built into the motherboard","adapter cards",["memory modules","expansion slots","ports"],"anakartta yerleşik olmayan bağlantı ve işlevleri sağlayan devre kartları"],[3,"the main circuit board of the system unit","motherboard",["sound card","processor","memory module"],"sistem biriminin ana devre kartı"],[3,"interprets and carries out the basic instructions that operate a computer","processor (CPU)",["memory","power supply","hard disk"],"bilgisayarı çalıştıran temel komutları yorumlar ve yürütür"],[3,"directs and coordinates most of the operations in the computer","control unit",["arithmetic logic unit","main memory","cache"],"bilgisayardaki işlemlerin çoğunu yönlendirir ve koordine eder"],[3,"performs arithmetic, comparison, and other operations","arithmetic logic unit (ALU)",["control unit","power supply","coding scheme"],"aritmetik, karşılaştırma ve diğer işlemleri yapar"],[3,"a number system that has just two unique digits, 0 and 1","binary system",["coding scheme","byte","stored program concept"],"yalnız iki rakamı (0 ve 1) olan sayı sistemi"],[3,"the smallest unit of data the computer can process","bit",["byte","character","coding scheme"],"bilgisayarın işleyebildiği en küçük veri birimi"],[3,"provides enough different combinations of 0s and 1s to represent 256 individual characters","byte",["bit","coding scheme","cache"],"256 ayrı karakteri gösterecek kadar 0-1 birleşimi sağlar"],[3,"electronic components that store instructions waiting to be executed by the processor","memory",["processor","power supply","port"],"işlemcinin yürütmesini bekleyen komutları saklayan elektronik bileşenler"],[3,"role of memory to store both data and programs","stored program concept",["coding scheme","main memory","binary system"],"belleğin hem veri hem program saklama rolü"],[3,"memory chips that can be read from and written to by the processor and other devices","RAM",["cache","hard disk","power supply"],"işlemcinin okuyup yazabildiği bellek yongaları"],[3,"loses its contents when the power is removed from the computer","volatile",["digital","pressure-sensitive","integrated"],"elektrik kesilince içeriğini kaybeden"],[3,"the process of copying items from RAM to a storage device such as a hard disk","saving",["processing","input","comparison"],"öğeleri RAM'den bir depolama aygıtına kopyalama"],[3,"stores frequently used instructions and data","memory cache",["hard disk","power supply","main memory"],"sık kullanılan komut ve verileri saklar"],[3,"a socket on the motherboard that can hold an adapter card","expansion slot",["port","connector","memory module"],"anakartta adaptör kartı tutabilen soket"],[3,"a device that connects to the system unit and is controlled by the processor in the computer","peripheral",["processor","motherboard","fan"],"sistem birimine bağlanan ve işlemcinin denetlediği aygıt"],[3,"the point at which a peripheral attaches to or communicates with a system unit","port",["connector","slot","cable"],"çevre biriminin sistem birimine takıldığı nokta"],[3,"joins a cable to a port","connector",["jack","socket","fan"],"kabloyu porta bağlar"],[3,"converts the wall outlet AC power into DC power","power supply",["fan","processor","motherboard"],"prizdeki AC akımı DC akıma dönüştürür"],[4,"any data and instructions entered into the memory of a computer","input",["output","storage","processing"],"bilgisayarın belleğine girilen veri ve komutlar"],[4,"any hardware component that allows users to enter data and instructions into a computer","input device",["output device","storage device","power supply"],"veri ve komut girmeyi sağlayan donanım bileşeni"],[4,"a small symbol on the screen whose location and shape change as a user moves a pointing device","pointer",["button","link","key"],"işaretleme aygıtı oynatıldıkça yeri ve şekli değişen küçük simge"],[4,"an input device that contains keys users press to enter data and instructions into a computer","keyboard",["mouse","scanner","graphics tablet"],"veri girmek için basılan tuşları içeren giriş aygıtı"],[4,"a pointing device that fits comfortably under the palm of your hand","mouse",["keyboard","stylus","joystick"],"avuç içine oturan işaretleme aygıtı"],[4,"a flat, rectangular, electronic, plastic board","graphics tablet",["motherboard","keyboard","touch screen"],"düz, dikdörtgen, elektronik, plastik levha"],[4,"the process of entering input by speaking into a microphone","voice input",["video input","pen input","biometric input"],"mikrofona konuşarak girdi girme"],[4,"the process of capturing full-motion images and storing them on a computer’s storage medium","video input",["voice input","audio input","pen input"],"hareketli görüntüleri yakalayıp saklama"],[4,"the original form of the data","source document",["storage medium","coding scheme","attachment"],"verinin asıl hâli"]]}</script>
+<script>
+(function () {
+  'use strict';
+  var V = JSON.parse(document.getElementById('veri').textContent);
+
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function dugme(cls, text, attrs) { var b = el('button', cls, text); b.type = 'button'; if (attrs) Object.keys(attrs).forEach(function (k) { b.setAttribute(k, attrs[k]); }); return b; }
+  function karistir(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function oku_(k, yedek) { try { var v = localStorage.getItem(k); return v === null ? yedek : JSON.parse(v); } catch (e) { return yedek; } }
+  function yaz_(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* gizli pencere */ } }
+  function sade(en) { return en.replace(/\s*\(.*?\)/g, '').trim(); }
+
+  /* ---------- Sesli okuma: tarayıcının kendi İngilizce sesi ---------- */
+  var SES = { var: 'speechSynthesis' in window && typeof window.SpeechSynthesisUtterance === 'function', hiz: 0.92, ses: null };
+  function sesSec() {
+    try {
+      var v = window.speechSynthesis.getVoices() || [];
+      SES.ses = v.filter(function (x) { return /^en[-_]US/i.test(x.lang); })[0] || v.filter(function (x) { return /^en/i.test(x.lang); })[0] || null;
+    } catch (e) { SES.ses = null; }
+  }
+  if (SES.var) { sesSec(); try { window.speechSynthesis.addEventListener('voiceschanged', sesSec); } catch (e) { /* eski tarayıcı */ } }
+  function seslendir(metin) {
+    if (!SES.var) return;
+    try {
+      window.speechSynthesis.cancel();
+      var u = new window.SpeechSynthesisUtterance(metin);
+      u.lang = 'en-US'; if (SES.ses) u.voice = SES.ses; u.rate = SES.hiz;
+      window.speechSynthesis.speak(u);
+    } catch (e) { /* ses yok */ }
+  }
+  var IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.6L12.5 18V6L7.6 9.5H4z" fill="currentColor"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+  function sesDugme(metin, etiket, yalnizIkon) {
+    var b = dugme('ses' + (yalnizIkon ? ' ikon' : '') + (SES.var ? '' : ' yok'), null, { 'aria-label': etiket || 'Dinle', title: etiket || 'Dinle' });
+    b.innerHTML = IKON + (yalnizIkon ? '' : '<span>dinle</span>');
+    b.addEventListener('click', function (e) { e.stopPropagation(); seslendir(metin); });
+    return b;
+  }
+
+  /* ---------- Sözlük ve metindeki terimler ---------- */
+  var SOZ = V.sozluk.map(function (s, i) { return { i: i, en: s[0], tr: s[1], h: s[2], y: !!s[3], v: s[4] ? s[4].split('|') : [] }; });
+  function adaylar(s) { return [sade(s.en)].concat(s.v).filter(function (d) { return d && !/\s\/\s|\.\.\./.test(d); }); }
+  var desen = [];
+  SOZ.forEach(function (s) { adaylar(s).forEach(function (d) { desen.push({ d: d.toLowerCase(), s: s }); }); });
+  desen.sort(function (a, b) { return b.d.length - a.d.length; });
+  var DESEN = {}; desen.forEach(function (x) { if (!(x.d in DESEN)) DESEN[x.d] = x.s; });
+  var DESEN_RE = new RegExp(desen.map(function (x) { return x.d.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }).join('|'), 'gi');
+  function harfMi(c) { return !!c && /[A-Za-z0-9À-ɏ-]/.test(c); }
+  function terimliYaz(hedef, metin, gorulen) {
+    var son = 0, m;
+    DESEN_RE.lastIndex = 0;
+    while ((m = DESEN_RE.exec(metin))) {
+      var bas = m.index, bit = bas + m[0].length;
+      if (harfMi(metin.charAt(bas - 1)) || harfMi(metin.charAt(bit))) { DESEN_RE.lastIndex = bas + 1; continue; }
+      var s = DESEN[m[0].toLowerCase()];
+      if (!s || gorulen[s.i]) continue;
+      gorulen[s.i] = 1;
+      if (bas > son) hedef.appendChild(document.createTextNode(metin.slice(son, bas)));
+      hedef.appendChild(dugme('terim', m[0], { 'aria-expanded': 'false', 'aria-haspopup': 'dialog', 'data-i': s.i }));
+      son = bit;
+    }
+    if (son < metin.length) hedef.appendChild(document.createTextNode(metin.slice(son)));
+  }
+
+  /* ---------- Okuma bölümleri ---------- */
+  var CUMLELER = [];
+  V.haftalar.forEach(function (h) {
+    var hedefP = document.querySelector('[data-hedef="' + h.no + '"]');
+    if (hedefP) { hedefP.appendChild(el('b', null, 'Bu haftanın sonunda: ')); hedefP.appendChild(document.createTextNode(h.hedef)); }
+    var kap = document.querySelector('.okuma[data-hafta="' + h.no + '"]');
+    if (!kap) return;
+    h.bolumler.forEach(function (b, bi) {
+      var no = h.no + '.' + (bi + 1), art = el('article', 'bolum'), h3 = el('h3'), tum = [], gorulen = {};
+      art.id = b.id;
+      h3.appendChild(el('span', 'no', no));
+      var enB = el('span', null, b.en); enB.lang = 'en'; h3.appendChild(enB);
+      h3.appendChild(el('span', 'trb', b.tr));
+      art.appendChild(h3);
+      var oz = el('div', 'ozet'); oz.appendChild(el('b', null, '› Türkçe özet')); oz.appendChild(el('p', null, b.ozet)); art.appendChild(oz);
+      b.p.forEach(function (p) {
+        var para = el('div', 'para'), cs = Array.isArray(p) ? p : p.c;
+        if (!Array.isArray(p) && p.h) {
+          var h4 = el('h4'), e4 = el('span', null, p.h); e4.lang = 'en'; h4.appendChild(e4);
+          if (p.htr) h4.appendChild(el('span', 'trb', p.htr));
+          if (p.ek) h4.appendChild(el('span', 'tag ek', 'ek · sunumda yalnız başlık'));
+          para.appendChild(h4);
+        }
+        cs.forEach(function (c) {
+          var satir = el('div', 'cumle' + (c[2] ? ' ek' : '')), en = el('p', 'en'), cb = el('div', 'cb'), trP = el('p', 'tr', c[1]);
+          en.lang = 'en'; terimliYaz(en, c[0], gorulen);
+          trP.hidden = true;
+          var trB = dugme('trb-btn', 'TR', { 'aria-expanded': 'false', 'aria-label': 'Türkçesini göster' });
+          trB.addEventListener('click', function () { var ac = trP.hidden; trP.hidden = !ac; trB.setAttribute('aria-expanded', ac ? 'true' : 'false'); });
+          cb.appendChild(trB); cb.appendChild(sesDugme(c[0], 'Cümleyi dinle', true));
+          satir.appendChild(en); satir.appendChild(cb); satir.appendChild(trP);
+          para.appendChild(satir);
+          tum.push(c[0]);
+          if (!c[2]) CUMLELER.push({ en: c[0], tr: c[1], h: h.no, b: no + ' · ' + b.en });
+        });
+        art.appendChild(para);
+      });
+      h3.appendChild(sesDugme(tum.join(' '), 'Bölümü baştan sona dinle'));
+      kap.appendChild(art);
+    });
+  });
+
+  var trHepsi = document.getElementById('tr-hepsi');
+  function trAyarla(ac) {
+    trHepsi.setAttribute('aria-pressed', ac ? 'true' : 'false');
+    document.querySelectorAll('.cumle').forEach(function (c) {
+      c.querySelector('.tr').hidden = !ac;
+      c.querySelector('.trb-btn').setAttribute('aria-expanded', ac ? 'true' : 'false');
+    });
+  }
+  trHepsi.addEventListener('click', function () { var ac = trHepsi.getAttribute('aria-pressed') !== 'true'; trAyarla(ac); yaz_('mesleki-ingilizce:tr-hepsi', ac); });
+  if (oku_('mesleki-ingilizce:tr-hepsi', false) === true) trAyarla(true);
+
+  var yavas = document.getElementById('ses-yavas');
+  if (SES.var) {
+    yavas.hidden = false;
+    yavas.addEventListener('click', function () { var a = yavas.getAttribute('aria-pressed') !== 'true'; yavas.setAttribute('aria-pressed', a ? 'true' : 'false'); SES.hiz = a ? 0.7 : 0.92; });
+  }
+
+  /* ---------- Terim kutusu ---------- */
+  var pop = document.getElementById('pop'), popAcan = null;
+  function popKapat() { if (pop.hidden) return; pop.hidden = true; if (popAcan) popAcan.setAttribute('aria-expanded', 'false'); popAcan = null; }
+  function popAc(btn) {
+    if (popAcan === btn) { popKapat(); return; }
+    popKapat();
+    var s = SOZ[+btn.getAttribute('data-i')];
+    document.getElementById('pop-en').textContent = s.en;
+    document.getElementById('pop-tr').textContent = s.tr;
+    document.getElementById('pop-h').textContent = s.h + '. hafta';
+    document.getElementById('pop-yildiz').hidden = !s.y;
+    var yer = document.getElementById('pop-ses'); yer.textContent = ''; yer.appendChild(sesDugme(sade(s.en), 'Terimi dinle'));
+    pop.hidden = false; popAcan = btn; btn.setAttribute('aria-expanded', 'true');
+    var r = btn.getBoundingClientRect(), gen = pop.offsetWidth, yuk = pop.offsetHeight, ekran = document.documentElement.clientWidth;
+    var x = Math.min(Math.max(8, r.left), ekran - gen - 8) + window.scrollX;
+    var y = r.bottom + 8;
+    if (y + yuk > window.innerHeight - 8 && r.top - yuk - 8 > 0) y = r.top - yuk - 8;
+    pop.style.left = x + 'px'; pop.style.top = (y + window.scrollY) + 'px';
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('.terim') : null;
+    if (t) { popAc(t); return; }
+    if (!pop.hidden && !pop.contains(e.target)) popKapat();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !pop.hidden) { var b = popAcan; popKapat(); if (b) b.focus(); } });
+  document.getElementById('pop-kapat').addEventListener('click', function () { var b = popAcan; popKapat(); if (b) b.focus(); });
+
+  /* ---------- Kalıplar ---------- */
+  var kl = document.getElementById('kalip-liste');
+  V.kaliplar.forEach(function (k, i) {
+    var d = el('div', 'kalip'), ul = el('ul');
+    d.appendChild(el('b', null, (i + 1) + '. ' + k.b));
+    d.appendChild(el('p', null, k.tr));
+    k.o.forEach(function (o) {
+      var li = el('li'), en = el('p', 'en', o[0]); en.lang = 'en';
+      li.appendChild(en); li.appendChild(sesDugme(o[0], 'Örneği dinle', true)); li.appendChild(el('p', 'tr', o[1]));
+      ul.appendChild(li);
+    });
+    d.appendChild(ul); kl.appendChild(d);
+  });
+
+  function ornekBul(s) {
+    var ad = adaylar(s).map(function (d) { return d.toLowerCase(); });
+    for (var i = 0; i < CUMLELER.length; i++) {
+      var m = CUMLELER[i].en, kucuk = m.toLowerCase();
+      for (var j = 0; j < ad.length; j++) {
+        var k = -1;
+        while ((k = kucuk.indexOf(ad[j], k + 1)) >= 0) {
+          if (!harfMi(m.charAt(k - 1)) && !harfMi(m.charAt(k + ad[j].length))) return { metin: m, bas: k, bit: k + ad[j].length };
+        }
+      }
+    }
+    return null;
+  }
+  function filtreKur(kap, secenekler, secili, degisti) {
+    var b = secenekler.map(function (f) {
+      var c = dugme('chip' + (f[0] === secili ? ' on' : ''), f[1], { 'aria-pressed': f[0] === secili ? 'true' : 'false' });
+      c.addEventListener('click', function () {
+        b.forEach(function (x) { var on = x === c; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+        degisti(f[0]);
+      });
+      kap.appendChild(c);
+      return c;
+    });
+    return b;
+  }
+
+  /* ---------- Kelime kartları ---------- */
+  (function () {
+    var ANAHTAR = 'mesleki-ingilizce:bildiklerim', bilinen = {};
+    (oku_(ANAHTAR, []) || []).forEach(function (e) { bilinen[e] = 1; });
+    var mod = 'temel', deste = [], sira = 0;
+    var kart = document.getElementById('kart'), kEn = document.getElementById('kart-en'), kTr = document.getElementById('kart-tr');
+    var kOr = document.getElementById('kart-ornek'), kKh = document.getElementById('kart-kh'), kSes = document.getElementById('kart-ses');
+    var sayac = document.getElementById('kart-sayac'), bar = document.getElementById('kart-bar');
+    var bTekrar = document.getElementById('k-tekrar'), bCevir = document.getElementById('k-cevir'), bBildim = document.getElementById('k-bildim');
+    function havuz() { return SOZ.filter(function (s) { return mod === 'temel' ? s.y : mod === 'hepsi' ? true : s.h === mod; }); }
+    function kur() { deste = karistir(havuz().filter(function (s) { return !bilinen[s.en]; })); sira = 0; goster(); }
+    function goster() {
+      kart.classList.remove('cevrik');
+      var h = havuz(), bil = h.filter(function (s) { return bilinen[s.en]; }).length;
+      sayac.textContent = bil + ' / ' + h.length + ' öğrenildi';
+      bar.style.width = (h.length ? Math.round(100 * bil / h.length) : 0) + '%';
+      var s = deste[sira];
+      [bTekrar, bCevir, bBildim].forEach(function (b) { b.disabled = !s; });
+      kSes.textContent = ''; kOr.textContent = '';
+      if (!s) { kKh.textContent = ''; kEn.textContent = 'Bu destede bilmediğin kart kalmadı'; kTr.textContent = ''; return; }
+      kKh.textContent = s.h + '. hafta' + (s.y ? ' · ★ temel' : '');
+      kEn.textContent = s.en; kTr.textContent = s.tr;
+      kSes.appendChild(sesDugme(sade(s.en), 'Terimi dinle'));
+      var o = ornekBul(s);
+      if (o) {
+        kOr.appendChild(document.createTextNode(o.metin.slice(0, o.bas)));
+        kOr.appendChild(el('mark', null, o.metin.slice(o.bas, o.bit)));
+        kOr.appendChild(document.createTextNode(o.metin.slice(o.bit)));
+      }
+      kart.setAttribute('aria-label', s.en + ' kartı; çevirmek için boşluk tuşu');
+    }
+    function cevir() { if (deste[sira]) kart.classList.toggle('cevrik'); }
+    function bildim() { var s = deste[sira]; if (!s) return; bilinen[s.en] = 1; yaz_(ANAHTAR, Object.keys(bilinen)); deste.splice(sira, 1); if (sira >= deste.length) sira = 0; goster(); }
+    function tekrar() { var s = deste[sira]; if (!s || deste.length < 2) { kart.classList.remove('cevrik'); return; } deste.splice(sira, 1); deste.splice(Math.min(deste.length, sira + 3), 0, s); goster(); }
+    kart.addEventListener('click', function (e) { if (!e.target.closest('.ses')) cevir(); });
+    kart.addEventListener('keydown', function (e) {
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); cevir(); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); bildim(); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); tekrar(); }
+    });
+    bCevir.addEventListener('click', cevir);
+    bBildim.addEventListener('click', bildim);
+    bTekrar.addEventListener('click', tekrar);
+    document.getElementById('k-sifirla').addEventListener('click', function () { bilinen = {}; yaz_(ANAHTAR, []); kur(); });
+    filtreKur(document.getElementById('kart-filtre'), [['temel', '★ Temel terimler'], [3, '3. hafta'], [4, '4. hafta'], ['hepsi', 'Hepsi']], mod, function (m) { mod = m; kur(); });
+    kur();
+  })();
+
+  /* ---------- Sözlük ---------- */
+  (function () {
+    var tb = document.getElementById('sozluk-liste'), ara = document.getElementById('sozluk-ara'), say = document.getElementById('sozluk-say');
+    var satirlar = SOZ.slice().sort(function (a, b) { return a.en.localeCompare(b.en, 'en', { sensitivity: 'base' }); }).map(function (s) {
+      var tr = el('tr'), a = el('td', 's-en'), sp = el('span', null, s.en), td = el('td');
+      sp.lang = 'en'; a.appendChild(sp); if (s.y) a.appendChild(el('span', 'yildiz', '★'));
+      tr.appendChild(a); tr.appendChild(el('td', null, s.tr)); tr.appendChild(el('td', 's-h', s.h + '. hafta'));
+      td.appendChild(sesDugme(sade(s.en), sade(s.en) + ' dinle', true)); tr.appendChild(td);
+      tb.appendChild(tr);
+      var k = s.en + ' ' + s.tr;
+      return { tr: tr, k: k.toLowerCase() + ' ' + k.toLocaleLowerCase('tr') };
+    });
+    function suz() {
+      var q = ara.value.trim(), q1 = q.toLowerCase(), q2 = q.toLocaleLowerCase('tr'), n = 0;
+      satirlar.forEach(function (x) { var g = !q || x.k.indexOf(q1) >= 0 || x.k.indexOf(q2) >= 0; x.tr.hidden = !g; if (g) n++; });
+      say.textContent = n + ' terim';
+    }
+    ara.addEventListener('input', suz);
+    suz();
+  })();
+
+  /* ---------- What is…? ---------- */
+  (function () {
+    var liste = document.getElementById('soru-liste');
+    var kutular = V.sorular.map(function (s) {
+      var d = el('details', 'oq'), sum = el('summary'), w = el('span'), qe = el('span', 'q-en', s[1]);
+      qe.lang = 'en'; w.appendChild(qe); w.appendChild(el('span', 'q-tr', s[2]));
+      sum.appendChild(w); sum.appendChild(el('span', 'tag h', s[0] + '. hafta')); d.appendChild(sum);
+      var ans = el('div', 'ans'), en = el('p', 'en', s[3]), r = el('div', 'chips');
+      en.lang = 'en'; ans.appendChild(en);
+      r.appendChild(sesDugme(s[1], 'Soruyu dinle')); r.appendChild(sesDugme(s[3], 'Cevabı dinle'));
+      r.lastChild.lastChild.textContent = 'cevabı dinle'; r.firstChild.lastChild.textContent = 'soruyu dinle';
+      ans.appendChild(r); ans.appendChild(el('p', 'tr', s[4]));
+      d.appendChild(ans); liste.appendChild(d);
+      return { d: d, h: s[0] };
+    });
+    filtreKur(document.getElementById('soru-filtre'), [[0, 'Hepsi'], [3, '3. hafta'], [4, '4. hafta']], 0, function (h) {
+      kutular.forEach(function (k) { k.d.hidden = !!h && k.h !== h; });
+    });
+  })();
+
+  /* ---------- Çeviri pratiği ---------- */
+  (function () {
+    var ANAHTAR = 'mesleki-ingilizce:ceviri', kayit = oku_(ANAHTAR, null) || { a: 0, z: 0, zor: [] };
+    if (!Array.isArray(kayit.zor)) kayit.zor = [];
+    var secili = 0, simdiki = null;
+    var enP = document.getElementById('c-en'), sesK = document.getElementById('c-ses'), kaynak = document.getElementById('c-kaynak');
+    var giris = document.getElementById('c-giris'), model = document.getElementById('c-model'), modelTr = document.getElementById('c-model-tr'), skor = document.getElementById('c-skor');
+    function havuz() { return CUMLELER.filter(function (c) { return !secili || c.h === secili; }); }
+    function skorYaz() { skor.textContent = 'Anladım: ' + kayit.a + ' · Zorlandım: ' + kayit.z + (kayit.zor.length ? ' · tekrar listesinde ' + kayit.zor.length + ' cümle' : ''); }
+    function yeni() {
+      var h = havuz(); if (!h.length) return;
+      var zorlar = h.filter(function (c) { return kayit.zor.indexOf(c.en) >= 0; }), aday, deneme = 0;
+      do {
+        aday = (zorlar.length && Math.random() < 0.4) ? zorlar[Math.floor(Math.random() * zorlar.length)] : h[Math.floor(Math.random() * h.length)];
+      } while (h.length > 1 && aday === simdiki && ++deneme < 10);
+      simdiki = aday;
+      enP.textContent = aday.en; kaynak.textContent = aday.b;
+      sesK.textContent = ''; sesK.appendChild(sesDugme(aday.en, 'Cümleyi dinle'));
+      giris.value = ''; model.hidden = true; modelTr.textContent = aday.tr;
+      skorYaz();
+    }
+    document.getElementById('c-goster').addEventListener('click', function () { model.hidden = false; });
+    document.getElementById('c-sonraki').addEventListener('click', yeni);
+    document.getElementById('c-anladim').addEventListener('click', function () {
+      kayit.a++; kayit.zor = kayit.zor.filter(function (e) { return e !== simdiki.en; }); yaz_(ANAHTAR, kayit); yeni();
+    });
+    document.getElementById('c-zor').addEventListener('click', function () {
+      kayit.z++; if (kayit.zor.indexOf(simdiki.en) < 0) kayit.zor.push(simdiki.en); yaz_(ANAHTAR, kayit); yeni();
+    });
+    filtreKur(document.getElementById('c-filtre'), [[0, 'Hepsi'], [3, '3. hafta'], [4, '4. hafta']], 0, function (h) { secili = h; yeni(); });
+    yeni();
+  })();
+
+  /* ---------- Test ---------- */
+  var TEST_SAYI = 0;
+  (function () {
+    var quizEl = document.getElementById('quiz'), scoreEl = document.getElementById('score');
+    var TUR = { kelime: 'kelime', tanim: 'tanım', bosluk: 'boşluk', dy: 'doğru-yanlış' };
+    var sabitler = [], no = 0;
+    V.tanim.forEach(function (t) {
+      var s = SOZ.filter(function (x) { return sade(x.en).toLowerCase() === sade(t[2]).toLowerCase(); })[0];
+      sabitler.push({ id: 't' + no++, t: 'tanim', h: t[0], ust: 'Bu tanım hangi terimin?', soru: '“' + t[1] + '”', en: 1, soruTr: t[4], ses: t[1], c: [t[2]].concat(t[3]), cEn: 1, d: 0,
+        a: t[2] + (s ? ' = ' + s.tr : '') + '. Tanımın Türkçesi: ' + t[4] + '.' });
+    });
+    V.bosluk.forEach(function (b) {
+      sabitler.push({ id: 'b' + no++, t: 'bosluk', h: b[0], soru: b[1], en: 1, soruTr: b[4], ses: b[1].replace('____', 'blank'), c: [b[2]].concat(b[3]), cEn: 1, d: 0,
+        a: 'Doğru kelime: ' + b[2] + '. ' + b[4] });
+    });
+    V.dy.forEach(function (d) {
+      sabitler.push({ id: 'd' + no++, t: 'dy', h: d[0], soru: d[1], en: 1, soruTr: d[2], ses: d[1], c: ['True · Doğru', 'False · Yanlış'], d: d[3] ? 0 : 1, sabit: 1, a: d[4] });
+    });
+    function kelimeSorulari(h) {
+      var havuz = SOZ.filter(function (s) { return !h || s.h === h; });
+      var temel = karistir(havuz.filter(function (s) { return s.y; })), diger = karistir(havuz.filter(function (s) { return !s.y; }));
+      var secim = karistir(temel.slice(0, 14).concat(diger.slice(0, 6)));
+      return secim.map(function (s, i) {
+        var ayni = karistir(havuz.filter(function (x) { return x !== s && x.tr !== s.tr && sade(x.en) !== sade(s.en); })).slice(0, 3);
+        var o = ornekBul(s), ek = o ? ' Sunumda: “' + o.metin + '”' : '';
+        if (i % 2 === 0) {
+          return { id: 'k' + i, t: 'kelime', h: s.h, soru: '“' + sade(s.en) + '” ne demek?', ses: sade(s.en), c: [s.tr].concat(ayni.map(function (x) { return x.tr; })), d: 0, a: sade(s.en) + ' = ' + s.tr + '.' + ek };
+        }
+        return { id: 'k' + i, t: 'kelime', h: s.h, soru: '“' + s.tr + '” İngilizcede hangisi?', c: [s.en].concat(ayni.map(function (x) { return x.en; })), cEn: 1, d: 0, a: s.tr + ' = ' + s.en + '.' + ek };
+      });
+    }
+    var tur = 'kelime', hafta = 0, sira = [], cevap = {}, yer = {};
+    function yeniden() {
+      var kel = kelimeSorulari(hafta);
+      var gruplar = { kelime: kel, tanim: [], bosluk: [], dy: [] };
+      sabitler.forEach(function (q) { gruplar[q.t].push(q); });
+      sira = [];
+      ['kelime', 'tanim', 'bosluk', 'dy'].forEach(function (t) { sira = sira.concat(karistir(gruplar[t].slice())); });
+      cevap = {}; yer = {};
+      sira.forEach(function (q) { var p = q.c.map(function (_, k) { return k; }); yer[q.id] = q.sabit ? p : karistir(p); });
+    }
+    function gorunur(q) {
+      if (hafta && q.h !== hafta) return false;
+      if (tur === 'yanlis') return q.id in cevap && cevap[q.id] !== q.d;
+      return tur === 'hepsi' || q.t === tur;
+    }
+    function puan() {
+      var ids = sira.filter(gorunur), biten = ids.filter(function (q) { return q.id in cevap; });
+      var dogru = biten.filter(function (q) { return cevap[q.id] === q.d; }).length;
+      scoreEl.textContent = dogru + ' / ' + biten.length + ' ';
+      scoreEl.appendChild(el('small', null, 'doğru · ' + ids.length + ' soru'));
+    }
+    function boya(q, k, btns, why) {
+      btns.forEach(function (b, pos) { b.disabled = true; var o = yer[q.id][pos]; if (o === q.d) b.classList.add('right'); else if (o === k) b.classList.add('wrong'); });
+      why.textContent = '';
+      why.appendChild(el('b', null, k === q.d ? 'Doğru. ' : 'Yanlış. Doğru cevap ' + String.fromCharCode(65 + yer[q.id].indexOf(q.d)) + '. '));
+      why.appendChild(document.createTextNode(q.a));
+    }
+    function ciz() {
+      quizEl.textContent = '';
+      var n = 0;
+      sira.forEach(function (q) {
+        if (!gorunur(q)) return;
+        n++;
+        var kutu = el('div', 'q'), t = el('div', 'qt'), metin = el('span', 'metin');
+        t.appendChild(el('span', 'n', String(n).padStart(2, '0')));
+        if (q.t === 'bosluk') {
+          var parca = q.soru.split('____');
+          metin.appendChild(document.createTextNode(parca[0])); metin.appendChild(el('span', 'bosluk', ' ')); metin.appendChild(document.createTextNode(parca[1] || ''));
+        } else metin.textContent = q.soru;
+        if (q.en) metin.lang = 'en';
+        if (q.ust) { var u = el('span', null, q.ust + ' '); u.style.cssText = 'display:block;font-weight:400;font-size:13px;color:var(--muted)'; metin.insertBefore(u, metin.firstChild); u.lang = 'tr'; }
+        t.appendChild(metin); t.appendChild(el('span', 'tag h', TUR[q.t] + ' · ' + q.h + '. hafta'));
+        kutu.appendChild(t);
+        var ara = el('div', 'q-ara'), trp = null;
+        if (q.soruTr) {
+          trp = el('p', 'q-tr', q.soruTr); trp.hidden = true;
+          var trb = dugme('trb-btn', 'TR', { 'aria-expanded': 'false', 'aria-label': 'Sorunun Türkçesi' });
+          trb.addEventListener('click', function () { var ac = trp.hidden; trp.hidden = !ac; trb.setAttribute('aria-expanded', ac ? 'true' : 'false'); });
+          ara.appendChild(trb);
+        }
+        if (q.ses) ara.appendChild(sesDugme(q.ses, 'Soruyu dinle', true));
+        if (ara.childNodes.length) kutu.appendChild(ara);
+        if (trp) kutu.appendChild(trp);
+        var opts = el('div', 'opts'), why = el('div', 'why');
+        why.setAttribute('aria-live', 'polite');
+        var btns = yer[q.id].map(function (k, pos) {
+          var b = dugme(null, null), tx = el('span', null, q.c[k]);
+          if (q.cEn) tx.lang = 'en';
+          b.appendChild(el('span', 'k', String.fromCharCode(65 + pos) + ')')); b.appendChild(tx);
+          b.addEventListener('click', function () { if (q.id in cevap) return; cevap[q.id] = k; boya(q, k, btns, why); puan(); yanlisSay(); });
+          opts.appendChild(b);
+          return b;
+        });
+        kutu.appendChild(opts); kutu.appendChild(why);
+        if (q.id in cevap) boya(q, cevap[q.id], btns, why);
+        quizEl.appendChild(kutu);
+      });
+      if (!n) quizEl.appendChild(el('p', 'bos', tur === 'yanlis' ? 'Yanlış cevabın yok. Güzel gidiyorsun.' : 'Bu seçimde soru yok.'));
+      puan();
+    }
+    var turB = filtreKur(document.getElementById('test-tur'), [['kelime', 'Kelime'], ['tanim', 'Tanım'], ['bosluk', 'Boşluk doldurma'], ['dy', 'Doğru / Yanlış'], ['hepsi', 'Hepsi'], ['yanlis', 'Yanlışlarım']], tur, function (t) { tur = t; ciz(); });
+    function yanlisSay() { var y = sira.filter(function (q) { return q.id in cevap && cevap[q.id] !== q.d; }).length; turB[5].textContent = 'Yanlışlarım' + (y ? ' (' + y + ')' : ''); }
+    filtreKur(document.getElementById('test-hafta'), [[0, 'Hepsi'], [3, '3. hafta'], [4, '4. hafta']], 0, function (h) { hafta = h; yeniden(); ciz(); yanlisSay(); });
+    document.getElementById('reset').addEventListener('click', function () { yeniden(); ciz(); yanlisSay(); });
+    yeniden(); ciz();
+    TEST_SAYI = sabitler.length + 20;
+  })();
+
+  /* ---------- Sayılar, sınav tarihi, plan ---------- */
+  var SAY = { cumle: CUMLELER.length, terim: SOZ.length, soru: V.sorular.length, test: TEST_SAYI };
+  document.querySelectorAll('[data-say]').forEach(function (e) { e.textContent = SAY[e.getAttribute('data-say')]; });
+  (function () {
+    var giris = document.getElementById('sinav-tarih'), gun = document.getElementById('gun'), etiket = document.getElementById('gun-etiket');
+    var ANAHTAR = 'mesleki-ingilizce:sinav-tarihi';
+    function bugun() { var n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); }
+    function guncelle() {
+      var v = giris.value, gunler = document.querySelectorAll('#plan-gunler .day');
+      gunler.forEach(function (g) { g.classList.remove('today'); var sm = g.querySelector('small'); sm.textContent = sm.getAttribute('data-etiket'); });
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(v)) { gun.textContent = '–'; etiket.textContent = 'tarihi gir, geri sayım başlasın'; return; }
+      var p = v.split('-'), sinav = new Date(+p[0], +p[1] - 1, +p[2]), b = bugun(), d = Math.round((sinav - b) / 864e5);
+      var uzun = sinav.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', weekday: 'long' });
+      if (d > 0) { gun.textContent = d; etiket.textContent = 'gün kaldı · ' + uzun; }
+      else if (d === 0) { gun.textContent = 'Bugün'; etiket.textContent = 'sınav günü, başarılar'; }
+      else { gun.textContent = '✓'; etiket.textContent = 'sınav geçti · ' + uzun; }
+      gunler.forEach(function (g) {
+        var t = new Date(sinav.getFullYear(), sinav.getMonth(), sinav.getDate() - (+g.getAttribute('data-once'))), sm = g.querySelector('small');
+        sm.textContent = sm.getAttribute('data-etiket') + ' · ' + t.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', weekday: 'short' });
+        if (t.getTime() === b.getTime()) g.classList.add('today');
+      });
+    }
+    giris.value = oku_(ANAHTAR, '') || '';
+    guncelle();
+    giris.addEventListener('change', function () { yaz_(ANAHTAR, giris.value); guncelle(); });
+  })();
+
+  /* ---------- İçindekiler vurgusu, yazdırma ---------- */
+  var linkler = Array.prototype.slice.call(document.querySelectorAll('nav.tree a'));
+  var bolumler = Array.prototype.slice.call(document.querySelectorAll('main > section.card')), gorunen = {};
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (girdiler) {
+      girdiler.forEach(function (g) { gorunen[g.target.id] = g.isIntersecting; });
+      var id = null;
+      bolumler.forEach(function (b) { if (!id && gorunen[b.id]) id = b.id; });
+      linkler.forEach(function (a) { a.classList.toggle('on', id !== null && a.getAttribute('href') === '#' + id); });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    bolumler.forEach(function (b) { io.observe(b); });
+  }
+  window.addEventListener('beforeprint', function () { document.querySelectorAll('details').forEach(function (d) { d.open = true; }); });
+})();
+</script>
+</body>
+</html>

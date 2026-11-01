@@ -24,7 +24,7 @@ Derleme adımı yok: düz HTML, CSS ve JavaScript; GitHub Pages yayınlar.
 - `.marquee` — gökyüzü renkli kayan teknoloji şeridi.
 - `section#work` — `ul.work-list > li.work-row`; fareyle gelen önizleme kartları `#preview-strip` içindeki `.pv-*` öğeleri. Kartlar satırla **aynı sıradadır** (indeksle eşlenir): satır eklersen kartı da aynı sıraya ekle.
 - `section#about` — `#statement` (kaydırdıkça kelime kelime yanar; `data-highlight` ile başlayan kelimeden sona kadar vurgu rengi), `.services`.
-- `section#classroom` — `chen-atolyesi/`, `laravel-vize/` ve `python-vize/` alt sayfalarına bağlantılar.
+- `section#classroom` — `chen-atolyesi/`, `laravel-vize/`, `python-vize/` ve `mesleki-ingilizce/` alt sayfalarına bağlantılar.
 - `section#repos` — `#repo-list` (JS yokken görünen statik yedek; JS, GitHub API'den günceller).
 - `section#contact.sky-fill` — gökyüzü sahnesi + cam panel `.contact-panel` (sosyal linkler, mailto/Formspree formu, alt bilgi, hareket düğmesi).
 - `dialog#terminal` — gizli Türkçe terminal (`/` tuşu, Ctrl+K).
@@ -34,7 +34,7 @@ Derleme adımı yok: düz HTML, CSS ve JavaScript; GitHub Pages yayınlar.
 **js/main.js** — tek IIFE; en üstte `CONFIG` (e-posta, GitHub kullanıcı adı, LinkedIn, Formspree adresi, saat dilimi, koordinatlar). Başlatma sırası:
 `initMotion` (hareket tercihi) → `initClock` → `initSky` (güneş konumu + palet → CSS değişkenleri, favicon, theme-color) → `initName` (isim harflerini kutuya oturtur, imlece göre `wdth` akordeonu) → `initRoundSun` → `initReveal` → `initStatement` → `initPreview` → `initMagnetic` → `initStatus` (müşteri sitelerine `no-cors` ölçüm) → `initTerminal` → `initContact` → `loadRepos`.
 
-**Alt sayfalar** (`chen-atolyesi/`, `laravel-vize/`, `python-vize/`, `PROJE/`) kendi stillerini taşır; istenmedikçe dokunma, ana sayfadan bağlantıları koru.
+**Alt sayfalar** (`chen-atolyesi/`, `laravel-vize/`, `python-vize/`, `mesleki-ingilizce/`, `PROJE/`) kendi stillerini taşır; istenmedikçe dokunma, ana sayfadan bağlantıları koru.
 
 ## Renk sistemi
 
