@@ -43,7 +43,7 @@ description: Portfolyo sitesini (eyupcalskanozturk-tr.github.io) güvenle yayın
 
 ## Yayın workflow'u tuzağı
 
-`deploy.yml`, sitenin tamamını değil **yalnızca şu yolları** `_site`'a kopyalar: `index.html`, `css/`, `js/`, `assets/`, `PROJE/`, `chen-atolyesi/`, `laravel-vize/`, `python-vize/`, `ntp-vize/`, `mesleki-ingilizce/`.
+`deploy.yml`, sitenin tamamını değil **yalnızca şu yolları** `_site`'a kopyalar: `index.html`, `css/`, `js/`, `assets/`, `PROJE/`, `chen-atolyesi/`, `laravel-vize/`, `python-vize/`, `ntp-vize/`, `mesleki-ingilizce/`, `kalite-kontrol/`.
 
 - Yeni bir alt sayfa klasörü (örneğin `blog/`) ya da kökte yeni bir dosya (`robots.txt`, `sitemap.xml`, `404.html`, `manifest.webmanifest`, ek favicon'lar) eklediğinde onu "Statik dosyaları hazırla" adımına ekle; yoksa yerelde çalışır ama canlıda 404 verir.
 - `.claude/` (bu skill'ler) ve `CLAUDE.md` bilerek yayınlanmaz.
