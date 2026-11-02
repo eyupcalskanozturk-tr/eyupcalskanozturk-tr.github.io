@@ -1,6 +1,6 @@
 # Eyüp'ün portfolyosu — proje hafızası
 
-Eyüp Çalışkanöztürk'ün kişisel sitesi: https://eyupcalskanozturk-tr.github.io (GitHub Pages). Türkçe; derleme adımı yok, düz HTML/CSS/JavaScript (`index.html`, `css/style.css`, `js/main.js`, `assets/`). Alt sayfalar: `chen-atolyesi/`, `laravel-vize/`, `python-vize/`, `mesleki-ingilizce/`, `PROJE/`.
+Eyüp Çalışkanöztürk'ün kişisel sitesi: https://eyupcalskanozturk-tr.github.io (GitHub Pages). Türkçe; derleme adımı yok, düz HTML/CSS/JavaScript (`index.html`, `css/style.css`, `js/main.js`, `assets/`). Alt sayfalar: `chen-atolyesi/`, `laravel-vize/`, `python-vize/`, `ntp-vize/`, `mesleki-ingilizce/`, `PROJE/`.
 
 Kullanıcıya "Başkan" ya da Eyüp diye hitap et. Koyu tema, altın ve neon vurgular, glassmorphism ve terminal estetiğini sever.
 
@@ -13,6 +13,7 @@ Kullanıcıya "Başkan" ya da Eyüp diye hitap et. Koyu tema, altın ve neon vur
 ## Araçlar
 
 - `python-vize/` sayfasındaki çıktılar, adım adım izler ve test cevapları elle yazılmaz: `.claude/araclar/python-vize-iz.py` sayfadaki kodları gerçek Python'da çalıştırıp `id="izler"` bloğuna yazar; testteki (`id="sorular"`) ve 50 soruluk deneme sınavındaki (`id="deneme"`) kodlu soruların doğru şıkkını da çalıştırarak doğrular. Sayfada bir kodu ya da soruyu değiştirince `python3 -I .claude/araclar/python-vize-iz.py --vt <vt.db>` ile yeniden üret. `vt.db` repoda yok (kişisel veri içerebilir); verilmezse veritabanı programlarının eski izleri korunur.
+- `ntp-vize/` (Java) sayfasındaki çıktılar, adım adım izler (çağrı yığını, nesneler, diziler) ve soruların cevapları da elle yazılmaz: `python3 -I .claude/araclar/ntp-vize-iz.py` sayfadaki programları `javac -g` ile derler, `Kosucu` ile girdili çalıştırır, `Izci` (JDI) ile satır satır izler ve `id="izler"` bloğuna yazar; testteki (`id="sorular"`) kodlu sorular ile derlenir mi kartlarını (`id="derleme"`) gerçek javac/java sonucuyla doğrular. Yardımcı Java sınıfları `.claude/araclar/ntp-java/`'da; senaryolar aracın `AYAR` sözlüğünde. Sayfada bir kodu ya da soruyu değiştirince aracı yeniden çalıştır (JDK 21 gerekir).
 - `mesleki-ingilizce/` sayfası metinleri, sözlüğü ve soruları `id="veri"` bloğundan çizer. Veriyi değiştirince `python3 -I .claude/araclar/ingilizce-dogrula.py` çalıştır: soru-cevaplar, boşluk doldurma ve tanımlar okuma metniyle karşılaştırılır; `--kaynak <sunum-metni.txt>` verilirse her cümle sunumla da karşılaştırılır (sunum metni repoda yok).
 
 ## Değişmez kurallar

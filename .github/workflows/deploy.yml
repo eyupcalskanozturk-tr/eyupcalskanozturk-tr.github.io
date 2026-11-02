@@ -41,6 +41,8 @@ jobs:
           if [ -d python-vize ]; then cp -R python-vize _site/; fi
           # Mesleki Yabancı Dil · İngilizce vize çalışma uygulaması
           if [ -d mesleki-ingilizce ]; then cp -R mesleki-ingilizce _site/; fi
+          # Nesne Tabanlı Programlama I · Java vize çalışma alanı
+          if [ -d ntp-vize ]; then cp -R ntp-vize _site/; fi
       - name: Dosyaları yükle
         uses: actions/upload-pages-artifact@v4
         with:
