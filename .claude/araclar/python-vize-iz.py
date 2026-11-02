@@ -8,7 +8,7 @@ Repo kökünden:
 2. Her programı AYAR'daki girdilerle geçici bir klasörde çalıştırır. Çıktıyı (klavye girdileri ayrı
    işaretli) ve satır satır izi (sıradaki satır, değişkenler, koşul notu, o ana kadarki çıktı) toplar.
 3. Sonucu sayfadaki <script type="application/json" id="izler"> bloğuna yazar.
-4. <script type="application/json" id="sorular"> içindeki kodlu test sorularının doğru şıkkını
+4. <script type="application/json" id="sorular"> ve id="deneme" içindeki kodlu soruların doğru şıkkını
    gerçek çıktıyla karşılaştırır. Tutmayan soru varsa sayfaya yazmadan durur.
 
 --vt verilmezse veritabanı kullanan programların önceki izleri korunur, onların soruları atlanır.
@@ -540,21 +540,22 @@ def calistir(pid, kodlar, vt):
     return {"dosya": dosya, "s": senaryolar}
 
 
-def soru_kontrol(sorular, kodlar, vt):
+def soru_kontrol(sorular, kodlar, vt, ad="soru"):
+    """Kodlu soruları çalıştırır. "k" gösterilen kod, "kk" gösterilmeyen kontrol kodu, "p" sayfadaki bir program."""
     sorun = 0
     for no, q in enumerate(sorular, 1):
         c, d = q["c"], q["d"]
         if not (0 <= d < len(c)) or len(set(c)) != len(c):
-            print(f"  ✗ soru {no}: şıklar ya da doğru indeks hatalı")
+            print(f"  ✗ {ad} {no}: şıklar ya da doğru indeks hatalı")
             sorun += 1
             continue
-        if "k" not in q and "p" not in q:
+        if "k" not in q and "kk" not in q and "p" not in q:
             continue
         if q.get("vt") or (q.get("p") and AYAR.get(q["p"], {}).get("vt")):
             if not vt:
-                print(f"  · soru {no}: vt.db yok, atlandı")
+                print(f"  · {ad} {no}: vt.db yok, atlandı")
                 continue
-        kod = q.get("k") or kodlar[q["p"]]["kod"]
+        kod = q.get("k") or q.get("kk") or kodlar[q["p"]]["kod"]
         dizin = tempfile.mkdtemp(prefix="pyvize-soru-")
         try:
             if q.get("p"):
@@ -569,14 +570,15 @@ def soru_kontrol(sorular, kodlar, vt):
             tamam = cikis == 1 and (q["e"] + ":") in metin
             gercek = metin.strip().splitlines()[-1] if metin.strip() else ""
         else:
-            satirlar = metin.rstrip("\n").split("\n")
+            # print(..., end=" ") satır sonuna görünmez boşluk bırakır; karşılaştırmada yok sayılır.
+            satirlar = [x.rstrip() for x in metin.rstrip("\n").split("\n")]
             kip = q.get("kip", "tam")
             gercek = satirlar[-1] if kip == "son" else satirlar[0] if kip == "ilk" else "\n".join(satirlar)
             beklenen = q.get("beklenen", c[d])
             tamam = cikis == 0 and gercek == beklenen and ("beklenen" in q or c.count(gercek) == 1)
         if not tamam:
             sorun += 1
-            print(f"  ✗ soru {no} ({q['s'][:50]}…): gerçek çıktı {gercek!r}")
+            print(f"  ✗ {ad} {no} ({q['s'][:50]}…): gerçek çıktı {gercek!r}")
     return sorun
 
 
@@ -635,7 +637,10 @@ def main():
     s = re.search(r'<script type="application/json" id="sorular">(.*?)</script>', sayfa, re.S)
     sorular = json.loads(s.group(1)) if s else []
     sorun = soru_kontrol(sorular, kodlar, vt)
-    print(f"\n{len(izler)} program, {len(sorular)} soru, {sorun} sorunlu soru")
+    s = re.search(r'<script type="application/json" id="deneme">(.*?)</script>', sayfa, re.S)
+    deneme = json.loads(s.group(1)) if s else []
+    sorun += soru_kontrol(deneme, kodlar, vt, ad="deneme")
+    print(f"\n{len(izler)} program, {len(sorular)} test sorusu, {len(deneme)} deneme sorusu, {sorun} sorunlu soru")
     if sorun:
         sys.exit(1)
 

@@ -73,7 +73,8 @@ async function viewportRun(browser, label, viewport, extra) {
   const { page, errors, network } = await openPage(browser, viewport, extra);
   const shots = [];
   const shot = async (name, opts = {}) => { const file = `${label}-${name}.png`; await page.screenshot({ path: path.join(out, file), ...opts }); shots.push(file); };
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+  // innerWidth değil clientWidth: mobilde taşan içerik sayfayı uzaklaştırır ve innerWidth de büyür, taşma gizlenir.
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   await shot("ilk-ekran");
 
   // Gökyüzü saatleri (yalnızca ana sayfada saat şeridi var)

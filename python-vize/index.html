@@ -257,7 +257,7 @@ body.ezber figure.prog:not(.yaz):not(.txt):not(.acik) .code-wrap::after{content:
 .exam > h3{border-top:0;margin:0 0 6px;padding:0;color:var(--gold-2)}
 .exam > p{color:var(--muted);font-size:14.5px;margin-bottom:10px}
 details.oq{border:1px solid var(--line);border-radius:12px;margin:8px 0;background:var(--panel)}
-details.oq > summary{cursor:pointer;padding:12px 14px;font-weight:600;list-style:none;display:flex;gap:10px;align-items:baseline}
+details.oq > summary{cursor:pointer;padding:12px 14px;font-weight:600;list-style:none;display:flex;gap:10px;align-items:baseline;overflow-wrap:anywhere}
 details.oq > summary::-webkit-details-marker{display:none}
 details.oq > summary::before{content:"+";font-family:var(--f-mono);color:var(--gold);width:14px;flex:none}
 details.oq[open] > summary::before{content:"−"}
@@ -300,6 +300,43 @@ details.oq .ans{padding:0 14px 14px 38px;display:flex;flex-direction:column;gap:
 .day ul{margin:0;padding-left:18px;font-size:14px;color:var(--soft);display:flex;flex-direction:column;gap:3px}
 footer.foot{margin-top:28px;color:var(--dim);font-size:13px;border-top:1px solid var(--line);padding-top:14px}
 
+/* Deneme sınavı */
+#deneme-app{scroll-margin-top:12px}
+.dn-bas{border:1px solid rgba(230,180,67,.32);border-radius:16px;padding:18px;display:grid;gap:12px;background:linear-gradient(160deg,rgba(230,180,67,.1),rgba(0,0,0,.08) 60%);color:var(--soft);max-width:760px}
+.dn-ozet{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+.dn-ozet b{color:var(--gold);font-weight:500;font-size:15px}
+.dn-sec{display:flex;align-items:center;gap:10px;font-size:14.5px;cursor:pointer}
+.dn-sec input{width:18px;height:18px;accent-color:var(--gold);flex:none}
+.dn-son{font-family:var(--f-mono);font-size:12.5px;color:var(--mint)}
+.dn-ust{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:space-between;padding:10px 12px;margin-bottom:12px;border:1px solid var(--line-2);border-radius:12px;background:rgba(16,21,28,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.dn-ust .ilerleme{font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+.dn-ust .sure{font-family:var(--f-mono);font-size:16px;font-weight:500;color:var(--gold-2);font-variant-numeric:tabular-nums}
+.dn-ust .sure.az{color:var(--red)}
+.dn-ust .btn{min-height:34px;padding:4px 12px}
+.dn-bar{flex:1 1 100%;height:4px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}
+.dn-bar i{display:block;height:100%;width:0;background:var(--gold);transition:width .25s}
+.dn-soru .opts button.secili{background:var(--gold-soft);border-color:var(--gold);color:var(--gold-2)}
+.dn-gezin{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.dn-gezin.sinav .btn.primary{margin-left:auto}
+.dn-uyari{margin-top:12px;border:1px solid rgba(255,123,134,.4);background:var(--red-soft);border-radius:12px;padding:12px 14px;color:var(--soft)}
+.dn-palet{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:5px;margin-top:16px;max-width:560px}
+.dn-palet button{position:relative;font-family:var(--f-mono);font-size:12px;min-height:32px;padding:0;border-radius:8px;border:1px solid var(--line-2);background:transparent;color:var(--dim);cursor:pointer}
+.dn-palet button:hover{color:var(--ink);border-color:rgba(255,255,255,.3)}
+.dn-palet button.cevapli{background:var(--gold-soft);border-color:rgba(230,180,67,.4);color:var(--gold-2)}
+.dn-palet button.simdi{outline:2px solid var(--gold);outline-offset:1px}
+.dn-palet button.isaret::after{content:"";position:absolute;top:3px;right:3px;width:6px;height:6px;border-radius:50%;background:var(--red)}
+.dn-sonuc{display:grid;gap:12px}
+.dn-skor{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px}
+.dn-skor b{font-family:var(--f-head);font-weight:900;font-variation-settings:"wdth" 68;font-size:clamp(52px,8vw,76px);line-height:.9;color:var(--gold);font-variant-numeric:tabular-nums}
+.dn-skor span{font-family:var(--f-mono);font-size:14px;color:var(--muted)}
+.dn-sayilar{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.dn-yorum{font-size:16px;color:var(--ink);max-width:70ch}
+.dn-hafta{display:grid;gap:8px;max-width:560px}
+.dn-hafta > div{display:grid;grid-template-columns:76px minmax(0,1fr) 56px;gap:10px;align-items:center;font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+.dn-hafta .bar{height:8px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}
+.dn-hafta .bar i{display:block;height:100%;background:var(--mint)}
+.dn-gozden .bos{color:var(--muted);padding:12px 0}
+
 @media (max-width:900px){
   header.top{grid-template-columns:minmax(0,1fr);gap:18px;padding-top:22px}
   .exam-card{grid-template-columns:auto minmax(0,1fr);align-items:center;column-gap:14px}
@@ -317,6 +354,8 @@ footer.foot{margin-top:28px;color:var(--dim);font-size:13px;border-top:1px solid
   body{font-size:15.5px}
   section.card{border-radius:16px;padding:20px 14px 24px}
   details.oq .ans{padding-left:14px}
+  details.oq > summary{flex-wrap:wrap;row-gap:6px}
+  details.oq > summary .tag{margin-left:24px}
   .term-acts{margin-left:0;width:100%}
   .term-acts .btn{flex:1;justify-content:center}
   .st-ctrl .hint{display:none}
@@ -330,7 +369,7 @@ footer.foot{margin-top:28px;color:var(--dim);font-size:13px;border-top:1px solid
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
 @media print{
   body{background:#fff;color:#000;padding:0;font-size:11pt}
-  body::before,body::after,nav.tree,.toolbar,.exam-card,.term,.yaz-alan,#test,.lab,.acts,.skip{display:none!important}
+  body::before,body::after,nav.tree,.toolbar,.exam-card,.term,.yaz-alan,#test,#deneme-sinavi,.lab,.acts,.skip{display:none!important}
   .layout{display:block;margin:0}
   header.top{display:block;padding:0 0 8pt}
   h1,h1 .py{color:#000}
@@ -354,6 +393,7 @@ footer.foot{margin-top:28px;color:var(--dim);font-size:13px;border-top:1px solid
       <li><b>20</b> program dosyası</li>
       <li><b>4</b> hafta</li>
       <li><b data-soru-sayisi>61</b> test sorusu</li>
+      <li><b>50</b> soruluk deneme sınavı</li>
       <li>çıktılar <b>Python 3.13</b> ile çalıştırılarak alındı</li>
     </ul>
   </div>
@@ -387,6 +427,7 @@ footer.foot{margin-top:28px;color:var(--dim);font-size:13px;border-top:1px solid
     <li class="sep" aria-hidden="true"></li>
     <li><a href="#ezber"><i>#</i><span><b>Ezber tablosu</b><small>son bakış</small></span></a></li>
     <li><a href="#test"><i>✓</i><span><b>Test</b><small><span data-soru-sayisi>61</span> soru, otomatik puan</small></span></a></li>
+    <li><a href="#deneme-sinavi"><i>◷</i><span><b>Deneme sınavı</b><small>50 soru, süreli</small></span></a></li>
     <li><a href="#plan"><i>→</i><span><b>Çalışma planı</b><small>4 gün + sınav sabahı</small></span></a></li>
   </ol>
 </nav>
@@ -1592,6 +1633,14 @@ print("Toplam:", toplam)</code></pre>
   <div id="quiz"></div>
 </section>
 
+<!-- ======================= DENEME SINAVI ======================= -->
+<section class="card" id="deneme-sinavi" aria-labelledby="deneme-t">
+  <div class="path"><span>~/PycharmProjects/</span><b>deneme_sinavi.py</b><span class="cmd">$ python deneme_sinavi.py</span></div>
+  <h2 id="deneme-t">Deneme sınavı</h2>
+  <div class="prose"><p>Gerçek sınav gibi: 50 soru, her biri dört şıklı; cevaplar ve açıklamalar sınav bitince görünür. Sorular yukarıdaki testten farklı; <code>split</code>, <code>len</code>, <code>pop</code>, <code>end=" "</code> gibi sık sorulan küçük ayrıntılar da var. Kod sorularının doğru cevapları, kodlar Python 3.13'te çalıştırılarak doğrulandı. İlerlemen bu tarayıcıda saklanır; sayfayı kapatsan da kaldığın yerden devam edebilirsin.</p></div>
+  <div id="deneme-app"><noscript><p>Deneme sınavı için JavaScript gerekir.</p></noscript></div>
+</section>
+
 <!-- ======================= PLAN ======================= -->
 <section class="card" id="plan" aria-labelledby="plan-t">
   <div class="path"><span>~/PycharmProjects/</span><b>plan.txt</b></div>
@@ -1601,7 +1650,7 @@ print("Toplam:", toplam)</code></pre>
     <div class="day" data-once="4"><div class="d">1. gün<small data-etiket="Hafta 1">Hafta 1</small></div><ul><li>1.1–1.6'yı oku, her terminalde önce tahmin et</li><li>Dilim ve range oyun alanında deneme yap</li><li>Hesap makinesi ve en büyük sayıyı kâğıda yaz</li><li>Testte 1. hafta</li></ul></div>
     <div class="day" data-once="3"><div class="d">2. gün<small data-etiket="Hafta 2">Hafta 2</small></div><ul><li>Liste işlemlerini adım adım izle, tabloyu kapatıp kendin doldur</li><li>Asal kontrolü kâğıda yaz, 1 tuzağını unutma</li><li>Testte 2. hafta</li></ul></div>
     <div class="day" data-once="2"><div class="d">3. gün<small data-etiket="Hafta 3">Hafta 3</small></div><ul><li>break ve continue çıktılarını ezbere söyle</li><li>Fonksiyon, lambda, faktöriyel, sınıf, import</li><li>Testte 3. hafta</li></ul></div>
-    <div class="day" data-once="1"><div class="d">4. gün<small data-etiket="Hafta 4">Hafta 4</small></div><ul><li>Kip tablosu, read tuzağı, os</li><li>İki SQL programını kâğıda yaz</li><li>Testin tamamı, sonra Yanlışlarım</li></ul></div>
+    <div class="day" data-once="1"><div class="d">4. gün<small data-etiket="Hafta 4">Hafta 4</small></div><ul><li>Kip tablosu, read tuzağı, os</li><li>İki SQL programını kâğıda yaz</li><li>Testin tamamı, sonra Yanlışlarım</li><li>Deneme sınavı, 60 dakika süreli</li></ul></div>
     <div class="day exam-day" data-once="0"><div class="d">Sınav sabahı<small data-etiket="son bakış">son bakış</small></div><ul><li>Ezber tablosu</li><li>Kırmızı tuzak kutuları</li><li>Ezber modunda üç programı aklından geçir</li></ul></div>
   </div>
 </section>
@@ -1674,6 +1723,7 @@ print("Toplam:", toplam)</code></pre>
 {"h":4,"s":"vtVeriGruplama.py çıktısında neden Çanakkale en üstte?","p":"h4-grup","kip":"ilk","beklenen":"Şehir Adı:Çanakkale","c":["Kayıt sayısı en büyük olduğu için","order by city desc baytlara göre sıralar ve Ç'nin baytı İngilizce harflerden büyüktür","Çanakkale tabloya ilk eklendiği için","SQLite Türkçe alfabeyi kullandığı için"],"d":1,"a":"Varsayılan karşılaştırma UTF-8 baytlarına bakar: Ç = 0xC3, S = 0x53. Azalan sırada en büyük bayt başa gelir."},
 {"h":4,"s":"Sorgu bitince bağlantıyı kapatan satır hangisidir?","c":["baglanti.stop()","baglanti.close()","sqlite3.close()","sorgu.end()"],"d":1,"a":"Dosyada da veritabanında da açılan kapatılır: f.close(), baglanti.close()."}
 ]</script>
+<script type="application/json" id="deneme">[{"h":1,"s":"Çıktı nedir?","k":"x = \"Python\"\nprint(len(x))","c":["6","5","7","Python"],"d":0,"ko":1,"a":"len() karakter sayısını verir: P-y-t-h-o-n, 6 karakter."},{"h":1,"s":"Çıktı nedir?","k":"s = \"Merhaba Dünya\"\nprint(s.split())","c":["['Merhaba', 'Dünya']","['Merhaba Dünya']","Merhaba Dünya","('Merhaba', 'Dünya')"],"d":0,"ko":1,"a":"split() metni boşluklardan böler ve liste döndürür; liste köşeli parantezle yazılır."},{"h":1,"s":"Çıktı nedir?","k":"print(\"ab\" * 3)","c":["ababab","ab3","aaabbb","Hata verir"],"d":0,"ko":1,"a":"Metin * sayı, metni o kadar kez yan yana tekrarlar."},{"h":1,"s":"Çıktı nedir?","k":"print(type(3 / 1))","c":["<class 'float'>","<class 'int'>","<class 'str'>","3.0"],"d":0,"ko":1,"a":"/ işleci her zaman float verir: 3 / 1 = 3.0, tipi float."},{"h":1,"s":"Çıktı nedir?","k":"print(7 // 2, 7 % 2)","c":["3 1","3.5 1","3 0","1 3"],"d":0,"ko":1,"a":"// tam bölme (3), % kalan (1). print virgülle ayrılan değerlerin arasına boşluk koyar."},{"h":1,"s":"Çıktı nedir?","k":"s = \"python\"\nprint(s.upper())","c":["PYTHON","Python","python","pYTHON"],"d":0,"ko":1,"a":"upper() bütün harfleri büyük yapar; lower() küçük yapar."},{"h":1,"s":"Çıktı nedir?","k":"s = \"Çanakkale\"\nprint(s[-1], s[0])","c":["e Ç","Ç e","l Ç","e a"],"d":0,"ko":1,"a":"-1 son karakter (e), 0 ilk karakter (Ç)."},{"h":1,"s":"Çıktı nedir?","k":"s = \"Merhaba\"\nprint(s[1:4])","c":["erh","Merh","erha","rha"],"d":0,"ko":1,"a":"1, 2 ve 3. indeksler: e, r, h. Bitiş (4) dahil değil."},{"h":1,"s":"Çıktı nedir?","k":"print(\"5\" + \"5\", 5 + 5)","c":["55 10","10 10","55 55","Hata verir"],"d":0,"ko":1,"a":"İki metin + ile yan yana eklenir (55); iki sayı toplanır (10)."},{"h":1,"s":"Çıktı nedir?","k":"print(int(\"42\") + 1)","c":["43","421","42","Hata verir"],"d":0,"ko":1,"a":"int(\"42\") metni 42 sayısına çevirir; 1 eklenince 43."},{"h":1,"s":"Çıktı nedir?","k":"puan = 75\nif puan >= 85:\n    print(\"AA\")\nelif puan >= 70:\n    print(\"BB\")\nelif puan >= 50:\n    print(\"CC\")\nelse:\n    print(\"FF\")","c":["BB","AA","CC","BB\nCC"],"d":0,"ko":1,"a":"İlk doğru olan dal çalışır: 75 >= 70 doğru, BB yazılır; sonraki elif'lere bakılmaz."},{"h":1,"s":"Çıktı nedir?","k":"for i in range(3):\n    print(i, end=\" \")","c":["0 1 2","1 2 3","0 1 2 3","0\n1\n2"],"d":0,"ko":1,"a":"range(3) 0, 1, 2 üretir. end=\" \" alt satıra geçmek yerine boşluk koyar; sayılar yan yana yazılır."},{"h":1,"s":"Çıktı nedir?","k":"carpim = 1\nfor i in range(1, 5):\n    carpim *= i\nprint(carpim)","c":["24","10","120","0"],"d":0,"ko":1,"a":"1·2·3·4 = 24. range(1, 5) 5'i kapsamaz; çarpımda başlangıç değeri 1 olmalı."},{"h":2,"s":"Çıktı nedir?","k":"numbers = [1, 2, 3, 4, 5]\nfor n in numbers:\n    if n % 2 == 1:\n        print(n, end=\" \")","c":["1 3 5","2 4","1 2 3 4 5","1\n3\n5"],"d":0,"ko":1,"a":"n % 2 == 1 tek sayıları seçer; end=\" \" ile yan yana yazılır."},{"h":2,"s":"Çıktı nedir?","k":"l = [10, 20, 30]\nprint(l.pop(), l)","c":["30 [10, 20]","10 [20, 30]","30 [10, 20, 30]","[10, 20] 30"],"d":0,"ko":1,"a":"Parametresiz pop() son elemanı siler ve döndürür; liste [10, 20] kalır."},{"h":2,"s":"Listeden son elemanı kaldıran komut hangisidir?","c":["liste.pop()","liste.remove()","liste.append()","liste.insert()"],"d":0,"a":"Parametresiz pop() son elemanı siler; pop(0) ilk elemanı siler. remove değere göre siler ve parametre ister."},{"h":2,"s":"Çıktı nedir?","k":"l = [3, 1, 2]\nl.sort()\nprint(l)","c":["[1, 2, 3]","[3, 2, 1]","[3, 1, 2]","None"],"d":0,"ko":1,"a":"sort() listeyi yerinde küçükten büyüğe sıralar. print(l.sort()) yazılsaydı None çıkardı."},{"h":2,"s":"Çıktı nedir?","k":"l = [\"a\", \"b\"]\nl.append([\"c\", \"d\"])\nprint(len(l))","c":["3","4","2","Hata verir"],"d":0,"ko":1,"a":"append verilen şeyi tek eleman olarak ekler: liste ['a', 'b', ['c', 'd']] olur, 3 eleman."},{"h":2,"s":"Çıktı nedir?","k":"l = [5, 3, 5, 1]\nprint(l.count(5), l.index(1))","c":["2 3","2 4","1 3","5 1"],"d":0,"ko":1,"a":"count(5) kaç tane 5 olduğunu (2), index(1) 1'in indeksini (3) verir."},{"h":2,"s":"Çıktı nedir?","k":"l = [1, 2, 3]\nprint(l[-1] + l[0])","c":["4","3","5","Hata verir"],"d":0,"ko":1,"a":"l[-1] son eleman 3, l[0] ilk eleman 1; toplamları 4."},{"h":2,"s":"Çıktı nedir?","k":"l = [4, 8, 15]\nprint(sum(l) / len(l))","c":["9.0","9","27","9.5"],"d":0,"ko":1,"a":"sum toplamı (27), len eleman sayısını (3) verir; / float döndürür: 9.0."},{"h":2,"s":"Çıktı nedir?","k":"print(10 % 3, 9 % 3)","c":["1 0","3 3","1 3","0 1"],"d":0,"ko":1,"a":"10 = 3·3 + 1, kalan 1; 9 = 3·3, kalan 0 (9, 3'e tam bölünür)."},{"h":2,"s":"Çıktı nedir?","k":"sayi = 7\nbolen = 0\nfor i in range(1, sayi + 1):\n    if sayi % i == 0:\n        bolen += 1\nprint(bolen)","c":["2","1","7","0"],"d":0,"ko":1,"a":"7'nin bölenleri yalnız 1 ve 7: iki bölen. Bölen sayısı 2 olan sayı asaldır."},{"h":2,"s":"Çıktı nedir?","k":"l = []\nfor i in range(3):\n    l.append(i * i)\nprint(l)","c":["[0, 1, 4]","[1, 4, 9]","[0, 1, 2]","[0, 2, 4]"],"d":0,"ko":1,"a":"i = 0, 1, 2 için kareler (0, 1, 4) sırayla sona eklenir."},{"h":2,"s":"Çıktı nedir?","k":"l = [\"x\", \"y\", \"z\"]\nl.insert(5, \"w\")\nprint(l)","c":["['x', 'y', 'z', 'w']","['w', 'x', 'y', 'z']","['x', 'y', 'z', None, None, 'w']","IndexError verir"],"d":0,"ko":1,"a":"insert listenin boyunu aşan bir indekse hata vermez; elemanı sona ekler."},{"h":2,"s":"Çıktı nedir?","k":"print(\"Kars\" in [\"Çanakkale\", \"kars\"])","c":["False","True","kars","Hata verir"],"d":0,"ko":1,"a":"Python büyük-küçük harfe duyarlıdır: \"Kars\" ile \"kars\" farklı metinlerdir."},{"h":3,"s":"Çıktı nedir?","k":"for i in range(1, 10):\n    if i % 4 == 0:\n        break\n    print(i, end=\" \")","c":["1 2 3","1 2 3 4","4","1 2 3 5 6 7 9"],"d":0,"ko":1,"a":"i = 4'te 4 % 4 == 0 olur; break print'ten önce çalışır ve döngü biter."},{"h":3,"s":"Çıktı nedir?","k":"for i in range(1, 7):\n    if i % 3 == 0:\n        continue\n    print(i, end=\" \")","c":["1 2 4 5","1 2","3 6","1 2 3 4 5 6"],"d":0,"ko":1,"a":"continue 3'e bölünen sayıların (3 ve 6) turunu atlar; döngü sürer."},{"h":3,"s":"Çıktı nedir?","k":"i = 0\nwhile i < 10:\n    i += 3\nprint(i)","c":["12","9","10","3"],"d":0,"ko":1,"a":"i sırayla 3, 6, 9, 12 olur. i = 9 iken koşul doğru olduğu için bir tur daha döner; 12 olunca durur."},{"h":3,"s":"Çıktı nedir?","k":"sayac = 0\nn = 100\nwhile n > 1:\n    n = n // 2\n    sayac += 1\nprint(sayac)","c":["6","7","5","50"],"d":0,"ko":1,"a":"100 → 50 → 25 → 12 → 6 → 3 → 1: altı bölme. n = 1 olunca koşul yanlış olur."},{"h":3,"s":"Çıktı nedir?","k":"def kuvvet(x, us=2):\n    return x ** us\n\nprint(kuvvet(3), kuvvet(2, 3))","c":["9 8","6 6","9 6","8 9"],"d":0,"ko":1,"a":"kuvvet(3) varsayılan us = 2 ile 3² = 9; kuvvet(2, 3) = 2³ = 8."},{"h":3,"s":"Çıktı nedir?","k":"def topla(a, b):\n    print(a + b)\n\nsonuc = topla(2, 3)\nprint(sonuc)","c":["5\nNone","5\n5","None","5"],"d":0,"ko":1,"a":"Fonksiyonun içindeki print 5 yazar; return olmadığı için None döner ve ikinci print onu yazar."},{"h":3,"s":"Çıktı nedir?","k":"cift_mi = lambda x: x % 2 == 0\nprint(cift_mi(4), cift_mi(7))","c":["True False","False True","0 1","4 7"],"d":0,"ko":1,"a":"Karşılaştırmanın sonucu True ya da False'tur: 4 çift, 7 tek."},{"h":3,"s":"Fonksiyonda return satırı çalışınca ne olur?","c":["Fonksiyon biter, değer çağırana döner","Değer ekrana yazılır, fonksiyon sürer","Program tamamen kapanır","Döngü bir sonraki tura geçer"],"d":0,"a":"return fonksiyonu orada bitirir, sonrasındaki satırlar çalışmaz. Ekrana yazmak print'in işidir."},{"h":3,"s":"Çıktı nedir?","k":"class Sayac:\n    def __init__(self):\n        self.deger = 0\n    def artir(self):\n        self.deger += 1\n\ns = Sayac()\ns.artir()\ns.artir()\nprint(s.deger)","c":["2","1","0","Hata verir"],"d":0,"ko":1,"a":"__init__ nesne oluşurken deger'i 0 yapar; iki kez artir çağrılınca 2 olur."},{"h":3,"s":"__init__ metodu ne zaman çalışır?","c":["Nesne oluşturulduğunda kendiliğinden","Yalnız elle çağrılınca","Program bitince","Sınıf tanımlanınca bir kez"],"d":0,"a":"Kurucu metottur: s = Sayac() satırında kendiliğinden çalışır ve başlangıç değerlerini atar."},{"h":3,"s":"from math import sqrt satırından sonra 16'nın karekökü nasıl alınır?","kk":"from math import sqrt\nprint(sqrt(16))","beklenen":"4.0","c":["sqrt(16)","math.sqrt(16)","import.sqrt(16)","math(16)"],"d":0,"a":"from ile yalnız sqrt alındı; math adı tanımlı olmadığı için math.sqrt(16) NameError verir."},{"h":3,"s":"Çıktı nedir?","k":"import math\nprint(math.sqrt(25))","c":["5.0","5","25","Hata verir"],"d":0,"ko":1,"a":"math.sqrt float döndürür: 5.0."},{"h":4,"s":"Dosya yoksa oluşturan, dosya varsa hata veren kip hangisidir?","kk":"open(\"d.txt\", \"w\").close()\nopen(\"d.txt\", \"x\")","e":"FileExistsError","c":["\"x\"","\"w\"","\"a\"","\"r\""],"d":0,"a":"x yalnız yeni dosya oluşturur; dosya varsa FileExistsError verir. w varsa sıfırlar, a sona ekler, r yalnız okur."},{"h":4,"s":"Çıktı nedir?","k":"f = open(\"t.txt\", \"w\", encoding=\"utf-8\")\nf.write(\"1\\n2\\n3\")\nf.close()\nf = open(\"t.txt\", encoding=\"utf-8\")\nprint(len(f.readlines()))\nf.close()","c":["3","2","5","1"],"d":0,"ko":1,"a":"readlines satırların listesini döndürür: ['1\\n', '2\\n', '3'], yani 3 eleman."},{"h":4,"s":"Çıktı nedir?","k":"f = open(\"t.txt\", \"w\", encoding=\"utf-8\")\nf.write(\"elma\\narmut\\nkiraz\")\nf.close()\nf = open(\"t.txt\", encoding=\"utf-8\")\nf.readline()\nprint(f.readline().strip())\nf.close()","c":["armut","elma","kiraz","elma armut"],"d":0,"ko":1,"a":"İlk readline elma'yı okur ve imleç ilerler; ikincisi armut'u okur. strip satır sonunu siler."},{"h":4,"s":"with open(...) as f: bloğu bitince ne olur?","kk":"with open(\"w.txt\", \"w\") as f:\n    f.write(\"x\")\nprint(f.closed)","beklenen":"True","c":["Dosya kendiliğinden kapanır","Dosya silinir","Dosyanın içi temizlenir","Hiçbir şey olmaz, close() yine gerekir"],"d":0,"a":"with bloğundan çıkınca, arada hata olsa bile, dosya kapanır; close() yazmak gerekmez."},{"h":4,"s":"Çıktı nedir?","k":"f = open(\"t.txt\", \"w\", encoding=\"utf-8\")\nf.write(\"abc\")\nf.close()\nf = open(\"t.txt\", encoding=\"utf-8\")\na = f.read()\nb = f.read()\nprint(len(a), len(b))\nf.close()","c":["3 0","3 3","0 3","Hata verir"],"d":0,"ko":1,"a":"İlk read her şeyi okur ve imleci sona götürür; ikinci read boş metin döndürür."},{"h":4,"s":"Klasör oluşturan komut hangisidir?","kk":"import os\nos.mkdir(\"yeni\")\nprint(os.path.isdir(\"yeni\"))","beklenen":"True","c":["os.mkdir(\"yeni\")","os.rmdir(\"yeni\")","os.remove(\"yeni\")","os.path.exists(\"yeni\")"],"d":0,"a":"mkdir klasör oluşturur, rmdir boş klasörü siler, remove dosya siler, exists var mı diye bakar."},{"h":4,"s":"Çıktı nedir?","k":"import os\nprint(os.path.exists(\"olmayan_dosya.txt\"))","c":["False","True","None","FileNotFoundError verir"],"d":0,"ko":1,"a":"exists dosya yoksa hata vermez, False döndürür."},{"h":4,"s":"Yalnız Almanya'daki müşterileri getiren sorgu hangisidir?","c":["SELECT * FROM customers WHERE Country = 'Germany'","SELECT * FROM customers WHERE Country = Germany","SELECT * FROM customers HAVING Country = 'Germany'","SELECT * FROM customers ORDER BY 'Germany'"],"d":0,"a":"Satırları süzmek WHERE ile yapılır ve metin değer tek tırnak ister. Tırnaksız Germany sütun adı sanılır."},{"h":4,"s":"Çıktı nedir?","k":"import sqlite3\nb = sqlite3.connect(\"vt.db\")\ns = b.execute(\"select count(*) from customers where Country = 'Germany'\")\nprint(s.fetchone()[0])\nb.close()","vt":1,"c":["4","5","13","0"],"d":0,"ko":1,"a":"Projedeki vt.db'de ülkesi Germany olan 4 müşteri var. fetchone() ilk satırı (4,) demeti olarak verir, [0] sayıyı alır."},{"h":4,"s":"SELECT City, count(*) FROM customers GROUP BY City sorgusu ne döndürür?","c":["Her şehir için müşteri sayısını","Yalnız en çok müşterisi olan şehri","Bütün müşterileri şehir sırasıyla","Toplam müşteri sayısını tek satırda"],"d":0,"a":"GROUP BY aynı şehirdekileri tek satırda toplar; count(*) her gruptaki satır sayısını verir."},{"h":4,"s":"Çıktı nedir?","k":"import sqlite3\nb = sqlite3.connect(\":memory:\")\nb.execute(\"create table t (ad text, notu int)\")\nb.execute(\"insert into t values ('Ali', 70), ('Ayşe', 90), ('Mert', 50)\")\ns = b.execute(\"select ad from t where notu > 60 order by notu desc\")\nprint(s.fetchall())","c":["[('Ayşe',), ('Ali',)]","[('Ali',), ('Ayşe',)]","['Ayşe', 'Ali']","[('Mert',)]"],"d":0,"ko":1,"a":"where notu > 60 Mert'i eler, desc büyükten küçüğe sıralar. fetchall satırları demet listesi olarak verir."},{"h":4,"s":"insert sorgusundan sonra değişikliği veritabanı dosyasına kaydeden komut hangisidir?","c":["baglanti.commit()","baglanti.save()","baglanti.close()","baglanti.execute()"],"d":0,"a":"commit() yapılmazsa bağlantı kapanınca eklenen kayıtlar kaybolur."}]</script>
 <script>
 (function () {
   'use strict';
@@ -2141,6 +2191,262 @@ print("Toplam:", toplam)</code></pre>
     }
     document.getElementById('reset').addEventListener('click', function () { yeniden(); ciz(); filtreleriGuncelle(); });
     yeniden(); ciz();
+  })();
+
+  /* ---------- Deneme sınavı: 50 soru, cevaplar sınav bitince ---------- */
+  (function () {
+    var kap = document.getElementById('deneme-app'); if (!kap) return;
+    var D = veri('deneme', []) || []; if (!D.length) return;
+    var ANAHTAR = 'python-vize:deneme', SON = 'python-vize:deneme-son', SURE = 60 * 60;
+    var durum = null, zaman = 0;
+    function oku(k) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch (x) { return null; } }
+    function yaz(k, v) { try { if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, JSON.stringify(v)); } catch (x) { /* gizli pencere */ } }
+    function karistir(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+    function dur() { clearInterval(zaman); zaman = 0; }
+    function sureYaz(ms) { var s = Math.max(0, Math.round(ms / 1000)), d = Math.floor(s / 60); return (d < 10 ? '0' : '') + d + ':' + String(s % 60).padStart(2, '0'); }
+    function cevapSay(d) { return Object.keys(d.cevap).length; }
+    function gecerli(d) { return d && Array.isArray(d.sira) && d.sira.length && d.sira.every(function (i) { return D[i] && d.yer && d.yer[i]; }); }
+    function yeniDurum(liste, sureli, tekrar) {
+      var sira = [];
+      [1, 2, 3, 4].forEach(function (h) { sira = sira.concat(karistir(liste.filter(function (i) { return D[i].h === h; }))); });
+      var yer = {};
+      sira.forEach(function (i) { yer[i] = karistir(D[i].c.map(function (_, k) { return k; })); });
+      return { sira: sira, yer: yer, cevap: {}, isaret: {}, simdi: 0, basla: Date.now(), sure: sureli ? SURE : 0, tekrar: !!tekrar };
+    }
+    function kaydet() { if (durum && !durum.tekrar && !durum.bitti) yaz(ANAHTAR, durum); }
+    function sikMetni(q, k) {
+      var tx = el('span', 'tx'), m = q.c[k];
+      if (q.ko && m.indexOf('\n') >= 0) { tx.className = 'tx lines'; m.split('\n').forEach(function (s) { tx.appendChild(el('span', null, s)); }); }
+      else tx.textContent = m;
+      return tx;
+    }
+    function soruBasi(q, n) {
+      var t = el('div', 'qt');
+      t.appendChild(el('span', 'n', String(n).padStart(2, '0')));
+      t.appendChild(el('span', null, q.s));
+      t.appendChild(el('span', 'tag ek', q.h + '. hafta'));
+      return t;
+    }
+    function kodBlogu(q) { var pre = el('pre', 'code frag'); pre.appendChild(el('code', null, q.k)); renklendir(pre, true); return pre; }
+    function basaGit() { var r = kap.getBoundingClientRect(); if (r.top < 0) kap.scrollIntoView({ block: 'start' }); }
+
+    function baslangic() {
+      dur(); kap.onkeydown = null; kap.textContent = '';
+      var k = el('div', 'dn-bas'), oz = el('p', 'dn-ozet');
+      [['50', 'soru'], ['4', 'hafta'], ['4', 'şık'], ['60 dk', 'süre, isteğe bağlı']].forEach(function (x) {
+        var s = el('span'); s.appendChild(el('b', null, x[0])); s.appendChild(document.createTextNode(' ' + x[1])); oz.appendChild(s);
+      });
+      k.appendChild(oz);
+      k.appendChild(el('p', null, 'Şıkka tıklayınca seçilir; sınav bitene kadar değiştirebilirsin. Emin olmadığın soruyu ⚑ ile işaretle, alttaki numaralardan geri dön. Klavyede 1–4 şık seçer, ← → soru değiştirir.'));
+      var sec = el('label', 'dn-sec'), cb = el('input');
+      cb.type = 'checkbox'; cb.checked = true;
+      sec.appendChild(cb); sec.appendChild(document.createTextNode('Süre tut: 60 dakika; süre bitince sınav kendiliğinden biter'));
+      k.appendChild(sec);
+      var dz = el('div', 'dn-gezin'), basla = dugme('btn primary', 'Sınavı başlat');
+      basla.addEventListener('click', function () { durum = yeniDurum(D.map(function (_, i) { return i; }), cb.checked, false); kaydet(); sinav(); basaGit(); });
+      dz.appendChild(basla);
+      var kayitli = oku(ANAHTAR);
+      if (gecerli(kayitli) && !kayitli.bitti) {
+        var devam = dugme('btn', 'Kaldığın yerden devam et (' + cevapSay(kayitli) + '/' + kayitli.sira.length + ' cevaplı)');
+        devam.addEventListener('click', function () { durum = kayitli; sinav(); basaGit(); });
+        dz.appendChild(devam);
+      } else if (kayitli) yaz(ANAHTAR, null);
+      k.appendChild(dz);
+      var son = oku(SON);
+      if (son && son.t) k.appendChild(el('p', 'dn-son', 'Son denemen: ' + son.d + ' / ' + son.t + ' doğru · ' + son.tarih));
+      kap.appendChild(k);
+    }
+
+    function sinav() {
+      dur(); kap.textContent = '';
+      var ust = el('div', 'dn-ust'), ilerleme = el('span', 'ilerleme'), sureEl = el('span', 'sure'), bitirB = dugme('btn', 'Sınavı bitir');
+      var bar = el('span', 'dn-bar'), barI = el('i');
+      bar.appendChild(barI); sureEl.title = 'Kalan süre';
+      ust.appendChild(ilerleme); if (durum.sure) ust.appendChild(sureEl); ust.appendChild(bitirB); ust.appendChild(bar);
+      var soruK = el('div', 'q dn-soru');
+      var gezin = el('div', 'dn-gezin sinav'), onceki = dugme('btn', '◀ Önceki'), isaretB = dugme('btn', '⚑ İşaretle', { 'aria-pressed': 'false' }), sonraki = dugme('btn primary', 'Sonraki ▶');
+      gezin.appendChild(onceki); gezin.appendChild(isaretB); gezin.appendChild(sonraki);
+      var uyari = el('div', 'dn-uyari'); uyari.hidden = true;
+      var palet = el('div', 'dn-palet'); palet.setAttribute('role', 'group'); palet.setAttribute('aria-label', 'Soru numaraları');
+      var pb = durum.sira.map(function (i, n) {
+        var b = dugme(null, String(n + 1), { 'aria-label': (n + 1) + '. soru' });
+        b.addEventListener('click', function () { git(n); });
+        palet.appendChild(b);
+        return b;
+      });
+      [ust, soruK, gezin, uyari, palet].forEach(function (x) { kap.appendChild(x); });
+
+      function ustGuncelle() {
+        var c = cevapSay(durum), t = durum.sira.length;
+        ilerleme.textContent = 'Soru ' + (durum.simdi + 1) + ' / ' + t + ' · ' + c + ' cevaplı';
+        barI.style.width = Math.round(100 * c / t) + '%';
+        pb.forEach(function (b, n) {
+          var i = durum.sira[n];
+          b.className = (i in durum.cevap ? 'cevapli' : '') + (n === durum.simdi ? ' simdi' : '') + (durum.isaret[i] ? ' isaret' : '');
+          if (n === durum.simdi) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
+        });
+      }
+      function ciz(odak) {
+        var n = durum.simdi, i = durum.sira[n], q = D[i];
+        soruK.textContent = '';
+        soruK.appendChild(soruBasi(q, n + 1));
+        if (q.k) soruK.appendChild(kodBlogu(q));
+        var opts = el('div', 'opts');
+        durum.yer[i].forEach(function (k, pos) {
+          var secili = durum.cevap[i] === k;
+          var b = dugme((q.ko ? 'mono' : '') + (secili ? ' secili' : ''), null, { 'aria-pressed': secili ? 'true' : 'false' });
+          b.appendChild(el('span', 'k', String.fromCharCode(65 + pos) + ')'));
+          b.appendChild(sikMetni(q, k));
+          b.addEventListener('click', function () { sec(pos); });
+          opts.appendChild(b);
+        });
+        soruK.appendChild(opts);
+        onceki.disabled = n === 0;
+        sonraki.disabled = n === durum.sira.length - 1;
+        isaretB.setAttribute('aria-pressed', durum.isaret[i] ? 'true' : 'false');
+        isaretB.textContent = durum.isaret[i] ? '⚑ İşareti kaldır' : '⚑ İşaretle';
+        ustGuncelle();
+        if (odak !== undefined) { var o = opts.children[odak]; if (o) { try { o.focus({ preventScroll: true }); } catch (x) { o.focus(); } } }
+      }
+      function sec(pos) { var i = durum.sira[durum.simdi]; durum.cevap[i] = durum.yer[i][pos]; kaydet(); ciz(pos); }
+      function git(n) {
+        durum.simdi = Math.max(0, Math.min(durum.sira.length - 1, n));
+        kaydet(); ciz();
+        var r = soruK.getBoundingClientRect();
+        if (r.top < 0 || r.top > window.innerHeight * 0.75) soruK.scrollIntoView({ block: 'center' });
+      }
+      onceki.addEventListener('click', function () { git(durum.simdi - 1); });
+      sonraki.addEventListener('click', function () { git(durum.simdi + 1); });
+      isaretB.addEventListener('click', function () {
+        var i = durum.sira[durum.simdi];
+        if (durum.isaret[i]) delete durum.isaret[i]; else durum.isaret[i] = 1;
+        kaydet(); ciz();
+      });
+      bitirB.addEventListener('click', function () {
+        var bos = durum.sira.length - cevapSay(durum);
+        if (!bos) { bitir(); return; }
+        uyari.textContent = ''; uyari.hidden = false;
+        uyari.appendChild(el('p', null, bos + ' soru boş. Boş soru puan getirmez. Yine de bitirilsin mi?'));
+        var r = el('div', 'dn-gezin'), e = dugme('btn primary', 'Evet, bitir'), h = dugme('btn', 'Sınava dön');
+        e.addEventListener('click', bitir);
+        h.addEventListener('click', function () { uyari.hidden = true; });
+        r.appendChild(e); r.appendChild(h); uyari.appendChild(r);
+        uyari.scrollIntoView({ block: 'nearest' });
+        e.focus();
+      });
+      kap.onkeydown = function (e) {
+        if (e.altKey || e.ctrlKey || e.metaKey || !durum || durum.bitti) return;
+        var pos = { '1': 0, '2': 1, '3': 2, '4': 3 }[e.key];
+        if (pos !== undefined && pos < durum.yer[durum.sira[durum.simdi]].length) { sec(pos); e.preventDefault(); }
+        else if (e.key === 'ArrowRight') { git(durum.simdi + 1); e.preventDefault(); }
+        else if (e.key === 'ArrowLeft') { git(durum.simdi - 1); e.preventDefault(); }
+      };
+      function tik() {
+        var kalan = durum.basla + durum.sure * 1000 - Date.now();
+        if (kalan <= 0) { bitir(); return; }
+        sureEl.textContent = sureYaz(kalan);
+        sureEl.classList.toggle('az', kalan < 5 * 60 * 1000);
+      }
+      if (durum.sure) { tik(); if (!durum.bitti) zaman = setInterval(tik, 1000); }
+      if (!durum.bitti) ciz();
+    }
+
+    function bitir() {
+      dur();
+      if (!durum || durum.bitti) return;
+      durum.bitti = true; durum.bitis = Date.now();
+      var r = { dogru: 0, yanlis: 0, bos: 0, hafta: {} };
+      durum.sira.forEach(function (i) {
+        var q = D[i], h = r.hafta[q.h] = r.hafta[q.h] || { d: 0, t: 0 };
+        h.t++;
+        if (!(i in durum.cevap)) r.bos++;
+        else if (durum.cevap[i] === q.d) { r.dogru++; h.d++; }
+        else r.yanlis++;
+      });
+      if (!durum.tekrar) {
+        yaz(ANAHTAR, null);
+        yaz(SON, { d: r.dogru, t: durum.sira.length, tarih: new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' }) });
+      }
+      sonuc(r);
+    }
+
+    function sonuc(r) {
+      kap.onkeydown = null; kap.textContent = '';
+      var t = durum.sira.length, oran = r.dogru / t, s = el('div', 'dn-sonuc');
+      var skor = el('div', 'dn-skor');
+      skor.appendChild(el('b', null, r.dogru + ' / ' + t));
+      skor.appendChild(el('span', null, '%' + Math.round(100 * oran) + ' doğru' + (durum.tekrar ? ' · tekrar turu' : '')));
+      s.appendChild(skor);
+      s.appendChild(el('p', 'dn-sayilar', 'Doğru ' + r.dogru + ' · Yanlış ' + r.yanlis + ' · Boş ' + r.bos + ' · Süre ' + sureYaz(durum.bitis - durum.basla)));
+      s.appendChild(el('p', 'dn-yorum',
+        oran >= 0.85 ? 'Çok iyi, sınava hazırsın. Yanlışlarının açıklamalarını bir kez oku.'
+        : oran >= 0.7 ? 'İyi. Aşağıda yanlışlarının açıklamalarını oku, sonra “Yanlış ve boşları tekrar çöz”.'
+        : oran >= 0.5 ? 'Orta. Düşük çıkan haftanın konu anlatımına dön, terminallerde kodları çalıştır, sonra yeniden dene.'
+        : 'Önce konu anlatımına dön: düşük çıkan haftayı baştan oku, “Çıktıyı yaz” alıştırmalarını yap, sonra yeniden dene.'));
+      var hk = el('div', 'dn-hafta');
+      [1, 2, 3, 4].forEach(function (h) {
+        var x = r.hafta[h]; if (!x) return;
+        var row = el('div'), a = el('a', null, h + '. hafta'), b = el('span', 'bar'), i = el('i');
+        a.href = '#h' + h; i.style.width = Math.round(100 * x.d / x.t) + '%'; b.appendChild(i);
+        row.appendChild(a); row.appendChild(b); row.appendChild(el('span', null, x.d + ' / ' + x.t));
+        hk.appendChild(row);
+      });
+      s.appendChild(hk);
+      var yanlislar = durum.sira.filter(function (i) { return durum.cevap[i] !== D[i].d; });
+      var dz = el('div', 'dn-gezin');
+      if (yanlislar.length) {
+        var tb = dugme('btn primary', 'Yanlış ve boşları tekrar çöz (' + yanlislar.length + ')');
+        tb.addEventListener('click', function () { durum = yeniDurum(yanlislar, false, true); sinav(); basaGit(); });
+        dz.appendChild(tb);
+      }
+      var yb = dugme('btn', 'Yeni deneme başlat');
+      yb.addEventListener('click', function () { baslangic(); basaGit(); });
+      dz.appendChild(yb);
+      s.appendChild(dz);
+      var gk = el('div', 'dn-gozden'), filtre = el('div', 'chips'), liste = el('div'), mod = yanlislar.length ? 'yanlis' : 'hepsi';
+      var fb = [['yanlis', 'Yanlış ve boşlar (' + yanlislar.length + ')'], ['hepsi', 'Bütün sorular']].map(function (f) {
+        var b = dugme('chip' + (f[0] === mod ? ' on' : ''), f[1], { 'aria-pressed': f[0] === mod ? 'true' : 'false' });
+        b.addEventListener('click', function () {
+          mod = f[0];
+          fb.forEach(function (x) { var on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+          listele();
+        });
+        filtre.appendChild(b);
+        return b;
+      });
+      gk.appendChild(el('h3', null, 'Cevapların ve açıklamalar'));
+      gk.appendChild(filtre); gk.appendChild(liste);
+      function listele() {
+        liste.textContent = '';
+        durum.sira.forEach(function (i, n) {
+          var q = D[i], senin = durum.cevap[i], dogruMu = senin === q.d;
+          if (mod === 'yanlis' && dogruMu) return;
+          var kutu = el('div', 'q');
+          kutu.appendChild(soruBasi(q, n + 1));
+          if (q.k) kutu.appendChild(kodBlogu(q));
+          var opts = el('div', 'opts');
+          durum.yer[i].forEach(function (k, pos) {
+            var b = dugme((q.ko ? 'mono' : '') + (k === q.d ? ' right' : k === senin ? ' wrong' : ''), null);
+            b.disabled = true;
+            b.appendChild(el('span', 'k', String.fromCharCode(65 + pos) + ')'));
+            b.appendChild(sikMetni(q, k));
+            opts.appendChild(b);
+          });
+          kutu.appendChild(opts);
+          var why = el('div', 'why');
+          why.appendChild(el('b', null, senin === undefined ? 'Boş bıraktın. ' : dogruMu ? 'Doğru. ' : 'Yanlış. '));
+          why.appendChild(document.createTextNode(q.a));
+          kutu.appendChild(why);
+          liste.appendChild(kutu);
+        });
+        if (!liste.childNodes.length) liste.appendChild(el('p', 'bos', 'Hepsi doğru. Tebrikler.'));
+      }
+      listele();
+      s.appendChild(gk);
+      kap.appendChild(s);
+    }
+
+    baslangic();
   })();
 
   /* ---------- İçindekiler vurgusu, yazdırma ---------- */
