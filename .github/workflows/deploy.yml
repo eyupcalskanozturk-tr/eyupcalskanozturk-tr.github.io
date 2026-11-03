@@ -45,6 +45,8 @@ jobs:
           if [ -d ntp-vize ]; then cp -R ntp-vize _site/; fi
           # Konfeksiyonda Kalite Kontrol · vize çalışma sayfası (arkadaş için)
           if [ -d kalite-kontrol ]; then cp -R kalite-kontrol _site/; fi
+          # Programlama Temelleri · C# 8 haftalık çalışma sayfası (arkadaş için)
+          if [ -d programlama-temelleri ]; then cp -R programlama-temelleri _site/; fi
       - name: Dosyaları yükle
         uses: actions/upload-pages-artifact@v4
         with:

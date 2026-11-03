@@ -1,6 +1,6 @@
 # Eyüp'ün portfolyosu — proje hafızası
 
-Eyüp Çalışkanöztürk'ün kişisel sitesi: https://eyupcalskanozturk-tr.github.io (GitHub Pages). Türkçe; derleme adımı yok, düz HTML/CSS/JavaScript (`index.html`, `css/style.css`, `js/main.js`, `assets/`). Alt sayfalar: `chen-atolyesi/`, `laravel-vize/`, `python-vize/`, `ntp-vize/`, `mesleki-ingilizce/`, `kalite-kontrol/`, `PROJE/`.
+Eyüp Çalışkanöztürk'ün kişisel sitesi: https://eyupcalskanozturk-tr.github.io (GitHub Pages). Türkçe; derleme adımı yok, düz HTML/CSS/JavaScript (`index.html`, `css/style.css`, `js/main.js`, `assets/`). Alt sayfalar: `chen-atolyesi/`, `laravel-vize/`, `python-vize/`, `ntp-vize/`, `mesleki-ingilizce/`, `kalite-kontrol/`, `programlama-temelleri/`, `PROJE/`.
 
 Kullanıcıya "Başkan" ya da Eyüp diye hitap et. Koyu tema, altın ve neon vurgular, glassmorphism ve terminal estetiğini sever.
 
@@ -16,6 +16,7 @@ Kullanıcıya "Başkan" ya da Eyüp diye hitap et. Koyu tema, altın ve neon vur
 - `ntp-vize/` (Java) sayfasındaki çıktılar, adım adım izler (çağrı yığını, nesneler, diziler) ve soruların cevapları da elle yazılmaz: `python3 -I .claude/araclar/ntp-vize-iz.py` sayfadaki programları `javac -g` ile derler, `Kosucu` ile girdili çalıştırır, `Izci` (JDI) ile satır satır izler ve `id="izler"` bloğuna yazar; testteki (`id="sorular"`) kodlu sorular ile derlenir mi kartlarını (`id="derleme"`) gerçek javac/java sonucuyla doğrular. Yardımcı Java sınıfları `.claude/araclar/ntp-java/`'da; senaryolar aracın `AYAR` sözlüğünde. Sayfada bir kodu ya da soruyu değiştirince aracı yeniden çalıştır (JDK 21 gerekir).
 - `mesleki-ingilizce/` sayfası metinleri, sözlüğü ve soruları `id="veri"` bloğundan çizer. Veriyi değiştirince `python3 -I .claude/araclar/ingilizce-dogrula.py` çalıştır: soru-cevaplar, boşluk doldurma ve tanımlar okuma metniyle karşılaştırılır; `--kaynak <sunum-metni.txt>` verilirse her cümle sunumla da karşılaştırılır (sunum metni repoda yok).
 - `kalite-kontrol/` (Konfeksiyonda Kalite Kontrol) sayfası kartları, soruları, listeleri ve sıralamaları `id="veri"` bloğundan çizer. Veriyi değiştirince `python3 -I .claude/araclar/kalite-dogrula.py` çalıştır; `--kaynak <sayfa-metinleri-klasörü>` verilirse her kartın ve sorunun kanıt ifadesi kitabın ilgili sayfasında aranır (kitap metni telif nedeniyle repoda yok).
+- `programlama-temelleri/` (C#, 8 hafta) sayfasındaki çıktılar, adım adım izler (Visual Studio Locals görünümü), test cevapları ve derlenir mi kartlarının derleyici mesajları elle yazılmaz: `python3 -I .claude/araclar/programlama-iz.py` sayfadaki programları .NET 8 SDK'nın Roslyn'iyle tek seferde derler (`.claude/araclar/programlama-cs/Derleyici.cs` her deyimin önüne ve her koşula izleme çağrısı ekler), tr-TR kültüründe girdili çalıştırır ve `id="izler"` ile `id="derleme-cikti"` bloklarına yazar; testteki (`id="sorular"`) kodlu soruları ve kartları (`id="derleme"`) gerçek sonuçla doğrular. Senaryolar aracın `AYAR` sözlüğünde. Sayfada bir kodu ya da soruyu değiştirince aracı yeniden çalıştır (.NET 8 SDK gerekir).
 
 ## Değişmez kurallar
 
