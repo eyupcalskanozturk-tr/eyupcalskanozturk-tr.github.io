@@ -1,0 +1,1301 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta property="og:title" content="Rehber Vize Provası · Görsel Programlama 2">
+<meta property="og:description" content="ASP.NET Core MVC PhoneBookApp kodları üzerinde konu anlatımı, boşluk doldurma alıştırmaları ve karışık vize provası.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://eyupcalskanozturk-tr.github.io/rehber-vize/">
+<link rel="canonical" href="https://eyupcalskanozturk-tr.github.io/rehber-vize/">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Rehber Vize Provası</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Görsel Programlama 2 vize hazırlığı: PhoneBookApp (ASP.NET Core MVC, Entity Framework) kodlarının konu anlatımı, boşluk doldurma alıştırmaları ve karışık sınav.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: tek sütun çalışma masası — üstte seviyeler, sonra sekmeler (konu + alıştırmalar), ortada editör görünümlü kod kağıdı, altta açıklama defteri */
+:root{
+  --bg:#EDF0F4; --paper:#FFFFFF; --ink:#172031; --muted:#5B6578; --line:#D6DCE6; --soft:#F5F7FA;
+  --accent:#0B7A73; --accent-ink:#FFFFFF; --accent-soft:#DDF1EE; --marker:#E2A526;
+  --ok:#1D7F47; --ok-soft:#E1F3E8; --bad:#BE3434; --bad-soft:#FBE6E6; --warn:#9A6200; --warn-soft:#FCF0D6;
+  --code-bg:#1A2030; --code-fg:#D8DEE9; --code-line:#3A4560; --code-input:#242C40; --code-num:#7E8AA6;
+  --c-kw:#7FB2FF; --c-type:#5FD1B8; --c-str:#E8B875; --c-com:#7C879E; --c-key:#C7A3FF; --c-cmd:#F0C66E;
+  --code-ok:#1F4A35; --code-bad:#5A2430; --code-shown:#4D3E1A; --code-mark:#3B3420;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", Consolas, "Cascadia Mono", monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F131B; --paper:#161C27; --ink:#E5E9F0; --muted:#97A1B4; --line:#283142; --soft:#1B2230;
+  --accent:#3CC2B6; --accent-ink:#06211F; --accent-soft:#16312F; --marker:#E9B544;
+  --ok:#5BCB8A; --ok-soft:#14301F; --bad:#F07F7F; --bad-soft:#3A1A1D; --warn:#E9B544; --warn-soft:#352A12;
+  --code-bg:#0B0F17; --code-input:#171E2C; --code-line:#334059;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F131B; --paper:#161C27; --ink:#E5E9F0; --muted:#97A1B4; --line:#283142; --soft:#1B2230;
+  --accent:#3CC2B6; --accent-ink:#06211F; --accent-soft:#16312F; --marker:#E9B544;
+  --ok:#5BCB8A; --ok-soft:#14301F; --bad:#F07F7F; --bad-soft:#3A1A1D; --warn:#E9B544; --warn-soft:#352A12;
+  --code-bg:#0B0F17; --code-input:#171E2C; --code-line:#334059;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.6 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+.wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1,h2,h3,h4{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:var(--accent)}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.eyebrow{font:600 11.5px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+header.top{display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-end;justify-content:space-between}
+.brand{display:flex;flex-direction:column;gap:8px;min-width:0}
+.brand h1{font-size:clamp(28px,5vw,40px);font-weight:700;line-height:1.05}
+.brand h1 mark{background:linear-gradient(transparent 62%,var(--marker) 62%);color:inherit;padding:0 2px}
+.meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:6px 12px;font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill b{font-weight:600}
+button.pill:hover{border-color:var(--bad)}
+.pill .cnt{background:var(--bad-soft);color:var(--bad);border-radius:999px;padding:0 7px;font-weight:600}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;background:var(--paper);padding:3px}
+.seg button{border:0;background:transparent;border-radius:999px;padding:5px 12px;font-size:13px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+
+.levels{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:780px){.levels{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.lv{text-align:left;border:1px solid var(--line);background:var(--paper);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.lv:hover{border-color:var(--accent)}
+.lv[aria-current="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.lv .name{font:600 16px/1.25 var(--display)}
+.lv .desc{font-size:12.5px;color:var(--muted);line-height:1.35}
+.lv .bar{height:4px;border-radius:2px;background:var(--line);overflow:hidden;margin-top:auto}
+.lv .bar i{display:block;height:100%;background:var(--accent);width:0}
+.lv.exam{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.lv.exam .desc,.lv.exam .eyebrow{color:var(--paper);opacity:.75}
+.lv.exam .bar{background:rgba(127,127,127,.4)} .lv.exam .bar i{background:var(--marker)}
+
+.extabs{display:flex;gap:8px;flex-wrap:wrap}
+.extab{border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:7px 12px;font-size:13.5px;display:inline-flex;gap:8px;align-items:center}
+.extab[aria-current="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--line);flex:none}
+.dot.part{background:var(--marker)} .dot.done{background:var(--ok)} .dot.book{background:var(--accent)}
+
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.card-head{padding:18px 20px 14px;display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--line)}
+.card-head .row{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+.card-head .row .seg{margin-left:auto}
+.file{font:500 12.5px/1 var(--mono);background:var(--accent-soft);color:var(--accent);padding:5px 8px;border-radius:6px}
+.card-head h2{font-size:22px;font-weight:600}
+.intro{color:var(--muted);margin:0;max-width:70ch}
+
+.code{background:var(--code-bg);color:var(--code-fg);overflow-x:auto}
+.code pre{margin:0;padding:18px 20px;font:400 13.5px/1.9 var(--mono);tab-size:4;white-space:pre;min-width:max-content}
+.c-kw{color:var(--c-kw)} .c-type{color:var(--c-type)} .c-str{color:var(--c-str)} .c-com{color:var(--c-com);font-style:italic} .c-key{color:var(--c-key)} .c-cmd{color:var(--c-cmd)}
+.given{color:var(--c-type);background:rgba(127,178,255,.10);border-radius:3px;padding:0 1px}
+.code mark.ans{background:var(--code-mark);color:#FFD98A;border-bottom:2px solid #E9B544;border-radius:3px 3px 0 0;padding:0 2px;font-style:normal}
+.code mark.ans::before{content:attr(data-n);font:600 11px/1 var(--body);color:var(--marker);vertical-align:super;margin-right:2px}
+.blank{white-space:nowrap}
+.blank input{font:inherit;color:inherit;background:var(--code-input);border:0;border-bottom:2px solid var(--code-line);border-radius:4px 4px 0 0;padding:0 .35ch;margin:0 1px;caret-color:var(--marker);text-align:left;font-style:normal}
+.blank input::placeholder{color:var(--code-num);opacity:1}
+.blank input.ok{background:var(--code-ok);border-color:#5BCB8A}
+.blank input.bad{background:var(--code-bad);border-color:#F07F7F}
+.blank input.case,.blank input.shown{background:var(--code-shown);border-color:#E9B544}
+.checked .blank::before{content:attr(data-n);font:600 11px/1 var(--body);color:var(--marker);vertical-align:super;margin-right:1px}
+
+.tlist{list-style:none;margin:0;padding:8px 20px 14px;display:flex;flex-direction:column}
+.tlist li{padding:12px 0;border-bottom:1px dashed var(--line);line-height:2.1}
+.tlist li:last-child{border-bottom:0}
+.tlist mark.ans,.qtext mark.ans{background:var(--warn-soft);color:var(--warn);font:600 14px/1.5 var(--mono);padding:1px 5px;border-radius:4px}
+.tlist .blank input,.qtext .blank input{background:var(--soft);border-bottom-color:var(--muted);color:var(--ink);font:500 14px/1.5 var(--mono)}
+.tlist .blank input::placeholder,.qtext .blank input::placeholder{color:var(--muted)}
+.tlist .blank input.ok,.qtext .blank input.ok{background:var(--ok-soft);border-color:var(--ok)}
+.tlist .blank input.bad,.qtext .blank input.bad{background:var(--bad-soft);border-color:var(--bad)}
+.tlist .blank input.shown,.tlist .blank input.case,.qtext .blank input.case{background:var(--warn-soft);border-color:var(--warn)}
+
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:14px 20px;border-top:1px solid var(--line);background:var(--soft)}
+.btn{border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:8px 14px;font-size:14px;font-weight:500}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.05)}
+.status{margin-left:auto;font-size:14px;font-variant-numeric:tabular-nums;color:var(--muted)}
+.status b{color:var(--ink)}
+@media (max-width:560px){.status{margin-left:0;width:100%}}
+
+.results{padding:6px 20px 18px;display:flex;flex-direction:column;gap:4px}
+.results h3{font-size:16px;font-weight:600;padding:12px 0 6px}
+.res{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.res .n{font:600 12px/24px var(--body);width:24px;height:24px;text-align:center;border-radius:50%;background:var(--soft);color:var(--muted)}
+.res.ok .n{background:var(--ok-soft);color:var(--ok)} .res.bad .n{background:var(--bad-soft);color:var(--bad)} .res.case .n,.res.shown .n,.res.read .n{background:var(--warn-soft);color:var(--warn)}
+.res .ans{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+.res code{font:600 13.5px/1.4 var(--mono);background:var(--soft);padding:2px 6px;border-radius:5px;word-break:break-all}
+.tag{font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px}
+.tag.ok{background:var(--ok-soft);color:var(--ok)} .tag.bad{background:var(--bad-soft);color:var(--bad)} .tag.case,.tag.shown{background:var(--warn-soft);color:var(--warn)}
+.yours{font-size:13px;color:var(--muted)} .yours s{font-family:var(--mono)}
+.res p{margin:4px 0 0;color:var(--muted);font-size:14px;max-width:72ch}
+.next{display:flex;justify-content:flex-end;gap:10px;padding:0 20px 18px;flex-wrap:wrap}
+
+.lesson{padding:6px 20px 20px;display:flex;flex-direction:column;gap:14px;max-width:820px}
+.lesson h3{font-size:18px;font-weight:600;margin-top:10px}
+.lesson p{margin:0;max-width:70ch}
+.lesson code{font:500 13px/1.4 var(--mono);background:var(--soft);border:1px solid var(--line);padding:1px 5px;border-radius:4px}
+.lesson ol,.lesson ul{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+.tbl table{border-collapse:collapse;width:100%;font-size:14px;min-width:520px}
+.tbl th,.tbl td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th{background:var(--soft);font-weight:600;font-size:13px}
+.tbl tr:last-child td{border-bottom:0}
+.tbl td:first-child{white-space:nowrap}
+.note{border:1px solid var(--line);background:var(--soft);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.note b{font-family:var(--display)}
+.note.warn{background:var(--warn-soft);border-color:transparent}
+.lcode{background:var(--code-bg);color:var(--code-fg);border-radius:10px;overflow-x:auto}
+.lcode pre{margin:0;padding:14px 16px;font:400 13px/1.75 var(--mono);white-space:pre;min-width:max-content}
+
+.exam-head{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.qlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.q{padding:16px 20px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.q:first-child{border-top:0}
+.q .qh{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.q .qn{font:600 13px/1 var(--body);color:var(--muted);font-variant-numeric:tabular-nums}
+.q .qt{font-weight:600}
+.q .qfile{font:500 12px/1 var(--mono);color:var(--muted)}
+.q .code{border-radius:10px}
+.q .code pre{padding:12px 16px}
+.qtext{margin:0;line-height:2.1}
+.mc{display:flex;flex-direction:column;gap:6px}
+.mc label{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:9px 12px;cursor:pointer;line-height:1.45}
+.mc label:hover{border-color:var(--muted)}
+.mc input{margin-top:3px;accent-color:var(--accent)}
+.mc label.ok{background:var(--ok-soft);border-color:var(--ok)}
+.mc label.bad{background:var(--bad-soft);border-color:var(--bad)}
+.q.graded.ok .qn{color:var(--ok)} .q.graded.bad .qn{color:var(--bad)}
+.qexp{font-size:14px;color:var(--muted);margin:0}
+.qexp b{color:var(--ink)}
+.score{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline}
+.score strong{font:700 30px/1 var(--display);font-variant-numeric:tabular-nums}
+
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;gap:6px;align-items:center}
+footer{font-size:13px;color:var(--muted);line-height:1.5}
+kbd{font:500 12px var(--mono);border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:1px 5px;background:var(--paper)}
+@media (prefers-reduced-motion:no-preference){.blank input{transition:background .15s,border-color .15s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <span class="eyebrow">Görsel Programlama 2 · PhoneBookApp · ASP.NET Core MVC</span>
+      <h1>Rehber Vize <mark>Provası</mark></h1>
+    </div>
+    <div class="meta">
+      <span class="pill" id="countdown">Sınav 5 Kasım</span>
+      <span class="pill" id="overall">İlerleme <b>%0</b></span>
+      <button type="button" class="pill" id="wrongs" title="Yanlış yaptığın boşluklardan sınav">Yanlışlarım <span class="cnt">0</span></button>
+      <div class="seg" role="group" aria-label="Zorluk">
+        <button type="button" id="m-kolay" data-mode="kolay" aria-pressed="false">Kolay</button>
+        <button type="button" id="m-zor" data-mode="zor" aria-pressed="false">Zor</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="levels" id="levels" aria-label="Seviyeler"></nav>
+  <div class="extabs" id="extabs" role="group" aria-label="Konu ve alıştırmalar"></div>
+  <section class="card" id="card"></section>
+
+  <div class="legend">
+    <span><i class="dot book"></i>Konu anlatımı</span>
+    <span><i class="dot done"></i>Tamamı doğru</span>
+    <span><i class="dot part"></i>Kısmen</span>
+    <span><kbd>Enter</kbd> sonraki boşluk, son boşlukta kontrol</span>
+  </div>
+  <footer><a href="../">← Eyüp Çalışkanöztürk</a> · Kolay modda zor kelimeler hazır gelir, Zor modda bütün boşluklar açıktır. Kod boşluklarında büyük-küçük harf önemlidir, tıpkı Visual Studio'da olduğu gibi. Kodlar dersin PhoneBookApp projesinden alınmıştır. İlerlemen sadece bu tarayıcıda saklanır.</footer>
+</div>
+
+<script>
+const LEVELS = [
+/* ───────────── 1. MODEL ───────────── */
+{ name:'Model', desc:'Contacts.cs ve Team.cs',
+lesson:`
+<p><b>Model</b>, verinin şeklidir: "bir kişi kaydında hangi bilgiler var?" sorusunun cevabı. Entity Framework (EF Core) her model sınıfından veritabanında bir <b>tablo</b> oluşturur.</p>
+<div class="tbl"><table><thead><tr><th>C# tarafı</th><th>Veritabanı tarafı</th><th>Örnek</th></tr></thead><tbody>
+<tr><td>class</td><td>tablo</td><td><code>Contacts</code> → Contacts tablosu</td></tr>
+<tr><td>property</td><td>sütun</td><td><code>PhoneNumber</code> → PhoneNumber sütunu</td></tr>
+<tr><td>nesne (new Contacts)</td><td>satır (kayıt)</td><td>Ahmet, 0555…, Aile</td></tr>
+</tbody></table></div>
+<h3>Visual Studio'da nasıl oluşturulur</h3>
+<ol><li>Sağdaki <b>Çözüm Gezgini</b>'nde <code>Models</code> klasörüne sağ tık</li><li><b>Ekle → Sınıf</b> (Add → Class)</li><li>Ad: <code>Contacts.cs</code> → Ekle. Aynı yolla <code>Team.cs</code>.</li></ol>
+<h3>Property ve attribute</h3>
+<p><code>public string Name { get; set; }</code> satırında <code>get</code> değeri okumayı, <code>set</code> değiştirmeyi sağlar. Üstüne yazılan <code>[Köşeli parantezli]</code> kurallara <b>attribute</b> denir; formdaki doğrulamayı bunlar yapar. Hepsi <code>using System.ComponentModel.DataAnnotations;</code> satırıyla gelir.</p>
+<div class="tbl"><table><thead><tr><th>Attribute</th><th>Ne yapar</th><th>Veritabanına etkisi</th></tr></thead><tbody>
+<tr><td><code>[Required]</code></td><td>Alan boş bırakılamaz</td><td>NOT NULL</td></tr>
+<tr><td><code>[StringLength(100)]</code></td><td>En fazla 100 karakter</td><td>nvarchar(100)</td></tr>
+<tr><td><code>[Phone]</code></td><td>Telefon formatı kontrolü</td><td>yok</td></tr>
+<tr><td><code>[EmailAddress]</code></td><td>E-posta formatı kontrolü</td><td>yok</td></tr>
+<tr><td><code>ErrorMessage = "..."</code></td><td>Hata olunca gösterilecek yazı</td><td>yok</td></tr>
+</tbody></table></div>
+<h3>Özel isimler</h3>
+<ul>
+<li><code>Id</code> adındaki property otomatik <b>Primary Key</b> olur ve 1, 2, 3 diye artar.</li>
+<li><code>string?</code> veya <code>int?</code>: soru işareti <b>nullable</b> demek, alan boş bırakılabilir.</li>
+<li><code>= string.Empty</code>: başlangıç değeri boş metin, null değil.</li>
+<li><code>TeamId</code>: <b>Foreign Key</b>. Teams tablosundaki Id'yi tutar. EF adından tanır: Team + Id.</li>
+<li><code>public Team? Team</code> ve <code>ICollection&lt;Contacts&gt;</code>: <b>navigation property</b>. Veritabanında sütun olmaz, koddan ilişkili nesneye ulaşmayı sağlar.</li>
+</ul>
+<h3>Bire-çok ilişki</h3>
+<div class="lcode"><pre>Teams                    Contacts
+Id  Name                 Id  Name    TeamId
+1   Aile        ◄─────── 1   Ahmet   1
+2   Arkadaşlar  ◄──┐     2   Ayşe    1
+3   İş             └──── 3   Mehmet  2</pre></div>
+<p>Bir kişinin <b>tek</b> ekibi var → Contacts içinde <code>Team? Team</code>. Bir ekipte <b>çok</b> kişi var → Team içinde <code>ICollection&lt;Contacts&gt;</code>.</p>
+<div class="note warn"><b>Sık yapılan hata</b><span>Property'nin adı neyse sütunun adı da o olur. Kuralın adı <code>EmailAddress</code>, alanın adı <code>Email</code>. Hocanın Word dosyasında sınıf adı bazen <code>Contact</code>, projede <code>Contacts</code>; hangisini kullanırsan her yerde aynı olmalı.</span></div>`,
+ex:[
+{ title:'Kişi modeli', file:'Models/Contacts.cs', kind:'code', lang:'cs',
+  intro:'Rehberdeki bir kişinin kalıbı. Her property veritabanında bir sütun olur.',
+  body:String.raw`using System.ComponentModel.⟦DataAnnotations||[Required], [Phone] gibi doğrulama kurallarının bulunduğu kütüphane. Bu satır olmazsa attribute'lar tanınmaz.⟧;
+
+namespace PhoneBookApp.⟦Models||Dosyanın adresi ProjeAdı.KlasörAdı şeklindedir. Bu dosya Models klasöründe.⟧
+{
+    public ⟦class||Sınıf (kalıp) tanımlar. EF Core her model sınıfından bir tablo oluşturur.⟧ Contacts
+    {
+        public ⟦int||Tam sayı türü. Adı Id olan int property otomatik artan anahtar olur.⟧ ⟦!Id||Adı tam olarak Id olduğu için EF Core bunu Primary Key (birincil anahtar) yapar.⟧ { get; set; }
+
+        [⟦Required||Alanı zorunlu yapar. Boş gönderilirse ErrorMessage gösterilir.⟧(ErrorMessage = "Ad soyad zorunludur")]
+        [⟦StringLength||En fazla karakter sayısını sınırlar. Veritabanında nvarchar(100) olur.⟧(100)]
+        public string Name { ⟦get||Değerin okunabilmesini sağlar.⟧; ⟦set||Değerin değiştirilebilmesini sağlar.⟧; } = ⟦!string.Empty||Başlangıç değeri boş metin olsun, null olmasın diye.⟧;
+
+        [⟦Phone||Değerin telefon formatında olup olmadığını kontrol eder.⟧(ErrorMessage = "Geçerli bir telefon numarası giriniz")]
+        [Required]
+        public ⟦string||Telefon metin olarak tutulur: içinde 0, +, boşluk olabilir ve hesap yapılmaz.⟧ PhoneNumber { get; set; } = string.Empty;
+
+        [⟦EmailAddress||Değerin e-posta formatında (@ içeren) olup olmadığını kontrol eder.⟧(ErrorMessage = "Geçerli bir e-posta giriniz")]
+        public string⟦!?||Soru işareti alanı nullable yapar: e-posta boş bırakılabilir.⟧ ⟦Email||Property adı sütun adı olur. Kuralın adı EmailAddress, alanın adı Email.⟧ { get; set; }
+
+        public int? ⟦TeamId||Foreign Key: Teams tablosundaki Id'yi tutar. Team + Id = TeamId.⟧ { get; set; }
+        public ⟦Team||Navigation property: kişinin ekibine koddan ulaşmak için (item.Team.Name). Veritabanında sütun olmaz.⟧? Team { get; set; }
+    }
+}` },
+{ title:'Ekip modeli', file:'Models/Team.cs', kind:'code', lang:'cs',
+  intro:'Aile, Arkadaşlar, İş gibi ekipler. Bir ekipte birden fazla kişi olabilir.',
+  body:String.raw`namespace PhoneBookApp.Models
+{
+    public class ⟦Team||Ekip sınıfı. Veritabanında Teams tablosu olur.⟧
+    {
+        public int ⟦Id||Ekibin Primary Key'i. Contacts içindeki TeamId buraya bağlanır.⟧ { get; set; }
+        public ⟦string||Ekip adı bir metindir: "Aile", "İş".⟧ Name { get; set; } = string.Empty;
+
+        // Her ekipte birden fazla kişi olabilir
+        public ⟦ICollection||Birden fazla nesne tutan koleksiyon. Bir ekipte çok kişi olduğu için liste kullanılır.⟧<⟦Contacts||Koleksiyonun içinde Contacts nesneleri durur.⟧>⟦!?||Ekip boş olabilir, içinde hiç kişi olmayabilir.⟧ Contacts { get; set; }
+    }
+}` },
+{ title:'Kavramlar', file:'Model kavramları', kind:'text', ci:true,
+  intro:'Hoca kodun yanına "bu satır ne işe yarar" diye sorabilir. Terimleri yaz.',
+  body:String.raw`Adı Id olan property'yi EF Core otomatik olarak ⟦Primary Key|PK|birincil anahtar||Birincil anahtar her satırı benzersiz tanımlar. 1, 2, 3 diye otomatik artar.⟧ yapar.
+TeamId gibi başka tablonun Id'sini tutan sütuna ⟦Foreign Key|FK|yabancı anahtar||İki tabloyu birbirine bağlayan sütun.⟧ denir.
+Team? Team gibi veritabanında sütun olmayan ama ilişkili nesneye ulaştıran property'ye ⟦navigation property|navigation|gezinme özelliği||Kodda item.Team.Name yazabilmeni sağlar.⟧ denir.
+Bir alanın boş bırakılabilmesi için türünün yanına ⟦?||string? veya int? gibi. Buna nullable denir.⟧ işareti konur.
+Bir ekipte çok kişi varsa ve bir kişinin tek ekibi varsa bu ⟦bire-çok|bire çok|birden çoğa|one-to-many||Team içinde ICollection<Contacts>, Contacts içinde tek bir Team bulunur.⟧ ilişkidir.
+Sınıf tabloya dönüşür, her property ise tabloda bir ⟦sütun|kolon|column||Her kayıt da bir satır olur.⟧ olur.
+Doğrulama attribute'larını kullanmak için dosyanın en üstüne using System.ComponentModel.⟦DataAnnotations||Bu satır yoksa [Required] tanınmaz.⟧ yazılır.
+Model sınıfı eklemek için Models klasörüne sağ tık → Ekle → ⟦Sınıf|Class||Add → Class.⟧` }
+]},
+/* ───────────── 2. DBCONTEXT ───────────── */
+{ name:'DbContext', desc:'Veritabanı köprüsü',
+lesson:`
+<p><b>DbContext</b>, C# kodun ile SQL Server arasındaki köprüdür. Controller veritabanına doğrudan değil, bu sınıf üzerinden ulaşır: <code>_db.Contacts.ToListAsync()</code> gibi. SQL yazmazsın, SQL'i EF Core üretir.</p>
+<h3>Visual Studio'da nasıl oluşturulur</h3>
+<ol><li>Proje adına sağ tık → <b>Ekle → Yeni Klasör</b> → <code>Data</code> (şablonda bu klasör yok)</li><li><code>Data</code>'ya sağ tık → <b>Ekle → Sınıf</b> → <code>ApplicationDbContext.cs</code></li></ol>
+<h3>Satırların görevi</h3>
+<div class="tbl"><table><thead><tr><th>Kod</th><th>Amacı</th></tr></thead><tbody>
+<tr><td><code>using Microsoft.EntityFrameworkCore;</code></td><td>DbContext ve DbSet bu NuGet paketinden gelir</td></tr>
+<tr><td><code>: DbContext</code></td><td>Miras alır; veritabanı yeteneklerini devralır</td></tr>
+<tr><td><code>(DbContextOptions&lt;ApplicationDbContext&gt; options)</code></td><td>Bağlantı ayarlarını Program.cs'ten alır</td></tr>
+<tr><td><code>: base(options) { }</code></td><td>Ayarları üst sınıfa iletir</td></tr>
+<tr><td><code>DbSet&lt;Contacts&gt; Contacts</code></td><td>Contacts tablosu</td></tr>
+<tr><td><code>DbSet&lt;Team&gt; Teams</code></td><td>Teams tablosu</td></tr>
+</tbody></table></div>
+<div class="note"><b>Kural</b><span>Her model için bir <code>DbSet&lt;Model&gt;</code> satırı yazılır. DbSet yoksa tablo da oluşmaz. Team modelini ekleyip DbSet'ini yazmayı unutursan migration Teams tablosunu üretmez.</span></div>
+<p>DbContext tek başına çalışmaz: Program.cs'te <code>AddDbContext</code> ile kaydedilmesi ve bağlantı adresinin verilmesi gerekir. Bu bir sonraki seviyenin konusu.</p>`,
+ex:[
+{ title:'Veritabanı köprüsü', file:'Data/ApplicationDbContext.cs', kind:'code', lang:'cs',
+  intro:'Kod ile SQL Server arasındaki köprü. Her tablo için bir DbSet satırı yazılır.',
+  body:String.raw`using ⟦!Microsoft.EntityFrameworkCore||DbContext ve DbSet bu kütüphanededir (kurduğumuz NuGet paketi).⟧;
+using PhoneBookApp.⟦Models||Contacts ve Team sınıflarını tanımak için Models namespace'i eklenir.⟧;
+
+namespace PhoneBookApp.⟦Data||Dosya Data klasöründe olduğu için adresi PhoneBookApp.Data.⟧
+{
+    public class ApplicationDbContext : ⟦DbContext||Miras alınan temel sınıf. Veritabanıyla konuşma yeteneklerini buradan alır.⟧
+    {
+        public ApplicationDbContext(⟦!DbContextOptions||Bağlantı ayarlarını taşıyan tür. Program.cs'teki AddDbContext bunu doldurur.⟧<ApplicationDbContext> options)
+            : ⟦base||Gelen ayarları üst sınıf DbContext'in constructor'ına iletir.⟧(options) { }
+
+        public ⟦DbSet||Bir tabloyu temsil eder. Her model için bir DbSet yazılır.⟧<⟦Contacts||Tablonun hangi modelden oluşacağı.⟧> Contacts { get; set; }
+        public DbSet<Team> ⟦Teams||Tablonun adı. Kodda _db.Teams diye kullanılır.⟧ { get; set; }
+    }
+}` },
+{ title:'Kavramlar', file:'DbContext kavramları', kind:'text', ci:true,
+  intro:'DbContext satırlarının amacını tek kelimeyle yaz.',
+  body:String.raw`ApplicationDbContext : DbContext satırındaki iki nokta ⟦miras|kalıtım|inheritance||ApplicationDbContext, DbContext'in bütün özelliklerini devralır.⟧ almak demektir.
+Her model için DbContext içine bir ⟦DbSet||DbSet satırı yoksa o modelin tablosu oluşmaz.⟧ satırı yazılır.
+Constructor'a gelen options, : ⟦base||Üst sınıfın constructor'ını çağırır.⟧(options) ile üst sınıfa iletilir.
+Controller içinde _db.⟦Contacts||DbSet'in adı. Contacts tablosundaki kayıtlara ulaşır.⟧ yazınca kişiler tablosuna ulaşılır.
+DbContext dosyası projede ⟦Data||Bu klasör şablonda yok, elle oluşturuluyor.⟧ klasöründe durur.
+DbContext, Program.cs'te builder.Services.⟦AddDbContext||Kayıt olmazsa Controller DbContext'i alamaz.⟧ ile uygulamaya tanıtılır.` }
+]},
+/* ───────────── 3. PROGRAM.CS ───────────── */
+{ name:'Program.cs', desc:'Bağlantı adresi ve başlangıç',
+lesson:`
+<p><b>Program.cs</b> uygulama açılırken çalışan ilk dosyadır. İki bölümden oluşur: önce <b>builder</b> ile servisler eklenir, sonra <code>builder.Build()</code> ile <b>app</b> oluşturulur ve gelen isteklerin geçeceği sıra (middleware) yazılır. En son <code>app.Run()</code>.</p>
+<div class="lcode"><pre>builder  →  servisleri ekle (MVC, DbContext, Cookie)
+Build()  →  app oluşur
+app      →  UseStaticFiles → UseRouting → UseAuthentication → UseAuthorization
+Map...   →  adres kuralı
+Run()    →  uygulama dinlemeye başlar</pre></div>
+<h3>Bağlantı adresi (appsettings.json)</h3>
+<div class="tbl"><table><thead><tr><th>Parça</th><th>Amacı</th></tr></thead><tbody>
+<tr><td><code>"ConnectionStrings"</code></td><td>Bağlantı adreslerinin bölümü</td></tr>
+<tr><td><code>"DefaultConnection"</code></td><td>Bağlantının adı; Program.cs bu isimle okur</td></tr>
+<tr><td><code>Server=(localdb)\\mssqllocaldb</code></td><td>Visual Studio ile gelen yerel SQL Server</td></tr>
+<tr><td><code>Database=PhoneBookDb</code></td><td>Oluşacak veritabanının adı</td></tr>
+<tr><td><code>Trusted_Connection=True</code></td><td>Windows hesabıyla bağlan</td></tr>
+</tbody></table></div>
+<p>Program.cs bu adresi şöyle okur: <code>builder.Configuration.GetConnectionString("DefaultConnection")</code>. İki taraftaki isim aynı olmazsa bağlantı bulunamaz.</p>
+<h3>Adres kuralı (route)</h3>
+<p><code>pattern: "{controller=Contacts}/{action=Index}/{id?}"</code> adresi parçalara böler: ilk parça Controller, ikinci parça metot (action), üçüncüsü isteğe bağlı id.</p>
+<div class="tbl"><table><thead><tr><th>Tarayıcıdaki adres</th><th>Çalışan kod</th></tr></thead><tbody>
+<tr><td><code>/</code></td><td>ContactsController → Index() (varsayılanlar)</td></tr>
+<tr><td><code>/Contacts/Create</code></td><td>ContactsController → Create()</td></tr>
+<tr><td><code>/Contacts/Edit/5</code></td><td>ContactsController → Edit(id: 5)</td></tr>
+<tr><td><code>/Account/Login</code></td><td>AccountController → Login()</td></tr>
+</tbody></table></div>
+<div class="note"><b>Sıra önemli</b><span><code>UseAuthentication()</code> ("kimsin?") her zaman <code>UseAuthorization()</code>'dan ("yetkin var mı?") önce gelir. Login seviyesinde tekrar göreceksin.</span></div>`,
+ex:[
+{ title:'Bağlantı adresi', file:'appsettings.json', kind:'code', lang:'json',
+  intro:'Veritabanının nerede olduğunu söyleyen ayar dosyası. JSON içinde yorum satırı yazılmaz.',
+  body:String.raw`{
+  "⟦ConnectionStrings||Bağlantı adreslerinin tutulduğu bölümün adı. Yazımı tam böyle olmalı.⟧": {
+    "⟦DefaultConnection||Bağlantının adı. Program.cs bu ismi GetConnectionString ile çağırır.⟧": "Server=⟦!(localdb)\\mssqllocaldb|(localdb)\mssqllocaldb||Visual Studio ile gelen yerel SQL Server. JSON içinde \ işareti \\ diye yazılır.⟧;Database=⟦PhoneBookDb||Oluşturulacak veritabanının adı.⟧;⟦!Trusted_Connection||Windows hesabınla bağlan, kullanıcı adı ve şifre gerekmez.⟧=True;MultipleActiveResultSets=true"
+  },
+  "AllowedHosts": "*"
+}` },
+{ title:'Uygulamanın başlangıcı', file:'Program.cs', kind:'code', lang:'cs',
+  intro:'Önce servisler eklenir, sonra uygulama kurulur ve çalıştırılır.',
+  body:String.raw`using Microsoft.EntityFrameworkCore;
+using PhoneBookApp.⟦Data||ApplicationDbContext, PhoneBookApp.Data namespace'inde.⟧;
+
+var builder = WebApplication.⟦CreateBuilder||Uygulamayı kurmaya başlar: ayarlar ve servisler.⟧(args);
+
+builder.Services.⟦AddControllersWithViews||MVC'yi açar: Controller ve View kullanılacak.⟧();
+
+// DbContext ekleme
+builder.Services.⟦AddDbContext||DbContext'i servis olarak kaydeder. Controller'lar onu constructor ile isteyebilir.⟧<⟦ApplicationDbContext||Kaydedilen sınıf bizim DbContext'imiz.⟧>(options =>
+    options.⟦UseSqlServer||Veritabanı olarak SQL Server kullanılacağını söyler.⟧(builder.Configuration.⟦GetConnectionString||appsettings.json içindeki ConnectionStrings bölümünden adresi okur.⟧("⟦DefaultConnection||appsettings.json'daki isimle birebir aynı olmalı.⟧")));
+
+var app = builder.⟦Build||Ayarlar bitti, uygulama nesnesi oluşturulur.⟧();
+
+app.⟦UseStaticFiles||wwwroot içindeki css, js ve resim dosyalarını sunar.⟧();
+app.⟦UseRouting||Gelen adresin hangi Controller'a gideceğini çözer.⟧();
+app.⟦!UseAuthorization||Yetki kontrolünü açar. [Authorize] bununla çalışır.⟧();
+
+app.⟦MapControllerRoute||Adres kuralını tanımlar.⟧(
+    name: "default",
+    pattern: "{controller=⟦Contacts||Boş adreste açılacak Controller.⟧}/{action=⟦Index||Boş adreste çalışacak metot.⟧}/{id⟦!?||id isteğe bağlı: hem /Contacts/Index hem /Contacts/Edit/5 çalışır.⟧}");
+
+app.⟦Run||Uygulamayı başlatır ve istekleri dinler.⟧();` },
+{ title:'Kavramlar', file:'Program.cs kavramları', kind:'text', ci:true,
+  intro:'Adres kuralı ve satırların sırası.',
+  body:String.raw`Tarayıcıda sadece site adresi açılırsa /⟦Contacts||pattern'daki controller=Contacts varsayılanı.⟧/⟦Index||pattern'daki action=Index varsayılanı.⟧ sayfası çalışır.
+/Contacts/Edit/5 adresindeki 5 değeri pattern'daki {⟦id||Edit metoduna parametre olarak gelir.⟧?} parçasına gider.
+wwwroot klasöründeki css ve js dosyalarını sunan satır: app.⟦UseStaticFiles⟧()
+appsettings.json'da bağlantının adı değişirse Program.cs'teki ⟦GetConnectionString||İçindeki isim appsettings.json'dakiyle aynı olmalı, yoksa bağlantı bulunamaz.⟧("...") içindeki isim de değişmelidir.
+Servisler eklendikten sonra builder.⟦Build||Uygulama nesnesini oluşturur.⟧() ile app oluşturulur, en son app.⟦Run||Uygulamayı başlatır. Her zaman en son satırdır.⟧() çalışır.
+MVC'yi (Controller + View) açan servis satırı: builder.Services.⟦AddControllersWithViews⟧()` }
+]},
+/* ───────────── 4. KOMUTLAR ───────────── */
+{ name:'Komutlar', desc:'NuGet, Migration, Visual Studio',
+lesson:`
+<h3>Proje nasıl oluşturulur</h3>
+<ol><li><b>Dosya → Yeni → Proje</b></li><li><b>ASP.NET Core Web App (Model-View-Controller)</b> → İleri</li><li>Proje adı: <code>PhoneBookApp</code></li><li>Authentication: <b>None</b> (girişi kendimiz yazacağız) → Oluştur</li></ol>
+<h3>NuGet paketleri</h3>
+<p><b>Araçlar → NuGet Paket Yöneticisi → Paket Yöneticisi Konsolu</b> açılır, alttaki <code>PM&gt;</code> satırına yazılır:</p>
+<div class="lcode"><pre>Install-Package Microsoft.EntityFrameworkCore.SqlServer
+Install-Package Microsoft.EntityFrameworkCore.Tools</pre></div>
+<div class="tbl"><table><thead><tr><th>Paket</th><th>Amacı</th></tr></thead><tbody>
+<tr><td><code>...SqlServer</code></td><td>EF Core'un SQL Server ile konuşması</td></tr>
+<tr><td><code>...Tools</code></td><td>Add-Migration, Update-Database komutları</td></tr>
+</tbody></table></div>
+<div class="note warn"><b>NU1202 hatası</b><span>Proje .NET 8 ise paketin de 8.x olması gerekir: <code>Install-Package Microsoft.EntityFrameworkCore.SqlServer -Version 8.0.11</code>. İki paket aynı sürümde olmalı.</span></div>
+<h3>Migration akışı</h3>
+<div class="lcode"><pre>Model değişti
+   ↓  Add-Migration InitialCreate   → Migrations klasöründe plan (C# dosyası) oluşur
+   ↓  Update-Database               → plan çalışır, SQL'de tablolar oluşur/güncellenir</pre></div>
+<div class="tbl"><table><thead><tr><th>Komut</th><th>Ne yapar</th></tr></thead><tbody>
+<tr><td><code>Add-Migration Ad</code></td><td>Değişiklik planı oluşturur</td></tr>
+<tr><td><code>Update-Database</code></td><td>Planı veritabanına uygular</td></tr>
+<tr><td><code>Remove-Migration</code></td><td>Son (uygulanmamış) planı siler</td></tr>
+<tr><td><code>Drop-Database</code></td><td>Veritabanını tamamen siler</td></tr>
+</tbody></table></div>
+<div class="note"><b>"There is already an object named 'Contacts'"</b><span>Veritabanı daha önce oluşmuş. Çözüm: <code>Drop-Database</code> → (gerekirse <code>Remove-Migration</code> → <code>Add-Migration InitialCreate</code>) → <code>Update-Database</code>. Hocanın notunda da ekip tablosu eklenirken bu yol öneriliyor.</span></div>
+<h3>Kısayollar</h3>
+<ul><li><kbd>Ctrl+Shift+B</kbd> derle (Derle → Çözümü Derle)</li><li><kbd>F5</kbd> çalıştır, tarayıcı açılır</li></ul>`,
+ex:[
+{ title:'Paket ve Migration komutları', file:'Paket Yöneticisi Konsolu', kind:'code', lang:'ps', ci:true,
+  intro:'Alttaki PM> penceresine yazılan komutlar.',
+  body:String.raw`# EF Core paketlerini kur
+Install-Package Microsoft.EntityFrameworkCore.⟦SqlServer||EF Core'un SQL Server ile konuşmasını sağlar.⟧
+Install-Package Microsoft.EntityFrameworkCore.⟦Tools||Add-Migration ve Update-Database komutlarını getirir.⟧
+
+# .NET 8 projesinde sürüm belirtilir
+Install-Package Microsoft.EntityFrameworkCore.SqlServer -⟦Version||Paketin ana sürümü .NET sürümüyle aynı olmalı: net8 için 8.x.⟧ ⟦!8.0.11|re:^8\.\d+\.\d+$||8 ile başlayan herhangi bir sürüm olur.⟧
+
+# Modelden plan çıkar, sonra veritabanına uygula
+⟦Add-Migration||Modellere bakıp değişiklik planı oluşturur, Migrations klasörü belirir.⟧ InitialCreate
+⟦Update-Database||Planı veritabanına uygular, tablolar oluşur.⟧` },
+{ title:'Migration durumları', file:'Komut kavramları', kind:'text', ci:true,
+  intro:'Hangi durumda hangi komut çalışır?',
+  body:String.raw`Son migration'ı (veritabanına uygulanmadıysa) silen komut: ⟦Remove-Migration||Hatalı planı geri almak için.⟧
+Veritabanını tamamen silen komut: ⟦Drop-Database||Onay sorarsa Y yazılır.⟧
+"There is already an object named 'Contacts'" hatası, veritabanında aynı isimde bir ⟦tablo|table||Çözüm: Drop-Database, sonra Update-Database.⟧ olduğu anlamına gelir.
+Modele yeni bir alan ekledin. Sırasıyla önce ⟦Add-Migration||Önce plan çıkarılır.⟧ sonra ⟦Update-Database||Sonra plan veritabanına uygulanır.⟧ çalıştırılır.
+Add-Migration'ın oluşturduğu dosyalar projedeki ⟦Migrations||Up() tabloları kurar, Down() geri alır.⟧ klasörüne yazılır.
+Paket komutlarının yazıldığı pencere: Araçlar → NuGet Paket Yöneticisi → ⟦Paket Yöneticisi Konsolu|Package Manager Console|PMC||Altta PM> ile başlayan pencere.⟧` },
+{ title:'Visual Studio adımları', file:'Visual Studio', kind:'text', ci:true,
+  intro:'"Dosya nasıl oluşturulur" sorusu için menü yolları.',
+  body:String.raw`Proje şablonu: ASP.NET Core Web App (⟦Model-View-Controller|MVC||Controllers, Models, Views klasörleri hazır gelir.⟧)
+Proje oluştururken Authentication seçeneği: ⟦None|Yok||Girişi kendimiz cookie ile yazacağız.⟧
+Model eklemek: ⟦Models⟧ klasörüne sağ tık → ⟦Ekle|Add⟧ → ⟦Sınıf|Class⟧
+Yeni klasör eklemek: projeye sağ tık → Ekle → ⟦Yeni Klasör|New Folder|Klasör⟧
+Dosyaların listelendiği sağdaki pencere: ⟦Çözüm Gezgini|Solution Explorer⟧
+Projeyi derleme kısayolu: ⟦Ctrl+Shift+B||Derle → Çözümü Derle ile aynı iş.⟧
+Projeyi çalıştırma kısayolu: ⟦F5||Hata ayıklamayla başlatır, tarayıcı açılır.⟧` }
+]},
+/* ───────────── 5. CONTROLLER ───────────── */
+{ name:'Controller', desc:'Listeleme, ekleme, düzenleme, silme',
+lesson:`
+<p><b>Controller</b> uygulamanın beynidir: isteği alır, DbContext ile veriyi çeker veya kaydeder, sonra hangi sayfanın açılacağına karar verir. İçindeki her public metoda <b>action</b> denir ve her action bir adrese karşılık gelir (<code>/Contacts/Edit/5</code> → <code>Edit(5)</code>).</p>
+<h3>Visual Studio'da nasıl oluşturulur</h3>
+<ol><li><code>Controllers</code> klasörüne sağ tık → <b>Ekle → Denetleyici</b> (Controller) → MVC Controller - Empty</li><li>Ya da hazır CRUD için: <b>Add → New Scaffolded Item → MVC Controller with views, using Entity Framework</b> → Model: Contacts, Data context: ApplicationDbContext. Controller ve Views/Contacts sayfaları otomatik oluşur.</li><li>Sınıf adı mutlaka <code>Controller</code> ile biter: <code>ContactsController</code>.</li></ol>
+<h3>ContactsController'ın action'ları</h3>
+<div class="tbl"><table><thead><tr><th>Action</th><th>Ne zaman</th><th>Ne yapar</th><th>Kim</th></tr></thead><tbody>
+<tr><td><code>Index()</code></td><td>GET</td><td>Bütün kişileri ekipleriyle listeler</td><td>Giriş yapan herkes</td></tr>
+<tr><td><code>Details(id)</code></td><td>GET</td><td>Tek kişiyi gösterir</td><td>Herkes</td></tr>
+<tr><td><code>Create()</code></td><td>GET</td><td>Boş formu açar, ekip listesini hazırlar</td><td>Admin</td></tr>
+<tr><td><code>Create(contact)</code></td><td>POST</td><td>Formu doğrular, kaydeder, listeye döner</td><td>Admin</td></tr>
+<tr><td><code>Edit(id)</code></td><td>GET</td><td>Kişiyi bulur, dolu formu açar</td><td>Admin</td></tr>
+<tr><td><code>Edit(contact)</code></td><td>POST</td><td>Değişikliği kaydeder</td><td>Admin</td></tr>
+<tr><td><code>Delete(id)</code></td><td>GET</td><td>Kişiyi bulup direkt siler</td><td>Admin</td></tr>
+</tbody></table></div>
+<h3>DbContext controller'a nasıl gelir</h3>
+<div class="lcode"><pre>private readonly ApplicationDbContext _db;
+public ContactsController(ApplicationDbContext db) => _db = db;</pre></div>
+<p>Program.cs'te <code>AddDbContext</code> ile kaydettiğimiz için ASP.NET Core, controller'ı oluştururken DbContext'i constructor'a <b>kendisi verir</b>. Buna <b>dependency injection</b> denir.</p>
+<h3>Her yerde tekrar eden kalıp</h3>
+<div class="lcode"><pre>if (id == null) return NotFound();          // adreste id yoksa 404
+var c = await _db.Contacts.FindAsync(id);  // Primary Key ile bul
+if (c == null) return NotFound();           // kayıt yoksa 404</pre></div>
+<div class="tbl"><table><thead><tr><th>Kod</th><th>Amacı</th></tr></thead><tbody>
+<tr><td><code>.Include(c =&gt; c.Team)</code></td><td>Ekip bilgisini de getirir; yoksa listede ekip adı boş kalır</td></tr>
+<tr><td><code>.ToListAsync()</code></td><td>Sorguyu çalıştırır, liste döndürür</td></tr>
+<tr><td><code>FindAsync(id)</code></td><td>Id'ye göre tek kayıt bulur</td></tr>
+<tr><td><code>_db.Add / Update / Remove</code></td><td>Ekleme / güncelleme / silme için işaretler</td></tr>
+<tr><td><code>SaveChangesAsync()</code></td><td>İşaretlenenleri gerçekten veritabanına yazar</td></tr>
+<tr><td><code>ModelState.IsValid</code></td><td>[Required] gibi kurallar sağlandı mı?</td></tr>
+<tr><td><code>return View(x)</code></td><td>Sayfayı açar, x'i model olarak verir</td></tr>
+<tr><td><code>RedirectToAction(nameof(Index))</code></td><td>İşlem bitince listeye yönlendirir</td></tr>
+<tr><td><code>new SelectList(_db.Teams, "Id", "Name")</code></td><td>Ekip dropdown'u: value = Id, görünen yazı = Name</td></tr>
+</tbody></table></div>
+<div class="note"><b>Neden iki Create, iki Edit?</b><span>Aynı adrese iki istek gelir: sayfa açılırken <code>[HttpGet]</code> (boş/dolu form gösterilir), Kaydet'e basılınca <code>[HttpPost]</code> (form verisi gelir). Formdaki alanlar POST metodunun <code>Contacts contact</code> parametresine otomatik dolar.</span></div>
+<div class="note warn"><b>async / await</b><span>Veritabanı işlemleri zaman alır. <code>async Task&lt;IActionResult&gt;</code> yazılan metotta <code>await</code> kullanılır; sunucu beklerken başka isteklere bakabilir. Async metot adları <code>...Async</code> ile biter.</span></div>`,
+ex:[
+{ title:'Listeleme ve detay', file:'Controllers/ContactsController.cs', kind:'code', lang:'cs',
+  intro:'Sınıfın iskeleti, DbContext alanı, Index ve Details action\'ları.',
+  body:String.raw`using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using PhoneBookApp.Data;
+using PhoneBookApp.Models;
+
+namespace PhoneBookApp.⟦Controllers||Dosya Controllers klasöründe.⟧
+{
+    public class ContactsController : ⟦Controller||Bütün controller'lar Controller sınıfından miras alır; View(), RedirectToAction(), NotFound() buradan gelir.⟧
+    {
+        private ⟦!readonly||Alan sadece constructor'da atanabilir, sonra değiştirilemez.⟧ ApplicationDbContext ⟦_db||DbContext'i tutan alan. Action'lar veritabanına _db üzerinden ulaşır.⟧;
+        public ContactsController(⟦ApplicationDbContext||Program.cs'te AddDbContext ile kaydedilen sınıf buraya otomatik verilir (dependency injection).⟧ db) => _db = db;
+
+        // Hem Admin hem User görebilir
+        [⟦Authorize||Sadece giriş yapmış kullanıcılar bu sayfayı açabilir.⟧]
+        public ⟦!async||Metodun içinde await kullanılabilsin diye.⟧ Task<⟦IActionResult||Action'ın döndürdüğü sonuç türü: View, Redirect, NotFound…⟧> Index()
+        {
+            var list = await _db.Contacts.⟦Include||İlişkili Team verisini de birlikte getirir; yoksa item.Team boş gelir.⟧(c => c.⟦Team||Hangi navigation property'nin yükleneceği.⟧).⟦ToListAsync||Sorguyu çalıştırıp sonucu liste olarak alır.⟧();
+            return ⟦View||Index.cshtml sayfasını açar ve listeyi ona model olarak verir.⟧(list);
+        }
+
+        public async Task<IActionResult> Details(int⟦!?||id gelmeyebilir; adres /Contacts/Details de olabilir.⟧ id)
+        {
+            if (id == ⟦null||Adreste id yoksa.⟧) return ⟦NotFound||404 sayfa bulunamadı sonucu döner.⟧();
+            var contact = await _db.Contacts.⟦FindAsync||Primary Key'e göre tek kayıt bulur.⟧(id);
+            if (contact == null) return NotFound();
+            return View(⟦contact||Bulunan kişi Details.cshtml'e model olarak gönderilir.⟧);
+        }
+    }
+}` },
+{ title:'Ekleme (Create)', file:'ContactsController.cs · Create', kind:'code', lang:'cs',
+  intro:'GET boş formu açar, POST formdan gelen kişiyi doğrulayıp kaydeder.',
+  body:String.raw`// GET: Contacts/Create — sadece Admin
+[Authorize(⟦Roles||Sadece belirtilen roldeki kullanıcılar girebilir.⟧ = "⟦Admin||Sadece Admin rolü kişi ekleyebilir.⟧")]
+[⟦HttpGet||Sayfa ilk açıldığında (form boş) çalışır.⟧]
+public IActionResult Create()
+{
+    // Ekip listesini dropdown'a göndermek için
+    ⟦ViewBag||Controller'dan View'a ek veri taşır. View'da asp-items="ViewBag.Teams" ile okunur.⟧.Teams = new ⟦SelectList||Dropdown (select) için seçenek listesi hazırlar.⟧(_db.Teams.ToList(), "⟦Id||Seçeneğin value değeri: ekibin Id'si (TeamId'ye yazılır).⟧", "⟦Name||Seçenekte görünen yazı: ekibin adı.⟧");
+    return View();
+}
+
+// POST: Contacts/Create
+[⟦HttpPost||Form gönderildiğinde (Oluştur butonu) çalışır.⟧, ⟦!ValidateAntiForgeryToken||Formun gerçekten bizim sitemizden geldiğini doğrular (CSRF koruması).⟧]
+public async Task<IActionResult> Create(⟦Contacts||Formdaki alanlar otomatik bir Contacts nesnesine doldurulur (model binding).⟧ contact)
+{
+    if (!⟦ModelState||[Required] gibi kuralların sonucu burada tutulur.⟧.⟦IsValid||Bütün kurallar sağlandıysa true olur.⟧)
+    {
+        // Model geçersizse liste tekrar doldurulur
+        ViewBag.Teams = new SelectList(_db.Teams.ToList(), "Id", "Name");
+        return View(⟦contact||Hatalı form, yazılanlar kaybolmadan geri gösterilir.⟧);
+    }
+
+    _db.⟦Add||Yeni kaydı eklenecek olarak işaretler.⟧(contact);
+    await _db.⟦SaveChangesAsync||Değişiklikleri gerçekten veritabanına yazar. Bu olmadan kayıt eklenmez.⟧();
+    return ⟦RedirectToAction||Başka bir action'a yönlendirir.⟧(⟦nameof||Metot adını string olarak verir: "Index". Yazım hatasını derleyici yakalar.⟧(Index));
+}` },
+{ title:'Düzenleme ve silme', file:'ContactsController.cs · Edit, Delete', kind:'code', lang:'cs',
+  intro:'Edit önce kaydı bulup formu doldurur, sonra günceller. Delete onay sormadan siler.',
+  body:String.raw`[Authorize(Roles = "Admin")]
+public async Task<IActionResult> Edit(int? id)
+{
+    if (id == null) return NotFound();
+    var c = await _db.Contacts.⟦FindAsync||Düzenlenecek kişiyi Id ile bulur.⟧(id);
+    if (c == null) return NotFound();
+    ViewBag.Teams = new SelectList(_db.Teams, "Id", "Name", c.⟦TeamId||Dördüncü parametre seçili değerdir: kişinin mevcut ekibi dropdown'da seçili gelir.⟧);
+    return View(⟦c||Bulunan kişi forma dolu olarak gelir.⟧);
+}
+
+[⟦HttpPost||Güncelle butonuna basılınca çalışır.⟧]
+[Authorize(Roles = "Admin")]
+public async Task<IActionResult> Edit(Contacts contact)
+{
+    if (!ModelState.IsValid)
+    {
+        // Formda hata varsa dropdown tekrar doldurulur
+        ViewBag.Teams = new SelectList(_db.Teams, "Id", "Name", contact.TeamId);
+        return View(contact);
+    }
+
+    _db.⟦Update||Var olan kaydı güncellenecek olarak işaretler (Id'ye göre).⟧(contact);
+    await _db.SaveChangesAsync();
+    return RedirectToAction(nameof(Index));
+}
+
+[Authorize(Roles = "Admin")]
+public async Task<IActionResult> Delete(int? id)
+{
+    if (id == null) return NotFound();
+    var c = await _db.Contacts.FindAsync(id);
+    if (c == null) return NotFound();
+    _db.Contacts.⟦Remove||Kaydı silinecek olarak işaretler.⟧(c);
+    await _db.⟦SaveChangesAsync||Silme ancak bu satırla veritabanına yansır.⟧();
+    return RedirectToAction(nameof(⟦Index||Silme bitince listeye dönülür.⟧));
+}` },
+{ title:'Kavramlar', file:'Controller kavramları', kind:'text', ci:true,
+  intro:'Controller satırlarının ne işe yaradığını tek kelimeyle yaz.',
+  body:String.raw`Controller içindeki her public metoda ⟦action|eylem||Her action bir adrese karşılık gelir.⟧ denir.
+Controller sınıfının adı her zaman ⟦Controller||ContactsController, AccountController, HomeController.⟧ kelimesiyle biter.
+Sayfa açılınca [HttpGet], form gönderilince [⟦HttpPost||Form verisi POST ile gelir.⟧] olan metot çalışır.
+Add, Update veya Remove'dan sonra kaydın veritabanına yazılması için ⟦SaveChangesAsync|SaveChanges||Bu satır unutulursa hiçbir değişiklik kaydedilmez.⟧() çağrılır.
+Listede ekip adının görünmesi için sorguya .⟦Include||Navigation property'yi yükler.⟧(c => c.Team) eklenir.
+Formdaki doğrulama kurallarının sağlanıp sağlanmadığı ⟦ModelState.IsValid|ModelState||false ise form hata mesajlarıyla geri gösterilir.⟧ ile kontrol edilir.
+Kayıt bulunamazsa return ⟦NotFound||404 hatası.⟧(); yazılır.
+İşlem bitince listeye dönmek için return ⟦RedirectToAction⟧(nameof(Index)); yazılır.
+DbContext'in constructor'a otomatik verilmesine ⟦dependency injection|bağımlılık enjeksiyonu|DI||Program.cs'teki AddDbContext kaydı sayesinde.⟧ denir.
+Controller'dan View'a ekip listesi gibi ek veri taşımak için ⟦ViewBag|ViewData||ViewBag.Teams = new SelectList(...)⟧ kullanılır.
+Hazır CRUD sayfaları üretmek için: Ekle → New ⟦Scaffolded|İskele||MVC Controller with views, using Entity Framework seçilir.⟧ Item` }
+]},
+/* ───────────── 6. VIEW'LAR ───────────── */
+{ name:'View\'lar', desc:'Index, Create, Edit, Layout',
+lesson:`
+<p><b>View</b> kullanıcının gördüğü sayfadır. Dosya uzantısı <code>.cshtml</code>; içinde HTML ile C# karışık yazılır. Buna <b>Razor</b> denir: <code>@</code> işaretinden sonrası C# kodudur.</p>
+<h3>Hangi View açılır?</h3>
+<p>Controller'da <code>return View();</code> yazınca ASP.NET Core şu dosyayı arar: <code>Views/{ControllerAdı}/{ActionAdı}.cshtml</code>. ContactsController'daki Index için <code>Views/Contacts/Index.cshtml</code>.</p>
+<h3>Visual Studio'da nasıl oluşturulur</h3>
+<ol><li><code>Views/Contacts</code> klasörüne sağ tık → <b>Ekle → Görünüm</b> (View) → Razor View</li><li>Ya da action'ın içinde sağ tık → <b>Görünüm Ekle</b>. Scaffold kullanılırsa Index, Create, Edit, Delete, Details otomatik gelir.</li></ol>
+<h3>Razor temel söz dizimi</h3>
+<div class="tbl"><table><thead><tr><th>Kod</th><th>Amacı</th></tr></thead><tbody>
+<tr><td><code>@model IEnumerable&lt;Contacts&gt;</code></td><td>Sayfaya liste gelecek (Index)</td></tr>
+<tr><td><code>@model PhoneBookApp.Models.Contacts</code></td><td>Sayfaya tek kişi gelecek (Create, Edit, Details)</td></tr>
+<tr><td><code>@foreach (var item in Model)</code></td><td>Listedeki her kişi için tekrar et</td></tr>
+<tr><td><code>@item.Name</code></td><td>Değeri sayfaya yaz</td></tr>
+<tr><td><code>@item.Team?.Name</code></td><td>Ekip yoksa hata vermeden boş geç</td></tr>
+<tr><td><code>@if (User.IsInRole("Admin"))</code></td><td>Sadece admine göster</td></tr>
+<tr><td><code>@* yorum *@</code></td><td>Razor yorum satırı</td></tr>
+</tbody></table></div>
+<h3>Tag helper'lar (asp-...)</h3>
+<div class="tbl"><table><thead><tr><th>Tag helper</th><th>Amacı</th><th>Örnek</th></tr></thead><tbody>
+<tr><td><code>asp-controller</code></td><td>Linkin gideceği controller</td><td><code>asp-controller="Account"</code></td></tr>
+<tr><td><code>asp-action</code></td><td>Linkin / formun gideceği action</td><td><code>asp-action="Create"</code></td></tr>
+<tr><td><code>asp-route-id</code></td><td>Adrese id ekler</td><td><code>/Contacts/Edit/5</code></td></tr>
+<tr><td><code>asp-for</code></td><td>Input'u model alanına bağlar</td><td><code>asp-for="Name"</code></td></tr>
+<tr><td><code>asp-items</code></td><td>Dropdown seçenekleri</td><td><code>asp-items="ViewBag.Teams"</code></td></tr>
+<tr><td><code>asp-validation-for</code></td><td>O alanın hata mesajı</td><td>"Ad soyad zorunludur"</td></tr>
+<tr><td><code>asp-validation-summary</code></td><td>Genel hatalar listesi</td><td><code>="ModelOnly"</code></td></tr>
+</tbody></table></div>
+<p>Tag helper'ların çalışması <code>Views/_ViewImports.cshtml</code> içindeki <code>@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers</code> satırı sayesindedir.</p>
+<h3>Ekip dropdown'unun yolculuğu</h3>
+<div class="lcode"><pre>Controller:  ViewBag.Teams = new SelectList(_db.Teams.ToList(), "Id", "Name");
+View:        &lt;select asp-for="TeamId" asp-items="ViewBag.Teams"&gt;
+Sonuç:       &lt;option value="1"&gt;Aile&lt;/option&gt; … → seçilen Id, contact.TeamId'ye yazılır</pre></div>
+<h3>Ortak şablon (Layout)</h3>
+<p><code>_ViewStart.cshtml</code> bütün sayfalara <code>Layout = "_Layout"</code> der. <code>Views/Shared/_Layout.cshtml</code> menü, giriş/çıkış linkleri ve footer'ı tutar; her sayfanın içeriği <code>@RenderBody()</code> yazan yere yerleşir. Sayfaların <code>@section Scripts { }</code> bölümü layout'taki <code>RenderSectionAsync("Scripts")</code> yerine konur.</p>
+<div class="note"><b>Edit formundaki gizli alan</b><span><code>&lt;input type="hidden" asp-for="Id" /&gt;</code> kullanıcıya görünmez ama Id'yi forma taşır. Bu olmazsa POST Edit hangi kaydı güncelleyeceğini bilemez.</span></div>`,
+ex:[
+{ title:'Liste sayfası', file:'Views/Contacts/Index.cshtml', kind:'code', lang:'razor',
+  intro:'Controller\'ın gönderdiği listeyi tabloya döker. Butonlar sadece admine görünür.',
+  body:String.raw`@⟦model||Bu sayfaya gelen verinin türünü bildirir.⟧ ⟦IEnumerable||Birden fazla kayıt (liste) geleceği için.⟧<PhoneBookApp.Models.Contacts>
+
+<h2>Telefon Rehberi</h2>
+@if (User.⟦IsInRole||Giriş yapan kullanıcının rolünü kontrol eder.⟧("Admin"))
+{
+    <p><a asp-⟦action||Linkin gideceği action'ı belirtir.⟧="⟦Create||Yeni Kayıt Ekle butonu Create sayfasını açar.⟧" class="btn btn-primary">Yeni Kayıt Ekle</a></p>
+}
+<table class="table table-striped">
+    <thead>
+        <tr><th>Ad Soyad</th><th>Telefon</th><th>Email</th><th>Ekip</th></tr>
+    </thead>
+    <tbody>
+        @⟦foreach||Listedeki her kişi için bir tablo satırı üretir.⟧ (var item in ⟦Model||Controller'ın View(list) ile gönderdiği liste.⟧)
+        {
+            <tr>
+                <td>@item.⟦Name||Kişinin ad soyadı yazılır.⟧</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.Email</td>
+                <td>@item.Team⟦!?||Ekip yoksa (null) hata vermeden boş geçer.⟧.Name</td>
+                <td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Details" asp-route-⟦id||Linke kişinin Id'sini ekler: /Contacts/Details/5.⟧="@item.Id" class="btn btn-sm btn-info">Detay</a>
+                        <a asp-action="⟦Edit||Düzenle butonu Edit action'ına gider.⟧" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Düzenle</a>
+                        <a asp-action="⟦Delete||Sil butonu Delete action'ına gider.⟧" asp-route-id="@item.⟦Id||Hangi kişinin silineceği Id ile bildirilir.⟧" class="btn btn-sm btn-danger">Sil</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>` },
+{ title:'Ekleme formu', file:'Views/Contacts/Create.cshtml', kind:'code', lang:'razor',
+  intro:'Tag helper\'lar input\'ları modele bağlar, hata mesajlarını gösterir.',
+  body:String.raw`@model PhoneBookApp.Models.⟦Contacts||Form tek bir kişi için; model tek bir Contacts.⟧
+
+<form asp-action="⟦Create||Form gönderilince POST Create action'ı çalışır.⟧">
+    <div asp-validation-⟦summary||Modelle ilgili genel hataları listeler.⟧="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label for="TeamId">Ekip</label>
+        <⟦select||Açılır liste (dropdown) elemanı.⟧ asp-for="⟦TeamId||Seçilen ekibin Id'si modeldeki TeamId'ye yazılır.⟧" asp-⟦items||Seçenekler Controller'daki ViewBag.Teams'ten gelir.⟧="ViewBag.Teams" class="form-control">
+            <option value="">Ekip seçin</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <⟦label||Alanın başlığı; asp-for ile modeldeki adı otomatik yazar.⟧ asp-for="Name" class="control-label"></label>
+        <input asp-⟦for||Input'u modeldeki Name alanına bağlar: id, name ve doğrulama otomatik gelir.⟧="Name" class="form-control" />
+        <span asp-validation-⟦for||Name alanının hata mesajını ("Ad soyad zorunludur") gösterir.⟧="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PhoneNumber" class="control-label"></label>
+        <input asp-for="⟦PhoneNumber||Telefon kutusu modeldeki PhoneNumber alanına bağlanır.⟧" class="form-control" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <input type="⟦submit||Formu gönderen buton.⟧" value="Oluştur" class="btn btn-primary" />
+</form>
+
+<a asp-action="⟦Index||Listeye geri dönüş linki.⟧">Listeye Dön</a>` },
+{ title:'Düzenleme formu', file:'Views/Contacts/Edit.cshtml', kind:'code', lang:'razor',
+  intro:'Create\'ten farkı: gizli Id alanı ve tarayıcıda doğrulama scriptleri.',
+  body:String.raw`@model PhoneBookApp.Models.Contacts
+
+@{
+    ViewData["⟦Title||Sekmede görünen başlık; layout'taki <title> bunu okur.⟧"] = "Edit";
+}
+
+<form asp-action="⟦Edit||Form gönderilince POST Edit action'ı çalışır.⟧">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="⟦hidden||Kullanıcı görmez ama değer forma gider; hangi kaydın güncelleneceği böyle bilinir.⟧" asp-for="⟦Id||Gizli alan kişinin Id'sini taşır.⟧" />
+
+    <div class="form-group">
+        <label for="TeamId">Ekip</label>
+        <select asp-for="TeamId" asp-items="⟦ViewBag.Teams||Edit GET'te hazırlanan, mevcut ekibi seçili SelectList.⟧" class="form-control">
+            <option value="">Ekip seçin</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="⟦Email||E-posta kutusu modeldeki Email alanına bağlanır.⟧" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <input type="submit" value="Güncelle" class="btn btn-primary" />
+</form>
+
+@⟦section||Sayfaya ait bir bölüm tanımlar.⟧ ⟦Scripts||Layout'taki RenderSectionAsync("Scripts") yerine buradaki kod konur.⟧ {
+    @{await Html.⟦RenderPartialAsync||Başka bir parça (partial) view'ı buraya ekler.⟧("⟦_ValidationScriptsPartial||Sayfa gönderilmeden tarayıcıda doğrulama yapan jQuery scriptleri.⟧");}
+}` },
+{ title:'Ortak şablon', file:'_ViewStart.cshtml + Shared/_Layout.cshtml', kind:'code', lang:'razor',
+  intro:'Bütün sayfaları saran ortak şablon. Giriş yapan kullanıcıya adı ve Çıkış linki görünür.',
+  body:String.raw`@* _ViewStart.cshtml *@
+@{
+    ⟦Layout||Bütün sayfaların hangi ortak şablonu kullanacağını belirler.⟧ = "⟦_Layout||Views/Shared/_Layout.cshtml dosyası.⟧";
+}
+
+@* _Layout.cshtml (özet) *@
+<title>@ViewData["Title"] - PhoneBookApp</title>
+
+@if (User?.Identity?.⟦IsAuthenticated||Kullanıcı giriş yapmış mı?⟧ == true)
+{
+    <span class="nav-link">Hoşgeldin: @User.Identity?.⟦Name||Cookie'deki kullanıcı adı (admin / user).⟧</span>
+    <a class="nav-link" asp-⟦controller||Linkin gideceği controller.⟧="⟦Account||Giriş/çıkış AccountController'da.⟧" asp-action="⟦Logout||Çıkış action'ı.⟧">Çıkış</a>
+}
+else
+{
+    <a class="nav-link" asp-controller="Account" asp-action="⟦Login||Giriş sayfası.⟧">Giriş</a>
+}
+
+<main role="main" class="pb-3">
+    @⟦RenderBody||Açılan sayfanın (Index, Create…) içeriği buraya yerleşir.⟧()
+</main>
+
+@await ⟦RenderSectionAsync||Sayfaların @section Scripts bölümü buraya konur.⟧("Scripts", required: ⟦false||Scripts bölümü olmayan sayfalar da hata vermeden açılır.⟧)` },
+{ title:'Kavramlar', file:'View kavramları', kind:'text', ci:true,
+  intro:'Razor ve tag helper terimleri.',
+  body:String.raw`View dosyalarının uzantısı ⟦.cshtml|cshtml||C# + HTML.⟧ olur.
+HTML içinde C# yazmayı sağlayan söz dizimine ⟦Razor||@ işaretinden sonrası C# kodudur.⟧ denir.
+Sayfaya gelen verinin türü en üstte @⟦model⟧ ile yazılır.
+Index sayfasına liste geldiği için tür ⟦IEnumerable|List||IEnumerable<PhoneBookApp.Models.Contacts>⟧<Contacts> olur.
+ContactsController'daki Index action'ının view'ı Views/⟦Contacts⟧/⟦Index.cshtml|Index⟧ dosyasıdır.
+Input'u model alanına bağlayan tag helper: asp-⟦for⟧
+Linke kişinin Id'sini ekleyen tag helper: asp-⟦route-id||Örnek: asp-route-id="@item.Id"⟧
+Dropdown'a seçenekleri veren tag helper: asp-⟦items⟧
+Bütün sayfaların ortak şablonu: Views/⟦Shared⟧/_Layout.cshtml
+Sayfa içeriğinin layout'ta yerleştiği yer: @⟦RenderBody⟧()
+Tag helper'ları projeye tanıtan dosya: _⟦ViewImports||@addTagHelper satırı burada.⟧.cshtml
+View eklemek: Views/Contacts klasörüne sağ tık → Ekle → ⟦Görünüm|View⟧` }
+]},
+/* ───────────── 7. LOGIN VE ROLLER ───────────── */
+{ name:'Login ve roller', desc:'Cookie girişi, Admin/User, ekip seed',
+lesson:`
+<p>Uygulamada iki kullanıcı var: <b>admin / 123</b> (rol: Admin, her şeyi yapar) ve <b>user / 123</b> (rol: User, sadece listeyi görür). Kullanıcılar veritabanında değil, AccountController'da sabit yazılı (demo).</p>
+<h3>Kimlik doğrulama ve yetkilendirme</h3>
+<div class="tbl"><table><thead><tr><th></th><th>Authentication</th><th>Authorization</th></tr></thead><tbody>
+<tr><td>Soru</td><td>Sen kimsin?</td><td>Buna yetkin var mı?</td></tr>
+<tr><td>Program.cs</td><td><code>AddAuthentication().AddCookie()</code>, <code>app.UseAuthentication()</code></td><td><code>app.UseAuthorization()</code></td></tr>
+<tr><td>Kodda</td><td><code>SignInAsync</code>, <code>SignOutAsync</code></td><td><code>[Authorize]</code>, <code>[Authorize(Roles = "Admin")]</code></td></tr>
+</tbody></table></div>
+<h3>Giriş akışı</h3>
+<ol>
+<li>Korumalı sayfaya (ör. Create) giriş yapmadan gidilir → <code>LoginPath</code> yüzünden <code>/Account/Login</code>'e yönlenir.</li>
+<li>Login GET formu açar. Form <code>name="username"</code>, <code>name="password"</code> ile POST Login'e gider.</li>
+<li>POST Login kullanıcıyı kontrol eder, rolü belirler.</li>
+<li><b>Claim</b> listesi oluşur: <code>ClaimTypes.Name</code> = kullanıcı adı, <code>ClaimTypes.Role</code> = rol.</li>
+<li>Claim'lerden <code>ClaimsIdentity</code>, ondan <code>ClaimsPrincipal</code> yapılır.</li>
+<li><code>HttpContext.SignInAsync(...)</code> tarayıcıya <b>cookie</b> yazar. Artık her istekte kullanıcı tanınır.</li>
+<li><code>[Authorize(Roles = "Admin")]</code> cookie'deki rolü kontrol eder. User rolü Create'e girerse erişim reddedilir (AccessDenied).</li>
+</ol>
+<h3>Attribute'lar</h3>
+<div class="tbl"><table><thead><tr><th>Yazım</th><th>Kim girebilir</th></tr></thead><tbody>
+<tr><td><code>[Authorize]</code></td><td>Giriş yapmış herkes</td></tr>
+<tr><td><code>[Authorize(Roles = "Admin")]</code></td><td>Sadece Admin</td></tr>
+<tr><td><code>[AllowAnonymous]</code></td><td>Giriş yapmamış biri de</td></tr>
+<tr><td>Sınıfın üstüne yazılırsa</td><td>Bütün action'lara uygulanır</td></tr>
+</tbody></table></div>
+<p>View tarafında butonları gizlemek için <code>@if (User.IsInRole("Admin")) { ... }</code>, kullanıcı adını yazmak için <code>@User.Identity.Name</code> kullanılır.</p>
+<h3>Varsayılan ekipler (seed)</h3>
+<p>Program.cs'te <code>builder.Build()</code>'den sonra bir scope açılır, DbContext alınır ve <code>if (!db.Teams.Any())</code> ile tablo boşsa Aile, Arkadaşlar, İş eklenir. Uygulama her açıldığında çalışır ama ekipler zaten varsa tekrar eklemez.</p>
+<div class="note warn"><b>Sıra</b><span><code>app.UseAuthentication();</code> mutlaka <code>app.UseAuthorization();</code>'dan önce yazılır. Önce kim olduğunu bilmek gerekir, sonra yetkisine bakılır.</span></div>`,
+ex:[
+{ title:'Cookie ve seed', file:'Program.cs (son hali)', kind:'code', lang:'cs',
+  intro:'Cookie girişinin ve varsayılan ekiplerin eklendiği kısım.',
+  body:String.raw`using Microsoft.AspNetCore.Authentication.⟦Cookies||Cookie ile giriş sisteminin kütüphanesi.⟧;
+using PhoneBookApp.Models;
+
+// Cookie Authentication
+builder.Services.⟦AddAuthentication||Kimlik doğrulama sistemini ekler.⟧(CookieAuthenticationDefaults.⟦!AuthenticationScheme||Varsayılan yöntem: Cookie.⟧)
+    .⟦AddCookie||Girişin tarayıcıdaki cookie ile hatırlanmasını sağlar.⟧(options =>
+    {
+        options.⟦LoginPath||Giriş yapmamış biri korumalı sayfaya girerse buraya yönlendirilir.⟧ = "/Account/Login";   // login sayfası
+        options.⟦LogoutPath||Çıkış adresi.⟧ = "/Account/Logout"; // çıkış
+    });
+
+var app = builder.Build();
+using (var scope = app.Services.⟦CreateScope||Uygulama başlamadan servisleri (DbContext) kullanabilmek için geçici kapsam açar.⟧())
+{
+    var db = scope.ServiceProvider.⟦!GetRequiredService||Kapsamdan ApplicationDbContext nesnesini alır.⟧<ApplicationDbContext>();
+
+    if (!db.Teams.⟦Any||Tabloda hiç kayıt var mı? Yoksa ekipler eklenir, varsa tekrar eklenmez.⟧())
+    {
+        db.Teams.⟦AddRange||Birden fazla kaydı tek seferde ekler.⟧(
+            new ⟦Team||Her biri yeni bir Team nesnesi.⟧ { Name = "Aile" },
+            new Team { Name = "Arkadaşlar" },
+            new Team { Name = "İş" }
+        );
+        db.⟦SaveChanges||Ekipleri veritabanına yazar.⟧();
+    }
+}
+
+app.UseStaticFiles();
+app.UseRouting();
+
+// Authentication + Authorization
+app.⟦UseAuthentication||"Kimsin?" — cookie'yi okuyup kullanıcıyı tanır. UseAuthorization'dan ÖNCE gelmeli.⟧();
+app.⟦UseAuthorization||"Yetkin var mı?" — [Authorize] kurallarını uygular.⟧();` },
+{ title:'Giriş ve çıkış', file:'Controllers/AccountController.cs', kind:'code', lang:'cs',
+  intro:'Sabit kullanıcıları kontrol eder, rolü cookie\'ye yazar.',
+  body:String.raw`public class AccountController : Controller
+{
+    [HttpGet]
+    public IActionResult Login(string returnUrl = null)
+    {
+        ViewData["⟦ReturnUrl||Girişten sonra dönülecek sayfa saklanır.⟧"] = returnUrl;
+        return View();
+    }
+
+    [⟦HttpPost||Giriş formu gönderilince çalışır.⟧]
+    public async Task<IActionResult> Login(string ⟦username||Formdaki name="username" input'undan gelir.⟧, string ⟦password||Formdaki name="password" input'undan gelir.⟧, string? returnUrl = null)
+    {   // Basit sabit kullanıcı kontrolü (demo)
+        string? role = null;
+        if (username == "admin" && password == "123") role = "⟦Admin||admin kullanıcısına Admin rolü verilir.⟧";
+        else if (username == "user" && password == "123") role = "⟦User||user kullanıcısına User rolü verilir.⟧";
+        if (role == null)
+        {
+            ⟦ViewBag||Hata mesajı View'a ViewBag ile taşınır.⟧.Error = "Kullanıcı adı veya şifre hatalı!";
+            return View();
+        }
+        var claims = new List<⟦Claim||Kullanıcı hakkında bir bilgi parçası (ad, rol).⟧>
+        {   new Claim(ClaimTypes.⟦Name||Kullanıcının adı cookie'ye yazılır; layout'ta User.Identity.Name ile okunur.⟧, username),
+            new Claim(ClaimTypes.⟦Role||Rol cookie'ye yazılır; [Authorize(Roles = "Admin")] bunu kontrol eder.⟧, role)
+        };
+        var identity = new ⟦ClaimsIdentity||Claim'lerden kimlik kartı oluşturur.⟧(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        var principal = new ⟦ClaimsPrincipal||Kimliği taşıyan kullanıcı nesnesi.⟧(identity);
+        await HttpContext.⟦SignInAsync||Kullanıcıyı giriş yapmış sayar ve cookie'yi oluşturur.⟧(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+        if (!string.IsNullOrEmpty(returnUrl) && Url.⟦!IsLocalUrl||Sadece kendi sitemizdeki bir adrese dönülür (güvenlik).⟧(returnUrl))
+            return Redirect(returnUrl);
+        return RedirectToAction("Index", "⟦Contacts||Giriş sonrası rehber listesine gidilir.⟧");
+    }
+
+    public async Task<IActionResult> ⟦Logout||Çıkış action'ı; layout'taki Çıkış linki buraya gelir.⟧()
+    {
+        await HttpContext.⟦SignOutAsync||Cookie'yi siler, kullanıcı çıkış yapar.⟧(CookieAuthenticationDefaults.AuthenticationScheme);
+        return RedirectToAction("⟦Login||Çıkıştan sonra giriş sayfasına dönülür.⟧", "Account");
+    }
+
+    public IActionResult ⟦AccessDenied||Yetkisiz kullanıcı Admin sayfasına girerse gösterilen sayfa.⟧()
+    {
+        return View(); // basit "erişim reddedildi" sayfası
+    }
+}` },
+{ title:'Giriş formu', file:'Views/Account/Login.cshtml', kind:'code', lang:'razor',
+  intro:'Input\'ların name değeri, controller parametreleriyle aynı olmalı.',
+  body:String.raw`@{
+    ViewData["Title"] = "Giriş Yap";
+}
+
+@if (ViewBag.⟦Error||Controller'ın ViewBag.Error'a yazdığı hata mesajı.⟧ != null)
+{
+    <div class="alert alert-danger text-center">@ViewBag.Error</div>
+}
+
+<form asp-action="⟦Login||Form POST Login action'ına gider.⟧" method="⟦post||Şifre adres çubuğunda görünmesin diye POST.⟧">
+    <label for="username" class="form-label">Kullanıcı Adı</label>
+    <input type="text" class="form-control" id="username" name="⟦username||Controller'daki string username parametresiyle aynı isim olmalı.⟧" required autofocus />
+
+    <label for="password" class="form-label">Şifre</label>
+    <input type="⟦password||Yazılanlar nokta olarak görünür.⟧" class="form-control" id="password" name="password" ⟦required||Boş bırakılırsa tarayıcı formu göndermez.⟧ />
+
+    <button type="submit" class="btn btn-primary w-100">Giriş Yap</button>
+</form>` },
+{ title:'Kavramlar', file:'Login kavramları', kind:'text', ci:true,
+  intro:'Giriş, rol ve yetki terimleri.',
+  body:String.raw`[Authorize] yazan sayfayı sadece ⟦giriş yapmış|giriş yapan|oturum açmış|login olmuş||Giriş yapmamış biri LoginPath'e yönlendirilir.⟧ kullanıcılar açabilir.
+Sadece adminin girebilmesi için: [Authorize(⟦Roles⟧ = "Admin")]
+Giriş yapmadan da açılabilmesi için: [⟦AllowAnonymous||Hocanın kodunda Details için yorum satırı olarak duruyor.⟧]
+Rol bilgisi cookie'ye ClaimTypes.⟦Role⟧ ile yazılır.
+Kullanıcıyı giriş yapmış sayıp cookie oluşturan metot: HttpContext.⟦SignInAsync⟧
+Çıkış yaptıran metot: HttpContext.⟦SignOutAsync⟧
+Program.cs'te app.⟦UseAuthentication⟧() her zaman app.UseAuthorization()'dan önce yazılır.
+Giriş yapmamış biri korumalı sayfaya girerse options.⟦LoginPath⟧ adresine yönlendirilir.
+View'da butonu sadece admine göstermek için @if (User.⟦IsInRole⟧("Admin"))
+Admin kullanıcı adı / şifre: ⟦admin⟧ / ⟦123⟧
+Layout'ta kullanıcının adı @User.Identity.⟦Name⟧ ile yazılır.
+Program.cs'teki seed kodu, Teams tablosu boşsa ⟦3|üç||Aile, Arkadaşlar, İş.⟧ ekip ekler.` }
+]},
+/* ───────────── 8. GENEL PROVA ───────────── */
+{ name:'Genel prova', desc:'Karışık sınav: boşluk + "ne işe yarar"', exam:true }
+];
+
+/* ───────────── durum ───────────── */
+const KEY = 'rehber-vize-v2';
+let S = { mode:'kolay', level:0, tab:{}, view:{}, best:{}, wrong:{}, examBest:0 };
+try { const saved = JSON.parse(localStorage.getItem(KEY) || 'null'); if (saved) S = Object.assign(S, saved); } catch (e) {}
+function persist(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+if (!LEVELS[S.level]) S.level = 0;
+
+const PH = i => '' + i + '';
+const PHRE = /(\d+)/g;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+/* ───────────── sözdizimi renklendirme ───────────── */
+const KW = new Set('using namespace public private protected class get set int string var new return if else async await readonly base null true false this void in foreach'.split(' '));
+const RX = {
+  cs: /(\/\/[^\n]*)|("(?:[^"\\\n]|\\.)*")|\b([A-Za-z_][A-Za-z0-9_]*)\b/g,
+  json: /("(?:[^"\\\n]|\\.)*")(\s*:)?/g,
+  ps: /(#[^\n]*)|(\b[A-Z][a-z]+-[A-Z][A-Za-z]+\b)|(\s-[A-Za-z]+\b)/g,
+  razor: /(@\*[\s\S]*?\*@)|(<\/?[A-Za-z][\w-]*|\/?>)|("[^"\n]*")|(@[A-Za-z_]\w*)|\b([A-Za-z_][\w-]*)(?==)|(?<!\p{L})([A-Za-z_]\w*)(?!\p{L})/gu
+};
+function highlight(src, lang){
+  const re = RX[lang]; if (!re) return esc(src);
+  re.lastIndex = 0; let out = '', last = 0, m;
+  const span = (c, t) => '<span class="' + c + '">' + esc(t) + '</span>';
+  while ((m = re.exec(src))) {
+    out += esc(src.slice(last, m.index));
+    if (lang === 'cs') {
+      if (m[1]) out += span('c-com', m[1]);
+      else if (m[2]) out += span('c-str', m[2]);
+      else if (KW.has(m[3])) out += span('c-kw', m[3]);
+      else if (/^[A-Z]/.test(m[3])) out += span('c-type', m[3]);
+      else out += esc(m[0]);
+    } else if (lang === 'json') {
+      out += span(m[2] ? 'c-key' : 'c-str', m[1]) + esc(m[2] || '');
+    } else if (lang === 'ps') {
+      if (m[1]) out += span('c-com', m[1]);
+      else if (m[2]) out += span('c-cmd', m[2]);
+      else out += span('c-kw', m[3]);
+    } else {
+      if (m[1]) out += span('c-com', m[1]);
+      else if (m[2]) out += span('c-kw', m[2]);
+      else if (m[3]) out += span('c-str', m[3]);
+      else if (m[4]) out += span('c-key', m[4]);
+      else if (m[5]) out += span('c-type', m[5]);
+      else if (KW.has(m[6])) out += span('c-kw', m[6]);
+      else out += esc(m[0]);
+    }
+    last = re.lastIndex;
+  }
+  return out + esc(src.slice(last));
+}
+
+/* ───────────── boşluk ayrıştırma ───────────── */
+const parsed = new Map();
+function parse(E){
+  if (parsed.has(E)) return parsed.get(E);
+  const blanks = [];
+  const text = E.body.replace(/⟦([\s\S]+?)⟧/g, (_, inner) => {
+    let hard = false; if (inner[0] === '!') { hard = true; inner = inner.slice(1); }
+    const cut = inner.indexOf('||');
+    const ans = cut < 0 ? inner : inner.slice(0, cut);
+    blanks.push({ answers: ans.split('|'), exp: cut < 0 ? '' : inner.slice(cut + 2), hard });
+    return PH(blanks.length - 1);
+  });
+  const r = { text, blanks }; parsed.set(E, r); return r;
+}
+function norm(s, ci){
+  s = String(s).trim().replace(/\s+/g, ' ');
+  if (ci) s = s.toLocaleLowerCase('tr-TR').replace(/ı/g, 'i').replace(/\s*([+\-→])\s*/g, '$1');
+  return s;
+}
+function matches(ans, val, ci){
+  if (ans.startsWith('re:')) return new RegExp(ans.slice(3)).test(String(val).trim());
+  return norm(val, ci) !== '' && norm(ans, ci) === norm(val, ci);
+}
+function grade(b, val, ci){
+  if (b.answers.some(a => matches(a, val, ci))) return 'ok';
+  if (!ci && b.answers.some(a => matches(a, val, true))) return 'case';
+  return 'bad';
+}
+const wkey = (li, ei, bi) => li + '.' + ei + '.' + bi;
+function markWrong(li, ei, bi, st){ const k = wkey(li, ei, bi); if (st === 'ok') delete S.wrong[k]; else S.wrong[k] = 1; }
+const inputHtml = (id, b, n, extra) => '<span class="blank" data-n="' + n + '"><input id="' + id + '" ' + (extra || '') + ' style="width:' + (Math.max(b.answers[0].length, 2) + 1.2) + 'ch" aria-label="Boşluk ' + n + '" autocomplete="off" autocapitalize="off" spellcheck="false"></span>';
+
+/* ───────────── ilerleme ───────────── */
+const exKey = (li, ei) => li + '.' + ei;
+function bestOf(li, ei){ const b = S.best[exKey(li, ei)]; return b ? (b[S.mode] || 0) : 0; }
+function levelPct(li){ const L = LEVELS[li]; if (L.exam) return S.examBest || 0; return L.ex.reduce((a, _, ei) => a + bestOf(li, ei), 0) / L.ex.length; }
+
+let cur = null, exam = null;
+
+function renderTop(){
+  const today = new Date(); today.setHours(0,0,0,0);
+  const days = Math.round((new Date(2026, 10, 5) - today) / 864e5);
+  document.getElementById('countdown').innerHTML = days > 1 ? 'Sınava <b>' + days + ' gün</b>' : days === 1 ? '<b>Sınav yarın</b>' : days === 0 ? '<b>Sınav bugün</b>' : 'Sınav 5 Kasım';
+  const pct = Math.round(LEVELS.reduce((a, _, i) => a + levelPct(i), 0) / LEVELS.length * 100);
+  document.getElementById('overall').innerHTML = 'İlerleme <b>%' + pct + '</b>';
+  document.querySelector('#wrongs .cnt').textContent = Object.keys(S.wrong).length;
+  ['kolay','zor'].forEach(m => document.getElementById('m-' + m).setAttribute('aria-pressed', String(S.mode === m)));
+  document.getElementById('levels').innerHTML = LEVELS.map((L, i) =>
+    '<button type="button" class="lv' + (L.exam ? ' exam' : '') + '" data-level="' + i + '" aria-current="' + (S.level === i) + '"><span class="eyebrow">Seviye ' + (i + 1) + '</span><span class="name">' + esc(L.name) + '</span><span class="desc">' + esc(L.desc) + '</span><span class="bar"><i style="width:' + Math.round(levelPct(i) * 100) + '%"></i></span></button>'
+  ).join('');
+  const L = LEVELS[S.level], tab = currentTab();
+  document.getElementById('extabs').innerHTML = L.exam ? '' :
+    '<button type="button" class="extab" data-tab="konu" aria-current="' + (tab === 'konu') + '"><i class="dot book"></i>Konu anlatımı</button>' +
+    L.ex.map((E, i) => {
+      const b = bestOf(S.level, i);
+      return '<button type="button" class="extab" data-tab="' + i + '" aria-current="' + (tab === i) + '"><i class="dot' + (b >= 1 ? ' done' : b > 0 ? ' part' : '') + '"></i>' + (i + 1) + '. ' + esc(E.title) + '</button>';
+    }).join('');
+}
+function currentTab(){ const t = S.tab[S.level]; return t === undefined || t === 'konu' ? 'konu' : +t; }
+
+function render(){
+  renderTop();
+  const L = LEVELS[S.level];
+  if (L.exam) return renderExam();
+  const tab = currentTab();
+  if (tab === 'konu') return renderLesson();
+  renderExercise();
+}
+
+function renderLesson(){
+  const li = S.level, L = LEVELS[li];
+  document.getElementById('card').innerHTML =
+    '<div class="card-head"><div class="row"><span class="eyebrow">Seviye ' + (li + 1) + ' · Konu anlatımı</span></div><h2>' + esc(L.name) + '</h2><p class="intro">Önce bu sayfayı oku, sonra alıştırmalarda her alıştırmanın "Oku" görünümüyle kodun tamamını açıklamalı gör, en son "Çöz" ile boşlukları doldur.</p></div>' +
+    '<div class="lesson">' + L.lesson + '</div>' +
+    '<div class="next"><button type="button" class="btn primary" data-tab="0">Alıştırmalara başla →</button></div>';
+  cur = null;
+}
+
+function renderExercise(){
+  const li = S.level, ei = currentTab(), E = LEVELS[li].ex[ei];
+  const { text, blanks } = parse(E);
+  const view = S.view[exKey(li, ei)] || 'coz';
+  const active = [];
+  let body;
+  if (view === 'oku') {
+    let n = 0; const order = [];
+    const rep = (_, i) => { const b = blanks[+i]; order.push(b); n++; return '<mark class="ans" data-n="' + n + '">' + esc(b.answers[0]) + '</mark>'; };
+    body = E.kind === 'code'
+      ? '<div class="code"><pre>' + highlight(text, E.lang).replace(PHRE, rep) + '</pre></div>'
+      : '<ol class="tlist">' + text.split('\n').map(l => '<li>' + esc(l).replace(PHRE, rep) + '</li>').join('') + '</ol>';
+    body += '<div class="results"><h3>Satırların amacı</h3>' + order.map((b, i) =>
+      '<div class="res read"><span class="n">' + (i + 1) + '</span><div><div class="ans"><code>' + esc(b.answers[0]) + '</code>' + (b.answers.length > 1 && !b.answers[1].startsWith('re:') ? '<span class="yours">kabul edilenler: ' + esc(b.answers.filter(a => !a.startsWith('re:')).join(', ')) + '</span>' : '') + '</div>' + (b.exp ? '<p>' + esc(b.exp) + '</p>' : '') + '</div></div>').join('') + '</div>' +
+      '<div class="next"><button type="button" class="btn primary" data-view="coz">Şimdi çöz</button></div>';
+  } else {
+    const blankHtml = i => {
+      const b = blanks[i];
+      if (S.mode === 'kolay' && b.hard) return '<span class="given">' + esc(b.answers[0]) + '</span>';
+      const n = active.push(Object.assign({ bi:i }, b));
+      return inputHtml('b-' + li + '-' + ei + '-' + n, b, n);
+    };
+    body = (E.kind === 'code'
+      ? '<div class="code"><pre>' + highlight(text, E.lang).replace(PHRE, (_, i) => blankHtml(+i)) + '</pre></div>'
+      : '<ol class="tlist">' + text.split('\n').map(l => '<li>' + esc(l).replace(PHRE, (_, i) => blankHtml(+i)) + '</li>').join('') + '</ol>');
+    body = '<div id="sheet">' + body + '</div>' +
+      '<div class="actions"><button type="button" class="btn primary" id="act-check">Kontrol et</button><button type="button" class="btn" id="act-hint">İpucu</button><button type="button" class="btn" id="act-show">Cevapları göster</button><button type="button" class="btn" id="act-clear">Temizle</button><span class="status" id="status" aria-live="polite">' + active.length + ' boşluk</span></div>' +
+      '<div id="results"></div>';
+  }
+  document.getElementById('card').innerHTML =
+    '<div class="card-head"><div class="row"><span class="file">' + esc(E.file) + '</span><span class="eyebrow">Seviye ' + (li + 1) + ' · Alıştırma ' + (ei + 1) + '/' + LEVELS[li].ex.length + '</span>' +
+    '<div class="seg" role="group" aria-label="Görünüm"><button type="button" data-view="coz" aria-pressed="' + (view === 'coz') + '">Çöz</button><button type="button" data-view="oku" aria-pressed="' + (view === 'oku') + '">Oku</button></div></div>' +
+    '<h2>' + esc(E.title) + '</h2><p class="intro">' + esc(E.intro) + '</p></div>' + body;
+  cur = view === 'coz' ? { li, ei, E, active, ci: !!E.ci, shown:false } : null;
+}
+
+function check(){
+  const inputs = [...document.querySelectorAll('#sheet input')];
+  let ok = 0;
+  const rows = cur.active.map((b, i) => {
+    const inp = inputs[i], val = inp.value;
+    inp.classList.remove('ok','bad','case','shown');
+    const st = cur.shown ? 'shown' : grade(b, val, cur.ci);
+    if (st === 'ok') ok++;
+    if (!cur.shown) markWrong(cur.li, cur.ei, b.bi, st);
+    inp.classList.add(st);
+    const label = { ok:'Doğru', bad: val.trim() ? 'Yanlış' : 'Boş', case:'Harf hatası', shown:'Gösterildi' }[st];
+    const yours = (st === 'bad' && val.trim()) || st === 'case' ? '<span class="yours">Senin cevabın: <s>' + esc(val.trim()) + '</s></span>' : '';
+    const caseNote = st === 'case' ? ' C#\'ta büyük-küçük harf farklı sayılır.' : '';
+    return '<div class="res ' + st + '"><span class="n">' + (i + 1) + '</span><div><div class="ans"><code>' + esc(b.answers[0]) + '</code><span class="tag ' + st + '">' + label + '</span>' + yours + '</div>' + (b.exp || caseNote ? '<p>' + esc(b.exp) + caseNote + '</p>' : '') + '</div></div>';
+  });
+  document.getElementById('sheet').classList.add('checked');
+  const total = cur.active.length, st = document.getElementById('status');
+  if (cur.shown) st.innerHTML = 'Cevaplar gösterildi. <b>Temizle</b> ile kendin dene.';
+  else {
+    st.innerHTML = '<b>' + ok + ' / ' + total + '</b> doğru';
+    const k = exKey(cur.li, cur.ei);
+    S.best[k] = S.best[k] || {};
+    S.best[k][S.mode] = Math.max(S.best[k][S.mode] || 0, total ? ok / total : 0);
+  }
+  persist();
+  const L = LEVELS[cur.li];
+  const nextLabel = cur.ei < L.ex.length - 1 ? 'Sonraki alıştırma →' : 'Sonraki seviye →';
+  document.getElementById('results').innerHTML =
+    '<div class="results"><h3>Her boşluğun amacı</h3>' + rows.join('') + '</div>' +
+    '<div class="next">' + (ok < total && !cur.shown ? '<button type="button" class="btn" id="act-retry">Yanlışları yeniden dene</button>' : '') + '<button type="button" class="btn primary" id="act-next">' + nextLabel + '</button></div>';
+  const keep = { li:cur.li, ei:cur.ei }; renderTop(); cur.li = keep.li; cur.ei = keep.ei;
+}
+function retryWrong(){
+  document.querySelectorAll('#sheet input').forEach(inp => {
+    if (inp.classList.contains('ok')) return;
+    inp.value = ''; inp.classList.remove('bad','case');
+  });
+  document.getElementById('sheet').classList.remove('checked');
+  document.getElementById('results').innerHTML = '';
+  const f = [...document.querySelectorAll('#sheet input')].find(i => !i.classList.contains('ok')); if (f) f.focus();
+}
+function showAnswers(){ cur.shown = true; document.querySelectorAll('#sheet input').forEach((inp, i) => { inp.value = cur.active[i].answers[0]; }); check(); }
+function hint(){
+  document.querySelectorAll('#sheet input').forEach((inp, i) => {
+    const a = cur.active[i].answers[0];
+    inp.placeholder = a.length <= 2 ? '·'.repeat(a.length) : a[0] + '·'.repeat(a.length - 1);
+  });
+  document.getElementById('status').textContent = 'İpucu: ilk harf ve harf sayısı gösterildi';
+}
+function go(level, tab){ S.level = level; if (tab !== undefined) S.tab[level] = tab; persist(); render(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+function next(){
+  const L = LEVELS[cur.li];
+  if (cur.ei < L.ex.length - 1) go(cur.li, cur.ei + 1);
+  else go(cur.li + 1, 'konu');
+}
+
+/* ───────────── genel prova ───────────── */
+function pool(){
+  const out = [];
+  LEVELS.forEach((L, li) => { if (!L.ex) return; L.ex.forEach((E, ei) => { const p = parse(E); p.blanks.forEach((b, bi) => out.push({ li, ei, bi, E, p, b })); }); });
+  return out;
+}
+function snippetHtml(q, target){
+  const { E, p, bi } = q;
+  if (E.kind === 'text') {
+    const line = p.text.split('\n').find(l => l.includes(PH(bi)));
+    return '<p class="qtext">' + esc(line).replace(PHRE, (_, i) => +i === bi ? target : esc(p.blanks[+i].answers[0])) + '</p>';
+  }
+  const lines = p.text.split('\n'); const idx = lines.findIndex(l => l.includes(PH(bi)));
+  let from = idx, to = idx;
+  if (idx > 0 && lines[idx - 1].trim()) from = idx - 1;
+  if (idx < lines.length - 1 && lines[idx + 1].trim()) to = idx + 1;
+  const seg = lines.slice(from, to + 1);
+  const ind = Math.min(...seg.filter(l => l.trim()).map(l => l.match(/^ */)[0].length));
+  const src = seg.map(l => l.slice(ind)).join('\n');
+  return '<div class="code"><pre>' + highlight(src, E.lang).replace(PHRE, (_, i) => +i === bi ? target : esc(p.blanks[+i].answers[0])) + '</pre></div>';
+}
+function newExam(onlyWrong){
+  const all = pool();
+  let qs = [];
+  if (onlyWrong) {
+    const ks = new Set(Object.keys(S.wrong));
+    qs = shuffle(all.filter(q => ks.has(wkey(q.li, q.ei, q.bi)))).slice(0, 25).map(q => ({ type:'fill', q }));
+  } else {
+    const code = shuffle(all.filter(q => q.E.kind === 'code'));
+    const text = shuffle(all.filter(q => q.E.kind === 'text'));
+    const fills = code.slice(0, 9).concat(text.slice(0, 3)).map(q => ({ type:'fill', q }));
+    const used = new Set(fills.map(f => f.q));
+    const mcPool = code.filter(q => !used.has(q) && q.b.exp.length >= 15);
+    const expAll = [...new Set(all.filter(q => q.E.kind === 'code' && q.b.exp.length >= 15).map(q => q.b.exp))];
+    const mcs = mcPool.slice(0, 8).map(q => {
+      const same = shuffle(expAll.filter(e => e !== q.b.exp && all.some(o => o.li === q.li && o.b.exp === e)));
+      const other = shuffle(expAll.filter(e => e !== q.b.exp && !same.includes(e)));
+      const opts = shuffle([q.b.exp].concat(same.concat(other).slice(0, 3)));
+      return { type:'mc', q, opts, correct: opts.indexOf(q.b.exp) };
+    });
+    qs = shuffle(fills.concat(mcs));
+  }
+  exam = { qs, graded:false, onlyWrong: !!onlyWrong };
+}
+function renderExam(){
+  if (!exam) newExam(false);
+  const wrongN = Object.keys(S.wrong).length;
+  const head = '<div class="card-head"><div class="row"><span class="eyebrow">Seviye 8 · Genel prova</span></div><h2>' + (exam.onlyWrong ? 'Yanlışlarım' : 'Karışık vize provası') + '</h2>' +
+    '<p class="intro">' + (exam.onlyWrong ? 'Daha önce yanlış yaptığın ' + exam.qs.length + ' boşluk. Doğru yaptıkların listeden çıkar.' : 'Her seferinde rastgele ' + exam.qs.length + ' soru: bütün seviyelerden boşluk doldurma ve "işaretli kod ne işe yarar?" soruları. Sınavdaki gibi Zor modda, kelimeler hazır gelmez.') + '</p>' +
+    '<div class="exam-head"><button type="button" class="btn" id="ex-new">Yeni karışık sınav</button><button type="button" class="btn" id="ex-wrong"' + (wrongN ? '' : ' disabled') + '>Sadece yanlışlarım (' + wrongN + ')</button></div></div>';
+  if (!exam.qs.length) {
+    document.getElementById('card').innerHTML = head + '<div class="lesson"><p>Yanlış listen boş. Önce alıştırmaları çöz ya da karışık sınava gir.</p></div>';
+    return;
+  }
+  const items = exam.qs.map((x, k) => {
+    const { q } = x, id = 'eq-' + k;
+    if (x.type === 'fill') {
+      return '<li class="q" data-k="' + k + '"><div class="qh"><span class="qn">' + (k + 1) + '.</span><span class="qt">Boşluğa ne gelir?</span><span class="qfile">' + esc(q.E.file) + '</span></div>' +
+        snippetHtml(q, inputHtml(id, q.b, k + 1, 'data-k="' + k + '"')) + '<p class="qexp" hidden></p></li>';
+    }
+    return '<li class="q" data-k="' + k + '"><div class="qh"><span class="qn">' + (k + 1) + '.</span><span class="qt">İşaretli kod ne işe yarar?</span><span class="qfile">' + esc(q.E.file) + '</span></div>' +
+      snippetHtml(q, '<mark class="ans" data-n="?">' + esc(q.b.answers[0]) + '</mark>') +
+      '<div class="mc" role="radiogroup">' + x.opts.map((o, j) => '<label><input type="radio" name="' + id + '" id="' + id + '-' + j + '" value="' + j + '"><span>' + esc(o) + '</span></label>').join('') + '</div><p class="qexp" hidden></p></li>';
+  }).join('');
+  document.getElementById('card').innerHTML = head + '<div id="score"></div><ol class="qlist">' + items + '</ol>' +
+    '<div class="actions"><button type="button" class="btn primary" id="ex-grade">Bitir ve puanla</button><span class="status">' + exam.qs.length + ' soru</span></div>';
+}
+function gradeExam(){
+  let ok = 0;
+  exam.qs.forEach((x, k) => {
+    const li = document.querySelector('.q[data-k="' + k + '"]'), { q } = x;
+    const expEl = li.querySelector('.qexp');
+    let st;
+    if (x.type === 'fill') {
+      const inp = li.querySelector('input'); const val = inp.value;
+      st = grade(q.b, val, !!q.E.ci);
+      inp.classList.remove('ok','bad','case'); inp.classList.add(st);
+      expEl.innerHTML = '<b>Cevap: ' + esc(q.b.answers[0]) + '</b>' + (st === 'case' ? ' · Harf hatası, C#\'ta büyük-küçük harf önemli.' : '') + (q.b.exp ? ' · ' + esc(q.b.exp) : '');
+    } else {
+      const sel = li.querySelector('input[type=radio]:checked');
+      const v = sel ? +sel.value : -1;
+      st = v === x.correct ? 'ok' : 'bad';
+      li.querySelectorAll('.mc label').forEach((lab, j) => { lab.classList.remove('ok','bad'); if (j === x.correct) lab.classList.add('ok'); else if (j === v) lab.classList.add('bad'); });
+      expEl.innerHTML = st === 'ok' ? '<b>Doğru.</b>' : '<b>' + (v < 0 ? 'Boş bıraktın.' : 'Yanlış.') + '</b> Doğru cevap yeşil işaretli olan.';
+    }
+    if (st === 'ok') ok++;
+    markWrong(q.li, q.ei, q.bi, st);
+    li.classList.add('graded'); li.classList.toggle('ok', st === 'ok'); li.classList.toggle('bad', st !== 'ok');
+    expEl.hidden = false;
+  });
+  const total = exam.qs.length, pct = total ? ok / total : 0;
+  if (!exam.onlyWrong) S.examBest = Math.max(S.examBest || 0, pct);
+  persist();
+  const msg = pct >= .85 ? 'Hazırsın. Yanlışlarına bir göz at.' : pct >= .6 ? 'İyi gidiyor. Yanlış çıkan seviyelerin konu anlatımına dön.' : 'Önce konu anlatımlarını ve "Oku" görünümünü tekrar et, sonra yeniden dene.';
+  document.getElementById('score').innerHTML = '<div class="score"><strong>' + ok + ' / ' + total + '</strong><span>%' + Math.round(pct * 100) + ' · ' + msg + '</span></div>';
+  document.getElementById('ex-grade').textContent = 'Yeniden puanla';
+  renderTop();
+  document.getElementById('score').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+/* ───────────── olaylar ───────────── */
+document.addEventListener('click', e => {
+  const t = e.target.closest('button'); if (!t) return;
+  if (t.dataset.level !== undefined) { const lv = +t.dataset.level; go(lv); }
+  else if (t.dataset.tab !== undefined) go(S.level, t.dataset.tab === 'konu' ? 'konu' : +t.dataset.tab);
+  else if (t.dataset.view) { S.view[exKey(S.level, currentTab())] = t.dataset.view; persist(); renderExercise(); }
+  else if (t.dataset.mode) { S.mode = t.dataset.mode; persist(); render(); }
+  else if (t.id === 'wrongs') { newExam(true); go(LEVELS.length - 1); }
+  else if (t.id === 'act-check') check();
+  else if (t.id === 'act-hint') hint();
+  else if (t.id === 'act-show') showAnswers();
+  else if (t.id === 'act-clear') { renderExercise(); const f = document.querySelector('#sheet input'); if (f) f.focus(); }
+  else if (t.id === 'act-retry') retryWrong();
+  else if (t.id === 'act-next') next();
+  else if (t.id === 'ex-new') { newExam(false); renderExam(); }
+  else if (t.id === 'ex-wrong') { newExam(true); renderExam(); }
+  else if (t.id === 'ex-grade') gradeExam();
+});
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' || e.target.tagName !== 'INPUT' || e.target.type === 'radio') return;
+  e.preventDefault();
+  const scope = e.target.closest('#sheet, .qlist'); if (!scope) return;
+  const inputs = [...scope.querySelectorAll('input:not([type=radio])')];
+  const i = inputs.indexOf(e.target);
+  if (i < inputs.length - 1) inputs[i + 1].focus();
+  else if (scope.id === 'sheet') check();
+});
+document.addEventListener('input', e => { if (e.target.tagName === 'INPUT' && e.target.type !== 'radio') e.target.classList.remove('ok','bad','case','shown'); });
+
+render();
+</script>
+</body>
+</html>
