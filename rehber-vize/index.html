@@ -176,6 +176,22 @@ button.pill:hover{border-color:var(--bad)}
 .score{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline}
 .score strong{font:700 30px/1 var(--display);font-variant-numeric:tabular-nums}
 
+.simple{border:1px solid var(--accent);background:var(--accent-soft);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.simple > b{font:600 15px/1.2 var(--display);color:var(--accent)}
+.simple p{margin:0}
+.simple .if{font-size:14px;color:var(--muted)}
+.t{font-weight:600;color:inherit;border-bottom:2px dotted var(--accent);cursor:help;background:none;padding:0}
+.t:hover{color:var(--accent)}
+.tdef{display:block;margin:6px 0 4px;padding:8px 12px;border-left:3px solid var(--accent);border-radius:0;background:var(--soft);font-size:14px;font-weight:400;color:var(--ink)}
+.tdef b{font-family:var(--display)}
+.lv.start{grid-column:1/-1;flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:4px 14px}
+.lv.start .bar{flex-basis:100%}
+.gloss-search{font:inherit;width:100%;max-width:360px;border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:var(--paper);color:var(--ink)}
+.gloss{display:grid;grid-template-columns:minmax(0,1fr);gap:0;padding:4px 20px 20px}
+.gloss div{display:grid;grid-template-columns:minmax(120px,190px) minmax(0,1fr);gap:4px 16px;padding:10px 0;border-top:1px solid var(--line)}
+.gloss dt{font-weight:600;margin:0}
+.gloss dd{margin:0;color:var(--muted)}
+@media (max-width:560px){.gloss div{grid-template-columns:minmax(0,1fr)}}
 .legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--muted)}
 .legend span{display:inline-flex;gap:6px;align-items:center}
 footer{font-size:13px;color:var(--muted);line-height:1.5}
@@ -193,6 +209,7 @@ kbd{font:500 12px var(--mono);border:1px solid var(--line);border-bottom-width:2
     <div class="meta">
       <span class="pill" id="countdown">Sınav 5 Kasım</span>
       <span class="pill" id="overall">İlerleme <b>%0</b></span>
+      <button type="button" class="pill" id="gloss-btn" title="Bütün terimlerin basit anlamları">Sözlük</button>
       <button type="button" class="pill" id="wrongs" title="Yanlış yaptığın boşluklardan sınav">Yanlışlarım <span class="cnt">0</span></button>
       <div class="seg" role="group" aria-label="Zorluk">
         <button type="button" id="m-kolay" data-mode="kolay" aria-pressed="false">Kolay</button>
@@ -216,9 +233,150 @@ kbd{font:500 12px var(--mono);border:1px solid var(--line);border-bottom-width:2
 
 <script>
 const LEVELS = [
+/* ───────────── 0. SIFIRDAN BAŞLA ───────────── */
+{ name:'Sıfırdan başla', desc:'Hiç bilmiyorsan buradan: web sitesi, MVC, C# alfabesi, veritabanı, Visual Studio', start:true,
+lesson:`
+<div class="simple"><b>Bu sayfa kimin için?</b><p>Daha önce hiç kod yazmamış biri için. Altı çizili (noktalı) kelimelere tıklarsan anlamı hemen altında açılır. Bütün terimler üstteki <b>Sözlük</b> düğmesinde de var.</p></div>
+
+<h3>Bu derste ne yapıyoruz?</h3>
+<p>Bir <b>telefon rehberi web sitesi</b> yapıyoruz. Telefonundaki Rehber uygulamasını düşün: kişilerin adı, numarası, e-postası var; yeni kişi ekleyebiliyor, düzenleyebiliyor, silebiliyorsun. Biz bunun aynısını tarayıcıda açılan bir site olarak yapıyoruz. Üstüne iki şey var:</p>
+<ul>
+<li><b>Ekipler:</b> her kişi "Aile", "Arkadaşlar" ya da "İş" ekibine konabiliyor.</li>
+<li><b>Giriş ekranı:</b> <code>admin</code> / <code>123</code> ile giren her şeyi yapabiliyor, <code>user</code> / <code>123</code> ile giren sadece listeyi görebiliyor.</li>
+</ul>
+<p>Ekle, listele, düzenle, sil işlerinin dördüne birden <button type="button" class="t" data-t="crud">CRUD</button> denir. Hoca "CRUD yapın" derse bunu kastediyor.</p>
+
+<h3>Bir web sitesi nasıl çalışır?</h3>
+<p>Adres çubuğuna bir adres yazıp Enter'a bastığında şu olur:</p>
+<div class="lcode"><pre>Sen (tarayıcı)                         Sunucu (bizim C# programımız)
+  │  "/Contacts/Index sayfasını ver"  ─►  │  kişileri veritabanından alır
+  │                                       │  bir HTML sayfası hazırlar
+  │  ◄─  hazır HTML sayfası               │
+  ▼
+Ekranda kişi listesi görünür</pre></div>
+<ul>
+<li><button type="button" class="t" data-t="tarayici">Tarayıcı</button>: Chrome, Edge gibi sayfayı isteyen ve gösteren program.</li>
+<li><button type="button" class="t" data-t="sunucu">Sunucu</button>: isteği alıp cevap hazırlayan program. Bizim yazdığımız C# kodu burada çalışır. Visual Studio'da F5'e basınca sunucu senin bilgisayarında açılır.</li>
+<li><button type="button" class="t" data-t="html">HTML</button>: sayfanın iskeleti. Tablolar, butonlar, yazılar HTML ile yazılır.</li>
+</ul>
+
+<h3>MVC: işi üçe bölmek (restoran benzetmesi)</h3>
+<p>Kodun hepsini tek dosyaya yazsak içinden çıkılmazdı. <button type="button" class="t" data-t="mvc">MVC</button> yöntemi işi üç parçaya böler. Bir restoran gibi düşün:</p>
+<div class="tbl"><table><thead><tr><th>Harf</th><th>Restoranda</th><th>Bizim projede</th><th>Klasör</th></tr></thead><tbody>
+<tr><td><b>M</b>odel</td><td>Mutfaktaki malzemenin tarifi: "bir hamburgerde ne var?"</td><td>"Bir kişide ne var?" Ad, telefon, e-posta, ekip</td><td><code>Models/</code></td></tr>
+<tr><td><b>V</b>iew</td><td>Müşteriye giden tabak: göze görünen kısım</td><td>Ekranda görünen sayfa (liste, form)</td><td><code>Views/</code></td></tr>
+<tr><td><b>C</b>ontroller</td><td>Garson: siparişi alır, mutfaktan getirir, tabağa koyup verir</td><td>İsteği alır, veriyi çeker, hangi sayfanın açılacağına karar verir</td><td><code>Controllers/</code></td></tr>
+</tbody></table></div>
+<p>Restoranın bir de deposu var: <b>veritabanı</b>. Garson depoya kendi gitmez, depocuya söyler. O depocu da <button type="button" class="t" data-t="dbcontext">DbContext</button>.</p>
+
+<h3>C# alfabesi</h3>
+<p>Bu projede yazdığımız dilin adı <button type="button" class="t" data-t="csharp">C#</button> ("si şarp" diye okunur). Önce birkaç işaretin ne demek olduğunu bil:</p>
+<div class="tbl"><table><thead><tr><th>Yazım</th><th>Anlamı</th><th>Örnek</th></tr></thead><tbody>
+<tr><td><code>;</code></td><td>Cümlenin sonundaki nokta gibi. Her komut noktalı virgülle biter.</td><td><code>var x = 5;</code></td></tr>
+<tr><td><code>{ }</code></td><td>Bir bloğun başı ve sonu. İçindekiler o bloğa aittir.</td><td><code>class Kisi { ... }</code></td></tr>
+<tr><td><code>//</code></td><td>Yorum satırı. Bilgisayar okumaz, insanlar için not.</td><td><code>// burası liste</code></td></tr>
+<tr><td><code>"..."</code></td><td>Tırnak içindeki her şey metindir.</td><td><code>"Ayşe"</code></td></tr>
+<tr><td><code>int</code></td><td>Tam sayı</td><td><code>5</code>, <code>2026</code></td></tr>
+<tr><td><code>string</code></td><td>Metin</td><td><code>"0555 123 45 67"</code></td></tr>
+<tr><td><code>bool</code></td><td>Sadece doğru / yanlış</td><td><code>true</code>, <code>false</code></td></tr>
+<tr><td><code>=</code></td><td>Atama: sağdaki değeri soldakine koy</td><td><code>Ad = "Ayşe"</code></td></tr>
+<tr><td><code>==</code></td><td>Karşılaştırma: eşit mi?</td><td><code>if (id == null)</code></td></tr>
+<tr><td><code>!</code></td><td>Değil</td><td><code>!ModelState.IsValid</code> = geçerli değilse</td></tr>
+<tr><td><code>public</code></td><td>Başka dosyalar da kullanabilir</td><td><code>public class Contacts</code></td></tr>
+</tbody></table></div>
+<div class="note"><b>Büyük-küçük harf</b><span>C# büyük ve küçük harfi ayrı sayar. <code>Name</code> ile <code>name</code> iki farklı şeydir. Sınavda harfi yanlış yazarsan Visual Studio hata verir.</span></div>
+
+<h3>Kalıp ve nesne (class ve object)</h3>
+<p>Kurabiye kalıbını düşün. Kalıp tek tanedir ama ondan istediğin kadar kurabiye çıkarırsın. C#'ta kalıba <button type="button" class="t" data-t="class">class</button>, kalıptan çıkan her kurabiyeye <button type="button" class="t" data-t="nesne">nesne</button> denir.</p>
+<div class="lcode"><pre>public class Ogrenci                 // kalıp: "bir öğrencide ne var?"
+{
+    public string Ad { get; set; }   // property: öğrencinin adı
+    public int Numara { get; set; }  // property: öğrencinin numarası
+}
+
+var ayse = new Ogrenci();            // new: kalıptan yeni bir öğrenci (nesne) üret
+ayse.Ad = "Ayşe";                    // nokta (.) ile içindeki kutuya ulaş
+ayse.Numara = 25;</pre></div>
+<ul>
+<li><button type="button" class="t" data-t="property">Property</button>: kalıbın içindeki kutular (Ad, Numara). <code>{ get; set; }</code> "bu kutu okunabilir ve değiştirilebilir" demek.</li>
+<li><button type="button" class="t" data-t="method">Metot</button>: bir iş yapan kod parçası. Adının yanında parantez olur: <code>Index()</code>, <code>SaveChangesAsync()</code>. Parantezin içine verilen değerlere <button type="button" class="t" data-t="parametre">parametre</button> denir: <code>Edit(5)</code>.</li>
+<li><code>return</code>: metodun sonucunu geri verir. Controller'da <code>return View();</code> "sayfayı geri ver" demek.</li>
+</ul>
+
+<h3>namespace ve using</h3>
+<p><button type="button" class="t" data-t="namespace">namespace</button> dosyanın adresidir: <code>namespace PhoneBookApp.Models</code> = "PhoneBookApp projesinin Models klasöründeyim". <button type="button" class="t" data-t="using">using</button> ise başka bir adresteki hazır kodları kullanacağını söyler. Kütüphaneden kitap almak için kütüphane kartı göstermek gibi: <code>using Microsoft.EntityFrameworkCore;</code> yazmazsan o kütüphanedeki <code>DbContext</code>'i kullanamazsın.</p>
+
+<h3>Veritabanı: büyük bir Excel dosyası</h3>
+<p><button type="button" class="t" data-t="veritabani">Veritabanı</button> bilgilerin kalıcı saklandığı yerdir. Site kapansa da kişiler kaybolmaz. Bir Excel dosyası gibi düşün: her sayfa bir <b>tablo</b>, her satır bir <b>kayıt</b>, her sütun bir <b>alan</b>.</p>
+<div class="tbl"><table><thead><tr><th>Id</th><th>Name</th><th>PhoneNumber</th><th>Email</th><th>TeamId</th></tr></thead><tbody>
+<tr><td>1</td><td>Ahmet Yılmaz</td><td>0555 111 22 33</td><td>ahmet@ornek.com</td><td>1</td></tr>
+<tr><td>2</td><td>Ayşe Kaya</td><td>0532 444 55 66</td><td></td><td>3</td></tr>
+</tbody></table></div>
+<ul>
+<li><b>Id</b> sütunu her satıra verilen benzersiz numaradır, TC kimlik numarası gibi. Buna <button type="button" class="t" data-t="pk">Primary Key</button> denir.</li>
+<li><b>TeamId</b> başka bir tablodaki (Teams) satırı gösterir: 1 = Aile, 3 = İş. Buna <button type="button" class="t" data-t="fk">Foreign Key</button> denir.</li>
+<li>Bizim veritabanı programımız <button type="button" class="t" data-t="sqlserver">SQL Server</button>. Tablolarla bizim yerimize konuşan araç da <button type="button" class="t" data-t="ef">Entity Framework</button>. Bu sayede SQL dili bilmeden C# ile çalışıyoruz.</li>
+</ul>
+
+<h3>Visual Studio turu</h3>
+<div class="tbl"><table><thead><tr><th>Pencere / tuş</th><th>Ne işe yarar</th></tr></thead><tbody>
+<tr><td><b>Çözüm Gezgini</b> (sağda)</td><td>Projedeki bütün klasör ve dosyaların listesi. Dosya eklemek için klasöre sağ tık → Ekle.</td></tr>
+<tr><td>Ortadaki büyük alan</td><td>Kod yazdığın yer. Kırmızı dalgalı çizgi = hata.</td></tr>
+<tr><td><b>Paket Yöneticisi Konsolu</b> (altta, <code>PM&gt;</code>)</td><td>Paket kurma ve veritabanı komutları buraya yazılır.</td></tr>
+<tr><td><b>Hata Listesi</b> (altta)</td><td>Derleyince bulunan hatalar burada listelenir.</td></tr>
+<tr><td><kbd>Ctrl+Shift+B</kbd></td><td>Derle: kodda hata var mı kontrol et.</td></tr>
+<tr><td><kbd>F5</kbd></td><td>Çalıştır: site tarayıcıda açılır.</td></tr>
+</tbody></table></div>
+
+<h3>Projenin yapım sırası = bu sitenin seviyeleri</h3>
+<ol>
+<li><b>Model</b>: önce "bir kişide ne var" yazılır.</li>
+<li><b>DbContext</b>: veritabanıyla konuşacak tercüman yazılır.</li>
+<li><b>Program.cs</b>: uygulamaya tercümanı ve veritabanı adresini tanıtırız.</li>
+<li><b>Komutlar</b>: paketler kurulur, veritabanı oluşturulur.</li>
+<li><b>Controller</b>: listele, ekle, düzenle, sil işleri yazılır.</li>
+<li><b>View'lar</b>: bu işlerin ekranları yazılır.</li>
+<li><b>Login ve roller</b>: giriş ekranı ve "kim neyi yapabilir" kuralları eklenir.</li>
+</ol>
+
+<div class="simple"><b>Nasıl çalışmalısın?</b><p>Her seviyede sırayla: <b>Konu anlatımı</b>'nı oku → alıştırmayı <b>Oku</b> görünümünde aç ve numaralı açıklamaları tek tek oku → <b>Çöz</b>'e geç, <b>Kolay</b> modda doldur → tamamı doğru olunca <b>Zor</b> mod → en son <b>Genel prova</b>. Takıldığın kelimeye tıkla ya da Sözlük'e bak.</p></div>`,
+ex:[
+{ title:'C# alfabesi', file:'Ogrenci.cs (alıştırma)', kind:'code', lang:'cs',
+  intro:'Projeden bağımsız küçük bir örnek. Önce Oku görünümünde her numaranın açıklamasını oku.',
+  body:String.raw`// İki eğik çizgi: yorum satırı. Bilgisayar okumaz, insanlar için not.
+public ⟦class||Bir kalıp tanımlar: "bir öğrencide ne var?" sorusunun cevabı.⟧ Ogrenci
+⟦{||Sınıfın başladığı yer. En alttaki } ile kapanır.⟧
+    public ⟦int||Tam sayı tutar: 1, 25, 2026.⟧ Numara { get; set; }
+    public ⟦string||Metin tutar. Değeri tırnak içinde yazılır: "Ayşe".⟧ Ad { get; set; } = "";
+    public ⟦bool||Sadece true (doğru) ya da false (yanlış) tutar.⟧ GectiMi { get; set; }
+
+    public int Ortalama(int vize, int final)
+    {
+        ⟦return||Metodun sonucunu geri verir. Controller'daki return View(); da aynı mantık.⟧ (vize + final) / 2;
+    }
+}
+
+var ayse = ⟦new||Kalıptan yeni bir nesne (gerçek bir öğrenci) üretir.⟧ Ogrenci();
+ayse⟦.||Nokta, nesnenin içindeki property'ye ulaşmayı sağlar: ayse.Ad⟧Ad = "Ayşe"⟦;||C#'ta her komut noktalı virgülle biter.⟧
+ayse.GectiMi = ayse.Ortalama(40, 80) >= 50;` },
+{ title:'Temel kavramlar', file:'Sıfırdan kavramlar', kind:'text', ci:true,
+  intro:'Hiçbir koda bakmadan bilmen gereken kelimeler.',
+  body:String.raw`Chrome, Edge gibi sayfayı isteyen ve gösteren programa ⟦tarayıcı|browser||Adres çubuğuna yazılan adresi sunucudan ister.⟧ denir.
+İsteği alıp cevap hazırlayan, bizim C# kodumuzun çalıştığı programa ⟦sunucu|server||F5'e basınca senin bilgisayarında açılır.⟧ denir.
+MVC'de M ⟦Model⟧, V ⟦View⟧, C ⟦Controller⟧ demektir.
+Restoran benzetmesinde siparişi alıp mutfaktan getiren garson ⟦Controller||İsteği alır, veriyi çeker, sayfayı seçer.⟧'dır.
+Müşteriye giden tabak, yani ekranda görünen sayfa ⟦View⟧'dır.
+Ekle, listele, düzenle, sil işlerinin dördüne birden ⟦CRUD||Create, Read, Update, Delete.⟧ denir.
+Bir kalıptan (class) üretilen gerçek örneğe ⟦nesne|object|obje||new Ogrenci() bir nesne üretir.⟧ denir.
+Veritabanında her satıra verilen TC kimlik no gibi benzersiz numaraya ⟦Primary Key|PK|birincil anahtar||Bizim projede Id sütunu.⟧ denir.
+C#'ta her komut ⟦;|noktalı virgül||Cümlenin sonundaki nokta gibi.⟧ ile biter.
+Visual Studio'da dosyaların listelendiği sağdaki pencere: ⟦Çözüm Gezgini|Solution Explorer⟧
+Projeyi tarayıcıda çalıştıran tuş: ⟦F5⟧` }
+]},
 /* ───────────── 1. MODEL ───────────── */
 { name:'Model', desc:'Contacts.cs ve Team.cs',
 lesson:`
+<div class="simple"><b>Basitçe</b><p>Telefonundaki rehbere yeni kişi eklerken boş kutular çıkar: Ad, Telefon, E-posta. <b>Model</b> bu kutuların listesidir. C#'ta bir <button type="button" class="t" data-t="class">class</button> olarak yazılır, her kutu bir <button type="button" class="t" data-t="property">property</button> olur. Veritabanı bu listeye bakıp aynı sütunlarla bir tablo kurar.</p><p class="if">Bu dosya olmasaydı: uygulama bir kişide hangi bilgileri saklayacağını bilmezdi, tablo da oluşmazdı.</p></div>
 <p><b>Model</b>, verinin şeklidir: "bir kişi kaydında hangi bilgiler var?" sorusunun cevabı. Entity Framework (EF Core) her model sınıfından veritabanında bir <b>tablo</b> oluşturur.</p>
 <div class="tbl"><table><thead><tr><th>C# tarafı</th><th>Veritabanı tarafı</th><th>Örnek</th></tr></thead><tbody>
 <tr><td>class</td><td>tablo</td><td><code>Contacts</code> → Contacts tablosu</td></tr>
@@ -305,6 +463,7 @@ Model sınıfı eklemek için Models klasörüne sağ tık → Ekle → ⟦Sın�
 /* ───────────── 2. DBCONTEXT ───────────── */
 { name:'DbContext', desc:'Veritabanı köprüsü',
 lesson:`
+<div class="simple"><b>Basitçe</b><p>Senin kodun C# konuşur, veritabanı SQL konuşur. <b>DbContext</b> ikisi arasındaki tercümandır: sen <code>_db.Contacts</code> dersin, o bunu SQL'e çevirip kişileri veritabanından getirir. <button type="button" class="t" data-t="dbset">DbSet</button> ise tercümanın elindeki tablo listesidir: Contacts tablosu, Teams tablosu.</p><p class="if">Bu dosya olmasaydı: Controller veritabanına ulaşamazdı, hiçbir kişi kaydedilemez ve listelenemezdi.</p></div>
 <p><b>DbContext</b>, C# kodun ile SQL Server arasındaki köprüdür. Controller veritabanına doğrudan değil, bu sınıf üzerinden ulaşır: <code>_db.Contacts.ToListAsync()</code> gibi. SQL yazmazsın, SQL'i EF Core üretir.</p>
 <h3>Visual Studio'da nasıl oluşturulur</h3>
 <ol><li>Proje adına sağ tık → <b>Ekle → Yeni Klasör</b> → <code>Data</code> (şablonda bu klasör yok)</li><li><code>Data</code>'ya sağ tık → <b>Ekle → Sınıf</b> → <code>ApplicationDbContext.cs</code></li></ol>
@@ -348,6 +507,7 @@ DbContext, Program.cs'te builder.Services.⟦AddDbContext||Kayıt olmazsa Contro
 /* ───────────── 3. PROGRAM.CS ───────────── */
 { name:'Program.cs', desc:'Bağlantı adresi ve başlangıç',
 lesson:`
+<div class="simple"><b>Basitçe</b><p>Bir dükkânın sabah açılış listesini düşün: ışıkları yak, tercümanı işe al, güvenliği kapıya koy, kapıyı aç. <b>Program.cs</b> uygulamanın açılış listesidir: MVC'yi aç, DbContext'i (tercüman) tanıt, giriş sistemini kur, adres kuralını yaz, en son <code>app.Run()</code> ile kapıyı aç. <b>appsettings.json</b> ise deponun (veritabanının) adresinin yazılı olduğu kâğıttır.</p><p class="if">Bu dosya olmasaydı: uygulama hiç açılmazdı. Bir satır eksik olursa (örneğin AddDbContext) o parça çalışmaz.</p></div>
 <p><b>Program.cs</b> uygulama açılırken çalışan ilk dosyadır. İki bölümden oluşur: önce <b>builder</b> ile servisler eklenir, sonra <code>builder.Build()</code> ile <b>app</b> oluşturulur ve gelen isteklerin geçeceği sıra (middleware) yazılır. En son <code>app.Run()</code>.</p>
 <div class="lcode"><pre>builder  →  servisleri ekle (MVC, DbContext, Cookie)
 Build()  →  app oluşur
@@ -417,6 +577,7 @@ MVC'yi (Controller + View) açan servis satırı: builder.Services.⟦AddControl
 /* ───────────── 4. KOMUTLAR ───────────── */
 { name:'Komutlar', desc:'NuGet, Migration, Visual Studio',
 lesson:`
+<div class="simple"><b>Basitçe</b><p>Kod yazmak tek başına yetmez. Önce eksik parçalar indirilir: <button type="button" class="t" data-t="nuget">NuGet</button> telefondaki uygulama mağazası gibidir, Entity Framework'ü oradan kurarız. Sonra veritabanı kurulur: <button type="button" class="t" data-t="migration">Migration</button> bir mimarın planı gibidir. Önce plan çizilir (<code>Add-Migration</code>), sonra bina yapılır (<code>Update-Database</code>).</p><p class="if">Bu adımlar yapılmazsa: <code>using Microsoft.EntityFrameworkCore</code> kırmızı yanar ya da site açılınca "tablo bulunamadı" hatası verir.</p></div>
 <h3>Proje nasıl oluşturulur</h3>
 <ol><li><b>Dosya → Yeni → Proje</b></li><li><b>ASP.NET Core Web App (Model-View-Controller)</b> → İleri</li><li>Proje adı: <code>PhoneBookApp</code></li><li>Authentication: <b>None</b> (girişi kendimiz yazacağız) → Oluştur</li></ol>
 <h3>NuGet paketleri</h3>
@@ -475,6 +636,7 @@ Projeyi çalıştırma kısayolu: ⟦F5||Hata ayıklamayla başlatır, tarayıc�
 /* ───────────── 5. CONTROLLER ───────────── */
 { name:'Controller', desc:'Listeleme, ekleme, düzenleme, silme',
 lesson:`
+<div class="simple"><b>Basitçe</b><p><b>Controller</b> restorandaki garsondur. Müşteri (tarayıcı) "kişi listesini istiyorum" der. Garson depocuya (DbContext) söyler, kişileri alır, tabağa (View) koyar ve müşteriye verir. Garsonun bildiği her sipariş türüne <button type="button" class="t" data-t="action">action</button> denir: listele (Index), ekle (Create), düzenle (Edit), sil (Delete).</p><p class="if">Bu dosya olmasaydı: adres çubuğuna /Contacts yazınca "sayfa bulunamadı" (404) çıkardı, çünkü isteği karşılayan kimse olmazdı.</p></div>
 <p><b>Controller</b> uygulamanın beynidir: isteği alır, DbContext ile veriyi çeker veya kaydeder, sonra hangi sayfanın açılacağına karar verir. İçindeki her public metoda <b>action</b> denir ve her action bir adrese karşılık gelir (<code>/Contacts/Edit/5</code> → <code>Edit(5)</code>).</p>
 <h3>Visual Studio'da nasıl oluşturulur</h3>
 <ol><li><code>Controllers</code> klasörüne sağ tık → <b>Ekle → Denetleyici</b> (Controller) → MVC Controller - Empty</li><li>Ya da hazır CRUD için: <b>Add → New Scaffolded Item → MVC Controller with views, using Entity Framework</b> → Model: Contacts, Data context: ApplicationDbContext. Controller ve Views/Contacts sayfaları otomatik oluşur.</li><li>Sınıf adı mutlaka <code>Controller</code> ile biter: <code>ContactsController</code>.</li></ol>
@@ -625,6 +787,7 @@ Hazır CRUD sayfaları üretmek için: Ekle → New ⟦Scaffolded|İskele||MVC C
 /* ───────────── 6. VIEW'LAR ───────────── */
 { name:'View\'lar', desc:'Index, Create, Edit, Layout',
 lesson:`
+<div class="simple"><b>Basitçe</b><p><b>View</b> müşteriye giden tabaktır, yani ekranda gördüğün sayfa. Normal bir HTML sayfasıdır ama içinde boşluklar vardır ve onları C# doldurur. Örneğin "her kişi için tabloya bir satır ekle" işini <code>@foreach</code> yapar. Sayfada <code>@</code> işaretini gördüğün yerde "buradan sonrası C#" diye oku.</p><p class="if">Bu dosya olmasaydı: Controller <code>return View()</code> deyince gösterecek sayfa bulamaz, hata verirdi.</p></div>
 <p><b>View</b> kullanıcının gördüğü sayfadır. Dosya uzantısı <code>.cshtml</code>; içinde HTML ile C# karışık yazılır. Buna <b>Razor</b> denir: <code>@</code> işaretinden sonrası C# kodudur.</p>
 <h3>Hangi View açılır?</h3>
 <p>Controller'da <code>return View();</code> yazınca ASP.NET Core şu dosyayı arar: <code>Views/{ControllerAdı}/{ActionAdı}.cshtml</code>. ContactsController'daki Index için <code>Views/Contacts/Index.cshtml</code>.</p>
@@ -796,6 +959,7 @@ View eklemek: Views/Contacts klasörüne sağ tık → Ekle → ⟦Görünüm|Vi
 /* ───────────── 7. LOGIN VE ROLLER ───────────── */
 { name:'Login ve roller', desc:'Cookie girişi, Admin/User, ekip seed',
 lesson:`
+<div class="simple"><b>Basitçe</b><p>Bir konsere girişi düşün. Kapıda biletini gösterirsin (kullanıcı adı ve şifre), koluna bileklik takılır. Bu bilekliğin adı <button type="button" class="t" data-t="cookie">cookie</button>. İçerideki her kapıda görevli bilekliğe bakar (<code>[Authorize]</code>). VIP bileklik (<b>Admin</b> <button type="button" class="t" data-t="rol">rolü</button>) her yere girer, normal bileklik (<b>User</b>) sadece salona. Çıkışta bileklik kesilir (<code>SignOutAsync</code>).</p><p class="if">Bu kısım olmasaydı: siteye giren herkes kişi ekleyip silebilirdi.</p></div>
 <p>Uygulamada iki kullanıcı var: <b>admin / 123</b> (rol: Admin, her şeyi yapar) ve <b>user / 123</b> (rol: User, sadece listeyi görür). Kullanıcılar veritabanında değil, AccountController'da sabit yazılı (demo).</p>
 <h3>Kimlik doğrulama ve yetkilendirme</h3>
 <div class="tbl"><table><thead><tr><th></th><th>Authentication</th><th>Authorization</th></tr></thead><tbody>
@@ -944,8 +1108,75 @@ Program.cs'teki seed kodu, Teams tablosu boşsa ⟦3|üç||Aile, Arkadaşlar, İ
 { name:'Genel prova', desc:'Karışık sınav: boşluk + "ne işe yarar"', exam:true }
 ];
 
+/* ───────────── sözlük ───────────── */
+const GLOSS = {
+  tarayici:['Tarayıcı (browser)','Chrome, Edge, Firefox gibi web sayfasını isteyen ve ekranda gösteren program.'],
+  sunucu:['Sunucu (server)','İsteği alıp cevap (sayfa) hazırlayan program. Bizim C# kodumuz sunucuda çalışır. F5\'e basınca senin bilgisayarında açılır.'],
+  html:['HTML','Web sayfasının iskelet dili. Başlıklar, tablolar, butonlar, formlar HTML etiketleriyle yazılır: <table>, <a>, <input>.'],
+  csharp:['C#','Microsoft\'un programlama dili ("si şarp"). Bu projedeki bütün .cs dosyaları C# ile yazılır.'],
+  dotnet:['.NET / ASP.NET Core','.NET, C# programlarının çalıştığı altyapıdır. ASP.NET Core bunun web sitesi yapma kısmıdır. Projeyi "ASP.NET Core Web App (Model-View-Controller)" şablonuyla açarız.'],
+  mvc:['MVC','Model-View-Controller. Kodu üçe bölme yöntemi: Model veri, View ekran, Controller aradaki yönetici. Restoran benzetmesi: tarif, tabak, garson.'],
+  model:['Model','Verinin şekli. "Bir kişide hangi bilgiler var?" sorusunun cevabı olan class. Projede Contacts ve Team.'],
+  view:['View','Ekranda görünen sayfa. .cshtml uzantılı, içinde HTML ve C# (Razor) karışık.'],
+  controller:['Controller','İsteği karşılayan, veriyi çeken ve hangi sayfanın açılacağına karar veren class. Adı Controller ile biter: ContactsController.'],
+  action:['Action','Controller içindeki her public metot. Her biri bir adrese karşılık gelir: /Contacts/Create → Create().'],
+  crud:['CRUD','Create (ekle), Read (listele/göster), Update (düzenle), Delete (sil). Veri tutan her uygulamanın dört temel işi.'],
+  class:['class (sınıf)','Bir kalıp. Kurabiye kalıbı gibi tek tanedir ama ondan istediğin kadar nesne üretilir. "public class Contacts { ... }"'],
+  nesne:['Nesne (object)','Bir class\'tan üretilen gerçek örnek. new Contacts() yeni bir kişi nesnesi üretir.'],
+  property:['Property (özellik)','Class içindeki bilgi kutusu: Name, PhoneNumber. { get; set; } okunabilir ve değiştirilebilir demek. Veritabanında bir sütun olur.'],
+  method:['Metot (method)','Bir iş yapan kod parçası. Adının yanında parantez olur: Index(), SaveChangesAsync().'],
+  parametre:['Parametre','Metoda dışarıdan verilen değer. Edit(int? id) metodunda id bir parametredir; /Contacts/Edit/5 adresinde 5 olur.'],
+  tur:['Tür (int, string, bool)','Bir kutunun ne tuttuğu: int tam sayı, string metin, bool doğru/yanlış. Yanına ? gelirse (int?, string?) boş bırakılabilir.'],
+  namespace:['namespace','Dosyanın adresi: PhoneBookApp.Models = PhoneBookApp projesinin Models klasörü. Aynı adresteki class\'lar birbirini görür.'],
+  using:['using','Başka bir adresteki hazır kodları kullanmak için dosyanın en üstüne yazılır. Kütüphane kartı gibi: using Microsoft.EntityFrameworkCore;'],
+  attribute:['Attribute','Köşeli parantezle bir şeyin üstüne yazılan kural ya da etiket: [Required], [HttpPost], [Authorize].'],
+  nullable:['null ve nullable (?)','null "hiç değer yok" demektir. Türün yanına ? konursa (string?, int?) o alan boş (null) olabilir.'],
+  veritabani:['Veritabanı','Bilgilerin kalıcı saklandığı yer. Excel dosyası gibi: tablolar, satırlar (kayıtlar), sütunlar (alanlar).'],
+  pk:['Primary Key (birincil anahtar)','Her satırı benzersiz tanımlayan sütun, TC kimlik no gibi. Bizde Id. 1, 2, 3 diye kendisi artar.'],
+  fk:['Foreign Key (yabancı anahtar)','Başka tablodaki bir satırı gösteren sütun. Contacts tablosundaki TeamId, Teams tablosundaki Id\'yi gösterir.'],
+  navigation:['Navigation property','Veritabanında sütun olmayan ama ilişkili nesneye ulaştıran property: Team? Team. Kodda item.Team.Name yazabilmeyi sağlar.'],
+  sqlserver:['SQL Server','Microsoft\'un veritabanı programı. Visual Studio ile gelen küçük sürümü (localdb)\\mssqllocaldb.'],
+  ef:['Entity Framework (EF Core)','C# class\'larını veritabanı tablolarına bağlayan araç. SQL yazmadan _db.Contacts.ToListAsync() gibi C# ile veri çekeriz.'],
+  dbcontext:['DbContext','Kod ile veritabanı arasındaki tercüman class. Projede ApplicationDbContext. Controller veritabanına _db üzerinden bununla ulaşır.'],
+  dbset:['DbSet','DbContext içinde bir tabloyu temsil eden satır: DbSet<Contacts> Contacts. Her model için bir tane yazılır.'],
+  connstr:['Connection string','Veritabanının adresi. appsettings.json içinde "DefaultConnection" adıyla yazılır.'],
+  nuget:['NuGet paketi','Hazır kod kütüphanesi. Uygulama mağazası gibi: Paket Yöneticisi Konsolu\'nda Install-Package ile kurulur.'],
+  migration:['Migration','Modeldeki değişikliği veritabanına taşıma planı. Add-Migration planı yazar, Update-Database uygular.'],
+  route:['Route (adres kuralı)','Adresin hangi Controller ve action\'a gideceğini belirleyen kural: {controller=Contacts}/{action=Index}/{id?}.'],
+  getpost:['GET ve POST','İki istek türü. GET sayfayı ister (sayfa açılınca), POST form verisini gönderir (Kaydet\'e basınca). [HttpGet], [HttpPost] bunları ayırır.'],
+  async:['async / await','Uzun süren işi (veritabanı) beklerken sunucunun takılmamasını sağlar. async metotta await yazılır; bu metotların adı Async ile biter.'],
+  modelstate:['ModelState.IsValid','Formdaki değerler [Required] gibi kurallara uyuyor mu? Uyuyorsa true. false ise form hata mesajlarıyla geri gösterilir.'],
+  savechanges:['SaveChangesAsync','Add, Update, Remove ile işaretlenen değişiklikleri gerçekten veritabanına yazar. Yazılmazsa hiçbir şey kaydedilmez.'],
+  include:['Include','Sorguya ilişkili veriyi de ekler: Include(c => c.Team) kişilerle birlikte ekiplerini de getirir.'],
+  di:['Dependency injection','Bir class\'ın ihtiyaç duyduğu nesnenin (DbContext) ona otomatik verilmesi. Program.cs\'teki AddDbContext sayesinde Controller\'ın constructor\'ına gelir.'],
+  scaffold:['Scaffold','Visual Studio\'nun modelden hazır Controller ve View\'lar (Index, Create, Edit, Delete, Details) üretmesi. Ekle → New Scaffolded Item.'],
+  razor:['Razor','View içinde HTML ile C#\'ı karıştırma yöntemi. @ işaretinden sonrası C#: @model, @foreach, @item.Name.'],
+  taghelper:['Tag helper','asp- ile başlayan HTML özellikleri: asp-action, asp-for, asp-items. HTML\'i Controller ve modele bağlar.'],
+  viewbag:['ViewBag','Controller\'dan View\'a model dışında küçük veri taşıyan çanta. ViewBag.Teams = ekip listesi, ViewBag.Error = hata mesajı.'],
+  layout:['Layout','Bütün sayfaları saran ortak şablon (menü, footer). Views/Shared/_Layout.cshtml. Sayfanın içeriği @RenderBody() yerine konur.'],
+  cookie:['Cookie (çerez)','Tarayıcıda saklanan küçük bilgi. Giriş yapınca yazılır, sonraki her istekte site seni bununla tanır. Konserdeki bileklik gibi.'],
+  claim:['Claim','Kullanıcı hakkında tek bir bilgi: adı (ClaimTypes.Name), rolü (ClaimTypes.Role). Cookie\'ye bunlar yazılır.'],
+  rol:['Rol','Kullanıcının yetki grubu. Bizde Admin (her şey) ve User (sadece liste).'],
+  authorize:['[Authorize]','Sayfayı sadece giriş yapanlara açar. [Authorize(Roles = "Admin")] sadece Admin\'e açar. [AllowAnonymous] herkese açar.'],
+  seed:['Seed','Uygulama ilk açıldığında veritabanına hazır kayıt ekleme. Bizde Aile, Arkadaşlar, İş ekipleri.']
+};
+let glossOpen = false;
+function renderGloss(){
+  document.getElementById('card').innerHTML =
+    '<div class="card-head"><div class="row"><span class="eyebrow">Sözlük · ' + Object.keys(GLOSS).length + ' terim</span></div><h2>Terimlerin basit anlamları</h2><p class="intro">Bir kelimeye takıldığında buraya bak. Aramak için yaz.</p><input id="gloss-q" class="gloss-search" type="search" placeholder="Örnek: cookie, DbSet, route" aria-label="Sözlükte ara" autocomplete="off"></div>' +
+    '<dl class="gloss" id="gloss-list">' + Object.entries(GLOSS).sort((a, b) => a[1][0].localeCompare(b[1][0], 'tr')).map(([k, [t, d]]) => '<div data-k="' + k + '"><dt>' + esc(t) + '</dt><dd>' + esc(d) + '</dd></div>').join('') + '</dl>';
+}
+function toggleTerm(btn){
+  const nx = btn.nextElementSibling;
+  if (nx && nx.classList.contains('tdef')) { nx.remove(); btn.setAttribute('aria-expanded', 'false'); return; }
+  const g = GLOSS[btn.dataset.t]; if (!g) return;
+  const box = document.createElement('span'); box.className = 'tdef';
+  box.innerHTML = '<b>' + esc(g[0]) + ':</b> ' + esc(g[1]);
+  btn.after(box); btn.setAttribute('aria-expanded', 'true');
+}
+
 /* ───────────── durum ───────────── */
-const KEY = 'rehber-vize-v2';
+const KEY = 'rehber-vize-v3';
 let S = { mode:'kolay', level:0, tab:{}, view:{}, best:{}, wrong:{}, examBest:0 };
 try { const saved = JSON.parse(localStorage.getItem(KEY) || 'null'); if (saved) S = Object.assign(S, saved); } catch (e) {}
 function persist(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
@@ -1044,10 +1275,10 @@ function renderTop(){
   document.querySelector('#wrongs .cnt').textContent = Object.keys(S.wrong).length;
   ['kolay','zor'].forEach(m => document.getElementById('m-' + m).setAttribute('aria-pressed', String(S.mode === m)));
   document.getElementById('levels').innerHTML = LEVELS.map((L, i) =>
-    '<button type="button" class="lv' + (L.exam ? ' exam' : '') + '" data-level="' + i + '" aria-current="' + (S.level === i) + '"><span class="eyebrow">Seviye ' + (i + 1) + '</span><span class="name">' + esc(L.name) + '</span><span class="desc">' + esc(L.desc) + '</span><span class="bar"><i style="width:' + Math.round(levelPct(i) * 100) + '%"></i></span></button>'
+    '<button type="button" class="lv' + (L.exam ? ' exam' : '') + (L.start ? ' start' : '') + '" data-level="' + i + '" aria-current="' + (!glossOpen && S.level === i) + '"><span class="eyebrow">' + (L.start ? 'Başlangıç · Seviye 0' : 'Seviye ' + i) + '</span><span class="name">' + esc(L.name) + '</span><span class="desc">' + esc(L.desc) + '</span><span class="bar"><i style="width:' + Math.round(levelPct(i) * 100) + '%"></i></span></button>'
   ).join('');
   const L = LEVELS[S.level], tab = currentTab();
-  document.getElementById('extabs').innerHTML = L.exam ? '' :
+  document.getElementById('extabs').innerHTML = L.exam || glossOpen ? '' :
     '<button type="button" class="extab" data-tab="konu" aria-current="' + (tab === 'konu') + '"><i class="dot book"></i>Konu anlatımı</button>' +
     L.ex.map((E, i) => {
       const b = bestOf(S.level, i);
@@ -1058,6 +1289,7 @@ function currentTab(){ const t = S.tab[S.level]; return t === undefined || t ===
 
 function render(){
   renderTop();
+  if (glossOpen) return renderGloss();
   const L = LEVELS[S.level];
   if (L.exam) return renderExam();
   const tab = currentTab();
@@ -1068,7 +1300,7 @@ function render(){
 function renderLesson(){
   const li = S.level, L = LEVELS[li];
   document.getElementById('card').innerHTML =
-    '<div class="card-head"><div class="row"><span class="eyebrow">Seviye ' + (li + 1) + ' · Konu anlatımı</span></div><h2>' + esc(L.name) + '</h2><p class="intro">Önce bu sayfayı oku, sonra alıştırmalarda her alıştırmanın "Oku" görünümüyle kodun tamamını açıklamalı gör, en son "Çöz" ile boşlukları doldur.</p></div>' +
+    '<div class="card-head"><div class="row"><span class="eyebrow">Seviye ' + li + ' · Konu anlatımı</span></div><h2>' + esc(L.name) + '</h2><p class="intro">Önce bu sayfayı oku. Noktalı çizgili kelimelere tıklarsan anlamı açılır. Sonra alıştırmalarda önce "Oku" ile kodu açıklamalı gör, en son "Çöz" ile boşlukları doldur.</p></div>' +
     '<div class="lesson">' + L.lesson + '</div>' +
     '<div class="next"><button type="button" class="btn primary" data-tab="0">Alıştırmalara başla →</button></div>';
   cur = null;
@@ -1077,7 +1309,7 @@ function renderLesson(){
 function renderExercise(){
   const li = S.level, ei = currentTab(), E = LEVELS[li].ex[ei];
   const { text, blanks } = parse(E);
-  const view = S.view[exKey(li, ei)] || 'coz';
+  const view = S.view[exKey(li, ei)] || 'oku';
   const active = [];
   let body;
   if (view === 'oku') {
@@ -1104,7 +1336,7 @@ function renderExercise(){
       '<div id="results"></div>';
   }
   document.getElementById('card').innerHTML =
-    '<div class="card-head"><div class="row"><span class="file">' + esc(E.file) + '</span><span class="eyebrow">Seviye ' + (li + 1) + ' · Alıştırma ' + (ei + 1) + '/' + LEVELS[li].ex.length + '</span>' +
+    '<div class="card-head"><div class="row"><span class="file">' + esc(E.file) + '</span><span class="eyebrow">Seviye ' + li + ' · Alıştırma ' + (ei + 1) + '/' + LEVELS[li].ex.length + '</span>' +
     '<div class="seg" role="group" aria-label="Görünüm"><button type="button" data-view="coz" aria-pressed="' + (view === 'coz') + '">Çöz</button><button type="button" data-view="oku" aria-pressed="' + (view === 'oku') + '">Oku</button></div></div>' +
     '<h2>' + esc(E.title) + '</h2><p class="intro">' + esc(E.intro) + '</p></div>' + body;
   cur = view === 'coz' ? { li, ei, E, active, ci: !!E.ci, shown:false } : null;
@@ -1269,6 +1501,9 @@ function gradeExam(){
 /* ───────────── olaylar ───────────── */
 document.addEventListener('click', e => {
   const t = e.target.closest('button'); if (!t) return;
+  if (t.dataset.t) { toggleTerm(t); return; }
+  if (t.id === 'gloss-btn') { glossOpen = true; render(); const q = document.getElementById('gloss-q'); if (q) q.focus(); return; }
+  if (t.dataset.level !== undefined || t.dataset.tab !== undefined || t.id === 'wrongs') glossOpen = false;
   if (t.dataset.level !== undefined) { const lv = +t.dataset.level; go(lv); }
   else if (t.dataset.tab !== undefined) go(S.level, t.dataset.tab === 'konu' ? 'konu' : +t.dataset.tab);
   else if (t.dataset.view) { S.view[exKey(S.level, currentTab())] = t.dataset.view; persist(); renderExercise(); }
@@ -1293,7 +1528,15 @@ document.addEventListener('keydown', e => {
   if (i < inputs.length - 1) inputs[i + 1].focus();
   else if (scope.id === 'sheet') check();
 });
-document.addEventListener('input', e => { if (e.target.tagName === 'INPUT' && e.target.type !== 'radio') e.target.classList.remove('ok','bad','case','shown'); });
+document.addEventListener('input', e => {
+  if (e.target.id === 'gloss-q') {
+    const fold = s => norm(s, true).replace(/[çğışöü]/g, c => ({'ç':'c','ğ':'g','ı':'i','ş':'s','ö':'o','ü':'u'}[c]));
+    const q = fold(e.target.value);
+    document.querySelectorAll('#gloss-list > div').forEach(d => { d.hidden = q !== '' && !fold(d.textContent).includes(q); });
+    return;
+  }
+  if (e.target.tagName === 'INPUT' && e.target.type !== 'radio') e.target.classList.remove('ok','bad','case','shown');
+});
 
 render();
 </script>
