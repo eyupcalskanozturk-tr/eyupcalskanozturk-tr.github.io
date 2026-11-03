@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta property="og:title" content="Sınav Kelime Defteri · Mesleki İngilizce">
+<meta property="og:description" content="Boşluk doldurma sınavında çıkacak 230 kelime: Türkçesi, sınavdaki ipucu ve açıklaması, hafta hafta.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://eyupcalskanozturk-tr.github.io/mesleki-ingilizce/defter/">
+<link rel="canonical" href="https://eyupcalskanozturk-tr.github.io/mesleki-ingilizce/defter/">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<meta name="description" content="Mesleki Yabancı Dil boşluk doldurma sınavında boş bırakılacak 230 kelime: Türkçesi, sınavdaki ipucu ve açıklaması.">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Sınav Kelime Defteri</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: tek sütun kelime defteri; her kelime bir satır kart: kelime + anlam, altında sınavdaki ipucu ve açıklama. Kalem mavisi + fosforlu kalem sarısı. */
+:root{
+  --bg:#F6F7FA; --paper:#FFFFFF; --ink:#161A22; --muted:#5A6272; --line:#DDE1EA;
+  --pen:#2546B8; --pen-soft:#E7ECFB; --hl:#FFE27A; --hl-ink:#3D3000;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#11141B; --paper:#181C25; --ink:#E7EAF0; --muted:#A0A8B8; --line:#2A303C;
+  --pen:#93AAFF; --pen-soft:#1E2640; --hl:#5C4B0E; --hl-ink:#FFE7A0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11141B; --paper:#181C25; --ink:#E7EAF0; --muted:#A0A8B8; --line:#2A303C;
+  --pen:#93AAFF; --pen-soft:#1E2640; --hl:#5C4B0E; --hl-ink:#FFE7A0; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 15.5px/1.6 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 56px}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+h1,h2{font-family:var(--display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:clamp(30px,6vw,44px);font-weight:800;line-height:1.05}
+h1 span{background:linear-gradient(transparent 60%,var(--hl) 60%);color:inherit}
+.lede{margin:6px 0 0;color:var(--muted);max-width:62ch}
+.how{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.how b{font-family:var(--display);font-size:17px}
+.how ol{margin:8px 0 0;padding-left:22px;display:flex;flex-direction:column;gap:4px}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.chip{font:500 13px/1 var(--mono);color:var(--pen);text-decoration:none;border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:7px 11px}
+.chip:hover{border-color:var(--pen)}
+.tog{margin-left:auto;font:500 13px/1 var(--body);border:1px solid var(--pen);background:var(--pen-soft);color:var(--pen);border-radius:999px;padding:8px 12px;cursor:pointer}
+.tog[aria-pressed="true"]{background:var(--pen);color:var(--paper)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--pen);outline-offset:2px}
+.week{display:flex;flex-direction:column;gap:12px;scroll-margin-top:70px}
+.wh{display:flex;flex-direction:column;gap:2px;padding-top:10px}
+.wk{font:600 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--pen)}
+.wh h2{font-size:26px;font-weight:800;display:flex;flex-direction:column;gap:2px}
+.wh h2 small{font:500 14px/1.3 var(--body);color:var(--muted)}
+.words{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.w{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.top{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+.no{font:500 12px/1 var(--mono);color:var(--muted);min-width:1.8em;font-variant-numeric:tabular-nums}
+.en{font:600 20px/1.2 var(--mono);color:var(--pen)}
+.phrase{font:500 14px/1.2 var(--mono);color:var(--muted)}
+.phrase::before{content:"→ "}
+.tr{font-weight:600;font-size:16px}
+.tr::before{content:"= ";color:var(--muted);font-weight:400}
+.cue,.exp{margin:0;font-size:14.5px;min-width:0;overflow-wrap:anywhere}
+.cue{font-family:var(--mono);font-size:13.5px}
+.exp{color:var(--muted)}
+.lbl{display:inline-block;font:600 10.5px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:3px 5px;margin-right:8px;vertical-align:1px}
+mark{background:var(--hl);color:var(--hl-ink);border-radius:3px;padding:0 3px;font-weight:600}
+.gizli .tr,.gizli .phrase,.gizli .exp{filter:blur(6px);cursor:pointer;user-select:none}
+.gizli .w.ac .tr,.gizli .w.ac .phrase,.gizli .w.ac .exp{filter:none}
+footer{color:var(--muted);font-size:13px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+.back{font:500 13px/1 var(--mono);color:var(--pen);text-decoration:none}
+.back:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <a class="back" href="../#foy">← Mesleki İngilizce · Boşluk sınavı</a>
+    <h1>Sınav <span>kelime defteri</span></h1>
+    <p class="lede">Mesleki Yabancı Dil boşluk doldurma sınavında boş bırakılacak 230 kelime, hafta hafta. Her satırda kelime, Türkçesi, sınavda yanında göreceğin ipucu ve slayttaki cümlenin Türkçesi var.</p>
+  </header>
+  <div class="how"><b>Yazarak nasıl çalışılır</b>
+    <ol>
+      <li>Deftere sol tarafa İngilizce kelimeyi, sağ tarafa Türkçesini yaz. Kelimeyi yazarken sesli söyle.</li>
+      <li>Altına sarı işaretli ipucu parçasını kopyala (ör. "also called the <b>CPU</b> (central processing unit)"). Sınavda bu kelimeleri görünce cevap aklına gelecek.</li>
+      <li>Bir haftayı bitirince <b>Türkçeyi gizle</b>'ye bas. Kelimeye bakıp anlamını söyle, sonra karta dokunup kontrol et.</li>
+      <li>Ardından <a href="../#foy">Boşluk sınavı</a> sayfasında o haftanın Hızlı tur'unu oyna.</li>
+    </ol>
+  </div>
+  <nav class="bar" aria-label="Haftalar"><a class="chip" href="#h1">1. hafta</a><a class="chip" href="#h2">2. hafta</a><a class="chip" href="#h3">3. hafta</a><a class="chip" href="#h4">4. hafta</a><a class="chip" href="#h5">5. hafta</a><a class="chip" href="#h6">6. hafta</a><a class="chip" href="#h7">7. hafta</a><button class="tog" id="gizle" type="button" aria-pressed="false">Türkçeyi gizle</button></nav>
+  <section class="week" id="h1" aria-labelledby="h1-t">
+<header class="wh"><span class="wk">1. hafta</span><h2 id="h1-t"><span lang="en">What Is a Computer?</span><small>Bilgisayar ve parçaları · 32 kelime</small></h2></header>
+<ol class="words"><li class="w"><div class="top"><span class="no">1</span><b class="en" lang="en">computer</b><span class="tr">bilgisayar</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>computer</mark> is an electronic…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bilgisayar, kendi belleğinde saklanan komutların denetiminde çalışan; veriyi alabilen, bu veriyi belirli kurallara göre işleyebilen, sonuç üretebilen ve sonuçları ileride kullanmak üzere saklayabilen elektronik bir aygıttır.</p></li><li class="w"><div class="top"><span class="no">2</span><b class="en" lang="en">information</b><span class="tr">bilgi (işlenmiş, anlamlı)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…process data into <mark>information</mark>.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bilgisayarlar veriyi işleyerek bilgiye dönüştürür.</p></li><li class="w"><div class="top"><span class="no">3</span><b class="en" lang="en">Data</b><span class="tr">veri (işlenmemiş)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>Data</mark> is a collection…</p>
+<p class="exp"><span class="lbl">açıklama</span>Veri (data); metin, sayı, görüntü, ses ve video içerebilen, işlenmemiş öğeler topluluğudur.</p></li><li class="w"><div class="top"><span class="no">4</span><b class="en" lang="en">meaning</b><span class="phrase" lang="en">convey meaning</span><span class="tr">anlam taşımak</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…Information conveys <mark>meaning</mark> and is useful…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bilgi (information) bir anlam taşır ve insanlar için yararlıdır.</p></li><li class="w"><div class="top"><span class="no">5</span><b class="en" lang="en">hardware</b><span class="tr">donanım</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…components known as <mark>hardware</mark>.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bilgisayar, donanım (hardware) olarak bilinen birçok elektrikli, elektronik ve mekanik bileşen içerir.</p></li><li class="w"><div class="top"><span class="no">6</span><b class="en" lang="en">system</b><span class="phrase" lang="en">system unit</span><span class="tr">sistem birimi (bilgisayar kasası)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…output devices, a <mark>system</mark> unit, storage devices,…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bu bileşenler giriş aygıtlarını, çıkış aygıtlarını, bir sistem birimini, depolama aygıtlarını ve iletişim aygıtlarını kapsar.</p></li><li class="w"><div class="top"><span class="no">7</span><b class="en" lang="en">input</b><span class="phrase" lang="en">input device</span><span class="tr">giriş aygıtı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…An <mark>input</mark> device is any…</p>
+<p class="exp"><span class="lbl">açıklama</span>Giriş aygıtı, bilgisayara veri ve komut girmenizi sağlayan her türlü donanım bileşenidir.</p></li><li class="w"><div class="top"><span class="no">8</span><b class="en" lang="en">Web</b><span class="phrase" lang="en">Web cam</span><span class="tr">web kamerası</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…microphone, scanner, and <mark>Web</mark> cam.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Yaygın kullanılan beş giriş aygıtı klavye, fare, mikrofon, tarayıcı ve web kamerasıdır.</p></li><li class="w"><div class="top"><span class="no">9</span><b class="en" lang="en">case</b><span class="tr">kasa</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…unit is a <mark>case</mark> that contains electronic…</p>
+<p class="exp"><span class="lbl">açıklama</span>Sistem birimi, bilgisayarın veri işlemek için kullanılan elektronik bileşenlerini içeren bir kasadır.</p></li><li class="w"><div class="top"><span class="no">10</span><b class="en" lang="en">motherboard</b><span class="tr">anakart</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…The <mark>motherboard</mark> provides connections for…</p>
+<p class="exp"><span class="lbl">açıklama</span>Anakart, bilgisayarın bütün parçaları için bağlantı sağlar.</p></li><li class="w"><div class="top"><span class="no">11</span><b class="en" lang="en">processor</b><span class="tr">işlemci</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…motherboard are the <mark>processor</mark> and memory.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Anakarttaki iki ana bileşen işlemci ve bellektir.</p></li><li class="w"><div class="top"><span class="no">12</span><b class="en" lang="en">CPU</b><span class="phrase" lang="en">central processing unit (CPU)</span><span class="tr">merkezi işlem birimi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…also called the <mark>CPU</mark> (central processing unit),…</p>
+<p class="exp"><span class="lbl">açıklama</span>CPU (merkezi işlem birimi) olarak da adlandırılan işlemci, bilgisayarı çalıştıran temel komutları yorumlayan ve yürüten elektronik bileşendir.</p></li><li class="w"><div class="top"><span class="no">13</span><b class="en" lang="en">Memory</b><span class="tr">bellek</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>Memory</mark> consists of electronic…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bellek; yürütülmeyi bekleyen komutları ve bu komutların ihtiyaç duyduğu verileri saklayan elektronik bileşenlerden oluşur.</p></li><li class="w"><div class="top"><span class="no">14</span><b class="en" lang="en">temporarily</b><span class="tr">geçici olarak</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…data and instructions <mark>temporarily</mark>, which means its…</p>
+<p class="exp"><span class="lbl">açıklama</span>Belleğin çoğu veri ve komutları geçici olarak tutar; yani bilgisayar kapatılınca içeriği silinir.</p></li><li class="w"><div class="top"><span class="no">15</span><b class="en" lang="en">Random</b><span class="phrase" lang="en">RAM (random access memory)</span><span class="tr">rastgele erişimli bellek</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>Random</mark> Access Memory (RAM)…</p>
+<p class="exp"><span class="lbl">açıklama</span>Rastgele erişimli bellek (RAM) bilgisayar verisini geçici olarak saklar.</p></li><li class="w"><div class="top"><span class="no">16</span><b class="en" lang="en">fastest</b><span class="tr">en hızlı (fast = hızlı)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…to be the <mark>fastest</mark> RAMS. (ex: DDR,…</p>
+<p class="exp"><span class="lbl">açıklama</span>Çift veri hızlı (double data rate) RAM&#x27;ler en hızlı RAM&#x27;ler olarak bilinir (örnek: DDR, DDR2, DDR3).</p></li><li class="w"><div class="top"><span class="no">17</span><b class="en" lang="en">Storage</b><span class="tr">depolama</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>Storage</mark> holds data, instructions,…</p>
+<p class="exp"><span class="lbl">açıklama</span>Depolama; veriyi, komutları ve bilgiyi ileride kullanmak üzere tutar.</p></li><li class="w"><div class="top"><span class="no">18</span><b class="en" lang="en">permanently</b><span class="tr">kalıcı olarak</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…holds these items <mark>permanently</mark>.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Depolama bu öğeleri kalıcı olarak tutar.</p></li><li class="w"><div class="top"><span class="no">19</span><b class="en" lang="en">media</b><span class="phrase" lang="en">storage media</span><span class="tr">depolama ortamları</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…Examples of storage <mark>media</mark> are USB flash…</p>
+<p class="exp"><span class="lbl">açıklama</span>Depolama ortamlarına örnek USB bellekler, sabit diskler, optik diskler ve hafıza kartlarıdır.</p></li><li class="w"><div class="top"><span class="no">20</span><b class="en" lang="en">writes</b><span class="tr">yazar, kaydeder (reads = okur)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…storage device records (<mark>writes</mark>) and/or retrieves (reads)…</p>
+<p class="exp"><span class="lbl">açıklama</span>Depolama aygıtı, depolama ortamına öğeleri kaydeder (yazar) ve/veya oradan geri getirir (okur).</p></li><li class="w"><div class="top"><span class="no">21</span><b class="en" lang="en">portable</b><span class="tr">taşınabilir</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…drive is a <mark>portable</mark> storage device that…</p>
+<p class="exp"><span class="lbl">açıklama</span>USB bellek, anahtarlıkta ya da cepte taşınabilecek kadar küçük ve hafif, taşınabilir bir depolama aygıtıdır (Şekil 1-3).</p></li><li class="w"><div class="top"><span class="no">22</span><b class="en" lang="en">4</b><span class="phrase" lang="en">4 billion</span><span class="tr">4 milyar karakter: ortalama USB bellek</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…can hold about <mark>4</mark> billion characters.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Ortalama bir USB bellek yaklaşık 4 milyar karakter tutabilir.</p></li><li class="w"><div class="top"><span class="no">23</span><b class="en" lang="en">capacity</b><span class="tr">kapasite</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…much greater storage <mark>capacity</mark> than a USB…</p>
+<p class="exp"><span class="lbl">açıklama</span>Sabit disk, USB bellekten çok daha büyük depolama kapasitesi sağlar.</p></li><li class="w"><div class="top"><span class="no">24</span><b class="en" lang="en">320</b><span class="phrase" lang="en">320 billion</span><span class="tr">320 milyar karakter: ortalama sabit disk</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…hold more than <mark>320</mark> billion characters.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Ortalama bir sabit disk 320 milyardan fazla karakter tutabilir.</p></li><li class="w"><div class="top"><span class="no">25</span><b class="en" lang="en">airtight</b><span class="tr">hava geçirmez</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…enclosed in an <mark>airtight</mark>, sealed case.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Sabit diskler hava geçirmez, kapalı bir kutunun içindedir.</p></li><li class="w"><div class="top"><span class="no">26</span><b class="en" lang="en">external</b><span class="phrase" lang="en">external hard disk</span><span class="tr">harici sabit disk</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…An <mark>external</mark> hard disk is…</p>
+<p class="exp"><span class="lbl">açıklama</span>Harici sabit disk ayrı, kendi başına duran bir birimdir; çıkarılabilir sabit diski ise bilgisayara ya da bilgisayara bağlı bir aygıta takıp çıkarırsınız.</p></li><li class="w"><div class="top"><span class="no">27</span><b class="en" lang="en">removable</b><span class="phrase" lang="en">removable hard disk</span><span class="tr">çıkarılabilir sabit disk</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…and remove a <mark>removable</mark> hard disk from…</p>
+<p class="exp"><span class="lbl">açıklama</span>Harici sabit disk ayrı, kendi başına duran bir birimdir; çıkarılabilir sabit diski ise bilgisayara ya da bilgisayara bağlı bir aygıta takıp çıkarırsınız.</p></li><li class="w"><div class="top"><span class="no">28</span><b class="en" lang="en">optical</b><span class="phrase" lang="en">optical disc</span><span class="tr">optik disk</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…An <mark>optical</mark> disc is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Optik disk; düz, yuvarlak, taşınabilir, plastik kaplı bir metal disktir.</p></li><li class="w"><div class="top"><span class="no">29</span><b class="en" lang="en">Blu-ray</b><span class="phrase" lang="en">Blu-ray Disc</span><span class="tr">Blu-ray disk</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…CDs, DVDs, and <mark>Blu-ray</mark> Discs are three…</p>
+<p class="exp"><span class="lbl">açıklama</span>CD&#x27;ler, DVD&#x27;ler ve Blu-ray diskler üç tür optik disktir.</p></li><li class="w"><div class="top"><span class="no">30</span><b class="en" lang="en">17</b><span class="phrase" lang="en">17 billion</span><span class="tr">17 milyar karakter: DVD (iki uzun film)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…full-length movies or <mark>17</mark> billion characters (Figure…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bazı DVD&#x27;ler iki uzun metrajlı film ya da 17 milyar karakter saklayabilir (Şekil 1-5).</p></li><li class="w"><div class="top"><span class="no">31</span><b class="en" lang="en">cards</b><span class="phrase" lang="en">memory card</span><span class="tr">hafıza kartı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…cameras, use memory <mark>cards</mark> as the storage…</p>
+<p class="exp"><span class="lbl">açıklama</span>Dijital fotoğraf makineleri gibi bazı mobil aygıtlar depolama ortamı olarak hafıza kartı kullanır.</p></li><li class="w"><div class="top"><span class="no">32</span><b class="en" lang="en">reader/writer</b><span class="phrase" lang="en">card reader/writer</span><span class="tr">kart okuyucu/yazıcı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…use a card <mark>reader/writer</mark> (Figure 1-3) to…</p>
+<p class="exp"><span class="lbl">açıklama</span>Dijital fotoğraflar gibi saklanmış öğeleri hafıza kartından bir bilgisayara ya da yazıcıya aktarmak için kart okuyucu/yazıcı (Şekil 1-3) kullanabilirsiniz.</p></li></ol></section><section class="week" id="h2" aria-labelledby="h2-t">
+<header class="wh"><span class="wk">2. hafta</span><h2 id="h2-t"><span lang="en">Networks, Software, Categories</span><small>Ağlar, yazılım, bilgisayar türleri · 31 kelime</small></h2></header>
+<ol class="words"><li class="w"><div class="top"><span class="no">1</span><b class="en" lang="en">network</b><span class="tr">ağ</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>network</mark> is a collection…</p>
+<p class="exp"><span class="lbl">açıklama</span>Ağ, iletişim aygıtları ve iletim ortamları aracılığıyla çoğu zaman kablosuz olarak birbirine bağlanmış bilgisayar ve aygıtlar topluluğudur.</p></li><li class="w"><div class="top"><span class="no">2</span><b class="en" lang="en">online</b><span class="tr">çevrimiçi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…network, it is <mark>online</mark>.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bir bilgisayar bir ağa bağlandığında çevrimiçidir (online).</p></li><li class="w"><div class="top"><span class="no">3</span><b class="en" lang="en">resources</b><span class="phrase" lang="en">share resources</span><span class="tr">kaynak paylaşmak</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…computers to share <mark>resources</mark>, such as hardware,…</p>
+<p class="exp"><span class="lbl">açıklama</span>Ağlar bilgisayarların donanım, yazılım, veri ve bilgi gibi kaynakları paylaşmasını sağlar.</p></li><li class="w"><div class="top"><span class="no">4</span><b class="en" lang="en">Internet</b><span class="tr">internet</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…The <mark>Internet</mark> is a worldwide…</p>
+<p class="exp"><span class="lbl">açıklama</span>İnternet; milyonlarca işletmeyi, devlet kurumunu, eğitim kurumunu ve bireyi birbirine bağlayan, dünya çapında bir ağlar topluluğudur.</p></li><li class="w"><div class="top"><span class="no">5</span><b class="en" lang="en">Web</b><span class="phrase" lang="en">Web (World Wide Web)</span><span class="tr">Web, dünya çapında ağ</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…for World Wide <mark>Web</mark>, is one of…</p>
+<p class="exp"><span class="lbl">açıklama</span>World Wide Web&#x27;in kısaltması olan Web, internetteki en popüler hizmetlerden biridir.</p></li><li class="w"><div class="top"><span class="no">6</span><b class="en" lang="en">pages</b><span class="phrase" lang="en">Web page</span><span class="tr">web sayfası</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…documents called Web <mark>pages</mark>.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Web, web sayfası denen milyarlarca belge içerir.</p></li><li class="w"><div class="top"><span class="no">7</span><b class="en" lang="en">site</b><span class="phrase" lang="en">Web site</span><span class="tr">web sitesi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A Web <mark>site</mark> is a collection…</p>
+<p class="exp"><span class="lbl">açıklama</span>Web sitesi, birbiriyle ilgili web sayfalarının topluluğudur.</p></li><li class="w"><div class="top"><span class="no">8</span><b class="en" lang="en">downloaded</b><span class="phrase" lang="en">download</span><span class="tr">indirmek</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…that can be <mark>downloaded</mark>, or transferred to…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bazı web siteleri kullanıcıların indirilebilen, yani bir bilgisayardaki ya da taşınabilir medya oynatıcıdaki depolama ortamına aktarılabilen müzik ve videolara erişmesini sağlar.</p></li><li class="w"><div class="top"><span class="no">9</span><b class="en" lang="en">application</b><span class="phrase" lang="en">Web application</span><span class="tr">web uygulaması</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A Web <mark>application</mark> is a Web…</p>
+<p class="exp"><span class="lbl">açıklama</span>Web uygulaması, kullanıcıların internete bağlı herhangi bir bilgisayardan ya da aygıttan bir yazılıma erişmesini ve onunla etkileşmesini sağlayan bir web sitesidir.</p></li><li class="w"><div class="top"><span class="no">10</span><b class="en" lang="en">program</b><span class="tr">program</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…also called a <mark>program</mark>, is a series…</p>
+<p class="exp"><span class="lbl">açıklama</span>Program olarak da adlandırılan yazılım, ortak bir amaç için düzenlenmiş, bilgisayara hangi görev(ler)i yapacağını ve bunları nasıl yapacağını söyleyen birbiriyle ilişkili komutlar dizisidir.</p></li><li class="w"><div class="top"><span class="no">11</span><b class="en" lang="en">interface</b><span class="phrase" lang="en">user interface</span><span class="tr">kullanıcı arayüzü</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…through its user <mark>interface</mark>.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bir programla onun kullanıcı arayüzü üzerinden etkileşirsiniz.</p></li><li class="w"><div class="top"><span class="no">12</span><b class="en" lang="en">GUI</b><span class="tr">grafik kullanıcı arayüzü (&quot;gooey&quot; okunur)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…graphical user interface (<mark>GUI</mark> pronounced gooey), you…</p>
+<p class="exp"><span class="lbl">açıklama</span>Grafik kullanıcı arayüzüyle (GUI, &quot;guyi&quot; diye okunur) yazılımla metin, grafik ve simgeler gibi görsel imgeler kullanarak etkileşirsiniz.</p></li><li class="w"><div class="top"><span class="no">13</span><b class="en" lang="en">system</b><span class="phrase" lang="en">system software</span><span class="tr">sistem yazılımı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…of software are <mark>system</mark> software and application…</p>
+<p class="exp"><span class="lbl">açıklama</span>Yazılımın iki kategorisi sistem yazılımı ve uygulama yazılımıdır.</p></li><li class="w"><div class="top"><span class="no">14</span><b class="en" lang="en">control</b><span class="tr">denetlemek, kontrol etmek</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…the programs that <mark>control</mark> or maintain the…</p>
+<p class="exp"><span class="lbl">açıklama</span>Sistem yazılımı, bilgisayarın ve aygıtlarının işleyişini denetleyen ya da sürdüren programlardan oluşur.</p></li><li class="w"><div class="top"><span class="no">15</span><b class="en" lang="en">utility</b><span class="phrase" lang="en">utility program</span><span class="tr">yardımcı program</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…operating system and <mark>utility</mark> programs.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Sistem yazılımının iki türü işletim sistemi ve yardımcı programlardır.</p></li><li class="w"><div class="top"><span class="no">16</span><b class="en" lang="en">operating</b><span class="phrase" lang="en">operating system</span><span class="tr">işletim sistemi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…An <mark>operating</mark> system is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>İşletim sistemi, bilgisayar donanım aygıtları arasındaki bütün etkinlikleri koordine eden programlar kümesidir.</p></li><li class="w"><div class="top"><span class="no">17</span><b class="en" lang="en">Windows</b><span class="tr">Microsoft&#x27;un işletim sistemi (Apple&#x27;ınki Mac OS)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…computers use Microsoft&#x27;s <mark>Windows</mark>, the latest version…</p>
+<p class="exp"><span class="lbl">açıklama</span>Günümüz bilgisayarlarının çoğu, son sürümü Şekil 1-8&#x27;de gösterilen Microsoft Windows&#x27;u ya da Apple&#x27;ın işletim sistemi Mac OS&#x27;u kullanır.</p></li><li class="w"><div class="top"><span class="no">18</span><b class="en" lang="en">programmer</b><span class="tr">programcı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>programmer</mark>, sometimes called a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bazen geliştirici (developer) de denen programcı, yazılım geliştiren ya da bilgisayarı veriyi bilgiye dönüştürmeye yönlendiren komutları yazan kişidir.</p></li><li class="w"><div class="top"><span class="no">19</span><b class="en" lang="en">language</b><span class="phrase" lang="en">programming language</span><span class="tr">programlama dili</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…use a programming <mark>language</mark> or program development…</p>
+<p class="exp"><span class="lbl">açıklama</span>Programcılar bilgisayar programı oluşturmak için bir programlama dili ya da program geliştirme aracı kullanır.</p></li><li class="w"><div class="top"><span class="no">20</span><b class="en" lang="en">seven</b><span class="tr">yedi: bilgisayarlar 7 kategoriye ayrılır</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…classify computers in <mark>seven</mark> categories: personal computers…</p>
+<p class="exp"><span class="lbl">açıklama</span>Sektör uzmanları bilgisayarları genellikle yedi kategoriye ayırır: kişisel bilgisayarlar (masaüstü), mobil bilgisayarlar ve mobil aygıtlar, oyun konsolları, sunucular, ana bilgisayarlar, süper bilgisayarlar ve gömülü bilgisayarlar.</p></li><li class="w"><div class="top"><span class="no">21</span><b class="en" lang="en">personal</b><span class="phrase" lang="en">personal computer</span><span class="tr">kişisel bilgisayar</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>personal</mark> computer is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Kişisel bilgisayar, giriş, işleme, çıkış ve depolama etkinliklerinin hepsini kendi başına yapabilen bilgisayardır.</p></li><li class="w"><div class="top"><span class="no">22</span><b class="en" lang="en">desktop</b><span class="phrase" lang="en">desktop computer</span><span class="tr">masaüstü bilgisayar</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…personal computers are <mark>desktop</mark> computers and notebook…</p>
+<p class="exp"><span class="lbl">açıklama</span>Kişisel bilgisayarların iki türü masaüstü ve dizüstü bilgisayarlardır.</p></li><li class="w"><div class="top"><span class="no">23</span><b class="en" lang="en">tower</b><span class="tr">kule kasa</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…tall and narrow <mark>tower</mark>, which can sit…</p>
+<p class="exp"><span class="lbl">açıklama</span>Daha popüler sistem birimi tipi, yerde dikey durabilen uzun ve dar kule (tower) kasadır.</p></li><li class="w"><div class="top"><span class="no">24</span><b class="en" lang="en">mobile</b><span class="phrase" lang="en">mobile computer</span><span class="tr">mobil bilgisayar</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>mobile</mark> computer is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Mobil bilgisayar, bir yerden bir yere taşıyabildiğiniz kişisel bilgisayardır.</p></li><li class="w"><div class="top"><span class="no">25</span><b class="en" lang="en">notebook</b><span class="phrase" lang="en">notebook computer</span><span class="tr">dizüstü bilgisayar</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…computer is the <mark>notebook</mark> computer.…</p>
+<p class="exp"><span class="lbl">açıklama</span>En popüler mobil bilgisayar türü dizüstü bilgisayardır.</p></li><li class="w"><div class="top"><span class="no">26</span><b class="en" lang="en">digital cameras</b><span class="phrase" lang="en">digital camera</span><span class="tr">dijital fotoğraf makinesi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…players, and digital <mark>digital cameras</mark>.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Popüler mobil aygıt türleri akıllı telefonlar ve PDA&#x27;lar, e-kitap okuyucular, el bilgisayarları, taşınabilir medya oynatıcılar ve dijital fotoğraf makineleridir.</p></li><li class="w"><div class="top"><span class="no">27</span><b class="en" lang="en">console</b><span class="phrase" lang="en">game console</span><span class="tr">oyun konsolu</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A game <mark>console</mark> is a mobile…</p>
+<p class="exp"><span class="lbl">açıklama</span>Oyun konsolu, tek oyunculu ya da çok oyunculu video oyunları için tasarlanmış mobil bir bilgi işlem aygıtıdır.</p></li><li class="w"><div class="top"><span class="no">28</span><b class="en" lang="en">server</b><span class="tr">sunucu</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>server</mark> controls access to…</p>
+<p class="exp"><span class="lbl">açıklama</span>Sunucu, bir ağdaki donanıma, yazılıma ve diğer kaynaklara erişimi denetler ve programlar, veri ve bilgi için merkezi bir depolama alanı sağlar (Şekil 1-22).</p></li><li class="w"><div class="top"><span class="no">29</span><b class="en" lang="en">mainframe</b><span class="tr">ana bilgisayar</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>mainframe</mark> is a large,…</p>
+<p class="exp"><span class="lbl">açıklama</span>Ana bilgisayar (mainframe), yüzlerce ya da binlerce bağlı kullanıcıyı aynı anda idare edebilen büyük, pahalı, güçlü bir bilgisayardır (Şekil 1-23).</p></li><li class="w"><div class="top"><span class="no">30</span><b class="en" lang="en">supercomputer</b><span class="tr">süper bilgisayar</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>supercomputer</mark> is the fastest,…</p>
+<p class="exp"><span class="lbl">açıklama</span>Süper bilgisayar en hızlı, en güçlü ve en pahalı bilgisayardır (Şekil 1-24).</p></li><li class="w"><div class="top"><span class="no">31</span><b class="en" lang="en">embedded</b><span class="phrase" lang="en">embedded computer</span><span class="tr">gömülü bilgisayar</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…An <mark>embedded</mark> computer is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Gömülü bilgisayar, daha büyük bir ürünün içinde bir bileşen olarak çalışan özel amaçlı bir bilgisayardır.</p></li></ol></section><section class="week" id="h3" aria-labelledby="h3-t">
+<header class="wh"><span class="wk">3. hafta</span><h2 id="h3-t"><span lang="en">The System Unit</span><small>Sistem birimi · 39 kelime</small></h2></header>
+<ol class="words"><li class="w"><div class="top"><span class="no">1</span><b class="en" lang="en">protects</b><span class="phrase" lang="en">protect</span><span class="tr">korumak</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…or plastic and <mark>protects</mark> the internal electronic…</p>
+<p class="exp"><span class="lbl">açıklama</span>Sistem biriminin kasası metal ya da plastikten yapılır ve içteki elektronik bileşenleri hasara karşı korur.</p></li><li class="w"><div class="top"><span class="no">2</span><b class="en" lang="en">all-in-one</b><span class="tr">hepsi bir arada</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…An <mark>all-in-one</mark> desktop personal computer…</p>
+<p class="exp"><span class="lbl">açıklama</span>Hepsi bir arada masaüstü bilgisayar bir istisnadır: monitörü ve sistem birimini aynı kasada barındırır.</p></li><li class="w"><div class="top"><span class="no">3</span><b class="en" lang="en">Adapter</b><span class="phrase" lang="en">adapter card</span><span class="tr">adaptör kartı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>Adapter</mark> cards are circuit…</p>
+<p class="exp"><span class="lbl">açıklama</span>Adaptör kartları, anakartta yerleşik olmayan bağlantı ve işlevleri sağlayan ya da anakarta tümleşik özelliklerin yeteneklerini genişleten devre kartlarıdır.</p></li><li class="w"><div class="top"><span class="no">4</span><b class="en" lang="en">cards</b><span class="phrase" lang="en">adapter card</span><span class="tr">adaptör kartı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…types of adapter <mark>cards</mark> found in some…</p>
+<p class="exp"><span class="lbl">açıklama</span>Örneğin ses kartı ve ekran kartı, günümüzde bazı masaüstü bilgisayarlarda bulunan iki tür adaptör kartıdır.</p></li><li class="w"><div class="top"><span class="no">5</span><b class="en" lang="en">ports</b><span class="phrase" lang="en">port</span><span class="tr">port, bağlantı noktası</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…often attach to <mark>ports</mark> on the system…</p>
+<p class="exp"><span class="lbl">açıklama</span>Sistem biriminin dışındaki aygıtlar çoğunlukla bir kablonun ucundaki konnektörle sistem birimindeki portlara takılır.</p></li><li class="w"><div class="top"><span class="no">6</span><b class="en" lang="en">motherboard</b><span class="tr">anakart</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…The <mark>motherboard</mark>, sometimes called a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bazen sistem kartı da denen anakart, sistem biriminin ana devre kartıdır.</p></li><li class="w"><div class="top"><span class="no">7</span><b class="en" lang="en">unit</b><span class="phrase" lang="en">central processing unit (CPU)</span><span class="tr">merkezi işlem birimi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…the central processing <mark>unit</mark> (CPU), interprets and…</p>
+<p class="exp"><span class="lbl">açıklama</span>Merkezi işlem birimi (CPU) olarak da adlandırılan işlemci, bir bilgisayarı çalıştıran temel komutları yorumlar ve yürütür.</p></li><li class="w"><div class="top"><span class="no">8</span><b class="en" lang="en">single</b><span class="phrase" lang="en">single chip</span><span class="tr">tek yonga</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…are on a <mark>single</mark> chip.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Kişisel bilgisayarda işlemcinin bütün işlevleri genellikle tek bir yonga üzerindedir.</p></li><li class="w"><div class="top"><span class="no">9</span><b class="en" lang="en">microprocessor</b><span class="tr">mikroişlemci</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…use the term <mark>microprocessor</mark> to refer to…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bazı bilgisayar ve yonga üreticileri, kişisel bilgisayarın işlemci yongası için mikroişlemci terimini kullanır.</p></li><li class="w"><div class="top"><span class="no">10</span><b class="en" lang="en">logic</b><span class="phrase" lang="en">arithmetic logic unit (ALU)</span><span class="tr">aritmetik mantık birimi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…and an arithmetic <mark>logic</mark> unit (ALU).…</p>
+<p class="exp"><span class="lbl">açıklama</span>İşlemciler bir kontrol birimi ve bir aritmetik mantık birimi (ALU) içerir.</p></li><li class="w"><div class="top"><span class="no">11</span><b class="en" lang="en">control</b><span class="phrase" lang="en">control unit</span><span class="tr">kontrol (denetim) birimi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…The <mark>control</mark> unit is the…</p>
+<p class="exp"><span class="lbl">açıklama</span>Kontrol birimi, işlemcinin bilgisayardaki işlemlerin çoğunu yönlendiren ve koordine eden bileşenidir.</p></li><li class="w"><div class="top"><span class="no">12</span><b class="en" lang="en">cop</b><span class="phrase" lang="en">traffic cop</span><span class="tr">trafik polisi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…like a traffic <mark>cop</mark>: it interprets each…</p>
+<p class="exp"><span class="lbl">açıklama</span>Kontrol biriminin rolü bir trafik polisininkine çok benzer: bir programın verdiği her komutu yorumlar, sonra o komutu yerine getirmek için uygun eylemi başlatır.</p></li><li class="w"><div class="top"><span class="no">13</span><b class="en" lang="en">arithmetic</b><span class="phrase" lang="en">arithmetic logic unit (ALU)</span><span class="tr">aritmetik mantık birimi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…The <mark>arithmetic</mark> logic unit (ALU),…</p>
+<p class="exp"><span class="lbl">açıklama</span>İşlemcinin bir diğer bileşeni olan aritmetik mantık birimi (ALU) aritmetik, karşılaştırma ve diğer işlemleri gerçekleştirir.</p></li><li class="w"><div class="top"><span class="no">14</span><b class="en" lang="en">digital</b><span class="tr">sayısal, dijital</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…Most computers are <mark>digital</mark>.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bilgisayarların çoğu sayısaldır (dijitaldir).</p></li><li class="w"><div class="top"><span class="no">15</span><b class="en" lang="en">off</b><span class="tr">kapalı: 0 = off (yük yok), 1 = on (yük var)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…electronic state of <mark>off</mark> (absence of an…</p>
+<p class="exp"><span class="lbl">açıklama</span>0 rakamı kapalı elektronik durumu (elektrik yükünün yokluğunu) gösterir.</p></li><li class="w"><div class="top"><span class="no">16</span><b class="en" lang="en">binary</b><span class="phrase" lang="en">binary system</span><span class="tr">ikili sistem</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…computer uses a <mark>binary</mark> system because it…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bilgisayar yalnızca iki durumu tanıdığı için ikili sistemi kullanır.</p></li><li class="w"><div class="top"><span class="no">17</span><b class="en" lang="en">bit</b><span class="phrase" lang="en">bit (binary digit)</span><span class="tr">bit, ikili basamak</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>bit</mark> (short for binary…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bit (binary digit, yani ikili basamak kısaltması), bilgisayarın işleyebildiği en küçük veri birimidir.</p></li><li class="w"><div class="top"><span class="no">18</span><b class="en" lang="en">byte</b><span class="tr">bayt (8 bit)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…they form a <mark>byte</mark>.…</p>
+<p class="exp"><span class="lbl">açıklama</span>8 bit bir birim olarak bir araya getirildiğinde bir bayt oluşturur.</p></li><li class="w"><div class="top"><span class="no">19</span><b class="en" lang="en">256</b><span class="tr">1 byte ile 256 farklı karakter gösterilir</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…1s to represent <mark>256</mark> individual characters.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bir bayt, 256 ayrı karakteri gösterecek kadar farklı 0-1 birleşimi sağlar.</p></li><li class="w"><div class="top"><span class="no">20</span><b class="en" lang="en">scheme</b><span class="phrase" lang="en">coding scheme</span><span class="tr">kodlama şeması</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…called a coding <mark>scheme</mark>.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Karakterleri gösteren 0-1 birleşimleri, kodlama şeması denen kalıplarla tanımlanır.</p></li><li class="w"><div class="top"><span class="no">21</span><b class="en" lang="en">stored</b><span class="phrase" lang="en">stored program concept</span><span class="tr">depolanmış program kavramı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…known as the <mark>stored</mark> program concept.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Belleğin hem veriyi hem programları saklama rolü depolanmış program kavramı olarak bilinir.</p></li><li class="w"><div class="top"><span class="no">22</span><b class="en" lang="en">main</b><span class="phrase" lang="en">main memory</span><span class="tr">ana bellek</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…memory), also called <mark>main</mark> memory, consists of…</p>
+<p class="exp"><span class="lbl">açıklama</span>Ana bellek olarak da adlandırılan RAM (rastgele erişimli bellek), işlemci ve diğer aygıtlar tarafından okunabilen ve yazılabilen bellek yongalarından oluşur.</p></li><li class="w"><div class="top"><span class="no">23</span><b class="en" lang="en">volatile</b><span class="tr">uçucu (elektrik gidince silinen)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…Most RAM is <mark>volatile</mark>, which means it…</p>
+<p class="exp"><span class="lbl">açıklama</span>RAM&#x27;in çoğu uçucudur; yani bilgisayarın elektriği kesildiğinde içeriğini kaybeder.</p></li><li class="w"><div class="top"><span class="no">24</span><b class="en" lang="en">Saving</b><span class="phrase" lang="en">save</span><span class="tr">kaydetmek</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>Saving</mark> is the process…</p>
+<p class="exp"><span class="lbl">açıklama</span>Kaydetme, öğeleri RAM&#x27;den sabit disk gibi bir depolama aygıtına kopyalama işlemidir.</p></li><li class="w"><div class="top"><span class="no">25</span><b class="en" lang="en">module</b><span class="phrase" lang="en">memory module</span><span class="tr">bellek modülü</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…on a memory <mark>module</mark>, which is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>RAM yongaları genellikle küçük bir devre kartı olan bellek modülünün üzerinde bulunur.</p></li><li class="w"><div class="top"><span class="no">26</span><b class="en" lang="en">cache</b><span class="tr">önbellek (&#x27;keş&#x27; diye okunur)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…processing times with <mark>cache</mark> (pronounced cash).…</p>
+<p class="exp"><span class="lbl">açıklama</span>Günümüz bilgisayarlarının çoğu işlem sürelerini önbellekle (cache, &#x27;keş&#x27; diye okunur) kısaltır.</p></li><li class="w"><div class="top"><span class="no">27</span><b class="en" lang="en">frequently</b><span class="phrase" lang="en">frequently used</span><span class="tr">sık kullanılan</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…because it stores <mark>frequently</mark> used instructions and…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bellek önbelleği sık kullanılan komut ve verileri sakladığı için bilgisayarın işlemlerini hızlandırmaya yardım eder.</p></li><li class="w"><div class="top"><span class="no">28</span><b class="en" lang="en">L1</b><span class="phrase" lang="en">L1 cache</span><span class="tr">L1 önbellek (işlemcinin içinde)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>L1</mark> cache is built…</p>
+<p class="exp"><span class="lbl">açıklama</span>L1 önbellek doğrudan işlemci yongasının içine yerleşiktir.</p></li><li class="w"><div class="top"><span class="no">29</span><b class="en" lang="en">L2</b><span class="phrase" lang="en">L2 cache</span><span class="tr">L2 önbellek</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>L2</mark> cache is slightly…</p>
+<p class="exp"><span class="lbl">açıklama</span>L2 önbellek L1&#x27;den biraz daha yavaştır ama kapasitesi çok daha büyüktür; 64 KB ile 16 MB arasında değişir.</p></li><li class="w"><div class="top"><span class="no">30</span><b class="en" lang="en">expansion</b><span class="phrase" lang="en">expansion slot</span><span class="tr">genişleme yuvası</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…An <mark>expansion</mark> slot is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Genişleme yuvası, anakart üzerinde bir adaptör kartını tutabilen sokettir.</p></li><li class="w"><div class="top"><span class="no">31</span><b class="en" lang="en">peripheral</b><span class="tr">çevre birimi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>peripheral</mark> is a device…</p>
+<p class="exp"><span class="lbl">açıklama</span>Çevre birimi, sistem birimine bağlanan ve bilgisayardaki işlemci tarafından denetlenen bir aygıttır.</p></li><li class="w"><div class="top"><span class="no">32</span><b class="en" lang="en">port</b><span class="tr">port, bağlantı noktası</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>port</mark> is the point…</p>
+<p class="exp"><span class="lbl">açıklama</span>Port, bir çevre biriminin bilgisayara veri gönderebilmesi ya da bilgisayardan bilgi alabilmesi için sistem birimine takıldığı ya da onunla iletişim kurduğu noktadır.</p></li><li class="w"><div class="top"><span class="no">33</span><b class="en" lang="en">connector</b><span class="tr">konnektör, kablo ucu</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>connector</mark> joins a cable…</p>
+<p class="exp"><span class="lbl">açıklama</span>Konnektör bir kabloyu bir porta bağlar.</p></li><li class="w"><div class="top"><span class="no">34</span><b class="en" lang="en">USB</b><span class="phrase" lang="en">USB (universal serial bus)</span><span class="tr">evrensel seri veri yolu</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>USB</mark> port, short for…</p>
+<p class="exp"><span class="lbl">açıklama</span>Universal serial bus (evrensel seri veri yolu) portunun kısaltması olan USB portu, tek bir konnektörle 127&#x27;ye kadar farklı çevre birimini birbirine bağlayabilir.</p></li><li class="w"><div class="top"><span class="no">35</span><b class="en" lang="en">FireWire</b><span class="phrase" lang="en">FireWire port</span><span class="tr">FireWire portu (eski adı IEEE 1394)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…1394 port, a <mark>FireWire</mark> port is similar…</p>
+<p class="exp"><span class="lbl">açıklama</span>Önceden IEEE 1394 portu denen FireWire portu, dijital video kamera, dijital video kaydedici, renkli yazıcı, tarayıcı, dijital fotoğraf makinesi ve DVD sürücü gibi daha yüksek veri aktarım hızı gerektiren birçok aygıtı tek bir konnektöre bağlayabilmesi bakımından USB portuna benzer.</p></li><li class="w"><div class="top"><span class="no">36</span><b class="en" lang="en">alternating</b><span class="phrase" lang="en">alternating current (AC)</span><span class="tr">alternatif akım</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…which supply an <mark>alternating</mark> current (AC) of…</p>
+<p class="exp"><span class="lbl">açıklama</span>Birçok kişisel bilgisayar, 115–120 voltluk alternatif akım (AC) veren standart duvar prizlerine takılır.</p></li><li class="w"><div class="top"><span class="no">37</span><b class="en" lang="en">direct</b><span class="phrase" lang="en">direct current (DC)</span><span class="tr">doğru akım</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…which requires a <mark>direct</mark> current (DC) ranging…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bu tür akım bilgisayarda kullanıma uygun değildir; bilgisayar 5 volttan 15 voltun üzerine kadar değişen doğru akım (DC) ister.</p></li><li class="w"><div class="top"><span class="no">38</span><b class="en" lang="en">power</b><span class="phrase" lang="en">power supply</span><span class="tr">güç kaynağı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…The <mark>power</mark> supply is the…</p>
+<p class="exp"><span class="lbl">açıklama</span>Güç kaynağı, sistem biriminin duvar prizinden gelen AC akımı DC akıma dönüştüren bileşenidir.</p></li><li class="w"><div class="top"><span class="no">39</span><b class="en" lang="en">fan</b><span class="tr">fan, pervane</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…supply is a <mark>fan</mark> that keeps the…</p>
+<p class="exp"><span class="lbl">açıklama</span>Güç kaynağının içinde onu serin tutan bir fan bulunur.</p></li></ol></section><section class="week" id="h4" aria-labelledby="h4-t">
+<header class="wh"><span class="wk">4. hafta</span><h2 id="h4-t"><span lang="en">Input</span><small>Giriş aygıtları · 25 kelime</small></h2></header>
+<ol class="words"><li class="w"><div class="top"><span class="no">1</span><b class="en" lang="en">Input</b><span class="tr">girdi, giriş</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>Input</mark> is any data…</p>
+<p class="exp"><span class="lbl">açıklama</span>Girdi, bir bilgisayarın belleğine girilen her türlü veri ve komuttur.</p></li><li class="w"><div class="top"><span class="no">2</span><b class="en" lang="en">mouse</b><span class="tr">fare</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…keyboard and the <mark>mouse</mark>.…</p>
+<p class="exp"><span class="lbl">açıklama</span>En yaygın kullanılan giriş aygıtlarından ikisi klavye ve faredir.</p></li><li class="w"><div class="top"><span class="no">3</span><b class="en" lang="en">pointing</b><span class="phrase" lang="en">pointing device</span><span class="tr">işaretleme aygıtı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…mouse is a <mark>pointing</mark> device because it…</p>
+<p class="exp"><span class="lbl">açıklama</span>Fare bir işaretleme aygıtıdır, çünkü kullanıcının ekrandaki bir işaretçiyi kontrol etmesini sağlar.</p></li><li class="w"><div class="top"><span class="no">4</span><b class="en" lang="en">pointer</b><span class="tr">işaretçi (ekrandaki ok)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…user interface, a <mark>pointer</mark> is a small…</p>
+<p class="exp"><span class="lbl">açıklama</span>Grafik kullanıcı arayüzünde işaretçi, kullanıcı işaretleme aygıtını hareket ettirdikçe konumu ve şekli değişen, ekrandaki küçük bir simgedir.</p></li><li class="w"><div class="top"><span class="no">5</span><b class="en" lang="en">keyboard</b><span class="tr">klavye</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>keyboard</mark> is an input…</p>
+<p class="exp"><span class="lbl">açıklama</span>Klavye, kullanıcıların bilgisayara veri ve komut girmek için bastığı tuşları içeren bir giriş aygıtıdır.</p></li><li class="w"><div class="top"><span class="no">6</span><b class="en" lang="en">typing</b><span class="phrase" lang="en">typing area</span><span class="tr">yazma alanı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…keyboards have a <mark>typing</mark> area that includes…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bütün masaüstü bilgisayar klavyelerinde alfabenin harflerini, rakamları, noktalama işaretlerini ve diğer temel tuşları içeren bir yazma alanı vardır.</p></li><li class="w"><div class="top"><span class="no">7</span><b class="en" lang="en">keypad</b><span class="phrase" lang="en">numeric keypad</span><span class="tr">sayısal tuş takımı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…have a numeric <mark>keypad</mark> on the right…</p>
+<p class="exp"><span class="lbl">açıklama</span>Birçok masaüstü klavyesinde ayrıca klavyenin sağ tarafında bir sayısal tuş takımı bulunur.</p></li><li class="w"><div class="top"><span class="no">8</span><b class="en" lang="en">wires</b><span class="phrase" lang="en">wire</span><span class="tr">kablo, tel</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…not have any <mark>wires</mark> connecting the keyboard…</p>
+<p class="exp"><span class="lbl">açıklama</span>Ancak bazı klavyelerde klavyeyi sistem birimine bağlayan hiçbir kablo yoktur.</p></li><li class="w"><div class="top"><span class="no">9</span><b class="en" lang="en">palm</b><span class="phrase" lang="en">palm of your hand</span><span class="tr">avuç içi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…comfortably under the <mark>palm</mark> of your hand.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Fare, avucunuzun altına rahatça oturan bir işaretleme aygıtıdır.</p></li><li class="w"><div class="top"><span class="no">10</span><b class="en" lang="en">optical</b><span class="phrase" lang="en">optical mouse</span><span class="tr">optik fare</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…some type of <mark>optical</mark> mouse, which uses…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bugün masaüstü bilgisayar kullanıcılarının çoğunda bir tür optik fare vardır; optik fare, farenin hareketini tespit etmek için ışık yayan ve ışığı algılayan düzenekler kullanır.</p></li><li class="w"><div class="top"><span class="no">11</span><b class="en" lang="en">laser</b><span class="tr">lazer</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…others use a <mark>laser</mark>.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bazıları optik algılayıcı, diğerleri lazer kullanır.</p></li><li class="w"><div class="top"><span class="no">12</span><b class="en" lang="en">pen</b><span class="phrase" lang="en">digital pen</span><span class="tr">dijital kalem</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…With <mark>pen</mark> input, you touch…</p>
+<p class="exp"><span class="lbl">açıklama</span>Kalemle girişte yazmak, çizmek ya da seçim yapmak için düz bir yüzeye stylus (ekran kalemi) ya da dijital kalemle dokunursunuz.</p></li><li class="w"><div class="top"><span class="no">13</span><b class="en" lang="en">digital</b><span class="phrase" lang="en">digital pen</span><span class="tr">dijital kalem</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>digital</mark> pen, which is…</p>
+<p class="exp"><span class="lbl">açıklama</span>Stylus&#x27;tan biraz daha büyük olan dijital kalem, elektronik silgileri ve programlanabilir düğmeleriyle genellikle stylus&#x27;tan daha fazla işlev sunar.</p></li><li class="w"><div class="top"><span class="no">14</span><b class="en" lang="en">tablet</b><span class="phrase" lang="en">graphics tablet</span><span class="tr">grafik tablet</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A graphics <mark>tablet</mark> is a flat,…</p>
+<p class="exp"><span class="lbl">açıklama</span>Grafik tablet düz, dikdörtgen, elektronik, plastik bir levhadır.</p></li><li class="w"><div class="top"><span class="no">15</span><b class="en" lang="en">controller</b><span class="phrase" lang="en">game controller</span><span class="tr">oyun kumandası</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…use a game <mark>controller</mark> as the input…</p>
+<p class="exp"><span class="lbl">açıklama</span>Video oyunları ve bilgisayar oyunları, ekrandaki nesnelerin hareketlerini ve eylemlerini yönlendiren giriş aygıtı olarak oyun kumandası kullanır (Şekil 5-13).</p></li><li class="w"><div class="top"><span class="no">16</span><b class="en" lang="en">joysticks</b><span class="phrase" lang="en">joystick</span><span class="tr">oyun çubuğu (joystick)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…controllers include gamepads, <mark>joysticks</mark> and wheels, light…</p>
+<p class="exp"><span class="lbl">açıklama</span>Oyun kumandaları arasında gamepad&#x27;ler, joystick&#x27;ler ve direksiyonlar, ışık tabancaları, dans pedleri ve çeşitli hareket algılayan kumandalar vardır.</p></li><li class="w"><div class="top"><span class="no">17</span><b class="en" lang="en">Voice</b><span class="phrase" lang="en">voice input</span><span class="tr">sesli giriş</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>Voice</mark> input is the…</p>
+<p class="exp"><span class="lbl">açıklama</span>Sesli giriş, mikrofona konuşarak girdi girme işlemidir.</p></li><li class="w"><div class="top"><span class="no">18</span><b class="en" lang="en">audio</b><span class="phrase" lang="en">audio input</span><span class="tr">ses girişi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…of input called <mark>audio</mark> input.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Sesli giriş, ses girişi (audio input) denen daha geniş bir giriş kategorisinin parçasıdır.</p></li><li class="w"><div class="top"><span class="no">19</span><b class="en" lang="en">effects</b><span class="phrase" lang="en">sound effects</span><span class="tr">ses efektleri</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…music, and sound <mark>effects</mark>.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Ses girişi, konuşma, müzik ve ses efektleri gibi herhangi bir sesi bilgisayara girme işlemidir.</p></li><li class="w"><div class="top"><span class="no">20</span><b class="en" lang="en">Video</b><span class="phrase" lang="en">video input</span><span class="tr">video girişi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>Video</mark> input is the…</p>
+<p class="exp"><span class="lbl">açıklama</span>Video girişi, hareketli görüntüleri yakalayıp sabit disk ya da optik disk gibi bir bilgisayar depolama ortamında saklama işlemidir.</p></li><li class="w"><div class="top"><span class="no">21</span><b class="en" lang="en">cam</b><span class="phrase" lang="en">Web cam</span><span class="tr">web kamerası</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A Web <mark>cam</mark>, also called a…</p>
+<p class="exp"><span class="lbl">açıklama</span>PC video kamerası olarak da adlandırılan web kamerası, ev ya da küçük işletme kullanıcısının video ve durağan görüntü yakalamasını, video ekli e-posta göndermesini, anlık mesajlara canlı görüntü eklemesini, internetten canlı görüntü yayınlamasını ve görüntülü telefon görüşmesi yapmasını sağlayan bir tür dijital video kameradır.</p></li><li class="w"><div class="top"><span class="no">22</span><b class="en" lang="en">telephone</b><span class="phrase" lang="en">video telephone call</span><span class="tr">görüntülü telefon görüşmesi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…and make video <mark>telephone</mark> calls.…</p>
+<p class="exp"><span class="lbl">açıklama</span>PC video kamerası olarak da adlandırılan web kamerası, ev ya da küçük işletme kullanıcısının video ve durağan görüntü yakalamasını, video ekli e-posta göndermesini, anlık mesajlara canlı görüntü eklemesini, internetten canlı görüntü yayınlamasını ve görüntülü telefon görüşmesi yapmasını sağlayan bir tür dijital video kameradır.</p></li><li class="w"><div class="top"><span class="no">23</span><b class="en" lang="en">source</b><span class="phrase" lang="en">source document</span><span class="tr">kaynak belge</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…directly from a <mark>source</mark> document, which is…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bazı giriş aygıtları veriyi doğrudan kaynak belgeden, yani verinin asıl hâlinden alarak kullanıcılara zaman kazandırır.</p></li><li class="w"><div class="top"><span class="no">24</span><b class="en" lang="en">Biometric</b><span class="phrase" lang="en">biometric input</span><span class="tr">biyometrik giriş</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>Biometric</mark> input identifies a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Biyometrik giriş bir kişiyi parmak izi, yüz, ses ya da göz gibi fiziksel bir özelliğinden tanır.</p></li><li class="w"><div class="top"><span class="no">25</span><b class="en" lang="en">pressure</b><span class="phrase" lang="en">pressure-sensitive</span><span class="tr">basınca duyarlı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…called pens, are <mark>pressure</mark>-sensitive.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Çoğu zaman kısaca kalem denen dijital kalemlerin çoğu basınca duyarlıdır.</p></li></ol></section><section class="week" id="h5" aria-labelledby="h5-t">
+<header class="wh"><span class="wk">5. hafta</span><h2 id="h5-t"><span lang="en">Output</span><small>Çıkış aygıtları · 29 kelime</small></h2></header>
+<ol class="words"><li class="w"><div class="top"><span class="no">1</span><b class="en" lang="en">Output</b><span class="tr">çıktı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>Output</mark> is data that…</p>
+<p class="exp"><span class="lbl">açıklama</span>Çıktı, işlenerek yararlı bir biçime getirilmiş veridir.</p></li><li class="w"><div class="top"><span class="no">2</span><b class="en" lang="en">video</b><span class="tr">video</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…graphics, audio, and <mark>video</mark> (Figure 5-29).…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bilgisayarla çalışırken kullanıcı dört temel çıktı tipiyle karşılaşır: metin, grafik, ses ve video (Şekil 5-29).</p></li><li class="w"><div class="top"><span class="no">3</span><b class="en" lang="en">display</b><span class="phrase" lang="en">display device</span><span class="tr">görüntü aygıtı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>display</mark> device is an…</p>
+<p class="exp"><span class="lbl">açıklama</span>Görüntü aygıtı; metin, grafik ve video bilgisini görsel olarak ileten bir çıkış aygıtıdır.</p></li><li class="w"><div class="top"><span class="no">4</span><b class="en" lang="en">monitor</b><span class="tr">monitör, ekran</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>monitor</mark> is a display…</p>
+<p class="exp"><span class="lbl">açıklama</span>Monitör, ayrı bir çevre birimi olarak paketlenmiş bir görüntü aygıtıdır.</p></li><li class="w"><div class="top"><span class="no">5</span><b class="en" lang="en">LCD</b><span class="phrase" lang="en">LCD monitor</span><span class="tr">LCD monitör</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…An <mark>LCD</mark> monitor is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>LCD monitör, görüntü oluşturmak için sıvı kristal ekran kullanan bir masaüstü monitörüdür.</p></li><li class="w"><div class="top"><span class="no">6</span><b class="en" lang="en">digital</b><span class="phrase" lang="en">digital signal</span><span class="tr">dijital sinyal</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…monitors use a <mark>digital</mark> signal to produce…</p>
+<p class="exp"><span class="lbl">açıklama</span>LCD monitörler görüntü oluşturmak için dijital sinyal kullanır.</p></li><li class="w"><div class="top"><span class="no">7</span><b class="en" lang="en">DisplayPort</b><span class="tr">monitör bağlantı portu (DVI ve HDMI gibi)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…port, or a <mark>DisplayPort</mark>.…</p>
+<p class="exp"><span class="lbl">açıklama</span>En yüksek kalitede görüntü vermek için bir LCD monitör DVI portuna, HDMI portuna ya da DisplayPort&#x27;a takılmalıdır.</p></li><li class="w"><div class="top"><span class="no">8</span><b class="en" lang="en">plasma</b><span class="phrase" lang="en">plasma monitor</span><span class="tr">plazma monitör</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>plasma</mark> monitor is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Plazma monitör, iki cam plaka arasına bir gaz katmanı yerleştiren gaz plazma teknolojisini kullanan bir görüntü aygıtıdır.</p></li><li class="w"><div class="top"><span class="no">9</span><b class="en" lang="en">CRT</b><span class="phrase" lang="en">CRT monitor</span><span class="tr">CRT (tüplü) monitör</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>CRT</mark> monitor is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>CRT monitör, katot ışınlı tüp içeren bir masaüstü monitörüdür (Şekil 5-33).</p></li><li class="w"><div class="top"><span class="no">10</span><b class="en" lang="en">printer</b><span class="tr">yazıcı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>printer</mark> is an output…</p>
+<p class="exp"><span class="lbl">açıklama</span>Yazıcı, metin ve grafikleri kâğıt gibi fiziksel bir ortam üzerinde üreten bir çıkış aygıtıdır.</p></li><li class="w"><div class="top"><span class="no">11</span><b class="en" lang="en">nonimpact</b><span class="phrase" lang="en">nonimpact printer</span><span class="tr">vuruşsuz yazıcı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>nonimpact</mark> printer forms characters…</p>
+<p class="exp"><span class="lbl">açıklama</span>Vuruşsuz yazıcı, kâğıda gerçekten vurmadan bir kâğıt parçası üzerinde karakter ve grafik oluşturur.</p></li><li class="w"><div class="top"><span class="no">12</span><b class="en" lang="en">ink</b><span class="phrase" lang="en">ink-jet printer</span><span class="tr">mürekkep püskürtmeli yazıcı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…An <mark>ink</mark>-jet printer is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Mürekkep püskürtmeli yazıcı, bir kâğıt parçasına küçük sıvı mürekkep damlaları püskürterek karakter ve grafik oluşturan bir vuruşsuz yazıcı türüdür.</p></li><li class="w"><div class="top"><span class="no">13</span><b class="en" lang="en">minute</b><span class="phrase" lang="en">pages per minute (ppm)</span><span class="tr">dakikada sayfa (ppm)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…of pages per <mark>minute</mark> (ppm) it can…</p>
+<p class="exp"><span class="lbl">açıklama</span>Mürekkep püskürtmeli yazıcının hızı, dakikada basabildiği sayfa sayısıyla (ppm) ölçülür.</p></li><li class="w"><div class="top"><span class="no">14</span><b class="en" lang="en">photo</b><span class="phrase" lang="en">photo printer</span><span class="tr">fotoğraf yazıcısı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>photo</mark> printer is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Fotoğraf yazıcısı, fotoğraf laboratuvarı kalitesinde resimler üreten renkli bir yazıcıdır (Şekil 5-37).</p></li><li class="w"><div class="top"><span class="no">15</span><b class="en" lang="en">PictBridge</b><span class="tr">PictBridge (makineden doğrudan baskı)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>PictBridge</mark> is a standard…</p>
+<p class="exp"><span class="lbl">açıklama</span>PictBridge, dijital fotoğraf makinesinden yazıcıdaki bir USB portuna kablo bağlayarak fotoğrafları doğrudan makineden basmanızı sağlayan standart bir teknolojidir.</p></li><li class="w"><div class="top"><span class="no">16</span><b class="en" lang="en">laser</b><span class="phrase" lang="en">laser printer</span><span class="tr">lazer yazıcı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>laser</mark> printer is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Lazer yazıcı, yüksek hızlı ve yüksek kaliteli bir vuruşsuz yazıcıdır (Şekil 5-38).</p></li><li class="w"><div class="top"><span class="no">17</span><b class="en" lang="en">trays</b><span class="phrase" lang="en">tray</span><span class="tr">tepsi (kâğıt)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…or more removable <mark>trays</mark> that slide in…</p>
+<p class="exp"><span class="lbl">açıklama</span>Kişisel bilgisayarlar için lazer yazıcılar genellikle yazıcı gövdesine kayarak giren bir ya da daha fazla çıkarılabilir tepside duran tek tek kâğıt yaprakları kullanır.</p></li><li class="w"><div class="top"><span class="no">18</span><b class="en" lang="en">toner</b><span class="tr">toner (toz mürekkep)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…powdered ink, called <mark>toner</mark>.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Lazer yazıcı, bir lazer ışını ve toner denen toz mürekkep kullanarak görüntü oluşturur.</p></li><li class="w"><div class="top"><span class="no">19</span><b class="en" lang="en">faster</b><span class="tr">daha hızlı: lazer yazıcı ink-jet yazıcıdan hızlı basar</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…usually print at <mark>faster</mark> speeds than ink-jet…</p>
+<p class="exp"><span class="lbl">açıklama</span>Lazer yazıcılar genellikle mürekkep püskürtmeli yazıcılardan daha hızlı basar.</p></li><li class="w"><div class="top"><span class="no">20</span><b class="en" lang="en">Multifunction</b><span class="phrase" lang="en">multifunction peripheral</span><span class="tr">çok işlevli çevre birimi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>Multifunction</mark> peripheral, also called…</p>
+<p class="exp"><span class="lbl">açıklama</span>Hepsi bir arada aygıt da denen çok işlevli çevre birimi; yazıcıya ya da fotokopi makinesine benzeyen ama yazıcı, tarayıcı, fotokopi makinesi ve belki faks makinesi işlevlerini sağlayan tek bir aygıttır (Şekil 5-39).</p></li><li class="w"><div class="top"><span class="no">21</span><b class="en" lang="en">mobile</b><span class="phrase" lang="en">mobile printer</span><span class="tr">mobil yazıcı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>mobile</mark> printer is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Mobil yazıcı, mobil kullanıcının yolculuk sırasında dizüstü bilgisayardan, akıllı telefondan ya da başka bir mobil aygıttan baskı almasını sağlayan küçük, hafif, pille çalışan bir yazıcıdır (Şekil 5-41).</p></li><li class="w"><div class="top"><span class="no">22</span><b class="en" lang="en">impact</b><span class="phrase" lang="en">impact printer</span><span class="tr">vuruşlu yazıcı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…An <mark>impact</mark> printer forms characters…</p>
+<p class="exp"><span class="lbl">açıklama</span>Vuruşlu yazıcı, kâğıda fiziksel olarak değen mürekkepli bir şeride bir mekanizmayla vurarak kâğıt üzerinde karakter ve grafik oluşturur.</p></li><li class="w"><div class="top"><span class="no">23</span><b class="en" lang="en">multipart</b><span class="phrase" lang="en">multipart forms</span><span class="tr">çok parçalı (kopyalı) formlar</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…ideal for printing <mark>multipart</mark> forms because they…</p>
+<p class="exp"><span class="lbl">açıklama</span>Vuruşlu yazıcılar çok katmanlı kâğıda kolayca bastıkları için çok parçalı formları basmak için idealdir.</p></li><li class="w"><div class="top"><span class="no">24</span><b class="en" lang="en">matrix</b><span class="phrase" lang="en">dot-matrix printer</span><span class="tr">nokta vuruşlu yazıcı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…impact printers are dot-<mark>matrix</mark> printers and line…</p>
+<p class="exp"><span class="lbl">açıklama</span>Yaygın kullanılan iki vuruşlu yazıcı türü nokta vuruşlu yazıcılar ve satır yazıcılardır.</p></li><li class="w"><div class="top"><span class="no">25</span><b class="en" lang="en">audio</b><span class="phrase" lang="en">audio output device</span><span class="tr">ses çıkış aygıtı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…An <mark>audio</mark> output device is…</p>
+<p class="exp"><span class="lbl">açıklama</span>Ses çıkış aygıtı; müzik, konuşma ya da bip gibi başka sesler üreten bir bilgisayar bileşenidir.</p></li><li class="w"><div class="top"><span class="no">26</span><b class="en" lang="en">earbuds</b><span class="tr">kulak içi kulaklık</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…speakers, headphones, and <mark>earbuds</mark>; data projectors; and…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bunlar hoparlörler, kulaklıklar ve kulak içi kulaklıklar; veri projektörleri ve etkileşimli tahtalardır.</p></li><li class="w"><div class="top"><span class="no">27</span><b class="en" lang="en">projector</b><span class="phrase" lang="en">data projector</span><span class="tr">veri projektörü</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A data <mark>projector</mark> is a device…</p>
+<p class="exp"><span class="lbl">açıklama</span>Veri projektörü, bilgisayar ekranında görünen metin ve görüntüleri alıp izleyicilerin görüntüyü net görebilmesi için daha büyük bir perdeye yansıtan aygıttır.</p></li><li class="w"><div class="top"><span class="no">28</span><b class="en" lang="en">whiteboard</b><span class="phrase" lang="en">interactive whiteboard</span><span class="tr">etkileşimli (akıllı) tahta</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…An interactive <mark>whiteboard</mark> is a touch-sensitive…</p>
+<p class="exp"><span class="lbl">açıklama</span>Etkileşimli tahta, silinebilir beyaz tahtaya benzeyen, bağlı bilgisayarın ekran görüntüsünü gösteren dokunmaya duyarlı bir aygıttır.</p></li><li class="w"><div class="top"><span class="no">29</span><b class="en" lang="en">radiation</b><span class="phrase" lang="en">electromagnetic radiation (EMR)</span><span class="tr">elektromanyetik radyasyon</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…Electromagnetic <mark>radiation</mark> (EMR) is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Elektromanyetik radyasyon (EMR), ışık hızında ilerleyen bir manyetik alandır.</p></li></ol></section><section class="week" id="h6" aria-labelledby="h6-t">
+<header class="wh"><span class="wk">6. hafta</span><h2 id="h6-t"><span lang="en">Storage</span><small>Depolama · 28 kelime</small></h2></header>
+<ol class="words"><li class="w"><div class="top"><span class="no">1</span><b class="en" lang="en">Storage</b><span class="tr">depolama</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>Storage</mark> holds data, instructions,…</p>
+<p class="exp"><span class="lbl">açıklama</span>Depolama; veriyi, komutları ve bilgiyi ileride kullanmak üzere tutar.</p></li><li class="w"><div class="top"><span class="no">2</span><b class="en" lang="en">medium</b><span class="phrase" lang="en">storage medium</span><span class="tr">depolama ortamı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A storage <mark>medium</mark> (media is the…</p>
+<p class="exp"><span class="lbl">açıklama</span>İkincil depolama da denen depolama ortamı (çoğulu media), bilgisayarın veriyi, komutları ve bilgiyi üzerinde tuttuğu fiziksel malzemedir.</p></li><li class="w"><div class="top"><span class="no">3</span><b class="en" lang="en">Cloud</b><span class="phrase" lang="en">cloud storage</span><span class="tr">bulut depolama</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>Cloud</mark> storage is another…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bulut depolama başka bir depolama seçeneğidir; burada kullanılan gerçek depolama ortamı kullanıcı için görünmezdir.</p></li><li class="w"><div class="top"><span class="no">4</span><b class="en" lang="en">Capacity</b><span class="tr">kapasite</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>Capacity</mark> is the number…</p>
+<p class="exp"><span class="lbl">açıklama</span>Kapasite, bir depolama ortamının tutabildiği bayt (karakter) sayısıdır.</p></li><li class="w"><div class="top"><span class="no">5</span><b class="en" lang="en">hard</b><span class="phrase" lang="en">hard disk</span><span class="tr">sabit disk</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>hard</mark> disk is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Sabit disk; veriyi, komutları ve bilgiyi saklamak için manyetik parçacıklar kullanan bir ya da daha fazla esnek olmayan, dairesel plaka içeren bir depolama aygıtıdır.</p></li><li class="w"><div class="top"><span class="no">6</span><b class="en" lang="en">sealed</b><span class="tr">kapalı, mühürlü</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…in an airtight, <mark>sealed</mark> case to protect…</p>
+<p class="exp"><span class="lbl">açıklama</span>Aygıtın tamamı kirlenmeye karşı korunmak için hava geçirmez, kapalı bir kutunun içindedir.</p></li><li class="w"><div class="top"><span class="no">7</span><b class="en" lang="en">fixed</b><span class="phrase" lang="en">fixed disk</span><span class="tr">sabit (çıkarılamayan) disk</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…is called a <mark>fixed</mark> disk because it…</p>
+<p class="exp"><span class="lbl">açıklama</span>Sistem biriminin içine monte edilen sabit diske taşınabilir olmadığı için bazen sabit (fixed) disk denir.</p></li><li class="w"><div class="top"><span class="no">8</span><b class="en" lang="en">portable</b><span class="tr">taşınabilir</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…medium, the term <mark>portable</mark> means you can…</p>
+<p class="exp"><span class="lbl">açıklama</span>Depolama ortamı açısından taşınabilir terimi, ortamı bir bilgisayardan çıkarıp başka bir bilgisayara götürebileceğiniz anlamına gelir.</p></li><li class="w"><div class="top"><span class="no">9</span><b class="en" lang="en">RAID</b><span class="tr">RAID (bağımsız disklerin yedekli dizisi)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…is called a <mark>RAID</mark> (redundant array of…</p>
+<p class="exp"><span class="lbl">açıklama</span>İki ya da daha fazla bütünleşik sabit diskten oluşan gruba RAID (bağımsız disklerin yedekli dizisi) denir.</p></li><li class="w"><div class="top"><span class="no">10</span><b class="en" lang="en">NAS</b><span class="phrase" lang="en">network attached storage (NAS)</span><span class="tr">ağa bağlı depolama (NAS)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…network attached storage (<mark>NAS</mark>) device is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Ağa bağlı depolama (NAS) aygıtı, tek amacı depolama sağlamak olan, bir ağa bağlı sunucudur.</p></li><li class="w"><div class="top"><span class="no">11</span><b class="en" lang="en">external</b><span class="phrase" lang="en">external hard disk</span><span class="tr">harici sabit disk</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…An <mark>external</mark> hard disk is…</p>
+<p class="exp"><span class="lbl">açıklama</span>Harici sabit disk; sistem birimindeki bir USB ya da FireWire portuna kabloyla bağlanan veya kablosuz iletişim kuran ayrı, kendi başına duran bir sabit disktir.</p></li><li class="w"><div class="top"><span class="no">12</span><b class="en" lang="en">removable</b><span class="phrase" lang="en">removable hard disk</span><span class="tr">çıkarılabilir sabit disk</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>removable</mark> hard disk is…</p>
+<p class="exp"><span class="lbl">açıklama</span>Çıkarılabilir sabit disk, bir sürücüye takıp çıkardığınız sabit disktir.</p></li><li class="w"><div class="top"><span class="no">13</span><b class="en" lang="en">Back</b><span class="phrase" lang="en">back up</span><span class="tr">yedeklemek</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>Back</mark> up important files…</p>
+<p class="exp"><span class="lbl">açıklama</span>Önemli dosyaları ya da dahili sabit diskin tamamını yedeklemek (bazı harici disk modelleri diskteki bir düğmeye basarak yedek almanızı sağlar)</p></li><li class="w"><div class="top"><span class="no">14</span><b class="en" lang="en">Flash</b><span class="phrase" lang="en">flash memory</span><span class="tr">flaş bellek</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>Flash</mark> memory is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Flaş bellek, elektronik olarak silinip yeniden yazılabilen bir tür kalıcı (uçucu olmayan) bellektir.</p></li><li class="w"><div class="top"><span class="no">15</span><b class="en" lang="en">solid</b><span class="phrase" lang="en">solid state media</span><span class="tr">katı hâl ortamı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…a type of <mark>solid</mark> state media, which…</p>
+<p class="exp"><span class="lbl">açıklama</span>Flaş bellek yongaları bir tür katı hâl ortamıdır; yani tümleşik devreler gibi tamamen elektronik bileşenlerden oluşur ve hareketli parça içermez.</p></li><li class="w"><div class="top"><span class="no">16</span><b class="en" lang="en">durable</b><span class="tr">dayanıklı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…memory storage more <mark>durable</mark> and shock resistant…</p>
+<p class="exp"><span class="lbl">açıklama</span>Hareketli parça olmaması flaş bellek depolamayı manyetik sabit diskler ya da optik diskler gibi diğer ortamlardan daha dayanıklı ve darbeye dirençli yapar.</p></li><li class="w"><div class="top"><span class="no">17</span><b class="en" lang="en">0.1</b><span class="phrase" lang="en">0.1 ms</span><span class="tr">0,1 milisaniye: SSD erişim süresi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…SSDs are about <mark>0.1</mark> ms, which is…</p>
+<p class="exp"><span class="lbl">açıklama</span>SSD&#x27;lerin erişim süresi yaklaşık 0,1 milisaniyedir; bu sabit diskten 80 kattan fazla hızlıdır.</p></li><li class="w"><div class="top"><span class="no">18</span><b class="en" lang="en">heat</b><span class="tr">ısı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…SSDs generate less <mark>heat</mark> and consume less…</p>
+<p class="exp"><span class="lbl">açıklama</span>SSD&#x27;ler sabit disklerden daha az ısı üretir ve daha az güç tüketir.</p></li><li class="w"><div class="top"><span class="no">19</span><b class="en" lang="en">50</b><span class="phrase" lang="en">50 years</span><span class="tr">50 yıl: SSD ömrü (sabit disk 3–5 yıl)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…last more than <mark>50</mark> years, which is…</p>
+<p class="exp"><span class="lbl">açıklama</span>Üreticiler SSD&#x27;lerin 50 yıldan fazla dayanacağını söylüyor; bu, sabit diskler için belirtilen 3–5 yıllık ömürden çok daha fazladır.</p></li><li class="w"><div class="top"><span class="no">20</span><b class="en" lang="en">rate</b><span class="phrase" lang="en">failure rate</span><span class="tr">arıza oranı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…a higher failure <mark>rate</mark> than hard disks,…</p>
+<p class="exp"><span class="lbl">açıklama</span>SSD&#x27;lerin dezavantajları, şu anda sabit disklerden daha yüksek arıza oranına sahip olmaları ve gigabayt başına maliyetlerinin çok daha yüksek olmasıdır.</p></li><li class="w"><div class="top"><span class="no">21</span><b class="en" lang="en">card</b><span class="phrase" lang="en">memory card</span><span class="tr">hafıza kartı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…4, a memory <mark>card</mark> is a removable…</p>
+<p class="exp"><span class="lbl">açıklama</span>4. bölümde değinildiği gibi hafıza kartı; genellikle yüksekliği ya da genişliği 1,5 inçten büyük olmayan, bir bilgisayardaki, mobil aygıttaki ya da kart okuyucu/yazıcıdaki yuvaya takıp çıkardığınız çıkarılabilir bir flaş bellek aygıtıdır (Şekil 6-13).</p></li><li class="w"><div class="top"><span class="no">22</span><b class="en" lang="en">thumb</b><span class="phrase" lang="en">thumb drive</span><span class="tr">USB bellek (başparmak sürücü)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…sometimes called a <mark>thumb</mark> drive, is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bazen thumb drive da denen USB bellek, bir bilgisayardaki ya da mobil aygıttaki USB portuna takılan bir flaş bellek depolama aygıtıdır (Şekil 6-15).</p></li><li class="w"><div class="top"><span class="no">23</span><b class="en" lang="en">service</b><span class="phrase" lang="en">Internet service</span><span class="tr">internet hizmeti</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…is an Internet <mark>service</mark> that provides hard…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bulut depolama, bilgisayar kullanıcılarına sabit disk depolama alanı sağlayan bir internet hizmetidir.</p></li><li class="w"><div class="top"><span class="no">24</span><b class="en" lang="en">subscribe</b><span class="tr">abone olmak</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…Users <mark>subscribe</mark> to a cloud…</p>
+<p class="exp"><span class="lbl">açıklama</span>Kullanıcılar bir bulut depolama hizmetine çeşitli nedenlerle abone olur:</p></li><li class="w"><div class="top"><span class="no">25</span><b class="en" lang="en">offsite</b><span class="tr">başka bir yerde (tesis dışında)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…To store <mark>offsite</mark> backups of data…</p>
+<p class="exp"><span class="lbl">açıklama</span>Verinin yedeklerini başka bir yerde saklamak</p></li><li class="w"><div class="top"><span class="no">26</span><b class="en" lang="en">optical</b><span class="phrase" lang="en">optical disc</span><span class="tr">optik disk</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…An <mark>optical</mark> disc is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Optik disk; metal, plastik ve vernikten yapılmış düz, yuvarlak, taşınabilir bir diskten oluşan bir optik depolama ortamı türüdür.</p></li><li class="w"><div class="top"><span class="no">27</span><b class="en" lang="en">only</b><span class="phrase" lang="en">read only</span><span class="tr">salt okunur</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…formats are read <mark>only</mark>, meaning users cannot…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bazı optik disk formatları salt okunurdur; yani kullanıcılar ortama yazamaz (kaydedemez).</p></li><li class="w"><div class="top"><span class="no">28</span><b class="en" lang="en">write</b><span class="phrase" lang="en">read/write</span><span class="tr">okunur/yazılır</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…Others are read/<mark>write</mark>, which allows users…</p>
+<p class="exp"><span class="lbl">açıklama</span>Diğerleri okunur/yazılırdır; kullanıcıların tıpkı sabit diske kaydettikleri gibi diske kaydetmesini sağlar.</p></li></ol></section><section class="week" id="h7" aria-labelledby="h7-t">
+<header class="wh"><span class="wk">7. hafta</span><h2 id="h7-t"><span lang="en">Operating Systems & Utilities</span><small>İşletim sistemi ve yardımcı programlar · 46 kelime</small></h2></header>
+<ol class="words"><li class="w"><div class="top"><span class="no">1</span><b class="en" lang="en">System</b><span class="phrase" lang="en">system software</span><span class="tr">sistem yazılımı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>System</mark> software consists of…</p>
+<p class="exp"><span class="lbl">açıklama</span>Sistem yazılımı, bilgisayarın ve aygıtlarının işleyişini denetleyen ya da sürdüren programlardan oluşur.</p></li><li class="w"><div class="top"><span class="no">2</span><b class="en" lang="en">operating</b><span class="phrase" lang="en">operating system</span><span class="tr">işletim sistemi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…An <mark>operating</mark> system (OS) is…</p>
+<p class="exp"><span class="lbl">açıklama</span>İşletim sistemi (OS), bilgisayar donanım kaynakları arasındaki bütün etkinlikleri koordine etmek için birlikte çalışan komutları içeren programlar kümesidir.</p></li><li class="w"><div class="top"><span class="no">3</span><b class="en" lang="en">platform</b><span class="tr">platform (kullanılan işletim sistemi)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…is called the <mark>platform</mark>.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bir bilgisayarın kullandığı işletim sistemine bazen platform denir.</p></li><li class="w"><div class="top"><span class="no">4</span><b class="en" lang="en">cross</b><span class="phrase" lang="en">cross-platform</span><span class="tr">çapraz platform (birden çok işletim sisteminde çalışan)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>cross</mark>-platform program is one…</p>
+<p class="exp"><span class="lbl">açıklama</span>Çapraz platform program, birden fazla işletim sisteminde aynı şekilde çalışan programdır.</p></li><li class="w"><div class="top"><span class="no">5</span><b class="en" lang="en">Booting</b><span class="tr">önyükleme, başlatma</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>Booting</mark> is the process…</p>
+<p class="exp"><span class="lbl">açıklama</span>Önyükleme (booting), bir bilgisayarı başlatma ya da yeniden başlatma sürecidir.</p></li><li class="w"><div class="top"><span class="no">6</span><b class="en" lang="en">cold</b><span class="phrase" lang="en">cold boot</span><span class="tr">soğuk başlatma (kapalıyken açmak)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…are performing a <mark>cold</mark> boot.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Tamamen kapatılmış bir bilgisayarı açarken soğuk başlatma (cold boot) yaparsınız.</p></li><li class="w"><div class="top"><span class="no">7</span><b class="en" lang="en">warm</b><span class="phrase" lang="en">warm boot</span><span class="tr">sıcak başlatma (yeniden başlatmak)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>warm</mark> boot, by contrast,…</p>
+<p class="exp"><span class="lbl">açıklama</span>Sıcak başlatma (warm boot) ise bunun tersine, bilgisayarı yeniden başlatmak için işletim sistemini kullanma sürecidir.</p></li><li class="w"><div class="top"><span class="no">8</span><b class="en" lang="en">Sleep</b><span class="phrase" lang="en">sleep mode</span><span class="tr">uyku modu (RAM&#x27;e kaydeder)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>Sleep</mark> mode saves any…</p>
+<p class="exp"><span class="lbl">açıklama</span>Uyku modu açık belge ve programları RAM&#x27;e kaydeder, gereksiz bütün işlevleri kapatır ve bilgisayarı düşük güç durumuna geçirir.</p></li><li class="w"><div class="top"><span class="no">9</span><b class="en" lang="en">Hibernate</b><span class="tr">hazırda bekletme (diske kaydeder)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>Hibernate</mark>, by contrast, saves…</p>
+<p class="exp"><span class="lbl">açıklama</span>Hazırda bekletme ise bunun tersine, bilgisayarın gücünü kesmeden önce açık belge ve programları sabit diske kaydeder.</p></li><li class="w"><div class="top"><span class="no">10</span><b class="en" lang="en">interface</b><span class="phrase" lang="en">user interface</span><span class="tr">kullanıcı arayüzü</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…is, a user <mark>interface</mark> controls how you…</p>
+<p class="exp"><span class="lbl">açıklama</span>Yani kullanıcı arayüzü veri ve komutları nasıl gireceğinizi ve bilginin ekranda nasıl görüntüleneceğini denetler.</p></li><li class="w"><div class="top"><span class="no">11</span><b class="en" lang="en">command</b><span class="phrase" lang="en">command-line interface</span><span class="tr">komut satırı arayüzü</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…are graphical and <mark>command</mark>-line.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Kullanıcı arayüzünün iki türü grafik ve komut satırıdır.</p></li><li class="w"><div class="top"><span class="no">12</span><b class="en" lang="en">graphical</b><span class="phrase" lang="en">graphical user interface</span><span class="tr">grafik kullanıcı arayüzü (GUI)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…With a <mark>graphical</mark> user interface (GUI),…</p>
+<p class="exp"><span class="lbl">açıklama</span>Grafik kullanıcı arayüzünde (GUI) komut vermek için menüler ve düğmeler gibi görsel imgeler ve diğer grafik nesnelerle etkileşirsiniz.</p></li><li class="w"><div class="top"><span class="no">13</span><b class="en" lang="en">tasking</b><span class="phrase" lang="en">single user/single tasking</span><span class="tr">tek kullanıcılı/tek görevli</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A single user/single <mark>tasking</mark> operating system allows…</p>
+<p class="exp"><span class="lbl">açıklama</span>Tek kullanıcılı/tek görevli işletim sistemi aynı anda yalnızca bir kullanıcının bir program çalıştırmasına izin verir.</p></li><li class="w"><div class="top"><span class="no">14</span><b class="en" lang="en">foreground</b><span class="tr">ön plan</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…one in the <mark>foreground</mark> is the active…</p>
+<p class="exp"><span class="lbl">açıklama</span>Ön plandaki aktif programdır, yani şu anda kullandığınız programdır.</p></li><li class="w"><div class="top"><span class="no">15</span><b class="en" lang="en">background</b><span class="tr">arka plan</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…are in the <mark>background</mark>.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bir bilgisayar birden çok programı eş zamanlı çalıştırırken bir program ön planda, diğerleri arka plandadır.</p></li><li class="w"><div class="top"><span class="no">16</span><b class="en" lang="en">management</b><span class="phrase" lang="en">memory management</span><span class="tr">bellek yönetimi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…purpose of memory <mark>management</mark> is to optimize…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bellek yönetiminin amacı rastgele erişimli bellek (RAM) kullanımını en iyi hâle getirmektir.</p></li><li class="w"><div class="top"><span class="no">17</span><b class="en" lang="en">allocates</b><span class="phrase" lang="en">allocate</span><span class="tr">ayırmak, tahsis etmek</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…The operating system <mark>allocates</mark>, or assigns, data…</p>
+<p class="exp"><span class="lbl">açıklama</span>İşletim sistemi işlenmekte olan veri ve komutları bellekte bir alana yerleştirir (ayırır).</p></li><li class="w"><div class="top"><span class="no">18</span><b class="en" lang="en">Virtual</b><span class="phrase" lang="en">virtual memory</span><span class="tr">sanal bellek</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…<mark>Virtual</mark> memory is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Sanal bellek, işletim sisteminin bir depolama ortamının, genellikle sabit diskin, bir kısmını ek RAM gibi çalışmak üzere ayırdığı bir kavramdır.</p></li><li class="w"><div class="top"><span class="no">19</span><b class="en" lang="en">task</b><span class="tr">görev, iş</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>task</mark>, or job, is…</p>
+<p class="exp"><span class="lbl">açıklama</span>Görev (task ya da job), işlemcinin yönettiği bir işlemdir.</p></li><li class="w"><div class="top"><span class="no">20</span><b class="en" lang="en">buffer</b><span class="tr">tampon bellek</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>buffer</mark> is a segment…</p>
+<p class="exp"><span class="lbl">açıklama</span>Tampon (buffer), öğelerin bir giriş aygıtından ya da bir çıkış aygıtına aktarılmayı beklerken konduğu bellek ya da depolama bölümüdür.</p></li><li class="w"><div class="top"><span class="no">21</span><b class="en" lang="en">spooling</b><span class="tr">kuyruğa alma (yazdırma tamponu)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…This process, called <mark>spooling</mark>, sends documents to…</p>
+<p class="exp"><span class="lbl">açıklama</span>Spooling denen bu süreç, yazdırılacak belgeleri hemen yazıcıya göndermek yerine bir tampona gönderir.</p></li><li class="w"><div class="top"><span class="no">22</span><b class="en" lang="en">administrator</b><span class="phrase" lang="en">administrator account</span><span class="tr">yönetici hesabı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…typically have an <mark>administrator</mark> account that enables…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bilgisayar ve ağ yöneticilerinin genellikle bilgisayardaki ya da ağdaki bütün dosya ve programlara erişmelerini, program yüklemelerini ve bütün kullanıcıları etkileyen ayarları belirlemelerini sağlayan bir yönetici hesabı vardır.</p></li><li class="w"><div class="top"><span class="no">23</span><b class="en" lang="en">permissions</b><span class="phrase" lang="en">permission</span><span class="tr">izin</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…These <mark>permissions</mark> define who can…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bu izinler belirli kaynaklara kimin ve ne zaman erişebileceğini tanımlar.</p></li><li class="w"><div class="top"><span class="no">24</span><b class="en" lang="en">password</b><span class="tr">parola, şifre</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>password</mark> is a private…</p>
+<p class="exp"><span class="lbl">açıklama</span>Parola, kullanıcı adıyla ilişkilendirilmiş, belirli bilgisayar kaynaklarına erişim sağlayan gizli bir karakter birleşimidir.</p></li><li class="w"><div class="top"><span class="no">25</span><b class="en" lang="en">backward</b><span class="phrase" lang="en">backward compatible</span><span class="tr">geriye uyumlu</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…system usually are <mark>backward</mark> compatible.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bir işletim sisteminin yeni sürümleri genellikle geriye uyumludur.</p></li><li class="w"><div class="top"><span class="no">26</span><b class="en" lang="en">upward</b><span class="phrase" lang="en">upward compatible</span><span class="tr">ileriye uyumlu</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…may not be <mark>upward</mark> compatible, meaning it…</p>
+<p class="exp"><span class="lbl">açıklama</span>Buna karşılık uygulama yazılımı ileriye uyumlu olabilir de olmayabilir de; yani işletim sisteminin yeni sürümlerinde çalışabilir ya da çalışmayabilir.</p></li><li class="w"><div class="top"><span class="no">27</span><b class="en" lang="en">server</b><span class="tr">sunucu</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…today are stand-alone, <mark>server</mark>, and embedded.…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bugün var olan üç temel işletim sistemi kategorisi bağımsız (stand-alone), sunucu ve gömülüdür.</p></li><li class="w"><div class="top"><span class="no">28</span><b class="en" lang="en">stand</b><span class="phrase" lang="en">stand-alone operating system</span><span class="tr">bağımsız işletim sistemi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>stand</mark>-alone operating system is…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bağımsız işletim sistemi; masaüstü bilgisayarda, dizüstü bilgisayarda ya da mobil bilgi işlem aygıtında çalışan tam bir işletim sistemidir.</p></li><li class="w"><div class="top"><span class="no">29</span><b class="en" lang="en">client</b><span class="phrase" lang="en">client operating system</span><span class="tr">istemci işletim sistemi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…systems are called <mark>client</mark> operating systems because…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bazı bağımsız işletim sistemlerine bir sunucu işletim sistemiyle birlikte de çalıştıkları için istemci işletim sistemi denir.</p></li><li class="w"><div class="top"><span class="no">30</span><b class="en" lang="en">embedded</b><span class="phrase" lang="en">embedded operating system</span><span class="tr">gömülü işletim sistemi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…electronics, called an <mark>embedded</mark> operating system, resides…</p>
+<p class="exp"><span class="lbl">açıklama</span>Çoğu mobil aygıtta ve birçok tüketici elektroniği ürününde bulunan, gömülü işletim sistemi denen işletim sistemi bir ROM yongasında durur.</p></li><li class="w"><div class="top"><span class="no">31</span><b class="en" lang="en">utility</b><span class="phrase" lang="en">utility program</span><span class="tr">yardımcı program</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>utility</mark> program, also called…</p>
+<p class="exp"><span class="lbl">açıklama</span>Utility olarak da adlandırılan yardımcı program, kullanıcının genellikle bilgisayarı, aygıtlarını ya da programlarını yönetmekle ilgili bakım türü işler yapmasını sağlayan bir sistem yazılımı türüdür.</p></li><li class="w"><div class="top"><span class="no">32</span><b class="en" lang="en">manager</b><span class="phrase" lang="en">file manager</span><span class="tr">dosya yöneticisi</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A file <mark>manager</mark> is a utility…</p>
+<p class="exp"><span class="lbl">açıklama</span>Dosya yöneticisi, dosya yönetimiyle ilgili işlevleri yerine getiren bir yardımcı programdır.</p></li><li class="w"><div class="top"><span class="no">33</span><b class="en" lang="en">search</b><span class="phrase" lang="en">search utility</span><span class="tr">arama aracı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>search</mark> utility is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Arama aracı, belirttiğiniz ölçütlere göre bilgisayarınızda bir dosyayı bulmaya çalışan programdır.</p></li><li class="w"><div class="top"><span class="no">34</span><b class="en" lang="en">uninstaller</b><span class="tr">kaldırıcı (program kaldırma aracı)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…An <mark>uninstaller</mark> is a utility…</p>
+<p class="exp"><span class="lbl">açıklama</span>Kaldırıcı (uninstaller), bir programı ve sistem dosyalarındaki ilişkili bütün kayıtlarını kaldıran yardımcı programdır.</p></li><li class="w"><div class="top"><span class="no">35</span><b class="en" lang="en">viewer</b><span class="phrase" lang="en">image viewer</span><span class="tr">resim görüntüleyici</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…An image <mark>viewer</mark> is a utility…</p>
+<p class="exp"><span class="lbl">açıklama</span>Resim görüntüleyici, kullanıcıların bir grafik dosyasının içeriğini görüntülemesini, kopyalamasını ve yazdırmasını sağlayan yardımcı programdır.</p></li><li class="w"><div class="top"><span class="no">36</span><b class="en" lang="en">cleanup</b><span class="phrase" lang="en">disk cleanup</span><span class="tr">disk temizleme</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A disk <mark>cleanup</mark> utility searches for…</p>
+<p class="exp"><span class="lbl">açıklama</span>Disk temizleme aracı gereksiz dosyaları arar ve kaldırır.</p></li><li class="w"><div class="top"><span class="no">37</span><b class="en" lang="en">backup</b><span class="phrase" lang="en">backup utility</span><span class="tr">yedekleme aracı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>backup</mark> utility allows users…</p>
+<p class="exp"><span class="lbl">açıklama</span>Yedekleme aracı, kullanıcıların seçili dosyaları ya da sabit diskin tamamını başka bir sabit disk, optik disk, USB bellek ya da teyp gibi başka bir depolama ortamına kopyalamasını, yani yedeklemesini sağlar.</p></li><li class="w"><div class="top"><span class="no">38</span><b class="en" lang="en">firewall</b><span class="phrase" lang="en">personal firewall</span><span class="tr">kişisel güvenlik duvarı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A personal <mark>firewall</mark> is a utility…</p>
+<p class="exp"><span class="lbl">açıklama</span>Kişisel güvenlik duvarı, kişisel bilgisayarı izinsiz girişlere karşı algılayan ve koruyan bir yardımcı programdır.</p></li><li class="w"><div class="top"><span class="no">39</span><b class="en" lang="en">virus</b><span class="phrase" lang="en">computer virus</span><span class="tr">bilgisayar virüsü</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…The term, computer <mark>virus</mark>, describes a potentially…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bilgisayar virüsü terimi, kullanıcının bilgisi ya da izni olmadan bilgisayarın çalışma biçimini değiştirerek onu olumsuz etkileyen, yani enfekte eden, zarar verme olasılığı olan bir bilgisayar programını tanımlar.</p></li><li class="w"><div class="top"><span class="no">40</span><b class="en" lang="en">worm</b><span class="tr">solucan (kendini kopyalayan zararlı)</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>worm</mark> copies itself repeatedly,…</p>
+<p class="exp"><span class="lbl">açıklama</span>Solucan (worm) kendini örneğin bellekte ya da ağ üzerinden tekrar tekrar kopyalar, sistem kaynaklarını tüketir ve sistemi kapatabilir.</p></li><li class="w"><div class="top"><span class="no">41</span><b class="en" lang="en">Trojan</b><span class="phrase" lang="en">Trojan horse</span><span class="tr">Truva atı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>Trojan</mark> horse hides within…</p>
+<p class="exp"><span class="lbl">açıklama</span>Truva atı, ekran koruyucu gibi yasal (zararsız görünen) bir programın içinde saklanır ya da ona benzer.</p></li><li class="w"><div class="top"><span class="no">42</span><b class="en" lang="en">antivirus</b><span class="phrase" lang="en">antivirus program</span><span class="tr">antivirüs programı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…An <mark>antivirus</mark> program protects a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Antivirüs programı bellekte, depolama ortamlarında ya da gelen dosyalarda bulunan bilgisayar virüslerini tanıyıp kaldırarak bilgisayarı virüslere karşı korur.</p></li><li class="w"><div class="top"><span class="no">43</span><b class="en" lang="en">compression</b><span class="phrase" lang="en">file compression</span><span class="tr">dosya sıkıştırma</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A file <mark>compression</mark> utility shrinks the…</p>
+<p class="exp"><span class="lbl">açıklama</span>Dosya sıkıştırma aracı bir ya da birkaç dosyanın boyutunu küçültür.</p></li><li class="w"><div class="top"><span class="no">44</span><b class="en" lang="en">less</b><span class="tr">daha az: sıkıştırılmış dosya daha az yer kaplar</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…file takes up <mark>less</mark> storage space than…</p>
+<p class="exp"><span class="lbl">açıklama</span>Sıkıştırılmış dosya asıl dosyadan daha az depolama alanı kaplar.</p></li><li class="w"><div class="top"><span class="no">45</span><b class="en" lang="en">unzip</b><span class="phrase" lang="en">uncompress / unzip</span><span class="tr">sıkıştırmayı açmak</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…To uncompress, or <mark>unzip</mark>, a file, you…</p>
+<p class="exp"><span class="lbl">açıklama</span>Bir dosyayı açmak (uncompress, unzip) onu asıl biçimine geri döndürmektir.</p></li><li class="w"><div class="top"><span class="no">46</span><b class="en" lang="en">media</b><span class="phrase" lang="en">media player</span><span class="tr">medya oynatıcı</span></div>
+<p class="cue" lang="en"><span class="lbl">sınavda</span>…A <mark>media</mark> player is a…</p>
+<p class="exp"><span class="lbl">açıklama</span>Medya oynatıcı, bilgisayarınızda resim ve animasyon görmenizi, ses dinlemenizi ve video dosyaları izlemenizi sağlayan programdır.</p></li></ol></section>
+  <footer><a href="../../">← Eyüp Çalışkanöztürk</a> · Kelimeler sınıf arkadaşının boşluk doldurma föyünden, cümleler ve ipuçları slaytlardan alındı. Türkçe karşılıklar çalışma kolaylığı için yazıldı.</footer>
+</div>
+<script>
+(function(){
+  var b=document.getElementById('gizle'), w=document.querySelector('.wrap');
+  b.addEventListener('click',function(){var on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',String(on));b.textContent=on?'Türkçeyi göster':'Türkçeyi gizle';w.classList.toggle('gizli',on);document.querySelectorAll('.w.ac').forEach(function(x){x.classList.remove('ac');});});
+  w.addEventListener('click',function(e){if(!w.classList.contains('gizli'))return;var k=e.target.closest('.w');if(k)k.classList.toggle('ac');});
+})();
+</script>
+
+</body>
+</html>
