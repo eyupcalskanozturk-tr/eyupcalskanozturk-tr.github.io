@@ -270,6 +270,33 @@ details.oq .ans .tr{color:var(--gold-2);font-size:15px;border-left:2px solid var
 .foy-q.dogru{border-color:rgba(94,234,168,.45)}
 .foy-q.yanlis{border-color:rgba(255,123,134,.45)}
 #foy-liste .bos{color:var(--muted);padding:12px 0}
+.tur{border:1px solid var(--line-2);border-radius:16px;padding:18px;background:rgba(255,255,255,.02);margin-top:6px}
+.tur-ust{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px;font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+.tur-nokta{display:flex;gap:5px;flex-wrap:wrap}
+.tur-nokta i{width:11px;height:11px;border-radius:50%;background:var(--line-2)}
+.tur-nokta i.ok{background:var(--mint)} .tur-nokta i.zor{background:var(--gold)} .tur-nokta i.hata{background:var(--red)}
+.tur-cumle{font-size:21px;line-height:1.75;font-weight:600;margin:12px 0 18px;max-width:46em}
+.tur-ipucu{background:var(--cyan-soft);color:var(--cyan);border-radius:5px;padding:1px 4px}
+.tur-bos{display:inline-block;min-width:5em;border-bottom:3px solid var(--gold);text-align:center;padding:0 4px}
+.tur-bos.acik{color:var(--mint);border-color:var(--mint)}
+.tur-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tur-opts button{font:inherit;font-size:18px;font-weight:600;text-align:left;padding:12px 14px;border-radius:12px;border:1px solid var(--line-2);background:rgba(255,255,255,.03);color:var(--ink);cursor:pointer;display:flex;gap:12px;align-items:center;min-height:54px}
+.tur-opts button:hover:not(:disabled){border-color:rgba(230,180,67,.6)}
+.tur-opts button .k{font-family:var(--f-mono);font-size:13px;color:var(--gold);border:1px solid var(--line-2);border-radius:6px;padding:1px 8px;flex:none}
+.tur-opts button.right{background:var(--mint-soft);border-color:var(--mint);color:var(--mint)}
+.tur-opts button.wrong{background:var(--red-soft);border-color:var(--red);color:var(--red)}
+.tur-opts button:disabled{cursor:default}
+.tur-alt{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;min-height:24px}
+.tur-ok{color:var(--mint);font-size:17px} .tur-no{color:var(--red);font-size:17px}
+.tur-terim{color:var(--ink);background:var(--gold-soft);border-radius:8px;padding:3px 10px}
+.tur-tr{flex-basis:100%;margin:0;color:var(--gold-2);font-size:14.5px}
+.tur-devam{margin-left:auto}
+.tur-not{margin:14px 0 0;font-size:13px;color:var(--dim)}
+.tur-ozet{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.tur-ozet > b{font-size:20px;color:var(--gold-2)}
+.tur-ozet p{margin:0;color:var(--muted)}
+.tur-zor{margin:0;padding-left:20px}
+@media (max-width:640px){.tur-opts{grid-template-columns:minmax(0,1fr)}.tur-cumle{font-size:18px}.tur{padding:14px}}
 
 /* Plan */
 .plan{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:14px}
@@ -389,7 +416,7 @@ footer.foot{margin-top:28px;color:var(--dim);font-size:13px;border-top:1px solid
   <h2 id="nasil-t">Nasıl çalışılır</h2>
   <div class="prose">
     <p>Yedi sunum var: <b>1</b> bilgisayar ve parçaları, <b>2</b> ağlar, internet, yazılım ve bilgisayar türleri, <b>3</b> sistem birimi, <b>4</b> giriş aygıtları, <b>5</b> çıkış aygıtları, <b>6</b> depolama, <b>7</b> işletim sistemleri ve yardımcı programlar. Hepsi aynı İngilizce bilgisayar kitabından paragraflar.</p>
-    <p><b>Sınav boşluk doldurma şeklinde:</b> slayttaki cümle aynen veriliyor, hocanın kalın yazdığı kelime boş bırakılıyor. Bu yüzden en verimli yol <a href="#foy">Boşluk doldurma sınavı</a> bölümü: önce <b>Şıktan seç</b> ile kelimeleri tanı, sonra <b>Yazarak</b> çöz, en son üç provayı yap. Bir cümleyi anlamadıysan <b>TR</b> düğmesine bas ya da o haftanın okuma bölümüne dön.</p>
+    <p><b>Sınav boşluk doldurma şeklinde:</b> slayttaki cümle aynen veriliyor, hocanın kalın yazdığı kelime boş bırakılıyor. Bu yüzden en verimli yol <a href="#foy">Boşluk doldurma sınavı</a> bölümü: önce <b>Hızlı tur</b> oyunuyla kelimeleri öğren, sonra <b>Liste: yazarak</b> ile kendini dene, en son üç provayı yap. Bir cümleyi anlamadıysan <b>TR</b> düğmesine bas ya da o haftanın okuma bölümüne dön.</p>
   </div>
   <div class="grid2">
     <div class="box ipucu"><b>✓ her bölümde</b><ol class="tight">
@@ -412,7 +439,7 @@ footer.foot{margin-top:28px;color:var(--dim);font-size:13px;border-top:1px solid
 <section class="card" id="foy" aria-labelledby="foy-t">
   <div class="path"><span>~/MeslekiYabanciDil/</span><b>bosluk-doldurma-sinav-foyu.pdf</b><span class="cmd">$ başla</span></div>
   <h2 id="foy-t">Boşluk doldurma sınavı<span class="trb">Slayttaki cümle aynen gelir, kalın yazılmış kelime boş bırakılır</span></h2>
-  <div class="prose"><p>Arkadaşının hazırladığı sınav föyündeki boşlukların hepsi burada, cümleler slaytlardaki orijinal hâliyle. Bir hafta ya da prova seç. <b>Şıktan seç</b> modunda dört seçenekten birine tıklarsın; <b>Yazarak</b> modunda kelimeyi kutuya yazıp <b>Kontrol et</b>'e basarsın (Enter bir sonraki boşluğa geçer). Büyük-küçük harf önemli değil. Yanlış yaptıkların <b>Yanlışlarım</b>'da toplanır; doğru yapınca oradan düşer.</p></div>
+  <div class="prose"><p>Arkadaşının hazırladığı sınav föyündeki boşlukların hepsi burada, cümleler slaytlardaki orijinal hâliyle. Bir hafta ya da prova seç. <b>Hızlı tur</b> en kolayı: ekranda tek cümle, boşluğun yanındaki ipucu kelimeler mavi; 1-2-3-4 ile seçersin, bilemediğin cümle birkaç soru sonra yine gelir, 10 cümleyi de bilene kadar tur bitmez. <b>Liste</b> modlarında haftanın bütün cümleleri alt alta gelir; şıktan seçersin ya da kelimeyi kutuya yazıp <b>Kontrol et</b>'e basarsın (Enter bir sonraki boşluğa geçer). Büyük-küçük harf önemli değil. Yanlış yaptıkların <b>Yanlışlarım</b>'da toplanır; doğru yapınca oradan düşer.</p></div>
   <div class="box ezber"><b># en çok çıkabilecek sayılar</b><p>1 byte = 8 bit = 256 karakter · USB portu 127 aygıt bağlar · L1 cache 8 KB–128 KB, L2 cache 64 KB–16 MB · prizde 115–120 volt AC, bilgisayar 5–15+ volt DC ister · ink-jet 12–36 ppm · USB bellek ≈ 4 GB, sabit disk 320 GB · SSD erişimi ≈ 0.1 ms (sabit diskten 80 kat hızlı) · SSD 50+ yıl, sabit disk 3–5 yıl · bilgisayar kategorisi 7 tane</p></div>
   <div class="chips" id="foy-set" role="group" aria-label="Hafta ve prova seçimi" style="margin-top:14px"></div>
   <div class="chips" id="foy-mod" role="group" aria-label="Cevaplama biçimi" style="margin-top:8px"></div>
@@ -562,7 +589,7 @@ footer.foot{margin-top:28px;color:var(--dim);font-size:13px;border-top:1px solid
 <section class="card" id="plan" aria-labelledby="plan-t">
   <div class="path"><span>~/MeslekiYabanciDil/</span><b>plan.txt</b></div>
   <h2 id="plan-t">Çalışma planı</h2>
-  <div class="prose"><p>Sınav yarın sabah. Bu gece için sıra: her blokta önce boşluk sınavını <b>Şıktan seç</b> ile, sonra <b>Yazarak</b> çöz. Takıldığın cümlede TR'ye bak; konu hiç oturmadıysa o haftanın okuma bölümündeki Türkçe özeti oku.</p></div>
+  <div class="prose"><p>Sınav yarın sabah. Bu gece için sıra: her blokta önce o haftayı <b>Hızlı tur</b> ile oyna (yeni tur diyerek bütün cümleleri bilene kadar), sonra <b>Liste: yazarak</b> ile kendini dene. Takıldığın cümlede TR'ye bak; konu hiç oturmadıysa o haftanın okuma bölümündeki Türkçe özeti oku.</p></div>
   <div class="plan" id="gece-plan">
     <div class="day"><div class="d">1. blok<small>1–2. hafta</small></div><ul><li>Boşluk sınavı: 1. hafta (32), 2. hafta (35)</li><li>Bilgisayar, data/information, network, Internet, software</li><li>7 bilgisayar kategorisi</li></ul></div>
     <div class="day"><div class="d">2. blok<small>3–4. hafta</small></div><ul><li>Boşluk sınavı: 3. hafta (40), 4. hafta (27)</li><li>Sayılar kutusunu ezberle</li><li>CPU, ALU, bit/byte, RAM, cache, port</li></ul></div>
@@ -1005,12 +1032,12 @@ footer.foot{margin-top:28px;color:var(--dim);font-size:13px;border-top:1px solid
 
   /* ---------- Boşluk doldurma sınavı (föy + provalar) ---------- */
   (function () {
-    var ANAHTAR = 'mesleki-ingilizce:foy-yanlis', MOD_A = 'mesleki-ingilizce:foy-mod';
+    var ANAHTAR = 'mesleki-ingilizce:foy-yanlis', MOD_A = 'mesleki-ingilizce:foy-mod2';
     var yanlis = oku_(ANAHTAR, {}) || {};
     var MAD = V.foy.map(function (f, i) { return { id: 'f' + i, h: f[0], s: f[1], a: f[2], tr: f[3] }; })
       .concat(V.prova.map(function (p) { return { id: 'p' + p[0] + '-' + p[1], h: 0, p: p[0], s: p[2], a: p[3], tr: p[4] }; }));
     var liste = document.getElementById('foy-liste'), skor = document.getElementById('foy-skor');
-    var set = 1, mod = oku_(MOD_A, 'sec') === 'yaz' ? 'yaz' : 'sec', sira = [], sonuc = {}, setB;
+    var set = 1, mod = (function (x) { return x === 'yaz' || x === 'sec' ? x : 'tur'; })(oku_(MOD_A, 'tur')), sira = [], sonuc = {}, setB;
     function nrm(x) { return String(x).toLowerCase().replace(/[’‘]/g, "'").replace(/,/g, '.').replace(/\s*([\/-])\s*/g, '$1').replace(/\s+/g, ' ').replace(/^[\s.]+|[\s.;:!?]+$/g, ''); }
     function sayi(x) { return /^[\d.,]+$/.test(x); }
     function secim() {
@@ -1113,7 +1140,126 @@ footer.foot{margin-top:28px;color:var(--dim);font-size:13px;border-top:1px solid
       puan();
       var ilk = liste.querySelector('.foy-in.bad'); if (ilk) ilk.focus();
     }
-    function yeniden(karis) { sira = secim(); if (karis) karistir(sira); ciz(); }
+
+    /* ----- Hızlı tur: tek cümle, ipucu kelimeler renkli, bilinmeyen tekrar gelir ----- */
+    var TUR_A = 'mesleki-ingilizce:tur-bilinen', bilinen = oku_(TUR_A, {}) || {}, tur = null;
+    var DUR = { a: 1, an: 1, the: 1, is: 1, are: 1, of: 1, to: 1, and: 1, or: 1, in: 1, on: 1, by: 1, it: 1, its: 1, that: 1, which: 1, as: 1, for: 1, be: 1, can: 1, with: 1, from: 1, at: 1, this: 1, these: 1 };
+    function kacis(x) { return x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+    function terimBul(m) {
+      var tam = tamCumle(m).toLowerCase(), cev = m.a[0].toLowerCase(), en = null;
+      SOZ.forEach(function (s) {
+        [sade(s.en)].concat(s.v).forEach(function (d) {
+          var dl = (d || '').toLowerCase();
+          if (!dl || dl.indexOf(cev) < 0) return;
+          if (new RegExp('(^|[^a-z])' + kacis(dl) + '($|[^a-z])').test(tam) && (!en || dl.length > en.d.length)) en = { d: d, s: s };
+        });
+      });
+      return en;
+    }
+    function cumleCiz(m, kap, acik) {
+      var tok = m.s.split(' '), bi = -1, bas = 0, son;
+      tok.forEach(function (t, i) { if (bi < 0 && t.indexOf('____') >= 0) bi = i; });
+      son = tok.length;
+      if (tok.length > 26) { bas = Math.max(0, bi - 11); son = Math.min(tok.length, bi + 12); }
+      if (bas > 0) kap.appendChild(document.createTextNode('… '));
+      for (var i = bas; i < son; i++) {
+        var t = tok[i];
+        if (i === bi) {
+          var p = t.split('____');
+          if (p[0]) kap.appendChild(document.createTextNode(p[0]));
+          kap.appendChild(el('span', 'tur-bos' + (acik ? ' acik' : ''), acik ? m.a[0] : ' '));
+          if (p[1]) kap.appendChild(document.createTextNode(p[1]));
+        } else {
+          var yalin = t.toLowerCase().replace(/[^a-z0-9]/g, '');
+          var ipucu = Math.abs(i - bi) <= 3 && yalin && !DUR[yalin];
+          kap.appendChild(ipucu ? el('mark', 'tur-ipucu', t) : document.createTextNode(t));
+        }
+        if (i < son - 1) kap.appendChild(document.createTextNode(' '));
+      }
+      if (son < tok.length) kap.appendChild(document.createTextNode(' …'));
+    }
+    function turPuan() {
+      var aday = secim().filter(function (m) { return m.a.length === 1; }), b = aday.filter(function (m) { return bilinen[m.id]; }).length;
+      skor.textContent = b + ' / ' + aday.length + ' ';
+      skor.appendChild(el('small', null, 'ilk denemede bildiğin cümle'));
+    }
+    function turBaslat() {
+      clearTimeout(tur && tur.zaman);
+      var aday = secim().filter(function (m) { return m.a.length === 1; });
+      var yeni_ = karistir(aday.filter(function (m) { return !bilinen[m.id]; })), eski = karistir(aday.filter(function (m) { return bilinen[m.id]; }));
+      var sec = yeni_.concat(eski).slice(0, 10);
+      tur = { liste: sec, kuyruk: sec.slice(), bitti: {}, hata: {}, zaman: 0, sec: null, devam: null };
+      turCiz();
+    }
+    function turCiz() {
+      clearTimeout(tur.zaman); tur.sec = null; tur.devam = null;
+      liste.textContent = ''; turPuan();
+      if (!tur.liste.length) { liste.appendChild(el('p', 'bos', set === 'yanlis' ? 'Yanlışın yok. Bir hafta seçip devam et.' : 'Bu seçimde soru yok.')); return; }
+      var kart = el('div', 'tur'), ust = el('div', 'tur-ust'), nokta = el('span', 'tur-nokta');
+      var biten = tur.liste.filter(function (m) { return tur.bitti[m.id]; }).length;
+      ust.appendChild(el('span', null, 'Tur: ' + biten + ' / ' + tur.liste.length));
+      tur.liste.forEach(function (m) { nokta.appendChild(el('i', tur.bitti[m.id] ? (tur.hata[m.id] ? 'zor' : 'ok') : (tur.hata[m.id] ? 'hata' : ''))); });
+      ust.appendChild(nokta); kart.appendChild(ust);
+      if (!tur.kuyruk.length) {
+        var zor = tur.liste.filter(function (m) { return tur.hata[m.id]; });
+        var oz = el('div', 'tur-ozet');
+        oz.appendChild(el('b', null, 'Tur bitti! İlk denemede ' + (tur.liste.length - zor.length) + ' / ' + tur.liste.length + '.'));
+        if (zor.length) {
+          oz.appendChild(el('p', null, 'Zorlandığın kelimeler (bir sonraki turda yine gelecekler):'));
+          var ul = el('ul', 'tur-zor');
+          zor.forEach(function (m) { var li = el('li'), t = terimBul(m), b = el('b', null, m.a[0]); b.lang = 'en'; li.appendChild(b); if (t) li.appendChild(document.createTextNode(' — ' + t.d + ' = ' + t.s.tr)); ul.appendChild(li); });
+          oz.appendChild(ul);
+        }
+        var yeniB = dugme('btn primary', 'Yeni tur →'); yeniB.addEventListener('click', turBaslat);
+        oz.appendChild(yeniB); kart.appendChild(oz); liste.appendChild(kart); tur.devam = yeniB; yeniB.focus();
+        return;
+      }
+      var m = tur.kuyruk[0];
+      kart.appendChild(el('span', 'tag h', m.p ? 'Prova ' + m.p : m.h + '. hafta'));
+      var c = el('p', 'tur-cumle'); c.lang = 'en'; cumleCiz(m, c, false); kart.appendChild(c);
+      var opts = el('div', 'tur-opts'), alt = el('div', 'tur-alt'), cevaplandi = false, secenek = karistir([m.a[0]].concat(celdirici(m)));
+      alt.setAttribute('aria-live', 'polite');
+      var btns = secenek.map(function (s, i) {
+        var b = dugme(null, null), tx = el('span', null, s);
+        tx.lang = 'en'; b.appendChild(el('span', 'k', String(i + 1))); b.appendChild(tx);
+        b.addEventListener('click', function () {
+          if (cevaplandi) return; cevaplandi = true;
+          var ok = nrm(s) === nrm(m.a[0]);
+          btns.forEach(function (x, j) { x.disabled = true; if (nrm(secenek[j]) === nrm(m.a[0])) x.classList.add('right'); else if (x === b) x.classList.add('wrong'); });
+          c.textContent = ''; cumleCiz(m, c, true);
+          alt.appendChild(el('b', ok ? 'tur-ok' : 'tur-no', ok ? '✓ Doğru' : '✗ Doğrusu: ' + m.a[0]));
+          var t = terimBul(m); if (t) { var te = el('span', 'tur-terim', t.d + ' = ' + t.s.tr); alt.appendChild(te); }
+          alt.appendChild(sesDugme(tamCumle(m), 'Cümleyi dinle', true));
+          if (m.tr) alt.appendChild(el('p', 'tur-tr', m.tr));
+          tur.kuyruk.shift();
+          if (ok) { tur.bitti[m.id] = 1; if (!tur.hata[m.id]) bilinen[m.id] = 1; kaydet(m, true); }
+          else { tur.hata[m.id] = 1; delete bilinen[m.id]; kaydet(m, false); tur.kuyruk.splice(Math.min(3, tur.kuyruk.length), 0, m); }
+          yaz_(TUR_A, bilinen); turPuan();
+          var d = dugme('btn primary tur-devam', 'Devam → (Enter)'); d.addEventListener('click', turCiz); alt.appendChild(d); tur.devam = d;
+          if (ok) tur.zaman = setTimeout(turCiz, 1600); else d.focus();
+        });
+        opts.appendChild(b); return b;
+      });
+      tur.sec = function (i) { if (btns[i] && !cevaplandi) btns[i].click(); };
+      kart.appendChild(opts); kart.appendChild(alt);
+      kart.appendChild(el('p', 'tur-not', 'Mavi kelimeler ipucu: boşluğun yanındaki bu kelimeleri görünce cevabı hatırla. Tuşlar: 1-2-3-4 seç, Enter devam.'));
+      liste.appendChild(kart);
+    }
+    document.addEventListener('keydown', function (e) {
+      if (mod !== 'tur' || !tur || e.ctrlKey || e.metaKey || e.altKey) return;
+      var a = document.activeElement, foy = document.getElementById('foy');
+      if (a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)) return;
+      if (a && a !== document.body && !foy.contains(a)) return;
+      var r = foy.getBoundingClientRect(); if (r.bottom < 0 || r.top > window.innerHeight) return;
+      if (/^[1-4]$/.test(e.key) && tur.sec) { e.preventDefault(); tur.sec(+e.key - 1); }
+      else if ((e.key === 'Enter' || e.key === ' ') && tur.devam && a === document.body) { e.preventDefault(); tur.devam.click(); }
+    });
+    function butonlar() {
+      document.getElementById('foy-kontrol').hidden = mod !== 'yaz';
+      document.getElementById('foy-karistir').hidden = mod === 'tur';
+      document.getElementById('foy-sifirla').textContent = mod === 'tur' ? 'Yeni tur' : 'Temizle';
+    }
+    function yeniden(karis) { butonlar(); if (mod === 'tur') return turBaslat(); sira = secim(); if (karis) karistir(sira); ciz(); }
     liste.addEventListener('keydown', function (e) {
       if (e.key !== 'Enter' || !e.target.classList.contains('foy-in')) return;
       e.preventDefault();
@@ -1122,7 +1268,7 @@ footer.foot{margin-top:28px;color:var(--dim);font-size:13px;border-top:1px solid
     });
     liste.addEventListener('input', function (e) { if (e.target.classList.contains('foy-in')) e.target.classList.remove('ok', 'bad'); });
     setB = filtreKur(document.getElementById('foy-set'), HF.concat([['p1', 'Prova 1'], ['p2', 'Prova 2'], ['p3', 'Prova 3'], ['karisik', 'Karışık 25'], ['yanlis', 'Yanlışlarım']]), set, function (s) { set = s; yeniden(set === 'karisik'); });
-    filtreKur(document.getElementById('foy-mod'), [['sec', 'Şıktan seç (kolay)'], ['yaz', 'Yazarak (sınav gibi)']], mod, function (x) { mod = x; yaz_(MOD_A, x); yeniden(false); });
+    filtreKur(document.getElementById('foy-mod'), [['tur', 'Hızlı tur (oyun)'], ['sec', 'Liste: şıktan seç'], ['yaz', 'Liste: yazarak (sınav gibi)']], mod, function (x) { mod = x; yaz_(MOD_A, x); yeniden(false); });
     document.getElementById('foy-kontrol').addEventListener('click', kontrol);
     document.getElementById('foy-karistir').addEventListener('click', function () { yeniden(true); });
     document.getElementById('foy-sifirla').addEventListener('click', function () { yeniden(false); });
