@@ -25,3 +25,4 @@ Kullanıcıya "Başkan" ya da Eyüp diye hitap et. Koyu tema, altın ve neon vur
 - Bilgi uydurma: müşteri, sayı ve özellik iddialarını yalnızca kullanıcının verdiği kaynaklardan al.
 - Erişilebilirlik ve hareket azaltma desteğini koru; yeni animasyonlar `motionPaused()` ve `.motion-paused` kurallarına uyar.
 - Kökte yeni dosya ya da yeni klasör eklersen `.github/workflows/deploy.yml` kopyalama adımına da ekle.
+- Ziyaretçi istatistiği Umami Cloud ile tutulur (çerezsiz, anonim). Kimlik tek yerde: `assets/istatistik.js` içindeki `UMAMI_ID`; betik yalnız canlı alan adında yüklenir. Yeni bir HTML sayfası eklersen `<head>`'ine `<script src="/assets/istatistik.js" defer></script>` satırını da ekle. Sitenin terminalinde `istatistik`, `beni-sayma`, `beni-say` komutları var (bir tarayıcıyı sayımın dışında bırakır).

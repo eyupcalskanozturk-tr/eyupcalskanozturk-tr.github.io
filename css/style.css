@@ -291,6 +291,8 @@ fieldset:disabled { opacity: .55; }
 .site-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px; padding: 22px 0 26px; border-top: 1px solid var(--line); }
 .footer-actions { display: flex; gap: 24px; align-items: center; font-family: var(--mono); font-size: .78rem; }
 .term-hint { color: var(--dim); }
+.stat-note { color: var(--dim); font-size: .74rem; flex-basis: 100%; order: 3; }
+.stat-note code { color: var(--muted); }
 
 /* ───────── Gizli terminal ───────── */
 .terminal { position: fixed; width: min(780px, calc(100vw - 24px)); height: min(540px, calc(100svh - 48px)); max-width: none; max-height: none; padding: 0; border: 1px solid rgba(255, 255, 255, .16); border-radius: 14px; background: rgba(9, 10, 18, .74); color: var(--ink); -webkit-backdrop-filter: blur(22px) saturate(1.4); backdrop-filter: blur(22px) saturate(1.4); box-shadow: 0 40px 120px -20px rgba(0, 0, 0, .75), inset 0 1px 0 rgba(255, 255, 255, .08), 0 0 90px -30px var(--accent); overflow: hidden; }

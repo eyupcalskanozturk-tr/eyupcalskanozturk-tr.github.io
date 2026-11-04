@@ -566,6 +566,7 @@
         "  cmatrix           Türkçe matrix yağmuru (durdurmak için bir tuşa bas)",
         "  oyna              GitHub profilimde bota karşı Dörtlü oyna",
         "  iletisim          e-posta ve bağlantılar",
+        "  istatistik        ziyaret sayımı hakkında · beni-sayma / beni-say",
         "  temizle · cikis   ekranı temizle · terminali kapat (Esc)"
       ]),
       hakkimda: () => printAll([
@@ -634,12 +635,29 @@
       },
       github: () => { window.open(`https://github.com/${CONFIG.github}`, "_blank", "noopener"); print("GitHub yeni sekmede açıldı."); },
       whoami: () => print("ziyaretci — ama bir mesajla müşteri olabilirsin → iletisim"),
+      istatistik: () => {
+        let kapali = false;
+        try { kapali = localStorage.getItem("umami.disabled") === "1"; } catch { /* depolama kapalı */ }
+        printAll([
+          "Bu site ziyaretleri Umami ile sayar: çerez kullanmaz, kim olduğunu bilmez.",
+          "Görülen: hangi sayfa, ülke/şehir, cihaz ve tarayıcı, nereden gelindiği.",
+          kapali ? "Bu tarayıcı sayılmıyor. Yeniden sayılmak için: beni-say" : "Bu tarayıcıyı saymanın dışında bırakmak için: beni-sayma"
+        ]);
+      },
+      "beni-sayma": () => {
+        try { localStorage.setItem("umami.disabled", "1"); print("Tamam: bu tarayıcıdan gelen ziyaretler artık sayılmayacak.", "accent"); }
+        catch { print("Tarayıcı yerel depolamaya izin vermiyor; ayar kaydedilemedi.", "err"); }
+      },
+      "beni-say": () => {
+        try { localStorage.removeItem("umami.disabled"); print("Bu tarayıcıdan gelen ziyaretler yeniden sayılacak.", "accent"); }
+        catch { print("Tarayıcı yerel depolamaya izin vermiyor; ayar kaydedilemedi.", "err"); }
+      },
       sudo: () => printAll(["[sudo] eyup için parola: ********", "sudo: Yetki reddedildi. Root erişimi için önce bir proje konuşalım → iletisim"], "err"),
       echo: (args) => print(args.join(" ")),
       temizle: () => out.replaceChildren(),
       cikis: () => close()
     };
-    const ALIASES = { help: "yardim", "?": "yardim", about: "hakkimda", projects: "isler", projeler: "isler", contact: "iletisim", mail: "iletisim", clear: "temizle", cls: "temizle", exit: "cikis", quit: "cikis", sky: "gokyuzu", time: "saat", date: "saat", tarih: "saat", matrix: "cmatrix", dir: "ls", dortlu: "oyna", oyun: "oyna", play: "oyna", game: "oyna" };
+    const ALIASES = { help: "yardim", "?": "yardim", about: "hakkimda", projects: "isler", projeler: "isler", contact: "iletisim", mail: "iletisim", clear: "temizle", cls: "temizle", exit: "cikis", quit: "cikis", sky: "gokyuzu", time: "saat", date: "saat", tarih: "saat", matrix: "cmatrix", dir: "ls", dortlu: "oyna", oyun: "oyna", play: "oyna", game: "oyna", stats: "istatistik", analytics: "istatistik" };
 
     function run(raw) {
       const text = raw.trim();

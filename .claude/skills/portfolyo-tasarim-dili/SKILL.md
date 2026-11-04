@@ -66,6 +66,8 @@ Derleme adımı yok: düz HTML, CSS ve JavaScript; GitHub Pages yayınlar.
 
 ## Erişilebilirlik ve güvenlik
 
+- **Ziyaret istatistiği:** Umami Cloud, çerezsiz. Her sayfanın `<head>`'inde `/assets/istatistik.js` var (kimlik orada, yalnız canlı alan adında yüklenir); ana sayfanın alt bilgisinde açıklama satırı (`.stat-note`), terminalde `istatistik` / `beni-sayma` / `beni-say`. Yeni sayfa eklerken bu satırı unutma.
+
 - Skip link, landmark'lar, `aria-label`, `role="status"` alanları, `:focus-visible`, form etiketleri korunur. Terminal native `<dialog>`; Esc ile kapanır.
 - Dış veriyi (GitHub API) `textContent` ile bas, linkleri `webURL()` ile doğrula, `target="_blank"` ise `rel="noopener noreferrer"` ekle.
 - JavaScript kapalıyken site çalışmalı: statik repo listesi, form uyarısı ve gün batımı paleti bunun için var.
