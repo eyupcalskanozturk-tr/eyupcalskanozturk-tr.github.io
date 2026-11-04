@@ -53,6 +53,8 @@ jobs:
           if [ -d rehber-vize ]; then cp -R rehber-vize _site/; fi
           # 5 Kasım sınav günü planı (NTP-1, Görsel Programlama 2, İnternet Programcılığı II)
           if [ -d sinav-gunu ]; then cp -R sinav-gunu _site/; fi
+          # Spam Makinesi · mesaj ve fotoğrafları absürt hızda yağdıran sayfa
+          if [ -d spam ]; then cp -R spam _site/; fi
       - name: Dosyaları yükle
         uses: actions/upload-pages-artifact@v4
         with:
