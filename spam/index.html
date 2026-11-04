@@ -137,7 +137,7 @@ body.surukle::after{content:"Bırak, fotoğraflar eklensin";position:fixed;inset
       <legend>Hız</legend>
       <div class="secim">
         <button type="button" class="chip" data-hiz="2" aria-pressed="false">sakin</button>
-        <button type="button" class="chip" data-hiz="5" aria-pressed="false">hızlı</button>
+        <button type="button" class="chip" data-hiz="5" aria-pressed="false">orta</button>
         <button type="button" class="chip" data-hiz="8" aria-pressed="false">absürt</button>
         <button type="button" class="chip" data-hiz="10" aria-pressed="false">kıyamet</button>
       </div>
@@ -153,7 +153,7 @@ body.surukle::after{content:"Bırak, fotoğraflar eklensin";position:fixed;inset
       <button type="button" class="dugme" id="paylas">Bağlantıyı kopyala</button>
     </div>
     <p class="not"><b>⚠</b> Çok hızlı hareket eden yoğun görüntü içerir. Boşluk tuşu ya da duraklat düğmesi her şeyi durdurur.</p>
-    <p class="not" id="az-not" hidden>Sisteminde hareket azaltma açık: gösteri sakin hızda ve sarsıntısız başlar. Hızı istersen sen artır.</p>
+    <p class="not" id="az-not" hidden>Sisteminde hareket azaltma açık: gösteri kendiliğinden başlamaz. Başlat'a basarsan sakin hızda ve sarsıntısız akar; hızı istersen sen artır.</p>
     <p class="kisayol" id="kisayol"></p>
     <noscript><p class="not">Bu sayfa JavaScript ile çalışır.</p></noscript>
   </div>
@@ -213,20 +213,22 @@ body.surukle::after{content:"Bırak, fotoğraflar eklensin";position:fixed;inset
   function rgba(h, a) { var c = hex(h); return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')'; }
   function karart(h, k) { return 'rgb(' + hex(h).map(function (x) { return Math.round(x * (1 - k)); }).join(',') + ')'; }
   function acik(h, k) { return 'rgb(' + hex(h).map(function (x) { return Math.round(x + (255 - x) * k); }).join(',') + ')'; }
-  function hizAd(h) { return h <= 3 ? 'sakin' : h <= 6 ? 'hızlı' : h <= 8 ? 'absürt' : 'kıyamet'; }
+  function hizAd(h) { return h <= 3 ? 'sakin' : h <= 6 ? 'orta' : h <= 8 ? 'absürt' : 'kıyamet'; }
   function kisaSayi(n) { return n >= 1e6 ? (n / 1e6).toFixed(1).replace('.', ',') + ' Mn' : n >= 1e4 ? Math.floor(n / 1e3) + ' B' : String(n); }
 
   var mesajKutu = $('mesaj'), giris = $('giris'), arac = $('arac'), goster = $('goster'), hud = $('hud'), tostEl = $('tost');
   var durBtn = $('dur'), durIkon = $('dur-ikon'), hizInput = $('hiz'), hizCikti = $('hiz-ad'), modSelect = $('mod');
   var izBtn = $('iz'), sarsBtn = $('sarsinti'), tamBtn = $('tam'), fotoSec = $('foto-sec');
 
+  /* Açılış herkes için aynı: orta hız, karışık mod, varsayılan mesaj. Paylaşılan bağlantı (?m, ?mod, ?hiz) bunları değiştirir. */
+  var ACILIS_HIZ = 5, ACILIS_MOD = 'karisik';
   var q = new URLSearchParams(location.search);
-  mesajKutu.value = q.has('m') ? q.get('m').slice(0, 900) : oku('spam:mesaj', VARSAYILAN);
-  var ayarMod = q.get('mod') || oku('spam:mod', 'karisik');
+  mesajKutu.value = q.has('m') ? q.get('m').slice(0, 900) : VARSAYILAN;
+  var ayarMod = q.get('mod') || ACILIS_MOD;
   var ayar = {
     mesajlar: [],
-    hiz: sinirla(parseInt(q.get('hiz') || oku('spam:hiz', '8'), 10) || 8, 1, 10),
-    mod: MOD_AD.indexOf(ayarMod) >= 0 ? ayarMod : 'karisik',
+    hiz: sinirla(parseInt(q.get('hiz') || String(ACILIS_HIZ), 10) || ACILIS_HIZ, 1, 10),
+    mod: MOD_AD.indexOf(ayarMod) >= 0 ? ayarMod : ACILIS_MOD,
     iz: oku('spam:iz', '0') === '1',
     sarsinti: !azHareket && oku('spam:sarsinti', '1') === '1'
   };
@@ -742,14 +744,14 @@ body.surukle::after{content:"Bırak, fotoğraflar eklensin";position:fixed;inset
     var o = el('option', null, (i + 1) + ' · ' + m[1]); o.value = m[0]; modSelect.appendChild(o);
   });
   function modSec(m) {
-    ayar.mod = m; yaz('spam:mod', m);
+    ayar.mod = m;
     document.querySelectorAll('[data-mod]').forEach(function (b) { dugmeBas(b, b.getAttribute('data-mod') === m); });
     modSelect.value = m;
   }
   modSelect.addEventListener('change', function () { modSec(modSelect.value); });
 
   function hizSec(h) {
-    ayar.hiz = sinirla(h, 1, 10); yaz('spam:hiz', String(ayar.hiz));
+    ayar.hiz = sinirla(h, 1, 10);
     hizInput.value = ayar.hiz;
     hizCikti.textContent = hizAd(ayar.hiz);
     hizInput.setAttribute('aria-valuetext', hizAd(ayar.hiz) + ', saniyede ' + HIZ[ayar.hiz]);
@@ -780,15 +782,17 @@ body.surukle::after{content:"Bırak, fotoğraflar eklensin";position:fixed;inset
   $('gizle').addEventListener('click', function () { aracGoster(false, true); });
   goster.addEventListener('click', function () { aracGoster(true, true); });
 
-  function gosteriBaslat() {
-    ayar.mesajlar = mesajlarCoz(mesajKutu.value); harfleriKur(); yaz('spam:mesaj', mesajKutu.value);
+  function gosteriBaslat(acilis) {
+    ayar.mesajlar = mesajlarCoz(mesajKutu.value); harfleriKur();
     gosteri = true; giris.hidden = true;
     aracGoster(!aracGizli);
     if (duraklat) duraklatDegis(false);
     if (!azHareket) patlat(W / 2, H / 2, 20 + ayar.hiz * 4);
     calistir();
     if (azHareket && !calisiyor) cizHepsi();
-    (aracGizli ? goster : durBtn).focus({ preventScroll: true });
+    /* Sayfa açılışında odak çalınmaz; nasıl durdurulacağı kısa bir notla söylenir */
+    if (acilis === true) tost(DOKUNMA ? 'Durdurmak için ❚❚ · düzenlemek için ✎' : 'Durdurmak için boşluk · düzenlemek için E');
+    else (aracGizli ? goster : durBtn).focus({ preventScroll: true });
   }
   function duzenle() {
     gosteri = false; giris.hidden = false; aracGoster(!aracGizli); document.title = ASIL;
@@ -799,7 +803,7 @@ body.surukle::after{content:"Bırak, fotoğraflar eklensin";position:fixed;inset
   $('duzenle').addEventListener('click', duzenle);
   mesajKutu.addEventListener('keydown', function (e) { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); gosteriBaslat(); } });
   mesajKutu.addEventListener('input', geciktir(function () {
-    ayar.mesajlar = mesajlarCoz(mesajKutu.value); harfleriKur(); yaz('spam:mesaj', mesajKutu.value);
+    ayar.mesajlar = mesajlarCoz(mesajKutu.value); harfleriKur();
   }, 250));
 
   izBtn.addEventListener('click', function () { ayar.iz = !ayar.iz; yaz('spam:iz', ayar.iz ? '1' : '0'); dugmeBas(izBtn, ayar.iz); });
@@ -1022,6 +1026,7 @@ body.surukle::after{content:"Bırak, fotoğraflar eklensin";position:fixed;inset
     ? 'Gösteride: dokun, patlasın · parmağını basılı tutup gezdir, hortum gibi püskürtsün · alttaki çubuktan hız ve mod.'
     : 'Kısayollar: boşluk duraklat · 1–8 mod · ↑↓ hız · Enter patlat · C temizle · F tam ekran · H araçlar · E düzenle · tıkla ya da basılı tut: patlat. Ctrl+Enter ile mesaj kutusundan başlat.';
   if (azHareket) { $('az-not').hidden = false; kok.classList.add('motion-paused'); }
+  else giris.hidden = true; /* gösteri doğrudan açılacak; düzenleme kartı yazı tipleri yüklenirken bir an görünmesin */
   boyutla();
   vtAc().then(fotolariYukle);
 
@@ -1032,7 +1037,7 @@ body.surukle::after{content:"Bırak, fotoğraflar eklensin";position:fixed;inset
     if (document.fonts && document.fonts.load) Promise.all([document.fonts.load('900 64px "Archivo"'), document.fonts.load('500 14px "JetBrains Mono"')]).then(bitti, bitti);
     else bitti();
   });
-  hazir.then(function () { onbellek.clear(); if (azHareket) statikSahne(); else calistir(); });
+  hazir.then(function () { onbellek.clear(); if (azHareket) statikSahne(); else gosteriBaslat(true); });
 
   window.spamDurum = function () {
     return { ekranda: liste.length, toplam: toplam, max: MAX, fps: Math.round(fps), foto: fotolar.length, mod: ayar.mod, hiz: ayar.hiz, gosteri: gosteri, calisiyor: calisiyor, onbellek: onbellek.size };
