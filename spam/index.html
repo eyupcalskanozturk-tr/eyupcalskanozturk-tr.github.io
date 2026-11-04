@@ -60,6 +60,7 @@ textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(2
 .kucukler img{width:56px;height:56px;object-fit:cover;border-radius:12px;border:1px solid var(--line-2);display:block}
 .kucukler button{position:absolute;top:-8px;right:-8px;width:26px;height:26px;border-radius:50%;border:1px solid var(--line-2);background:#151821;color:var(--ink);font:700 15px/1 var(--f-head);cursor:pointer;display:grid;place-items:center;padding:0}
 .kucukler button:hover{border-color:var(--gold);color:var(--gold)}
+.kucukler li.gomulu img{border:2px solid var(--gold);box-shadow:0 0 14px -4px rgba(230,180,67,.8)}
 .ipucu{margin:8px 0 0;font-size:13px;color:var(--dim)}
 .secim{display:flex;flex-wrap:wrap;gap:6px}
 .chip{font:500 13px var(--f-mono);padding:6px 12px;min-height:36px;border-radius:999px;border:1px solid var(--line-2);background:rgba(255,255,255,.03);color:var(--soft);cursor:pointer}
@@ -130,7 +131,7 @@ body.surukle::after{content:"Bırak, fotoğraflar eklensin";position:fixed;inset
       </div>
       <input type="file" id="foto-sec" class="gorunmez" accept="image/*" multiple tabindex="-1" aria-hidden="true">
       <ul class="kucukler" id="kucukler"></ul>
-      <p class="ipucu">Sürükleyip bırakabilir ya da yapıştırabilirsin. Fotoğraflar bu cihazdan çıkmaz. Fotoğraf yoksa emojiler uçar.</p>
+      <p class="ipucu">Sürükleyip bırakabilir ya da yapıştırabilirsin. Eklediğin fotoğraflar bu cihazdan çıkmaz. Altın çerçeveli olan sitenin sabit fotoğrafı; herkes onu görür.</p>
     </div>
 
     <fieldset class="alan">
@@ -200,6 +201,8 @@ body.surukle::after{content:"Bırak, fotoğraflar eklensin";position:fixed;inset
   var F_MONO = '"JetBrains Mono", ui-monospace, Consolas, monospace';
   var F_EMOJI = '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif';
   var FOTO_MAX = 30;
+  /* Sitenin içine gömülü fotoğraflar: siteyi açan herkes görür. Dosyalar spam/gomulu/ klasöründe. */
+  var GOMULU = ['gomulu/baskan.jpg'];
 
   function $(id) { return document.getElementById(id); }
   function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
@@ -885,19 +888,21 @@ body.surukle::after{content:"Bırak, fotoğraflar eklensin";position:fixed;inset
   function vtEkle(b) { return b ? vtIs('readwrite', function (st) { return st.add({ blob: b, t: Date.now() }); }) : Promise.resolve(null); }
   function vtSil(id) { vtIs('readwrite', function (st) { return st.delete(id); }); }
 
-  function kucult(blob) {
+  /* Blob ya da sitedeki bir görsel yolu alır; en uzun kenarı en çok 480 piksel olan bir tuval döndürür */
+  function kucult(kaynak) {
     return new Promise(function (ok, red) {
-      var url = URL.createObjectURL(blob), img = new Image();
+      var blobMu = typeof kaynak !== 'string', url = blobMu ? URL.createObjectURL(kaynak) : kaynak, img = new Image();
+      function birak() { if (blobMu) URL.revokeObjectURL(url); }
       img.onload = function () {
         try {
           var iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height, s = Math.min(1, 480 / Math.max(iw, ih, 1));
           var c = document.createElement('canvas');
           c.width = Math.max(1, Math.round(iw * s)); c.height = Math.max(1, Math.round(ih * s));
           c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
-          URL.revokeObjectURL(url); ok(c);
-        } catch (e) { URL.revokeObjectURL(url); red(e); }
+          birak(); ok(c);
+        } catch (e) { birak(); red(e); }
       };
-      img.onerror = function () { URL.revokeObjectURL(url); red(new Error('görsel açılamadı')); };
+      img.onerror = function () { birak(); red(new Error('görsel açılamadı')); };
       img.src = url;
     });
   }
@@ -921,7 +926,8 @@ body.surukle::after{content:"Bırak, fotoğraflar eklensin";position:fixed;inset
     ul.textContent = '';
     fotolar.forEach(function (f, i) {
       var li = el('li'), img = el('img'), b = el('button', null, '×');
-      img.src = f.url; img.alt = 'Fotoğraf ' + (i + 1); img.width = 56; img.height = 56; img.decoding = 'async';
+      img.src = f.url; img.alt = (f.gomulu ? 'Sabit fotoğraf ' : 'Fotoğraf ') + (i + 1); img.width = 56; img.height = 56; img.decoding = 'async';
+      if (f.gomulu) { li.className = 'gomulu'; li.title = 'Sitenin sabit fotoğrafı: kaldırırsan yalnız bu açılış için kalkar'; }
       b.type = 'button'; b.setAttribute('aria-label', 'Fotoğraf ' + (i + 1) + ' kaldır');
       b.addEventListener('click', function () { fotoSil(f.id); });
       li.appendChild(img); li.appendChild(b); ul.appendChild(li);
@@ -941,7 +947,11 @@ body.surukle::after{content:"Bırak, fotoğraflar eklensin";position:fixed;inset
       }).catch(function () { return false; });
     })).then(function (s) {
       var ok = s.filter(Boolean).length;
-      while (fotolar.length > FOTO_MAX) fotoSil(fotolar[0].id, true);
+      while (fotolar.length > FOTO_MAX) {
+        var eski = fotolar.filter(function (x) { return !x.gomulu; })[0];
+        if (!eski) break;
+        fotoSil(eski.id, true);
+      }
       kucukleriCiz();
       tost(ok ? ok + ' fotoğraf eklendi' + (ok < s.length ? ' · ' + (s.length - ok) + ' tanesi açılamadı' : '') : 'Fotoğraf açılamadı');
     });
@@ -954,6 +964,15 @@ body.surukle::after{content:"Bırak, fotoğraflar eklensin";position:fixed;inset
       }));
     }).then(function (s) {
       s.forEach(function (x) { if (x) fotoKaydet(x.id, x.c, x.b); });
+      kucukleriCiz();
+    });
+  }
+  /* Gömülü fotoğraflar her açılışta siteden yüklenir; IndexedDB'ye yazılmaz */
+  function gomuluYukle() {
+    return Promise.all(GOMULU.map(function (yol, i) {
+      return kucult(yol).then(function (c) { return { id: 'gomulu-' + i, kaynak: c, url: yol, gomulu: true }; }, function () { return null; });
+    })).then(function (s) {
+      fotolar = s.filter(Boolean).concat(fotolar.filter(function (f) { return !f.gomulu; }));
       kucukleriCiz();
     });
   }
@@ -1029,6 +1048,7 @@ body.surukle::after{content:"Bırak, fotoğraflar eklensin";position:fixed;inset
   else giris.hidden = true; /* gösteri doğrudan açılacak; düzenleme kartı yazı tipleri yüklenirken bir an görünmesin */
   boyutla();
   vtAc().then(fotolariYukle);
+  var gomuluHazir = gomuluYukle();
 
   var hazir = new Promise(function (ok) {
     var b = false;
@@ -1037,10 +1057,14 @@ body.surukle::after{content:"Bırak, fotoğraflar eklensin";position:fixed;inset
     if (document.fonts && document.fonts.load) Promise.all([document.fonts.load('900 64px "Archivo"'), document.fonts.load('500 14px "JetBrains Mono"')]).then(bitti, bitti);
     else bitti();
   });
-  hazir.then(function () { onbellek.clear(); if (azHareket) statikSahne(); else gosteriBaslat(true); });
+  /* Açılış: yazı tipleri ve gömülü fotoğraflar hazır olunca, en geç 2,5 saniyede */
+  Promise.race([Promise.all([hazir, gomuluHazir]), new Promise(function (ok) { setTimeout(ok, 2500); })]).then(function () {
+    onbellek.clear();
+    if (azHareket) statikSahne(); else gosteriBaslat(true);
+  });
 
   window.spamDurum = function () {
-    return { ekranda: liste.length, toplam: toplam, max: MAX, fps: Math.round(fps), foto: fotolar.length, mod: ayar.mod, hiz: ayar.hiz, gosteri: gosteri, calisiyor: calisiyor, onbellek: onbellek.size };
+    return { ekranda: liste.length, toplam: toplam, max: MAX, fps: Math.round(fps), foto: fotolar.length, gomulu: fotolar.filter(function (f) { return f.gomulu; }).length, ekrandaFoto: liste.filter(function (s) { return s.g.fid != null; }).length, mod: ayar.mod, hiz: ayar.hiz, gosteri: gosteri, calisiyor: calisiyor, onbellek: onbellek.size };
   };
 })();
 </script>
