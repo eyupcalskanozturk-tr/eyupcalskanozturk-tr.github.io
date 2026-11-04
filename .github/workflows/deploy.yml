@@ -51,6 +51,8 @@ jobs:
           if [ -d cpp-temelleri ]; then cp -R cpp-temelleri _site/; fi
           # Görsel Programlama 2 · PhoneBookApp (ASP.NET Core MVC) vize provası
           if [ -d rehber-vize ]; then cp -R rehber-vize _site/; fi
+          # 5 Kasım sınav günü planı (NTP-1, Görsel Programlama 2, İnternet Programcılığı II)
+          if [ -d sinav-gunu ]; then cp -R sinav-gunu _site/; fi
       - name: Dosyaları yükle
         uses: actions/upload-pages-artifact@v4
         with:

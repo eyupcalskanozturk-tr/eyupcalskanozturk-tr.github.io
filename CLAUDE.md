@@ -1,6 +1,6 @@
 # Eyüp'ün portfolyosu — proje hafızası
 
-Eyüp Çalışkanöztürk'ün kişisel sitesi: https://eyupcalskanozturk-tr.github.io (GitHub Pages). Türkçe; derleme adımı yok, düz HTML/CSS/JavaScript (`index.html`, `css/style.css`, `js/main.js`, `assets/`). Alt sayfalar: `chen-atolyesi/`, `laravel-vize/`, `python-vize/`, `ntp-vize/`, `mesleki-ingilizce/`, `kalite-kontrol/`, `programlama-temelleri/`, `cpp-temelleri/`, `PROJE/`.
+Eyüp Çalışkanöztürk'ün kişisel sitesi: https://eyupcalskanozturk-tr.github.io (GitHub Pages). Türkçe; derleme adımı yok, düz HTML/CSS/JavaScript (`index.html`, `css/style.css`, `js/main.js`, `assets/`). Alt sayfalar: `chen-atolyesi/`, `laravel-vize/`, `python-vize/`, `ntp-vize/`, `mesleki-ingilizce/`, `kalite-kontrol/`, `programlama-temelleri/`, `cpp-temelleri/`, `rehber-vize/`, `sinav-gunu/`, `PROJE/`.
 
 Kullanıcıya "Başkan" ya da Eyüp diye hitap et. Koyu tema, altın ve neon vurgular, glassmorphism ve terminal estetiğini sever.
 

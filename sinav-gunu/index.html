@@ -1,0 +1,888 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>5 Kasım Sınav Günü</title>
+<script src="/assets/istatistik.js" defer></script>
+<meta name="description" content="5 Kasım sınav günü planı: NTP-1 (Java) 09:00, Görsel Programlama 2 ve İnternet Programcılığı II 13:00 ve 14:00. Bu geceden yarın öğlene saat saat plan, her ders için baştan özet ve örnek kodlar.">
+<meta name="theme-color" content="#090b10">
+<link rel="canonical" href="https://eyupcalskanozturk-tr.github.io/sinav-gunu/">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{color-scheme:dark;--bg:#090b10;--panel:rgba(255,255,255,.035);--panel-2:rgba(255,255,255,.06);--line:rgba(255,255,255,.09);--line-2:rgba(255,255,255,.17);
+--ink:#eef1f6;--soft:#d2d8e2;--muted:#a3adbc;--dim:#7d8798;--gold:#e6b443;--gold-2:#f4d27e;--gold-soft:rgba(230,180,67,.12);--live:#4dff7c;--live-soft:rgba(77,255,124,.1);
+--ntp:#ff9f43;--gp2:#b58cff;--ip2:#ff6b6b;--code:#0c0f15;
+--f-head:"Archivo",system-ui,"Segoe UI",sans-serif;--f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:12px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-head);font-size:16px;line-height:1.6;
+  padding:0 max(16px,env(safe-area-inset-right,0px)) 64px max(16px,env(safe-area-inset-left,0px))}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(50rem 30rem at 85% -8%,rgba(230,180,67,.14),transparent 62%),radial-gradient(40rem 28rem at -10% 30%,rgba(77,255,124,.06),transparent 60%)}
+a{color:var(--gold-2);text-underline-offset:3px}a:hover{color:var(--gold)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
+code{font-family:var(--f-mono);font-size:.86em;background:var(--panel-2);border:1px solid var(--line);border-radius:5px;padding:.03em .35em;font-variant-ligatures:none}
+.skip{position:absolute;left:12px;top:-60px;background:var(--gold);color:#16110a;padding:8px 14px;border-radius:8px;font-weight:700;z-index:20}
+.skip:focus{top:12px}
+.sar{max-width:1120px;margin:0 auto}
+header{padding:26px 0 8px}
+.crumb{font-family:var(--f-mono);font-size:12.5px;color:var(--dim);display:flex;flex-wrap:wrap;gap:4px 10px}
+.crumb a{color:var(--muted);text-decoration:none}
+h1{font-weight:900;font-variation-settings:"wdth" 68;font-size:clamp(42px,8vw,92px);line-height:.9;margin:14px 0 0;letter-spacing:-.005em}
+h1 i{font-style:normal;color:var(--gold)}
+.lede{color:var(--soft);max-width:62ch;margin:14px 0 0;font-size:17px}
+.saat{font-family:var(--f-mono);color:var(--muted);font-size:13px;margin-top:10px;display:flex;align-items:center;gap:8px}
+.saat .led{width:8px;height:8px;border-radius:50%;background:var(--live);box-shadow:0 0 10px var(--live)}
+.sinavlar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:22px 0 10px}
+.sk{background:var(--panel);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;text-decoration:none;color:var(--ink);position:relative;overflow:hidden}
+.sk::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--renk)}
+.sk .zaman{font-family:var(--f-mono);font-size:30px;font-weight:500;color:var(--renk);line-height:1.1}
+.sk b{font-size:16px}
+.sk .kalan{font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+.sk.gecti{opacity:.55}
+.sk:hover{border-color:var(--line-2)}
+.sira-sec{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px;color:var(--muted);background:var(--gold-soft);border:1px solid rgba(230,180,67,.35);border-radius:12px;padding:10px 12px}
+.sira-sec b{color:var(--gold-2)}
+.chip{font:inherit;font-family:var(--f-mono);font-size:12.5px;padding:5px 11px;border-radius:999px;border:1px solid var(--line-2);background:transparent;color:var(--soft);cursor:pointer;min-height:32px}
+.chip[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#16110a;font-weight:600}
+.simdi{margin:18px 0;border:1px solid rgba(77,255,124,.35);background:var(--live-soft);border-radius:14px;padding:12px 16px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+.simdi .etk{font-family:var(--f-mono);font-size:11.5px;color:var(--live);border:1px solid var(--live);border-radius:999px;padding:1px 8px}
+.simdi b{font-size:17px}
+.simdi .kalan{font-family:var(--f-mono);font-size:13px;color:var(--soft)}
+.simdi a{margin-left:auto}
+nav.hizli{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 4px}
+nav.hizli a{font-family:var(--f-mono);font-size:12.5px;text-decoration:none;color:var(--soft);border:1px solid var(--line-2);border-radius:999px;padding:4px 12px}
+nav.hizli a:hover{border-color:var(--gold);color:var(--gold)}
+h2{font-weight:800;font-variation-settings:"wdth" 74;font-size:clamp(28px,4vw,44px);line-height:1;margin:10px 0 10px}
+h3{font-weight:750;font-variation-settings:"wdth" 86;font-size:20px;margin:28px 0 10px}
+section.plan,section.ders{margin-top:36px;padding-top:22px;border-top:1px solid var(--line)}
+.ust{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;margin:0}
+.ust .nokta{width:10px;height:10px;border-radius:3px;background:var(--renk)}
+.giris{color:var(--soft);max-width:72ch}
+[data-ders="ntp"]{--renk:var(--ntp)}[data-ders="gp2"]{--renk:var(--gp2)}[data-ders="ip2"]{--renk:var(--ip2)}
+.plan-bas{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:space-between}
+.plan-bas p{margin:0;color:var(--muted);font-size:14px}
+h3.gun{font-family:var(--f-mono);font-size:13px;font-weight:500;color:var(--gold);margin:22px 0 8px;letter-spacing:.02em}
+ol.akis{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.blok{display:grid;grid-template-columns:118px minmax(0,1fr);gap:4px 14px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;position:relative}
+.blok::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:3px;background:var(--renk,var(--line-2))}
+.blok .zm{font-family:var(--f-mono);font-size:13.5px;color:var(--soft);padding-top:2px}
+.blok .zm small{display:block;color:var(--dim);font-size:11.5px}
+.blok h4{margin:0;font-size:16.5px;font-weight:700;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.blok .tur{font-family:var(--f-mono);font-size:10.5px;font-weight:500;color:var(--dim);border:1px solid var(--line-2);border-radius:999px;padding:0 7px}
+.blok ul{margin:6px 0 0;padding-left:18px;color:var(--soft);font-size:14.5px;display:flex;flex-direction:column;gap:3px}
+.blok ul li small{font-family:var(--f-mono);color:var(--dim);font-size:11.5px;margin-right:6px}
+.blok .bitti{grid-column:2;justify-self:start;margin-top:6px;font:inherit;font-size:12.5px;display:inline-flex;gap:6px;align-items:center;background:none;border:1px solid var(--line-2);border-radius:999px;padding:3px 10px;color:var(--muted);cursor:pointer}
+.blok .bitti[aria-pressed="true"]{border-color:var(--live);color:var(--live)}
+.blok .bitti[aria-pressed="true"]::before{content:"✓"}
+.blok.t-mola,.blok.t-uyku{background:transparent;border-style:dashed}
+.blok.t-sinav{border-color:var(--renk);background:linear-gradient(90deg,rgba(255,255,255,.05),transparent)}
+.blok.t-uyku h4{color:var(--muted)}
+.blok.gecmis{opacity:.5}
+.blok.su{border-color:var(--live);box-shadow:0 0 0 1px var(--live),0 14px 40px -24px rgba(77,255,124,.6)}
+.blok.su .zm{color:var(--live)}
+.blok.yapildi h4{text-decoration:line-through;text-decoration-color:var(--dim)}
+.dortlu{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}
+.dortlu .kart{text-decoration:none;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:4px}
+.dortlu .kart b{font-family:var(--f-mono);color:var(--renk);font-size:22px;line-height:1}
+.dortlu .kart span{font-weight:700}
+.dortlu .kart small{color:var(--muted);font-size:13px;line-height:1.45}
+.dortlu .kart:hover{border-color:var(--renk)}
+ol.sira{list-style:none;counter-reset:s;margin:14px 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr));gap:8px}
+ol.sira li{counter-increment:s;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14px}
+ol.sira li::before{content:counter(s);font-family:var(--f-mono);color:var(--renk);font-size:12px;display:block}
+ol.sira li b{display:block}ol.sira li span{color:var(--muted);font-size:13px}
+.iki{display:grid;grid-template-columns:minmax(0,1fr);gap:4px 12px;align-items:start}
+.iki.tablolar{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+figure.kod{margin:10px 0;min-width:0}
+figure.kod figcaption{font-family:var(--f-mono);font-size:11.5px;color:var(--dim);margin-bottom:4px}
+pre{margin:0;background:var(--code);border:1px solid var(--line);border-left:3px solid var(--renk,var(--gold));border-radius:10px;padding:12px 14px;overflow-x:auto;font-family:var(--f-mono);font-size:13px;line-height:1.55;color:#d6dde8;font-variant-ligatures:none;tab-size:4}
+pre code{background:none;border:0;padding:0;font-size:inherit;display:block;min-width:max-content}
+.k-kw{color:#7cc4ff}.k-st{color:#f4d27e}.k-cm{color:#6b7a8f;font-style:italic}.k-nu{color:#b6e3a1}.k-at{color:#ff9fd1}.k-dr{color:#c9a0ff}
+.ders ul{color:var(--soft);padding-left:20px;display:flex;flex-direction:column;gap:4px;max-width:86ch}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;margin:10px 0}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:11.5px;font-weight:500;color:var(--dim);background:var(--panel)}
+tr:last-child td{border-bottom:0}
+table.liste td:first-child{font-weight:600;color:var(--ink)}
+table.liste td:last-child{font-family:var(--f-mono);white-space:nowrap}
+.ezber{background:var(--gold-soft);border:1px solid rgba(230,180,67,.35);border-radius:12px;padding:10px 14px;color:var(--soft);margin:12px 0;max-width:86ch}
+details.soru{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:8px 0;max-width:90ch}
+details.soru summary{cursor:pointer;padding:10px 14px;font-weight:600;list-style:none}
+details.soru summary::-webkit-details-marker{display:none}
+details.soru summary::before{content:"+";font-family:var(--f-mono);color:var(--gold);margin-right:10px}
+details.soru[open] summary::before{content:"−"}
+details.soru .cevap{padding:0 14px 12px;color:var(--soft)}
+.dipnot{color:var(--muted);font-size:14px;margin-top:16px}
+.sonbakis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
+.sonbakis div{background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--renk);border-radius:12px;padding:12px 14px}
+.sonbakis h3{margin:0 0 6px;font-size:15px}
+.sonbakis ol{margin:0;padding-left:18px;color:var(--soft);font-size:14px;display:flex;flex-direction:column;gap:4px}
+footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:var(--dim);font-size:13px}
+@media (max-width:860px){.sinavlar,.sonbakis{grid-template-columns:minmax(0,1fr)}.dortlu{grid-template-columns:repeat(2,minmax(0,1fr))}.sinavlar{gap:8px}.sk{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;align-items:center;padding:10px 14px}.sk .zaman{grid-row:span 2;font-size:26px}.sk b{font-size:15px;line-height:1.3}.blok{grid-template-columns:minmax(0,1fr)}.blok .bitti{grid-column:1}.simdi a{margin-left:0}}
+@media (max-width:520px){pre{font-size:12px}.sk .zaman{font-size:26px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<a class="skip" href="#plan">Plana geç</a>
+<div class="sar">
+<header>
+<p class="crumb"><a href="../">eyupcalskanozturk-tr.github.io</a><span aria-hidden="true">/</span><span>sinav-gunu</span></p>
+<h1>5 Kasım · <i>3 sınav</i></h1>
+<p class="lede">Bu geceden yarın 14:00'e kadar saat saat plan. Üç ders, her biri baştan ve dersin kendi örnekleriyle. Bloğu bitirince işaretle; şu anki blok yeşil yanar.</p>
+<p class="saat"><span class="led" aria-hidden="true"></span><span id="saat">Şu an …</span></p>
+</header>
+<main>
+<div class="sinavlar" id="sinavlar" role="group" aria-label="Sınavlar ve kalan süre"></div>
+<div class="sira-sec" role="group" aria-label="13:00 ve 14:00 sınavlarının sırası">
+<span><b>13:00'teki sınav hangisi?</b> Plan buna göre kurulur.</span>
+<button type="button" class="chip" data-sira="gp2-ilk" aria-pressed="true">13:00 Görsel Prog. 2 · 14:00 IP2</button>
+<button type="button" class="chip" data-sira="ip2-ilk" aria-pressed="false">13:00 IP2 · 14:00 Görsel Prog. 2</button>
+</div>
+<div class="simdi" id="simdi" hidden><span class="etk" id="simdi-etk">şimdi</span><b id="simdi-ad" aria-live="polite"></b><span class="kalan" id="simdi-kalan"></span><a id="simdi-git" href="#akis">plana git →</a></div>
+<nav class="hizli" aria-label="Bölümler"><a href="#plan">Plan</a><a href="#ntp">NTP</a><a href="#gp2">Görsel Prog. 2</a><a href="#ip2">IP2 · Laravel</a><a href="#son">Son bakış</a></nav>
+
+<section class="plan" id="plan" aria-labelledby="plan-b">
+<div class="plan-bas"><h2 id="plan-b">Plan</h2><button type="button" class="chip" id="yeniden">Gece planını şu andan başlat</button></div>
+<p id="plan-basladi" class="giris"></p>
+<div id="akis"><noscript><p class="giris">Saatli plan için JavaScript gerekir; aşağıdaki ders özetleri JavaScript olmadan da okunur.</p></noscript></div>
+</section>
+
+<section class="ders" id="ntp" data-ders="ntp" aria-labelledby="ntp-b">
+<p class="ust"><span class="nokta"></span>09:00 · NTP-1 · Java · <a href="../ntp-vize/">tam çalışma sayfası →</a></p>
+<h2 id="ntp-b">NTP-1: hocanın dört sorusu</h2>
+<p class="giris">Vize 7. haftaya kadar. Hoca dört soru soracağını ve konularını söyledi. Bu sayfadaki sıra ve örnekler <a href="../ntp-vize/">NTP-1 Vize Çalışma</a> sayfasından; oradaki kodların çıktıları Java ile gerçekten çalıştırılarak üretildi.</p>
+<div class="dortlu">
+  <a class="kart" href="../ntp-vize/#s1"><b>1</b><span>Java'nın temelleri</span><small>JDK, JRE, JVM · türler · Scanner · printf · if · switch · döngüler · diziler · metotlar</small></a>
+  <a class="kart" href="../ntp-vize/#s2"><b>2</b><span>Güncel konu (6–7. hafta)</span><small>sınıf ve nesne · new · nesne dizisi · kurucu · this · örnek metodu</small></a>
+  <a class="kart" href="../ntp-vize/#s3"><b>3</b><span>İstisnalar</span><small>throw ile fırlatma · try-catch-finally · throws · kendi istisna sınıfın</small></a>
+  <a class="kart" href="../ntp-vize/#s4"><b>4</b><span>Kapsamlı örnek</span><small>Depo menüsü: paralel diziler ve sınıflı, istisnalı hâli</small></a>
+</div>
+<h3>Örneklerle kalıplar</h3>
+<div class="iki">
+<figure class="kod"><figcaption>2. soru · sınıf, kurucu, this, örnek metodu</figcaption><pre data-dil="java"><code>public class Urun {
+    private String ad;          // alan
+    private int stok;
+    Urun(String ad, int stok) { // kurucu: dönüş türü yok
+        if (stok &lt; 0) {
+            throw new IllegalArgumentException("Stok negatif");
+        }
+        this.ad = ad;           // this.alan = parametre
+        this.stok = stok;
+    }
+    boolean kritikMi() {        // örnek metodu
+        return stok &lt;= 5;
+    }
+    int getStok() {             // getter
+        return stok;
+    }
+}</code></pre></figure>
+<figure class="kod"><figcaption>3. soru · istisna fırlat, yakala (tam puanlık cevap kalıbı)</figcaption><pre data-dil="java"><code>static void stokDus(int adet, int stok) {
+    if (adet &gt; stok) {
+        throw new IllegalArgumentException("Yetersiz stok: " + stok + " var");
+    }
+    System.out.println("Kalan: " + (stok - adet));
+}
+public static void main(String[] args) {
+    try {
+        stokDus(2, 5);     // Kalan: 3
+        stokDus(9, 5);     // fırlatır
+    } catch (IllegalArgumentException e) {
+        System.out.println("Hata: " + e.getMessage());   // Hata: Yetersiz stok: 5 var
+    } finally {
+        System.out.println("her durumda");
+    }
+}</code></pre></figure>
+<figure class="kod"><figcaption>2. soru · nesne dizisi</figcaption><pre data-dil="java"><code>Urun[] katalog = new Urun[5];   // 5 null hücre
+int sayi = 0;
+katalog[sayi] = new Urun("Fare", 5);
+sayi++;
+for (int i = 0; i &lt; sayi; i++) {
+    if (katalog[i] != null &amp;&amp; katalog[i].kritikMi()) {
+        System.out.println("kritik");
+    }
+}</code></pre></figure>
+<figure class="kod"><figcaption>1. soru · Scanner ve printf</figcaption><pre data-dil="java"><code>import java.util.Scanner;
+Scanner sc = new Scanner(System.in);
+int n = sc.nextInt();
+sc.nextLine();                   // Enter'ı temizle
+String ad = sc.nextLine();
+int m = Integer.parseInt(sc.nextLine()); // ya da böyle
+System.out.printf("%-10s%5d%10.2f%n", ad, n, 7.5);
+// %s metin · %d tam · %.2f ondalık · %n satır sonu
+// %5d sağa yaslı · %-5d sola · %05d sıfırla doldur</code></pre></figure>
+</div>
+<figure class="kod"><figcaption>3. soru · throws</figcaption><pre data-dil="java"><code>// checked istisna: imzada bildir
+static void oku() throws Exception {
+    throw new Exception("dosya yok");
+}</code></pre></figure>
+<h3>Tek cümleyle</h3>
+<div class="tbl"><table class=""><thead><tr><th>Kavram</th><th>Tek cümle</th></tr></thead><tbody><tr><td>JDK ⊃ JRE ⊃ JVM</td><td>JDK geliştirme kiti (javac + JRE), JRE çalışma ortamı (kütüphane + JVM), JVM bytecode'u çalıştıran sanal makine.</td></tr><tr><td>bytecode</td><td>javac'ın ürettiği, platformdan bağımsız .class kodu; JVM olan her yerde çalışır.</td></tr><tr><td>sınıf / nesne</td><td>Sınıf alanları ve metotları tanımlayan kalıp; nesne ondan new ile oluşan, kendi değerlerini taşıyan örnek (instance).</td></tr><tr><td>kurucu</td><td>new sırasında çalışan, adı sınıfla aynı, dönüş türü olmayan bildirim; nesnenin başlangıç durumunu kurar.</td></tr><tr><td>new'in üç işi</td><td>Yer ayır + varsayılan değerler → uyan kurucuyu çalıştır → referansı döndür.</td></tr><tr><td>this</td><td>Üzerinde çalışılan nesne; <code>this.ad</code> alan, <code>ad</code> parametre; <code>this(...)</code> başka kurucu.</td></tr><tr><td>static</td><td>Sınıfa ait; nesnesiz kullanılır, bütün nesneler paylaşır.</td></tr><tr><td>referans / null</td><td>Değişken nesnenin yerini tutar; null hiçbir nesneyi göstermez, alanına ulaşmak NullPointerException.</td></tr><tr><td>istisna</td><td>Çalışırken akışı bozan durum; bir sınıfın nesnesi. throw fırlatır, try-catch yakalar, finally her durumda çalışır.</td></tr><tr><td>throw / throws</td><td>throw gövdede fırlatır; throws imzada bildirir.</td></tr><tr><td>checked / unchecked</td><td>Checked (Exception, IOException) yakalanmalı ya da bildirilmeli; unchecked (RuntimeException ve alt türleri) zorunlu değil.</td></tr><tr><td>== / equals</td><td>== aynı nesne mi; equals içerik aynı mı. Metinde equals.</td></tr><tr><td>aşırı yükleme</td><td>Aynı ad, farklı parametre listesi; Java argümana göre seçer.</td></tr></tbody></table></div>
+<h3>Sınavda böyle sorulabilir</h3>
+<details class="soru"><summary>JDK, JRE ve JVM nedir, aralarındaki ilişki ne?</summary><div class="cevap"><p>JVM .class dosyasındaki bytecode'u çalıştıran sanal makinedir. JRE = standart kütüphaneler + JVM; hazır programı çalıştırmaya yeter. JDK = javac derleyicisi ve geliştirme araçları + JRE; kod yazmak için gerekir. İç içedirler: JDK ⊃ JRE ⊃ JVM.</p></div></details>
+<details class="soru"><summary>Kurucu nedir, özellikleri neler? new işleci hangi üç işi yapar?</summary><div class="cevap"><p>Kurucu, nesne new ile oluşturulurken çalışan ve başlangıç durumunu kuran bildirimdir. Adı sınıfın adıyla aynıdır, dönüş türü yazılmaz, parametre alabilir, aşırı yüklenebilir. Hiç yazılmazsa Java parametresiz varsayılan kurucu ekler. new: 1) yer ayırıp alanlara varsayılan değer verir, 2) uyan kurucuyu çalıştırır, 3) referansı döndürür.</p></div></details>
+<details class="soru"><summary>this ne işe yarar? Kurucuda this yazılmazsa ne olur?</summary><div class="cevap"><p>this üzerinde çalışılan nesnenin kendisidir. Parametre ile alan aynı addaysa <code>this.kod</code> alanı, <code>kod</code> parametreyi belirtir. <code>kod = kod;</code> yazılırsa parametre kendine atanır, alan varsayılan değerde (null) kalır; kod derlenir ama nesne boş kalır.</p></div></details>
+<details class="soru"><summary>Java'da istisna nasıl fırlatılır? Örnek metot ve onu yakalayan kod.</summary><div class="cevap"><p>throw anahtar kelimesiyle, new ile oluşturulan bir istisna nesnesi fırlatılır. Fırlatma anında metodun kalanı çalışmaz; istisna çağıran yere geçer ve orada try-catch ile yakalanır. Tam puan: tanım + <code>throw new …Exception("mesaj")</code> içeren metot + onu çağırıp yakalayan try-catch + çıktı. Kodu yukarıdaki 3. soru kutusunda.</p></div></details>
+<details class="soru"><summary>throw ile throws arasındaki fark nedir?</summary><div class="cevap"><p>throw metodun gövdesinde bir istisna nesnesini fırlatır. throws metodun imzasında, bu metodun hangi (checked) istisnayı fırlatabileceğini bildirir; çağıran yakalamak ya da kendisi de bildirmek zorundadır.</p></div></details>
+<p class="dipnot">Daha fazlası: <a href="../ntp-vize/#derlenir">Derlenir mi?</a> · <a href="../ntp-vize/#test">Test</a> · <a href="../ntp-vize/#prova">Sınav provası (A ve B seti)</a> · <a href="../ntp-vize/pratik/">Java Pratik (boşluk doldurma)</a></p>
+</section>
+
+
+<section class="ders" id="gp2" data-ders="gp2" aria-labelledby="gp2-b">
+<p class="ust"><span class="nokta"></span><span data-saat="gp2">13:00</span> · Görsel Programlama 2 · ASP.NET Core MVC · <a href="../rehber-vize/">Rehber Vize Provası →</a></p>
+<h2 id="gp2-b">Görsel Programlama 2: Telefon Rehberi (PhoneBookApp)</h2>
+<p class="giris">Ders tek bir proje üzerinden ilerliyor: kişileri ve ekipleri tutan telefon rehberi. Projenin yapım sırası sınavın da sırasıdır. Kodlar <a href="../rehber-vize/">Rehber Vize Provası</a> sayfasındaki proje kodundan; orada her satırın açıklaması ve boşluk doldurma alıştırmaları var.</p>
+<ol class="sira">
+  <li><b>Model</b><span>bir kişide ne var</span></li>
+  <li><b>DbContext</b><span>veritabanıyla konuşan tercüman</span></li>
+  <li><b>Program.cs</b><span>tercümanı ve adresi tanıt</span></li>
+  <li><b>Komutlar</b><span>paket kur, veritabanını oluştur</span></li>
+  <li><b>Controller</b><span>listele, ekle, düzenle, sil</span></li>
+  <li><b>View</b><span>bu işlerin ekranları</span></li>
+  <li><b>Login ve roller</b><span>kim neyi yapabilir</span></li>
+</ol>
+<h3>1 · Model</h3>
+<figure class="kod"><figcaption>Models/Contacts.cs</figcaption><pre data-dil="cs"><code>using System.ComponentModel.DataAnnotations;
+
+namespace PhoneBookApp.Models
+{
+    public class Contacts
+    {
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "Ad soyad zorunludur")]
+        [StringLength(100)]
+        public string Name { get; set; } = string.Empty;
+
+        [Phone(ErrorMessage = "Geçerli bir telefon numarası giriniz")]
+        [Required]
+        public string PhoneNumber { get; set; } = string.Empty;
+
+        [EmailAddress(ErrorMessage = "Geçerli bir e-posta giriniz")]
+        public string? Email { get; set; }
+
+        public int? TeamId { get; set; }
+        public Team? Team { get; set; }
+    }
+}</code></pre></figure>
+<ul><li>Adı <code>Id</code> olan property'yi EF Core otomatik <b>Primary Key</b> yapar. <code>TeamId</code> başka tablonun Id'sini tutan <b>Foreign Key</b>'dir.</li><li><code>Team? Team</code> sütun değil <b>navigation property</b>: kodda <code>item.Team.Name</code> yazmayı sağlar. <code>?</code> alanın boş olabileceğini söyler.</li><li>Team içinde <code>ICollection&lt;Contacts&gt;</code>, Contacts içinde tek Team: <b>bire-çok</b> ilişki. Sınıf tabloya, her property sütuna dönüşür.</li><li>Doğrulama attribute'ları için en üstte <code>using System.ComponentModel.DataAnnotations;</code></li></ul>
+<h3>2 · DbContext ve 3 · Program.cs</h3>
+<div class="iki">
+<figure class="kod"><figcaption>Data/ApplicationDbContext.cs</figcaption><pre data-dil="cs"><code>using Microsoft.EntityFrameworkCore;
+using PhoneBookApp.Models;
+
+namespace PhoneBookApp.Data
+{
+    public class ApplicationDbContext : DbContext
+    {
+        public ApplicationDbContext(DbContextOptions&lt;ApplicationDbContext&gt; options)
+            : base(options) { }
+
+        public DbSet&lt;Contacts&gt; Contacts { get; set; }
+        public DbSet&lt;Team&gt; Teams { get; set; }
+    }
+}</code></pre></figure>
+<figure class="kod"><figcaption>Program.cs</figcaption><pre data-dil="cs"><code>var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllersWithViews();
+
+// DbContext ekleme
+builder.Services.AddDbContext&lt;ApplicationDbContext&gt;(options =&gt;
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+var app = builder.Build();
+
+app.UseStaticFiles();
+app.UseRouting();
+app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Contacts}/{action=Index}/{id?}");
+
+app.Run();</code></pre></figure>
+</div>
+<ul><li><code>: DbContext</code> miras almak demek; her model için bir <code>DbSet</code> satırı; <code>options</code> <code>: base(options)</code> ile üst sınıfa gider.</li><li>Bağlantı adresi <code>appsettings.json</code> içinde <code>ConnectionStrings:DefaultConnection</code>; adı değişirse <code>GetConnectionString("...")</code> da değişir.</li><li>Site adresi tek başına açılırsa <code>/Contacts/Index</code> çalışır; <code>/Contacts/Edit/5</code> adresindeki 5 <code>{id?}</code>'ye gider.</li><li><code>AddControllersWithViews()</code> MVC'yi açar; <code>UseStaticFiles()</code> wwwroot'taki css/js'i sunar; en son <code>app.Run()</code>.</li></ul>
+<h3>4 · Komutlar (Paket Yöneticisi Konsolu)</h3>
+<figure class="kod"><figcaption>Araçlar → NuGet Paket Yöneticisi → Paket Yöneticisi Konsolu</figcaption><pre data-dil="ps"><code># EF Core paketlerini kur
+Install-Package Microsoft.EntityFrameworkCore.SqlServer
+Install-Package Microsoft.EntityFrameworkCore.Tools
+
+# Modelden plan çıkar, sonra veritabanına uygula
+Add-Migration InitialCreate
+Update-Database</code></pre></figure>
+<ul><li>Modele alan ekledin: önce <code>Add-Migration</code>, sonra <code>Update-Database</code>. Dosyalar <b>Migrations</b> klasörüne yazılır.</li><li><code>Remove-Migration</code> uygulanmamış son migration'ı siler; <code>Drop-Database</code> veritabanını tamamen siler.</li><li>"There is already an object named 'Contacts'" hatası: aynı adlı tablo var; çözüm <code>Drop-Database</code>, sonra <code>Update-Database</code>.</li></ul>
+<h3>5 · Controller</h3>
+<div class="iki">
+<figure class="kod"><figcaption>Controllers/ContactsController.cs</figcaption><pre data-dil="cs"><code>public class ContactsController : Controller
+{
+    private readonly ApplicationDbContext _db;
+    public ContactsController(ApplicationDbContext db) =&gt; _db = db;
+
+    // Hem Admin hem User görebilir
+    [Authorize]
+    public async Task&lt;IActionResult&gt; Index()
+    {
+        var list = await _db.Contacts.Include(c =&gt; c.Team).ToListAsync();
+        return View(list);
+    }
+
+    public async Task&lt;IActionResult&gt; Details(int? id)
+    {
+        if (id == null) return NotFound();
+        var contact = await _db.Contacts.FindAsync(id);
+        if (contact == null) return NotFound();
+        return View(contact);
+    }
+}</code></pre></figure>
+<figure class="kod"><figcaption>Create: GET ekranı açar, POST kaydeder</figcaption><pre data-dil="cs"><code>// GET: Contacts/Create — sadece Admin
+[Authorize(Roles = "Admin")]
+[HttpGet]
+public IActionResult Create()
+{
+    ViewBag.Teams = new SelectList(_db.Teams.ToList(), "Id", "Name");
+    return View();
+}
+
+// POST: Contacts/Create
+[HttpPost, ValidateAntiForgeryToken]
+public async Task&lt;IActionResult&gt; Create(Contacts contact)
+{
+    if (!ModelState.IsValid)
+    {
+        ViewBag.Teams = new SelectList(_db.Teams.ToList(), "Id", "Name");
+        return View(contact);
+    }
+
+    _db.Add(contact);
+    await _db.SaveChangesAsync();
+    return RedirectToAction(nameof(Index));
+}</code></pre></figure>
+</div>
+<ul><li>Controller içindeki her public metot bir <b>action</b>; sınıf adı <code>Controller</code> ile biter. Sayfa açılınca <code>[HttpGet]</code>, form gönderilince <code>[HttpPost]</code> çalışır.</li><li>Her yerde tekrar eden kalıp: kontrol et (<code>NotFound()</code>, <code>ModelState.IsValid</code>) → <code>Add</code> / <code>Update</code> / <code>Remove</code> → <code>SaveChangesAsync()</code> → <code>RedirectToAction(nameof(Index))</code>.</li><li><code>SaveChangesAsync()</code> unutulursa hiçbir değişiklik kaydedilmez. Listede ekip adı için <code>.Include(c =&gt; c.Team)</code>.</li><li>DbContext'in constructor'a kendiliğinden gelmesi <b>dependency injection</b> (Program.cs'teki <code>AddDbContext</code> sayesinde). Dropdown verisi <code>ViewBag.Teams = new SelectList(...)</code> ile taşınır.</li></ul>
+<h3>6 · View (Razor)</h3>
+<div class="iki">
+<figure class="kod"><figcaption>Views/Contacts/Index.cshtml (özet)</figcaption><pre data-dil="cshtml"><code>@model IEnumerable&lt;PhoneBookApp.Models.Contacts&gt;
+
+&lt;h2&gt;Telefon Rehberi&lt;/h2&gt;
+@if (User.IsInRole("Admin"))
+{
+    &lt;p&gt;&lt;a asp-action="Create" class="btn btn-primary"&gt;Yeni Kayıt Ekle&lt;/a&gt;&lt;/p&gt;
+}
+&lt;table class="table table-striped"&gt;
+    @foreach (var item in Model)
+    {
+        &lt;tr&gt;
+            &lt;td&gt;@item.Name&lt;/td&gt;
+            &lt;td&gt;@item.PhoneNumber&lt;/td&gt;
+            &lt;td&gt;@item.Team?.Name&lt;/td&gt;
+            &lt;td&gt;&lt;a asp-action="Edit" asp-route-id="@item.Id"&gt;Düzenle&lt;/a&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+    }
+&lt;/table&gt;</code></pre></figure>
+<figure class="kod"><figcaption>Views/Contacts/Create.cshtml (özet)</figcaption><pre data-dil="cshtml"><code>@model PhoneBookApp.Models.Contacts
+
+&lt;form asp-action="Create"&gt;
+    &lt;div asp-validation-summary="ModelOnly" class="text-danger"&gt;&lt;/div&gt;
+
+    &lt;select asp-for="TeamId" asp-items="ViewBag.Teams" class="form-control"&gt;
+        &lt;option value=""&gt;Ekip seçin&lt;/option&gt;
+    &lt;/select&gt;
+
+    &lt;label asp-for="Name" class="control-label"&gt;&lt;/label&gt;
+    &lt;input asp-for="Name" class="form-control" /&gt;
+    &lt;span asp-validation-for="Name" class="text-danger"&gt;&lt;/span&gt;
+
+    &lt;input type="submit" value="Oluştur" class="btn btn-primary" /&gt;
+&lt;/form&gt;</code></pre></figure>
+</div>
+<ul><li>View uzantısı <code>.cshtml</code>; HTML içinde C# yazma söz dizimi <b>Razor</b>. Gelen verinin türü en üstte <code>@model</code>.</li><li>Index action'ının view'ı <code>Views/Contacts/Index.cshtml</code>. Liste geldiği için tür <code>IEnumerable&lt;Contacts&gt;</code>.</li><li>Tag helper'lar: <code>asp-for</code> input'u alana bağlar · <code>asp-route-id</code> linke Id ekler · <code>asp-items</code> dropdown'u doldurur · <code>asp-validation-for</code> hata mesajı.</li><li>Ortak şablon <code>Views/Shared/_Layout.cshtml</code>; sayfa içeriği <code>@RenderBody()</code> ile yerleşir; <code>_ViewStart.cshtml</code> layout'u seçer, <code>_ViewImports.cshtml</code> tag helper'ları tanıtır.</li></ul>
+<h3>7 · Login ve roller</h3>
+<figure class="kod"><figcaption>Giriş akışı</figcaption><pre data-dil="cs"><code>// Program.cs: Cookie Authentication
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =&gt;
+    {
+        options.LoginPath = "/Account/Login";   // login sayfası
+        options.LogoutPath = "/Account/Logout"; // çıkış
+    });
+// …
+app.UseAuthentication();   // her zaman UseAuthorization'dan önce
+app.UseAuthorization();
+
+// AccountController.Login (POST) içinde: rol cookie'ye yazılır
+var claims = new List&lt;Claim&gt;
+{
+    new Claim(ClaimTypes.Name, username),
+    new Claim(ClaimTypes.Role, role)
+};
+var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));</code></pre></figure>
+<ul><li><code>[Authorize]</code> sayfayı yalnız giriş yapmış kullanıcı açar; <code>[Authorize(Roles = "Admin")]</code> yalnız admin; <code>[AllowAnonymous]</code> giriş gerekmez.</li><li>Giriş yapmamış biri korumalı sayfaya girerse <code>options.LoginPath</code> adresine yönlendirilir. Çıkış <code>HttpContext.SignOutAsync</code>.</li><li>View'da butonu yalnız admine göstermek: <code>@if (User.IsInRole("Admin"))</code>. Layout'ta ad: <code>@User.Identity.Name</code>.</li><li>Demo kullanıcıları: admin / 123 (Admin), user / 123 (User). Seed kodu Teams boşsa 3 ekip ekler: Aile, Arkadaşlar, İş.</li></ul>
+<p class="dipnot">Daha fazlası: <a href="../rehber-vize/">Rehber Vize Provası</a> sayfasında her seviyenin boşluk doldurma alıştırması ve <b>Genel prova</b> var. Visual Studio: proje şablonu ASP.NET Core Web App (Model-View-Controller), derle Ctrl+Shift+B, çalıştır F5.</p>
+</section>
+
+
+<section class="ders" id="ip2" data-ders="ip2" aria-labelledby="ip2-b">
+<p class="ust"><span class="nokta"></span><span data-saat="ip2">14:00</span> · İnternet Programcılığı II · Laravel · <a href="../laravel-vize/">IP2 Vize Kampı →</a></p>
+<h2 id="ip2-b">İnternet Programcılığı II: hocanın vize listesi</h2>
+<p class="giris">Son derste hoca sınav konularını aşağıdaki gibi sıraladı. Sağdaki hafta bağlantıları <a href="../laravel-vize/">IP2 Vize Kampı</a> sayfasındaki anlatıma gider; dersin projesi etkinlik ve atölye kayıt sistemi (Event, Category).</p>
+<div class="tbl"><table class="liste"><thead><tr><th>Hocanın dediği</th><th>Ne bilmen gerekiyor</th><th>Hafta</th></tr></thead><tbody><tr><td>HTTP metotları: GET, POST…</td><td>Metotların niyeti, GET ile POST farkı</td><td><a href="../laravel-vize/#h1">1</a>, <a href="../laravel-vize/#h6">6</a></td></tr><tr><td>Durum kodları: 404, 200, 300…</td><td>Sınıflar (1xx–5xx) ve sık kodlar</td><td><a href="../laravel-vize/#h1">1</a></td></tr><tr><td>Composer komutları, ezberle</td><td>create-project, require, install, update, dump-autoload</td><td><a href="../laravel-vize/#h2">2</a>, <a href="../laravel-vize/#h3">3</a></td></tr><tr><td>vendor klasörü ve kilit dosyasının adı</td><td>vendor/, composer.lock, composer.json</td><td><a href="../laravel-vize/#h2">2</a></td></tr><tr><td>MVC genel nedir</td><td>Model, View, Controller görevleri</td><td><a href="../laravel-vize/#h2">2</a>, <a href="../laravel-vize/#h3">3</a></td></tr><tr><td>Laravel genel yapısı: web, view…</td><td>Klasörler, routes/web.php, resources/views, public</td><td><a href="../laravel-vize/#h3">3</a>, <a href="../laravel-vize/#h4">4</a></td></tr><tr><td>Veritabanı, migration komutları ve tanımları</td><td>make:migration, make:model -m, migrate, rollback, up/down</td><td><a href="../laravel-vize/#h5">5</a></td></tr><tr><td>Eloquent ilişkileri: hasMany, belongsTo</td><td>Hangi model hangi metodu yazar, foreignId</td><td><a href="../laravel-vize/#h7">7</a></td></tr><tr><td>Validasyonlar</td><td>validate(), kurallar, hata gösterme</td><td><a href="../laravel-vize/#h6">6</a></td></tr><tr><td>Blade, layout kullanımı</td><td>{{ }}, @foreach, @extends/@section/@yield</td><td><a href="../laravel-vize/#h4">4</a></td></tr><tr><td>Veriyi controller'dan gönderme, compact</td><td>view('ad', compact('x')) ve eşdeğerleri</td><td><a href="../laravel-vize/#h4">4</a>, <a href="../laravel-vize/#h5">5</a></td></tr></tbody></table></div>
+<h3>HTTP ve durum kodları (1. hafta)</h3>
+<div class="iki tablolar">
+<div class="tbl"><table class=""><thead><tr><th>Metot</th><th>Niyet</th></tr></thead><tbody><tr><td>GET</td><td>Okuma; sunucudaki veriyi değiştirmez. Veri URL'de: <code>/ara?q=web</code>. Yer imine eklenir.</td></tr><tr><td>POST</td><td>Yeni kayıt, giriş: veriyi değiştiren her iş. Veri isteğin gövdesinde.</td></tr><tr><td>PUT / PATCH</td><td>Var olan kaynağı güncelleme</td></tr><tr><td>DELETE</td><td>Silme</td></tr></tbody></table></div>
+<div class="tbl"><table class=""><thead><tr><th>Kod</th><th>Ne zaman?</th></tr></thead><tbody><tr><td>200 OK</td><td>Liste başarıyla geldi (boş liste de 200)</td></tr><tr><td>301 / 302 / 303</td><td>Kalıcı / geçici yönlendirme / form sonrası "GET ile iste" (PRG)</td></tr><tr><td>401 / 403</td><td>Giriş yok / kimlik var ama yetki yok</td></tr><tr><td>404 / 405</td><td>Yol ya da kayıt yok / yol var ama yöntem uygun değil</td></tr><tr><td>419</td><td>Laravel'e özel: formda CSRF belirteci yok</td></tr><tr><td>422</td><td>Form alanı kurala uymuyor (ad boş)</td></tr><tr><td>500</td><td>Sunucuda PHP kodu hata verdi</td></tr></tbody></table></div>
+</div>
+<p class="ezber"><b>Ezber cümlesi:</b> 2 tamam · 3 şuraya git · 4 sen hatalısın · 5 ben hatalıyım. HTML formu yalnız GET ve POST gönderir; şifre asla GET ile gitmez.</p>
+<h3>Composer ve MVC (2. hafta)</h3>
+<ul><li><b>Composer</b> PHP'nin bağımlılık yöneticisi: paketleri Packagist'ten indirip <code>vendor/</code> klasörüne kurar.</li><li><b>composer.json</b> isteği yazar (hangi paket, hangi sürüm aralığı: <code>^3.14</code>); <b>composer.lock</b> kurulan kesin sürümleri yazar; elle düzenlenmez. Teslimde <code>vendor/</code> verilmez, <code>composer install</code> lock'tan yeniden kurar.</li><li><b>MVC</b>: Model veri ve kuralları (app/Models) · View HTML çıktısı (resources/views) · Controller isteği karşılar, Model'den veriyi ister, view'ı seçer (app/Http/Controllers). Akış: İstek → Route → Controller ⇄ Model ⇄ Veritabanı → View → HTML.</li></ul>
+<h3>Laravel yapısı ve rotalar (3. hafta)</h3>
+<figure class="kod"><figcaption>Kurulum</figcaption><pre data-dil="bash"><code>composer create-project laravel/laravel proje-adi   # Laravel projesi kur
+php artisan serve                                  # 127.0.0.1:8000
+php artisan route:list                             # bütün rotalar</code></pre></figure>
+<ul><li><code>public/</code> dışarıdan erişilen tek klasör, her istek <code>public/index.php</code>'den girer · <code>routes/web.php</code> adresleri koda bağlar (çok önemli) · <code>app/</code> controller ve modeller · <code>resources/views</code> Blade şablonları · <code>database/</code> migrations, seeders · <code>.env</code> makineye özgü gizli değerler.</li><li>CSS ve JS neden <code>resources</code>'ta? Oradakiler ham kaynak; Vite derleyip <code>public/build</code>'e yazar, tarayıcıya yalnız derlenmiş hâli gider.</li></ul>
+<figure class="kod"><figcaption>routes/web.php</figcaption><pre data-dil="php"><code>use App\Http\Controllers\EventController;
+
+Route::get('/events', [EventController::class, 'index'])-&gt;name('events.index');
+// dizinin 1. elemanı controller sınıfı, 2. elemanı action adı
+
+Route::resource('events', EventController::class)-&gt;only(['index', 'show']);</code></pre></figure>
+<h3>Controller, compact ve Blade (4. hafta)</h3>
+<div class="iki">
+<figure class="kod"><figcaption>EventController · view'a veri göndermek</figcaption><pre data-dil="php"><code>public function index()
+{
+    $events = Event::all();
+    $baslik = 'Etkinlikler';
+
+    return view('events.index', compact('events', 'baslik'));
+}
+
+// Şu üçü AYNI işi yapar: view'da $events olarak kullanılır
+return view('events.index', compact('events'));
+return view('events.index', ['events' =&gt; $events]);
+return view('events.index')-&gt;with('events', $events);</code></pre></figure>
+<figure class="kod"><figcaption>Blade layout: @yield ↔ @extends + @section</figcaption><pre data-dil="blade"><code>{{-- layouts/app.blade.php --}}
+&lt;title&gt;@yield('title', 'Etkinlikler')&lt;/title&gt;
+&lt;main&gt;
+    @yield('content')
+&lt;/main&gt;
+
+{{-- events/show.blade.php --}}
+@extends('layouts.app')
+
+@section('title', $event-&gt;title)
+
+@section('content')
+  &lt;h1&gt;{{ $event-&gt;title }}&lt;/h1&gt;
+  &lt;p&gt;Kapasite: {{ $event-&gt;capacity }}&lt;/p&gt;
+@endsection</code></pre></figure>
+</div>
+<ul><li><code>php artisan make:controller EventController</code> · <code>-r</code> ile resource controller: 7 action (index, create, store, show, edit, update, destroy).</li><li>Blade: <code>{{ $x }}</code> ekrana yazar (kaçışlı) · <code>@foreach … @endforeach</code> · <code>@if</code> · layout'ta <code>@yield</code>, sayfada <code>@extends</code> + <code>@section</code>.</li></ul>
+<h3>Migration, model ve Eloquent (5. hafta)</h3>
+<div class="iki">
+<figure class="kod"><figcaption>database/migrations/…_create_students_table.php</figcaption><pre data-dil="php"><code>return new class extends Migration
+{
+    public function up(): void      // php artisan migrate ÇALIŞINCA
+    {
+        Schema::create('students', function (Blueprint $table) {
+            $table-&gt;id();                            // otomatik artan PK
+            $table-&gt;string('name');                  // VARCHAR(255)
+            $table-&gt;char('student_no', 7)-&gt;unique();
+            $table-&gt;unsignedInteger('capacity')-&gt;default(20);
+            $table-&gt;date('birth_date')-&gt;nullable();
+            $table-&gt;timestamps();                    // created_at, updated_at
+        });
+    }
+
+    public function down(): void    // migrate:rollback ÇALIŞINCA
+    {
+        Schema::dropIfExists('students');
+    }
+};</code></pre></figure>
+<figure class="kod"><figcaption>Migration komutları</figcaption><pre data-dil="bash"><code>php artisan make:migration create_students_table   # yalnız migration
+php artisan make:model Student -m                  # model + migration
+php artisan migrate                                # up() çalışır
+php artisan migrate:rollback                       # son batch geri (down())
+php artisan migrate:status                         # Ran / Pending
+php artisan migrate:fresh --seed                   # sil, baştan kur, veri ekle</code></pre></figure>
+</div>
+<ul><li>Model: <code>class Student extends Model { protected $fillable = ['name', 'email']; }</code> toplu yazılabilecek sütunlar.</li><li>Eloquent: <code>Event::all()</code>, <code>Event::find(1)</code>, <code>Event::create($data)</code>, <code>$event-&gt;update($data)</code>, <code>$event-&gt;delete()</code>.</li></ul>
+<h3>Form ve doğrulama (6. hafta)</h3>
+<figure class="kod"><figcaption>EventController@store</figcaption><pre data-dil="php"><code>public function store(Request $request)
+{
+    $data = $request-&gt;validate([
+        'title'    =&gt; ['required', 'string', 'max:120'],
+        'capacity' =&gt; ['required', 'integer', 'min:1', 'max:500'],
+        'category' =&gt; ['required', 'in:Web,Veri'],
+        'email'    =&gt; ['required', 'email', 'unique:users,email'],
+    ]);
+    // eski yazım da çalışır: 'title' =&gt; 'required|string|max:120'
+
+    $event = Event::create($data);
+    return redirect()-&gt;route('events.show', $event)-&gt;with('status', 'Kaydedildi');
+}</code></pre></figure>
+<ul><li>Formda <code>@csrf</code> zorunlu (yoksa 419). PUT/DELETE için formda <code>@method('PUT')</code> (method spoofing).</li><li>Kural çiğnenince Laravel forma geri döner (302), hatalar <code>@error('alan') {{ $message }} @enderror</code> ile, eski girdi <code>old('alan')</code> ile gösterilir.</li></ul>
+<h3>Eloquent ilişkileri (7. hafta)</h3>
+<div class="iki">
+<figure class="kod"><figcaption>app/Models/Category.php</figcaption><pre data-dil="php"><code>class Category extends Model
+{
+    // Bir kategorinin ÇOK etkinliği vardır
+    public function events(): HasMany
+    {
+        return $this-&gt;hasMany(Event::class);
+    }
+}</code></pre></figure>
+<figure class="kod"><figcaption>app/Models/Event.php</figcaption><pre data-dil="php"><code>class Event extends Model
+{
+    // Etkinlik BİR kategoriye aittir (category_id bu tabloda)
+    public function category(): BelongsTo
+    {
+        return $this-&gt;belongsTo(Category::class);
+    }
+}
+
+// migration'da yabancı anahtar
+$table-&gt;foreignId('category_id')-&gt;constrained();</code></pre></figure>
+</div>
+<p class="ezber"><b>Kural:</b> yabancı anahtar (`category_id`) hangi tablodaysa o model <b>belongsTo</b> yazar; karşı taraf <b>hasMany</b>. N+1 sorgu sorununu `Event::with('category')->get()` (eager loading) çözer.</p>
+<h3>Baştan sona örnek: hocanın ÇOMÜ formu</h3>
+<div class="iki">
+<figure class="kod"><figcaption>1) Terminal</figcaption><pre data-dil="bash"><code>php artisan make:controller ComuController
+php artisan make:model Faculty -m
+# migration'a sütunları yaz, sonra:
+php artisan migrate</code></pre></figure>
+<figure class="kod"><figcaption>2) migration → up()</figcaption><pre data-dil="php"><code>Schema::create('faculties', function (Blueprint $table) {
+    $table-&gt;id();
+    $table-&gt;string('name')-&gt;unique();
+    $table-&gt;string('dean')-&gt;nullable();
+    $table-&gt;timestamps();
+});</code></pre></figure>
+<figure class="kod"><figcaption>3) app/Models/Faculty.php</figcaption><pre data-dil="php"><code>class Faculty extends Model
+{
+    protected $fillable = ['name', 'dean'];
+
+    public function departments()
+    {
+        return $this-&gt;hasMany(Department::class);
+    }
+}</code></pre></figure>
+<figure class="kod"><figcaption>4) routes/web.php</figcaption><pre data-dil="php"><code>use App\Http\Controllers\ComuController;
+
+Route::get('/comu', [ComuController::class, 'index'])-&gt;name('comu.index');
+Route::post('/comu', [ComuController::class, 'store'])-&gt;name('comu.store');</code></pre></figure>
+<figure class="kod"><figcaption>5) app/Http/Controllers/ComuController.php</figcaption><pre data-dil="php"><code>class ComuController extends Controller
+{
+    public function index()
+    {
+        $faculties = Faculty::all();
+        return view('comu.index', compact('faculties'));
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request-&gt;validate([
+            'name' =&gt; ['required', 'string', 'max:150', 'unique:faculties,name'],
+            'dean' =&gt; ['nullable', 'string', 'max:100'],
+        ]);
+        Faculty::create($data);
+        return redirect()-&gt;route('comu.index')-&gt;with('status', 'Fakülte eklendi');
+    }
+}</code></pre></figure>
+<figure class="kod"><figcaption>6) resources/views/comu/index.blade.php</figcaption><pre data-dil="blade"><code>@extends('layouts.app')
+
+@section('title', 'Fakülteler')
+
+@section('content')
+    @if (session('status'))
+        &lt;p&gt;{{ session('status') }}&lt;/p&gt;
+    @endif
+
+    &lt;form method="POST" action="{{ route('comu.store') }}"&gt;
+        @csrf
+        &lt;input name="name" value="{{ old('name') }}" placeholder="Fakülte adı"&gt;
+        @error('name') &lt;small&gt;{{ $message }}&lt;/small&gt; @enderror
+        &lt;button&gt;Ekle&lt;/button&gt;
+    &lt;/form&gt;
+
+    &lt;ul&gt;
+    @forelse ($faculties as $faculty)
+        &lt;li&gt;{{ $loop-&gt;iteration }}. {{ $faculty-&gt;name }}&lt;/li&gt;
+    @empty
+        &lt;li&gt;Henüz fakülte yok.&lt;/li&gt;
+    @endforelse
+    &lt;/ul&gt;
+@endsection</code></pre></figure>
+</div>
+<p class="dipnot">Daha fazlası: <a href="../laravel-vize/#komut">Komut ezber tablosu</a> · <a href="../laravel-vize/#test">56 soruluk test</a> · her haftanın sonundaki "sınav soruları" kutuları.</p>
+</section>
+
+<section class="plan" id="son" aria-labelledby="son-b">
+<h2 id="son-b">Sınavdan önceki son bakış</h2>
+<p class="giris">Her sınavdan hemen önce 5 dakikada okunacak altı satır.</p>
+<div class="sonbakis" id="sonbakis-ic"></div>
+</section>
+</main>
+<footer>Kaynaklar: <a href="../ntp-vize/">NTP-1 Vize Çalışma</a>, <a href="../rehber-vize/">Rehber Vize Provası</a> ve <a href="../laravel-vize/">IP2 Vize Kampı</a> sayfaları (ders notları, IdeaProjects ve PhoneBookApp projeleri, ders sunumları). Saatler İstanbul saatiyle.</footer>
+</div>
+<script type="application/json" id="plan-veri">{"dersler": {"ntp": {"ad": "NTP-1 (Java)", "kisa": "NTP", "sayfa": "../ntp-vize/", "bolum": "#ntp"}, "gp2": {"ad": "Görsel Programlama 2", "kisa": "Görsel Prog. 2", "sayfa": "../rehber-vize/", "bolum": "#gp2"}, "ip2": {"ad": "İnternet Programcılığı II", "kisa": "IP2 · Laravel", "sayfa": "../laravel-vize/", "bolum": "#ip2"}}, "gece": [{"id": "hazir", "dk": 10, "tur": "hazirlik", "baslik": "Hazırlık", "is": ["Telefonu sessize al, su koy. NTP sayfasını ve bu sayfayı aç.", "NTP'nin dört soru haritasını oku: aşağıda <a href=\"#ntp\">NTP<\/a> bölümü."]}, {"id": "ntp1", "dk": 45, "tur": "calis", "ders": "ntp", "baslik": "NTP · 1. soru: Java'nın temelleri", "is": ["<a href=\"../ntp-vize/#s1\">1.1–1.10<\/a>: JDK/JRE/JVM, türler ve dönüşüm, Scanner (nextInt sonrası nextLine tuzağı), printf, if, switch, döngüler, diziler, metotlar.", "Bölüm sonundaki <b>1. soru · sınavda böyle sorulabilir<\/b> sorularını kapatıp cevapla.", "N × N çarpım tablosunu kâğıda yaz (notta sınav sorusu olabilir diye geçiyor)."]}, {"id": "mola1", "dk": 10, "tur": "mola", "baslik": "Mola", "is": ["Kalk, yürü, ekrandan uzaklaş."]}, {"id": "ntp2", "dk": 45, "tur": "calis", "ders": "ntp", "baslik": "NTP · 2. soru: sınıf, nesne, kurucu, this", "is": ["<a href=\"../ntp-vize/#s2\">2.1–2.11<\/a>: sınıf ve nesne tanımı, new'in üç işi, nesne dizisinde null, kurucu, this tuzağı, örnek metodu, static, kapsülleme.", "Hafta6 programını adım adım izle (nesneler bellekte nasıl duruyor).", "Bir <code>Ogrenci<\/code> ya da <code>Kitap<\/code> sınıfını kâğıda yaz: alanlar, kurucu + this, bir metot, main'de nesne."]}, {"id": "ntp3", "dk": 40, "tur": "calis", "ders": "ntp", "baslik": "NTP · 3. soru: istisnalar", "is": ["<a href=\"../ntp-vize/#s3\">3.1–3.7<\/a>: istisna nedir, yığın izi, try-catch, birden çok catch ve finally, <b>throw<\/b>, throws, kendi istisna sınıfın.", "Tam puan kalıbını ezberle: tanım + <code>throw new …Exception(\"mesaj\")<\/code> içeren metot + çağırıp yakalayan try-catch + çıktı."]}, {"id": "mola2", "dk": 10, "tur": "mola", "baslik": "Mola", "is": ["Bir şeyler ye, su iç."]}, {"id": "ntp4", "dk": 35, "tur": "calis", "ders": "ntp", "baslik": "NTP · 4. soru: Depo + derlenir mi", "is": ["<a href=\"../ntp-vize/#s4\">4.1–4.3<\/a>: Depo'nun paralel dizili ve sınıflı hâlini oku; \"8) Fiyat güncelle\" gibi bir ekleme yapmayı dene.", "<a href=\"../ntp-vize/#derlenir\">Derlenir mi?<\/a> kartlarından 10 tane hızlıca."]}, {"id": "ikinci", "dk": 60, "tur": "calis", "ders": "@14", "baslik": "{14} · ilk tur (yarın en az zamanı olan sınav)", "kisa": true}], "yarin": [{"id": "kalk", "bas": "07:00", "son": "07:30", "tur": "hazirlik", "baslik": "Kalk, kahvaltı", "is": ["Kahvaltıyı atlama; uzun bir gün var."]}, {"id": "ntpson", "bas": "07:30", "son": "08:20", "tur": "son", "ders": "ntp", "baslik": "NTP · son tur", "is": ["<a href=\"../ntp-vize/#ezber\">Ezber tablosu<\/a> ve bu sayfadaki <a href=\"#ntp\">kalıplar<\/a>.", "<a href=\"../ntp-vize/#prova\">Prova B<\/a>'den 3. soru (10 dk), kâğıda.", "Derlenir mi: dün yanlış yaptığın kartlar."]}, {"id": "yol", "bas": "08:20", "son": "09:00", "tur": "hazirlik", "baslik": "Sınav yerine geç", "is": ["Kalem, silgi, kimlik. Yolda son bakış: <a href=\"#ntp-son\">NTP son bakış listesi<\/a>."]}, {"id": "s-ntp", "bas": "09:00", "son": "10:00", "tur": "sinav", "ders": "ntp", "baslik": "NTP-1 sınavı", "is": ["Önce emin olduğun soruyu yaz. Kod sorusunun tamamını bilemesen de iskeleti yaz: sınıf, alanlar, kurucu, main'de nesne."]}, {"id": "mola3", "bas": "10:00", "son": "10:15", "tur": "mola", "baslik": "Mola", "is": ["Sınavı unut, su iç, bir şey ye."]}, {"id": "ilk-uzun", "bas": "10:15", "son": "11:45", "tur": "calis", "ders": "@13", "baslik": "{13} · baştan", "uzun": true}, {"id": "ikinci-tekrar", "bas": "11:45", "son": "12:15", "tur": "calis", "ders": "@14", "baslik": "{14} · ikinci tur", "kisa": true, "is": ["Dün geceki turun hızlı tekrarı; bu kez kodları kapatıp kâğıda yaz."]}, {"id": "ogle", "bas": "12:15", "son": "12:35", "tur": "mola", "baslik": "Öğle", "is": ["Hafif ye; ağır yemek uyku yapar."]}, {"id": "ilk-son", "bas": "12:35", "son": "12:55", "tur": "son", "ders": "@13", "baslik": "{13} · son bakış", "sonbakis": true}, {"id": "s-13", "bas": "13:00", "son": "14:00", "tur": "sinav", "ders": "@13", "baslik": "{13} sınavı", "is": ["Çıkınca kalan dakikalarda {14} için son bakış listesine geç."]}, {"id": "s-14", "bas": "14:00", "son": "15:00", "tur": "sinav", "ders": "@14", "baslik": "{14} sınavı", "is": ["Son sınav. Bitince dinlen."]}], "icerik": {"gp2": {"uzun": [[10, "<a href=\"../rehber-vize/\">Sıfırdan başla<\/a>: web isteği, MVC (restoran benzetmesi), CRUD, C# alfabesi."], [15, "<a href=\"#gp2\">Model<\/a>: Contacts ve Team, [Required]/[Phone], Id = PK, TeamId = FK, navigation property, bire-çok."], [15, "DbContext + appsettings.json + Program.cs: DbSet, AddDbContext, UseSqlServer, MapControllerRoute."], [10, "Komutlar: Install-Package, Add-Migration, Update-Database, Remove-Migration, Drop-Database."], [25, "Controller: Index (Include + ToListAsync), Details, Create GET/POST (ModelState, Add, SaveChangesAsync, RedirectToAction), Edit, Delete, ViewBag + SelectList."], [25, "View: @model, @foreach, tag helper'lar (asp-for, asp-action, asp-route-id, asp-items, asp-validation-for), _Layout + @RenderBody."], [20, "Login ve roller: AddAuthentication + AddCookie, LoginPath, Claim'ler, SignInAsync, [Authorize(Roles = \"Admin\")], UseAuthentication önce. Sonra Rehber sayfasında <b>Genel prova<\/b>."]], "kisa": [[10, "Yapım sırasını ezberle: Model → DbContext → Program.cs → Komutlar → Controller → View → Login."], [15, "<a href=\"#gp2\">Model + DbContext + Program.cs<\/a> kodlarını oku; PK, FK, navigation property, DbSet, AddDbContext."], [10, "Komutlar: Add-Migration, Update-Database ve hata durumları."], [15, "Controller CRUD kalıbı: kontrol et → Add/Update/Remove → SaveChangesAsync → RedirectToAction."], [10, "View tag helper'ları ve [Authorize] kuralları."]], "son": ["Yapım sırası: Model → DbContext → Program.cs → Komutlar → Controller → View → Login.", "Add-Migration, sonra Update-Database. Remove-Migration · Drop-Database.", "ModelState.IsValid · SaveChangesAsync() · RedirectToAction(nameof(Index)) · NotFound().", "Include(c => c.Team) · ViewBag.Teams = new SelectList(_db.Teams, \"Id\", \"Name\").", "asp-for · asp-items · asp-route-id · asp-validation-for · @model · @RenderBody().", "[Authorize(Roles = \"Admin\")] · UseAuthentication() UseAuthorization()'dan önce · LoginPath."]}, "ip2": {"uzun": [[15, "<a href=\"../laravel-vize/#h1\">1. hafta<\/a>: HTTP metotları, GET ile POST farkı, durum kodları, PRG."], [15, "<a href=\"../laravel-vize/#h2\">2. hafta<\/a>: Composer (komutlar, composer.json/lock, vendor), MVC."], [15, "<a href=\"../laravel-vize/#h3\">3. hafta<\/a>: create-project, klasör yapısı, routes/web.php, rota parametresi ve adı."], [20, "<a href=\"../laravel-vize/#h4\">4. hafta<\/a>: make:controller (-r 7 action), compact, Blade {{ }}, @foreach, @extends/@section/@yield."], [20, "<a href=\"../laravel-vize/#h5\">5. hafta<\/a>: make:migration, make:model -m, migrate, rollback, up/down, $fillable, Eloquent CRUD."], [15, "<a href=\"../laravel-vize/#h6\">6. hafta<\/a>: @csrf, validate() kuralları, @error ve old(), @method('PUT')."], [15, "<a href=\"../laravel-vize/#h7\">7. hafta<\/a>: hasMany / belongsTo, foreignId()->constrained(), with() ile eager loading."], [5, "<a href=\"#ip2\">ÇOMÜ örneği<\/a> ve <a href=\"../laravel-vize/#komut\">komut tablosu<\/a>."]], "kisa": [[10, "<a href=\"#ip2\">Hocanın 11 maddelik listesi<\/a>: her satırı oku, \"ne bilmen gerekiyor\" sütununu sesli söyle."], [10, "HTTP metotları + durum kodları + Composer + MVC."], [15, "Laravel yapısı, rotalar, controller, compact, Blade layout."], [15, "Migration komutları, model, Eloquent, hasMany / belongsTo."], [10, "validate() kuralları ve ÇOMÜ örneği (6 adım)."]], "son": ["2 tamam · 3 şuraya git · 4 sen hatalısın · 5 ben hatalıyım · 419 CSRF yok · 422 kural ihlali.", "composer create-project laravel/laravel ad · vendor/ · composer.lock · composer.json.", "make:model X -m · make:migration · migrate · migrate:rollback · up() / down().", "view('a.b', compact('x')) = ['x' => $x] = ->with('x', $x).", "@extends · @section · @yield · {{ }} · @foreach · @csrf · @error.", "FK hangi tablodaysa o belongsTo; karşı taraf hasMany."]}, "ntp": {"son": ["Kurucu: adı sınıfla aynı, dönüş türü yok; this.alan = parametre.", "new'in üç işi: yer ayır + varsayılan değer → kurucu → referans.", "throw gövdede fırlatır, throws imzada bildirir; finally her durumda çalışır.", "Checked (Exception) yakala ya da bildir; RuntimeException zorunlu değil.", "nextInt sonrası nextLine boş satır okur; metinde equals, == değil.", "Nesne dizisi new Urun[5]: 5 null hücre; null'a erişmek NullPointerException."]}}}</script>
+<script>(function () {
+  'use strict';
+  var P = JSON.parse(document.getElementById('plan-veri').textContent);
+  var TZ = 'Europe/Istanbul';
+  function an(gun, saat) { return +new Date('2026-11-' + gun + 'T' + saat + ':00+03:00'); }
+  var GECE_ERKEN = an('04', '20:00'), YATIS = an('05', '00:30'), KALKIS = an('05', '07:00');
+
+  function oku(k, y) { try { var v = localStorage.getItem(k); return v == null ? y : JSON.parse(v); } catch (e) { return y; } }
+  function yaz(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* gizli pencere: yalnız bu oturum */ } }
+  var fSaat = new Intl.DateTimeFormat('tr-TR', { hour: '2-digit', minute: '2-digit', timeZone: TZ });
+  var fGun = new Intl.DateTimeFormat('tr-TR', { weekday: 'long', day: 'numeric', month: 'long', timeZone: TZ });
+  function hhmm(t) { return fSaat.format(new Date(t)); }
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  function metin(e, s) { if (e.textContent !== s) e.textContent = s; }
+  function kacis(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  /* "13:00" → "13:00'te", "09:00" → "09:00'da", "12:35" → "12:35'te" */
+  var EK_BIR = ['', 'de', 'de', 'te', 'te', 'te', 'da', 'de', 'de', 'da'], EK_ON = ['da', 'da', 'de', 'da', 'ta', 'de'];
+  function saatEki(hm) { var p = hm.split(':'), n = +p[1] || +p[0]; return hm + "'" + (n % 10 ? EK_BIR[n % 10] : EK_ON[Math.floor(n / 10) % 6]); }
+  function sure(ms, yukari) {
+    var dk = Math.max(0, (yukari ? Math.ceil : Math.round)(ms / 6e4)), s = Math.floor(dk / 60), d = dk % 60;
+    return s ? s + ' sa' + (d ? ' ' + d + ' dk' : '') : d + ' dk';
+  }
+
+  /* ---------- 13:00 / 14:00 sırası ---------- */
+  var sira = oku('sg:sira', 'gp2-ilk');
+  if (sira !== 'gp2-ilk' && sira !== 'ip2-ilk') sira = 'gp2-ilk';
+  function d13() { return sira === 'ip2-ilk' ? 'ip2' : 'gp2'; }
+  function d14() { return sira === 'ip2-ilk' ? 'gp2' : 'ip2'; }
+  function dersCoz(d) { return d === '@13' ? d13() : d === '@14' ? d14() : d; }
+  function adCoz(m) { return m.replace('{13}', P.dersler[d13()].ad).replace('{14}', P.dersler[d14()].ad); }
+
+  /* ---------- Süre paylaştırma: toplamı 5 dakikalık birimlere böler, her parça en az 5 dk ---------- */
+  function paylastir(agirlik, toplamDk) {
+    var birim = Math.max(agirlik.length, Math.round(toplamDk / 5));
+    var top = agirlik.reduce(function (a, b) { return a + b; }, 0);
+    var ham = agirlik.map(function (a) { return a * birim / top; });
+    var tam = ham.map(function (x) { return Math.max(1, Math.floor(x)); });
+    var kalan = birim - tam.reduce(function (a, b) { return a + b; }, 0);
+    var artan = ham.map(function (x, i) { return [x - Math.floor(x), i]; }).sort(function (a, b) { return b[0] - a[0] || a[1] - b[1]; });
+    for (var j = 0; kalan > 0; j = (j + 1) % artan.length, kalan--) tam[artan[j][1]]++;
+    while (kalan < 0) {
+      var mx = 0;
+      tam.forEach(function (x, i) { if (x > tam[mx]) mx = i; });
+      if (tam[mx] <= 1) break;
+      tam[mx]--; kalan++;
+    }
+    return tam.map(function (x) { return x * 5; });
+  }
+
+  /* ---------- Gece planı: başlangıç anından yatışa (00:30) sığdırılır ---------- */
+  function besDk(t) { return Math.floor(t / 3e5) * 3e5; }
+  var baslangic = oku('sg:baslangic', null);
+  if (typeof baslangic !== 'number') { baslangic = Math.max(besDk(Date.now()), GECE_ERKEN); yaz('sg:baslangic', baslangic); }
+
+  function geceBloklari() {
+    var bos = Math.floor((YATIS - baslangic) / 3e5) * 5;
+    var bl = P.gece.map(function (b) { return Object.assign({}, b); });
+    if (bos < 120) bl = bl.filter(function (b) { return b.ders !== '@14'; });
+    var calis = bl.filter(function (b) { return b.tur === 'calis'; });
+    if (bos < calis.length * 5 + 5) return [];
+    var nominal = bl.reduce(function (a, b) { return a + b.dk; }, 0);
+    if (bos < nominal) {
+      if (bos < 90) bl = bl.filter(function (b) { return b.tur !== 'mola'; });
+      if (bos < 150) bl.forEach(function (b) { if (b.tur !== 'calis') b.dk = 5; });
+      var sabit = bl.reduce(function (a, b) { return a + (b.tur === 'calis' ? 0 : b.dk); }, 0);
+      var pay = paylastir(calis.map(function (b) { return b.dk; }), bos - sabit), i = 0;
+      bl.forEach(function (b) { if (b.tur === 'calis') b.dk = pay[i++]; });
+    }
+    var t = baslangic;
+    return bl.map(function (b) { b.t0 = t; b.t1 = t + b.dk * 6e4; t = b.t1; return b; });
+  }
+
+  function icerik(b, d) {
+    var liste = (b.is || []).map(adCoz);
+    if (b.uzun || b.kisa) {
+      var parcalar = P.icerik[d][b.uzun ? 'uzun' : 'kisa'];
+      var dk = paylastir(parcalar.map(function (p) { return p[0]; }), Math.round((b.t1 - b.t0) / 6e4));
+      parcalar.forEach(function (p, i) { liste.push('<small>' + dk[i] + ' dk</small>' + p[1]); });
+    } else if (b.sonbakis) {
+      liste = liste.concat(P.icerik[d].son.map(kacis));
+      liste.push('Sayfadaki <a href="' + P.dersler[d].bolum + '">' + kacis(P.dersler[d].ad) + '</a> özetine hızlı bir göz.');
+    }
+    return liste;
+  }
+
+  var TUR = { calis: 'çalış', mola: 'mola', hazirlik: 'hazırlık', son: 'son bakış', sinav: 'sınav', uyku: 'uyku' };
+  var bitti = oku('sg:bitti', {});
+  if (!bitti || typeof bitti !== 'object') bitti = {};
+  var bloklar = [];
+
+  function blokCiz(b) {
+    var d = dersCoz(b.ders || ''), anahtar = b.id + (b.ders && b.ders.charAt(0) === '@' ? ':' + d : '');
+    var li = el('li', 'blok t-' + b.tur); li.id = 'b-' + b.id;
+    if (d) li.setAttribute('data-ders', d);
+    var zm = el('div', 'zm', hhmm(b.t0) + '–' + hhmm(b.t1));
+    zm.appendChild(el('small', null, sure(b.t1 - b.t0)));
+    li.appendChild(zm);
+    var govde = el('div');
+    var h = el('h4', null, adCoz(b.baslik)); h.id = 'bh-' + b.id;
+    h.appendChild(el('span', 'tur', TUR[b.tur]));
+    govde.appendChild(h);
+    var ul = el('ul');
+    icerik(b, d).forEach(function (x) { var i = el('li'); i.innerHTML = x; ul.appendChild(i); });
+    govde.appendChild(ul);
+    li.appendChild(govde);
+    if (b.tur === 'calis' || b.tur === 'son') {
+      var bt = el('button', 'bitti', 'Bitti');
+      bt.type = 'button';
+      bt.setAttribute('aria-describedby', h.id);
+      bt.setAttribute('aria-pressed', bitti[anahtar] ? 'true' : 'false');
+      li.classList.toggle('yapildi', !!bitti[anahtar]);
+      bt.addEventListener('click', function () {
+        var yeni = !bitti[anahtar];
+        if (yeni) bitti[anahtar] = 1; else delete bitti[anahtar];
+        yaz('sg:bitti', bitti);
+        bt.setAttribute('aria-pressed', yeni ? 'true' : 'false');
+        li.classList.toggle('yapildi', yeni);
+      });
+      li.appendChild(bt);
+    }
+    return li;
+  }
+
+  function ciz() {
+    var gece = geceBloklari();
+    var uykuBas = gece.length ? gece[gece.length - 1].t1 : Math.max(baslangic, YATIS - 30 * 6e4);
+    var geceGrup = gece.slice();
+    if (uykuBas < KALKIS) {
+      var sa = Math.round((KALKIS - uykuBas) / 18e5) / 2;
+      geceGrup.push({ id: 'uyku', tur: 'uyku', baslik: 'Uyku', t0: uykuBas, t1: KALKIS,
+        is: ["Alarmı 07:00'ye kur. Yaklaşık " + sa.toLocaleString('tr-TR') + ' saat uyku: öğrendiklerin uykuda pekişir, sabah 9 sınavı için gece çalışmasından daha değerli.'] });
+    }
+    var gruplar = [];
+    if (geceGrup.length) gruplar.push(['Bu gece · 4 Kasım Çarşamba', geceGrup]);
+    gruplar.push(['Sınav günü · 5 Kasım Perşembe', P.yarin.map(function (b) { return Object.assign({}, b, { t0: an('05', b.bas), t1: an('05', b.son) }); })]);
+
+    bloklar = [];
+    var kap = document.getElementById('akis'); kap.textContent = '';
+    gruplar.forEach(function (g) {
+      kap.appendChild(el('h3', 'gun', g[0]));
+      var ol = el('ol', 'akis');
+      g[1].forEach(function (b) { bloklar.push(b); ol.appendChild(blokCiz(b)); });
+      kap.appendChild(ol);
+    });
+
+    var not = document.getElementById('plan-basladi');
+    if (gece.length) not.textContent = 'Bu gecenin planı ' + hhmm(baslangic) + ' başlangıcına göre; yatış en geç ' + hhmm(YATIS) + '. Geç başladıysan düğmeyle planı şu ana kaydır, süreler yatışa sığacak biçimde kısalır.';
+    else if (Date.now() < KALKIS) not.textContent = 'Saat geç: bu gece için çalışma bloğu yok. Uyu; sabah 07:30\'da NTP son turu var.';
+    else not.textContent = '';
+
+    document.querySelectorAll('[data-saat]').forEach(function (e) { e.textContent = e.getAttribute('data-saat') === d13() ? '13:00' : '14:00'; });
+    document.querySelectorAll('[data-sira]').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-sira') === sira ? 'true' : 'false'); });
+    var s13 = document.getElementById(d13()), s14 = document.getElementById(d14());
+    s14.parentNode.insertBefore(s13, s14);
+    var n13 = document.querySelector('nav.hizli a[href="#' + d13() + '"]'), n14 = document.querySelector('nav.hizli a[href="#' + d14() + '"]');
+    n14.parentNode.insertBefore(n13, n14);
+    sinavKartlari();
+    sonBakis();
+  }
+
+  function sinavlar() { return [['ntp', '09:00'], [d13(), '13:00'], [d14(), '14:00']]; }
+
+  function sinavKartlari() {
+    var k = document.getElementById('sinavlar'); k.textContent = '';
+    sinavlar().forEach(function (x) {
+      var d = P.dersler[x[0]], a = el('a', 'sk');
+      a.href = d.bolum; a.setAttribute('data-ders', x[0]); a.setAttribute('data-t', an('05', x[1]));
+      a.appendChild(el('span', 'zaman', x[1]));
+      a.appendChild(el('b', null, d.ad));
+      a.appendChild(el('span', 'kalan', ''));
+      k.appendChild(a);
+    });
+  }
+
+  function sonBakis() {
+    var k = document.getElementById('sonbakis-ic'); k.textContent = '';
+    sinavlar().forEach(function (x) {
+      var d = el('div'); d.setAttribute('data-ders', x[0]); if (x[0] === 'ntp') d.id = 'ntp-son';
+      d.appendChild(el('h3', null, x[1] + ' · ' + P.dersler[x[0]].ad));
+      var o = el('ol');
+      P.icerik[x[0]].son.forEach(function (s) { o.appendChild(el('li', null, s)); });
+      d.appendChild(o); k.appendChild(d);
+    });
+  }
+
+  function guncelle() {
+    var simdi = Date.now();
+    metin(document.getElementById('saat'), 'Şu an ' + hhmm(simdi) + ' · ' + fGun.format(new Date(simdi)));
+    document.querySelectorAll('.sk').forEach(function (a) {
+      var t = +a.getAttribute('data-t'), gecti = simdi >= t + 36e5;
+      metin(a.querySelector('.kalan'), simdi < t ? sure(t - simdi, true) + ' kaldı' : gecti ? 'geçti' : 'sınav zamanı · başarılar');
+      a.classList.toggle('gecti', gecti);
+    });
+    var su = null, sonraki = null;
+    bloklar.forEach(function (b) {
+      var li = document.getElementById('b-' + b.id); if (!li) return;
+      var aktif = simdi >= b.t0 && simdi < b.t1;
+      li.classList.toggle('su', aktif);
+      li.classList.toggle('gecmis', simdi >= b.t1);
+      if (aktif) { su = b; li.setAttribute('aria-current', 'step'); } else li.removeAttribute('aria-current');
+      if (!sonraki && b.t0 > simdi) sonraki = b;
+    });
+    var kutu = document.getElementById('simdi'), etk = document.getElementById('simdi-etk'), ad = document.getElementById('simdi-ad');
+    var kalan = document.getElementById('simdi-kalan'), git = document.getElementById('simdi-git');
+    kutu.hidden = false; git.hidden = false;
+    if (su) {
+      metin(etk, 'şimdi'); metin(ad, adCoz(su.baslik));
+      metin(kalan, 'bu blokta ' + sure(su.t1 - simdi, true) + ' kaldı' + (sonraki ? ' · sonra: ' + adCoz(sonraki.baslik) : ''));
+      git.href = '#b-' + su.id;
+    } else if (sonraki) {
+      metin(etk, 'sıradaki'); metin(ad, adCoz(sonraki.baslik));
+      metin(kalan, saatEki(hhmm(sonraki.t0)) + ' başlıyor · ' + sure(sonraki.t0 - simdi, true) + ' sonra');
+      git.href = '#b-' + sonraki.id;
+    } else {
+      metin(etk, 'bitti'); metin(ad, 'Üç sınav da bitti. Geçmiş olsun!'); metin(kalan, ''); git.hidden = true;
+    }
+    document.getElementById('yeniden').hidden = simdi > YATIS - 30 * 6e4;
+  }
+
+  document.querySelectorAll('[data-sira]').forEach(function (b) {
+    b.addEventListener('click', function () { sira = b.getAttribute('data-sira'); yaz('sg:sira', sira); ciz(); guncelle(); });
+  });
+  document.getElementById('yeniden').addEventListener('click', function () {
+    baslangic = besDk(Date.now()); yaz('sg:baslangic', baslangic); ciz(); guncelle();
+  });
+
+  /* ---------- Kod renklendirme (sade) ---------- */
+  var KW = {};
+  ('public private protected class static void int long double float boolean bool char string String var new return if else for foreach while do switch case break continue try catch finally throw throws extends implements import using namespace async await function fn use readonly true false null this base get set override Task interface').split(' ').forEach(function (k) { KW[k] = 1; });
+  document.querySelectorAll('pre[data-dil] code').forEach(function (c) {
+    var dil = c.parentNode.getAttribute('data-dil'), m = c.textContent, o = '', son = 0, r, kabuk = dil === 'bash' || dil === 'ps';
+    var re = kabuk ? /(#[^\n]*)|("(?:[^"\\\n]|\\.)*"|'[^'\n]*')|\b(\d+)\b/g
+      : /(\/\/[^\n]*|\{\{--[\s\S]*?--\}\}|@\*[\s\S]*?\*@)|("(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*')|(\[[A-Z][A-Za-z]*(?:\([^\]\n]*\))?(?:,\s*[A-Z][A-Za-z]*)*\])|(@[a-z]+)|\b(\d+)\b|\b([A-Za-z_]\w*)\b/g;
+    while ((r = re.exec(m))) {
+      o += kacis(m.slice(son, r.index));
+      var t = kacis(r[0]);
+      if (kabuk) o += r[1] ? '<span class="k-cm">' + t + '</span>' : r[2] ? '<span class="k-st">' + t + '</span>' : '<span class="k-nu">' + t + '</span>';
+      else if (r[1]) o += '<span class="k-cm">' + t + '</span>';
+      else if (r[2]) o += '<span class="k-st">' + t + '</span>';
+      else if (r[3]) o += '<span class="k-at">' + t + '</span>';
+      else if (r[4]) o += '<span class="k-dr">' + t + '</span>';
+      else if (r[5]) o += '<span class="k-nu">' + t + '</span>';
+      else o += KW[r[6]] ? '<span class="k-kw">' + t + '</span>' : t;
+      son = r.index + r[0].length;
+    }
+    c.innerHTML = o + kacis(m.slice(son));
+  });
+
+  ciz(); guncelle();
+  setInterval(guncelle, 30000);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) guncelle(); });
+})();
+</script>
+</body>
+</html>
