@@ -34,7 +34,7 @@ Derleme adımı yok: düz HTML, CSS ve JavaScript; GitHub Pages yayınlar.
 **js/main.js** — tek IIFE; en üstte `CONFIG` (e-posta, GitHub kullanıcı adı, LinkedIn, Formspree adresi, saat dilimi, koordinatlar). Başlatma sırası:
 `initMotion` (hareket tercihi) → `initClock` → `initSky` (güneş konumu + palet → CSS değişkenleri, favicon, theme-color) → `initName` (isim harflerini kutuya oturtur, imlece göre `wdth` akordeonu) → `initRoundSun` → `initReveal` → `initStatement` → `initPreview` → `initMagnetic` → `initStatus` (müşteri sitelerine `no-cors` ölçüm) → `initTerminal` → `initContact` → `loadRepos`.
 
-**Alt sayfalar** (`chen-atolyesi/`, `laravel-vize/`, `python-vize/`, `ntp-vize/`, `mesleki-ingilizce/`, `kalite-kontrol/`, `programlama-temelleri/`, `cpp-temelleri/`, `rehber-vize/`, `sinav-gunu/`, `PROJE/`) kendi stillerini taşır; istenmedikçe dokunma, ana sayfadan bağlantıları koru.
+**Alt sayfalar** (`chen-atolyesi/`, `laravel-vize/`, `python-vize/`, `ntp-vize/`, `mesleki-ingilizce/`, `kalite-kontrol/`, `programlama-temelleri/`, `cpp-temelleri/`, `rehber-vize/`, `sinav-gunu/`, `spam/`, `PROJE/`) kendi stillerini taşır; istenmedikçe dokunma, ana sayfadan bağlantıları koru.
 
 ## Renk sistemi
 
