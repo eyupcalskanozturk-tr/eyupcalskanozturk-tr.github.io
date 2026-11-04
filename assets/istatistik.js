@@ -5,7 +5,7 @@
    (Umami'nin kendi anahtarı: localStorage "umami.disabled"). Her sayfanın <head>'inde bu dosya var. */
 (function () {
   "use strict";
-  var UMAMI_ID = "";
+  var UMAMI_ID = "07708f7a-94d6-4b2d-83fd-ecd1f5cce99f";
   var ALAN = "eyupcalskanozturk-tr.github.io";
   if (!UMAMI_ID || location.hostname !== ALAN) return;
   var s = document.createElement("script");
