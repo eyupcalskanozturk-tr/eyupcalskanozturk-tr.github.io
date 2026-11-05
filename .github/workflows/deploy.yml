@@ -55,6 +55,8 @@ jobs:
           if [ -d sinav-gunu ]; then cp -R sinav-gunu _site/; fi
           # Spam Makinesi · mesaj ve fotoğrafları absürt hızda yağdıran sayfa
           if [ -d spam ]; then cp -R spam _site/; fi
+          # Veri Tabanı I · 1–7. haftaların çözümlü örnekleri (vize)
+          if [ -d veri-tabani ]; then cp -R veri-tabani _site/; fi
       - name: Dosyaları yükle
         uses: actions/upload-pages-artifact@v4
         with:
