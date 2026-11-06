@@ -1,0 +1,8 @@
+Bu klasördeki iki dosya SQLite'ın resmî WebAssembly derlemesidir:
+  npm paketi @sqlite.org/sqlite-wasm 3.53.4-build2 (SQLite 3.53.4)
+  dist/index.mjs  -> sqlite3.mjs
+  dist/sqlite3.wasm -> sqlite3.wasm
+Dosyalar değiştirilmedi. SQLite kamu malıdır (public domain); Emscripten
+yapıştırma kodu MIT / University of Illinois-NCSA lisanslıdır (ayrıntı:
+sqlite3.mjs dosyasının başındaki lisans notu).
+sqlite3.mjs, sqlite3.wasm'ı kendi yanında arar (import.meta.url).
