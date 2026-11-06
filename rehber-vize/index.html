@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta property="og:title" content="Rehber Vize Provası · Görsel Programlama 2">
-<meta property="og:description" content="ASP.NET Core MVC PhoneBookApp kodları üzerinde konu anlatımı, boşluk doldurma alıştırmaları ve karışık vize provası.">
+<meta property="og:description" content="ASP.NET Core MVC PhoneBookApp kodları üzerinde konu anlatımı, boşluk doldurma alıştırmaları, MVC yazılı soruları ve karışık vize provası.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://eyupcalskanozturk-tr.github.io/rehber-vize/">
 <link rel="canonical" href="https://eyupcalskanozturk-tr.github.io/rehber-vize/">
@@ -13,7 +13,7 @@
 <title>Rehber Vize Provası</title>
 <script src="/assets/istatistik.js" defer></script>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Görsel Programlama 2 vize hazırlığı: PhoneBookApp (ASP.NET Core MVC, Entity Framework) kodlarının konu anlatımı, boşluk doldurma alıştırmaları ve karışık sınav.">
+<meta name="description" content="Görsel Programlama 2 vize hazırlığı: PhoneBookApp (ASP.NET Core MVC, Entity Framework) kodlarının konu anlatımı, boşluk doldurma alıştırmaları, rastgele boşluklu kod kâğıtları, örnek cevaplı MVC yazılı soruları ve karışık sınav.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
@@ -198,6 +198,32 @@ button.pill:hover{border-color:var(--bad)}
 footer{font-size:13px;color:var(--muted);line-height:1.5}
 kbd{font:500 12px var(--mono);border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:1px 5px;background:var(--paper)}
 @media (prefers-reduced-motion:no-preference){.blank input{transition:background .15s,border-color .15s}}
+/* MVC soruları */
+.akis{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px}
+.akis li{padding-left:4px;line-height:1.6}
+.akis code,.cevap-sablon code,.yz-cevap p{overflow-wrap:anywhere}
+.akis li::marker{font-weight:700;color:var(--accent)}
+.cevap-sablon{border:1px solid var(--accent);border-left-width:5px;background:var(--paper);border-radius:10px;padding:14px 18px}
+.cevap-sablon p{margin:0;line-height:1.75}
+textarea.yz-yazi,textarea.yz-sinav{width:100%;box-sizing:border-box;font:400 15px/1.6 var(--body);color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px;resize:vertical;min-height:7.5em}
+textarea.yz-yazi:focus,textarea.yz-sinav:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.yz-liste .q.ok{background:var(--ok-soft)}
+.yz-soru{font-weight:600;margin:0}
+.yz-alt{display:flex;gap:8px;flex-wrap:wrap}
+.yz-cevap{border:1px solid var(--line);background:var(--soft);border-radius:10px;padding:12px 14px}
+.yz-cevap b,.yz-noktalar b{display:block;font-size:13px;letter-spacing:.02em;color:var(--accent);margin-bottom:4px}
+.yz-cevap p{margin:0;line-height:1.7;max-width:80ch}
+.yz-noktalar ul{margin:0;padding-left:20px;color:var(--muted)}
+.yz-sonuc{border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:var(--paper)}
+.yz-puan{font-size:14px;margin-bottom:4px}
+.yz-puan b{font:700 18px var(--display)}
+.yz-kontrol{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:4px;font-size:14px}
+.yz-kontrol li{display:flex;gap:8px;align-items:baseline}
+.yz-kontrol li span{font-weight:700;width:1em;flex:none}
+.yz-kontrol li.var{color:var(--ok)}
+.yz-kontrol li.yok{color:var(--muted)}
+.yz-kontrol li.yok i{color:var(--bad);font-style:normal;font-size:12px;font-weight:600}
+.yz-bos{margin:0;color:var(--warn)}
 </style>
 </head>
 <body>
@@ -208,7 +234,7 @@ kbd{font:500 12px var(--mono);border:1px solid var(--line);border-bottom-width:2
       <h1>Rehber Vize <mark>Provası</mark></h1>
     </div>
     <div class="meta">
-      <span class="pill" id="countdown">Sınav 5 Kasım</span>
+      <span class="pill" id="countdown"><b>Vize</b> · kod boşluğu + MVC soruları</span>
       <span class="pill" id="overall">İlerleme <b>%0</b></span>
       <button type="button" class="pill" id="gloss-btn" title="Bütün terimlerin basit anlamları">Sözlük</button>
       <button type="button" class="pill" id="wrongs" title="Yanlış yaptığın boşluklardan sınav">Yanlışlarım <span class="cnt">0</span></button>
@@ -1106,7 +1132,228 @@ Layout'ta kullanıcının adı @User.Identity.⟦Name⟧ ile yazılır.
 Program.cs'teki seed kodu, Teams tablosu boşsa ⟦3|üç||Aile, Arkadaşlar, İş.⟧ ekip ekler.` }
 ]},
 /* ───────────── 8. GENEL PROVA ───────────── */
-{ name:'Genel prova', desc:'Karışık sınav: boşluk + "ne işe yarar"', exam:true }
+/* ───────────── 8. MVC SORULARI ───────────── */
+{ name:'MVC soruları', desc:'"MVC yapısını açıklayınız" gibi yazılı sorular: cevap şablonu, istek akışı, örnek cevaplar',
+lesson:`
+<div class="simple"><b>Sınavda "MVC yapısını açıklayınız" çıkarsa</b><p>Beş parçayı sırayla yaz: <b>1)</b> tanım, <b>2)</b> üç katmanın görevi, <b>3)</b> projeden birer örnek, <b>4)</b> bir isteğin yolculuğu, <b>5)</b> neden MVC. Sayfanın sonundaki cevap şablonu bu sırayla yazıldı. Sonra "Yazılı sorular" alıştırmalarında kendi cümlelerinle dene.</p></div>
+
+<h3>1. Tanım</h3>
+<p><button type="button" class="t" data-t="mvc">MVC</button> (Model–View–Controller), bir uygulamayı üç ayrı sorumluluğa bölen bir <b>tasarım desenidir</b> (mimari desen). <b>Model</b> veriyi ve kurallarını, <b>View</b> kullanıcıya görünen arayüzü, <b>Controller</b> ise gelen isteği karşılayıp Model ile View arasındaki işi yönetir. ASP.NET Core MVC, Microsoft'un bu deseni kullanan web çatısıdır (framework).</p>
+
+<h3>2. Üç katman ve PhoneBookApp'teki karşılıkları</h3>
+<div class="tbl"><table><thead><tr><th>Katman</th><th>Görevi</th><th>Bizim projede</th><th>Klasör</th></tr></thead><tbody>
+<tr><td><b>Model</b></td><td>Verinin yapısı ve doğrulama kuralları. Ekranı bilmez. EF Core her model sınıfından bir tablo oluşturur.</td><td><code>Contacts</code> (Name, PhoneNumber, Email, TeamId), <code>Team</code>; <code>[Required]</code>, <code>[Phone]</code>, <code>[EmailAddress]</code></td><td><code>Models/</code></td></tr>
+<tr><td><b>View</b></td><td>Kullanıcının gördüğü HTML sayfa. <button type="button" class="t" data-t="razor">Razor</button> (.cshtml) ile yazılır, Controller'ın verdiği modeli gösterir; veritabanına gitmez.</td><td><code>Index.cshtml</code> (liste tablosu), <code>Create.cshtml</code> ve <code>Edit.cshtml</code> (formlar), <code>Login.cshtml</code></td><td><code>Views/Contacts/</code>, <code>Views/Shared/</code></td></tr>
+<tr><td><b>Controller</b></td><td>İsteği karşılar, veriyi Model ve DbContext üzerinden alır ya da kaydeder, hangi View'ın açılacağına karar verir. Her public metodu bir <button type="button" class="t" data-t="action">action</button>'dır.</td><td><code>ContactsController</code> (Index, Details, Create, Edit, Delete), <code>AccountController</code> (Login, Logout)</td><td><code>Controllers/</code></td></tr>
+</tbody></table></div>
+<p>Üç katmanın yardımcıları: <code>Data/ApplicationDbContext.cs</code> veritabanı köprüsüdür (<button type="button" class="t" data-t="dbcontext">DbContext</button>), <code>Program.cs</code> servisleri ve adres kuralını (<button type="button" class="t" data-t="route">route</button>) tanımlar, <code>appsettings.json</code> bağlantı adresini tutar, <code>wwwroot/</code> css, js ve resimleri tutar, <code>Migrations/</code> veritabanı değişikliklerini saklar.</p>
+
+<h3>3. Bir isteğin yolculuğu: /Contacts/Edit/5</h3>
+<p>"MVC'de bir istek nasıl işlenir?" sorusunun cevabı budur. Listede bir kişinin <b>Düzenle</b> butonuna basıldığını düşün:</p>
+<ol class="akis">
+<li><b>Tarayıcı</b> <code>GET /Contacts/Edit/5</code> ister. Bu link Index.cshtml'de <code>asp-action="Edit" asp-route-id="@item.Id"</code> ile üretilmişti.</li>
+<li><b>Routing</b>: Program.cs'teki <code>MapControllerRoute</code> kuralı <code>{controller=Contacts}/{action=Index}/{id?}</code> adresi parçalar: controller = Contacts, action = Edit, id = 5.</li>
+<li><b>Yetki</b>: action'ın üstünde <code>[Authorize(Roles = "Admin")]</code> var. Giriş yapılmamışsa cookie ayarındaki <code>/Account/Login</code> sayfasına gidilir.</li>
+<li><b>Controller</b>: <code>ContactsController.Edit(int? id)</code> çalışır ve kişiyi <code>_db.Contacts.FindAsync(id)</code> ile bulur. <b>Model</b> burada devrede: veritabanındaki satır bir <code>Contacts</code> nesnesine dönüşür.</li>
+<li>Action dropdown için <code>ViewBag.Teams</code>'i hazırlar ve <code>return View(c);</code> ile kişiyi <b>View</b>'a model olarak verir.</li>
+<li><b>View</b>: <code>Views/Contacts/Edit.cshtml</code> açılır. <code>@model</code> ve <code>asp-for</code> sayesinde kutular dolu gelir; Razor sonuçta düz HTML üretir ve bu HTML tarayıcıya gönderilir.</li>
+<li>Kullanıcı <b>Güncelle</b>'ye basınca form <code>POST</code> ile gönderilir ve <code>[HttpPost] Edit(Contacts contact)</code> çalışır. Form alanları <b>model binding</b> ile <code>contact</code> nesnesine dolar.</li>
+<li><code>ModelState.IsValid</code> doğruysa <code>_db.Update(contact)</code> ve <code>await _db.SaveChangesAsync()</code> ile kaydedilir, <code>RedirectToAction(nameof(Index))</code> ile listeye dönülür. Geçersizse aynı View hata mesajlarıyla yeniden açılır.</li>
+</ol>
+<div class="lcode"><pre>Tarayıcı ──GET /Contacts/Edit/5──► Routing (Program.cs)
+                                     │ controller=Contacts · action=Edit · id=5
+                                     ▼
+                    ContactsController.Edit(5) ◄──► Model + DbContext ◄──► SQL Server
+                                     │ return View(c)
+                                     ▼
+                    Views/Contacts/Edit.cshtml ──HTML──► Tarayıcı</pre></div>
+
+<h3>4. Adlandırma kuralları</h3>
+<ul>
+<li>Controller sınıfının adı <code>Controller</code> ile biter ve <code>Controller</code> sınıfından türer: <code>ContactsController : Controller</code>. Adreste sonek yazılmaz: <code>/Contacts</code>.</li>
+<li><code>return View()</code> action ile <b>aynı adlı</b> sayfayı, controller ile <b>aynı adlı</b> klasörde arar: <code>ContactsController.Edit</code> → <code>Views/Contacts/Edit.cshtml</code>.</li>
+<li>Bütün sayfaların ortak çerçevesi (menü, başlık) <code>Views/Shared/_Layout.cshtml</code>'dir; sayfanın kendisi <code>@RenderBody()</code> yerine yerleşir. <code>_ViewStart.cshtml</code> bu layout'u her sayfaya uygular.</li>
+<li>Adres kalıbı <code>/Controller/Action/id</code>'dir; id isteğe bağlıdır (<code>{id?}</code>).</li>
+</ul>
+
+<h3>5. Neden MVC?</h3>
+<ul>
+<li><b>Sorumlulukların ayrılması</b> (separation of concerns): her katman tek bir iş yapar; kod düzenli ve okunur olur.</li>
+<li><b>Bakım kolaylığı</b>: tasarım değişince yalnız View, kural değişince yalnız Model değişir.</li>
+<li><b>Ekip çalışması</b>: tasarımcı View'larda, yazılımcı Controller ve Model'de aynı anda çalışabilir.</li>
+<li><b>Test edilebilirlik</b>: Controller ve Model arayüzden bağımsız sınanabilir.</li>
+<li><b>Tekrar kullanım</b>: aynı Model birden çok View'da kullanılır; <code>Contacts</code> hem Index'te hem Edit'te.</li>
+</ul>
+<div class="note"><b>Sık yapılan yanlış</b><span>"View veritabanından veriyi çeker" yazma. View veritabanına gitmez; veriyi Controller DbContext üzerinden alır ve <code>return View(model)</code> ile View'a verir. Model de veritabanının kendisi değildir: bir C# sınıfıdır, EF Core onu tabloya çevirir.</span></div>
+
+<h3>Cevap şablonu: "MVC yapısını açıklayınız"</h3>
+<div class="cevap-sablon"><p>MVC (Model–View–Controller), bir uygulamayı üç katmana ayıran bir tasarım desenidir. <b>Model</b> uygulamanın verisini ve kurallarını temsil eder; projemizde <code>Contacts</code> ve <code>Team</code> sınıfları modeldir, <code>[Required]</code> gibi doğrulama kuralları burada yazılır ve Entity Framework bu sınıflardan tablo oluşturur. <b>View</b> kullanıcının gördüğü arayüzdür; Razor ile yazılan <code>.cshtml</code> dosyalarıdır, örneğin <code>Index.cshtml</code> kişileri tabloda listeler. <b>Controller</b> kullanıcıdan gelen isteği karşılar, gerekli veriyi DbContext üzerinden alır ve hangi View'ın gösterileceğine karar verir; <code>ContactsController</code> içindeki Index, Create, Edit ve Delete metotları birer action'dır. Bir istek geldiğinde routing adresi ilgili controller ve action'a yönlendirir, action veriyi alıp <code>return View(model)</code> ile View'a verir, View de HTML üretip tarayıcıya gönderir. Bu ayrım sayesinde kod düzenli olur, bakımı ve testi kolaylaşır ve ekipte farklı kişiler farklı katmanlarda aynı anda çalışabilir.</p></div>
+`,
+ex:[
+{ title:'Yazılı · MVC yapısı', file:'Yazılı sorular · MVC', kind:'yazili',
+  intro:'Önce kendi cümlelerinle yaz, sonra "Kontrol et": cevabının hangi anahtar noktaları içerdiği işaretlenir. En son örnek cevabı oku. Türkçe karakter kullanmasan da olur.',
+  sorular:[
+    { s:'MVC yapısını açıklayınız. Her katmanın görevini projeden örnekle yazınız.',
+      k:[ ['Model: veriyi ve kurallarını tutar', ['model'], ['veri','data','sinif','class','kural','tablo']],
+          ['View: kullanıcının gördüğü arayüz', ['view'], ['arayuz','gorun','sayfa','ekran','html','kullanici']],
+          ['Controller: isteği karşılar ve yönetir', ['controller'], ['istek','request','yonet','karar','karsila','koordin']],
+          ['Uygulamayı katmanlara / sorumluluklara ayırır', ['ayir','ayri','bol','katman','sorumluluk','separation']],
+          ['Projeden örnek (Contacts, ContactsController, Index.cshtml…)', ['contacts','index.cshtml','cshtml','team','phonebook','rehber']] ],
+      c:'MVC (Model–View–Controller), bir uygulamayı üç katmana ayıran bir tasarım desenidir. Model, uygulamanın verisini ve kurallarını temsil eder; projemizde Contacts ve Team sınıfları modeldir, [Required] gibi doğrulama kuralları burada yazılır ve Entity Framework bu sınıflardan tablo oluşturur. View, kullanıcının gördüğü arayüzdür; Razor ile yazılan .cshtml dosyalarıdır, örneğin Index.cshtml kişileri tabloda listeler. Controller, kullanıcıdan gelen isteği karşılar, gerekli veriyi DbContext üzerinden alır ve hangi View\'ın gösterileceğine karar verir; ContactsController içindeki Index, Create, Edit ve Delete metotları birer action\'dır. Bu ayrım sayesinde kod düzenli olur, bakımı ve testi kolaylaşır.' },
+    { s:'Model katmanı nedir, ne işe yarar? PhoneBookApp\'ten örnek veriniz.',
+      k:[ ['Verinin yapısını tanımlayan sınıf', ['sinif','class'], ['veri','property','ozellik','alan']],
+          ['Doğrulama kuralları ([Required], [Phone]…)', ['required','dogrulama','validation','annotation','phone','emailaddress','stringlength']],
+          ['EF Core modelden tablo oluşturur', ['tablo','veritaban','entity','sutun']],
+          ['Projeden örnek: Contacts ya da Team', ['contacts','team']] ],
+      c:'Model, uygulamanın verisini temsil eden C# sınıflarıdır; "bir kayıtta hangi bilgiler var?" sorusunun cevabıdır. Her property bir bilgiyi tutar; Entity Framework Core her model sınıfından veritabanında bir tablo, her property\'den bir sütun oluşturur. Doğrulama kuralları da modelde attribute olarak yazılır. Projemizde Contacts sınıfı modeldir: Id, Name, PhoneNumber, Email ve TeamId alanları vardır; Name için [Required] ve [StringLength(100)], telefon için [Phone], e-posta için [EmailAddress] kuralı yazılmıştır. Team sınıfı da ekipleri tutar. Model ekranı bilmez; aynı model hem liste hem form sayfasında kullanılır.' },
+    { s:'Controller nedir? Action ne demektir?',
+      k:[ ['Gelen isteği karşılar', ['istek','request','karsila']],
+          ['Veriyi Model / DbContext ile alır ya da kaydeder', ['veri','dbcontext','_db','veritaban']],
+          ['Hangi View açılacak, karar verir / sonuç döndürür', ['view','sonuc','return','iactionresult','yonlendir']],
+          ['Action: controller içindeki public metot', ['action'], ['metot','metod','method','fonksiyon']],
+          ['Adı Controller ile biter, Controller sınıfından türer', ['contactscontroller','accountcontroller','ile biter','turer','miras',': controller']] ],
+      c:'Controller, MVC\'de kullanıcıdan gelen isteği karşılayan katmandır. İsteğe göre veriyi Model ve DbContext üzerinden veritabanından alır ya da kaydeder, sonra hangi sayfanın gösterileceğine karar verip bir sonuç döndürür (View, RedirectToAction, NotFound; ortak türü IActionResult). Controller içindeki her public metoda action denir ve her action bir adrese karşılık gelir: ContactsController\'daki Edit metodu /Contacts/Edit adresidir. Controller sınıflarının adı Controller ile biter ve Controller sınıfından türer (ContactsController : Controller). Projede ContactsController ekleme, listeleme, düzenleme ve silme action\'larını, AccountController giriş ve çıkış action\'larını içerir.' },
+    { s:'View nedir? Razor ne işe yarar?',
+      k:[ ['Kullanıcının gördüğü arayüz / HTML sayfa', ['arayuz','sayfa','ekran','html','gorun']],
+          ['.cshtml dosyası, Views klasöründe', ['cshtml','views']],
+          ['Razor: HTML içinde @ ile C# yazmak', ['razor','@'], ['c#','csharp','kod','html']],
+          ['@model ile Controller\'ın verdiği veriyi gösterir', ['model'], ['controller','veri','gonder','goster']],
+          ['Veritabanına gitmez, iş kuralı içermez', ['veritaban','mantik','hesap','sadece goster','yalnizca goster','is kural']] ],
+      c:'View, kullanıcının ekranda gördüğü arayüzdür; tarayıcıya giden HTML sayfayı üretir. ASP.NET Core MVC\'de View\'lar Views klasöründe .cshtml uzantılı dosyalardır ve Razor ile yazılır. Razor, HTML\'in içine @ işaretiyle C# kodu yazmayı sağlayan sözdizimidir: @model ile sayfaya gelen verinin türü bildirilir, @foreach ile liste döndürülür, @item.Name ile değer yazdırılır. View veritabanına bağlanmaz ve iş kuralı içermez; Controller\'ın return View(model) ile verdiği modeli gösterir. Projede Index.cshtml kişileri tabloda listeler, Create.cshtml ve Edit.cshtml formları gösterir, ortak menü Shared/_Layout.cshtml\'dedir.' },
+    { s:'MVC\'de bir istek nasıl işlenir? /Contacts/Edit/5 örneğiyle sırayla anlatınız.',
+      k:[ ['Routing adresi controller ve action\'a çözer', ['rout','mapcontrollerroute','adres kural','yonlendirme kural']],
+          ['ContactsController\'ın Edit action\'ı çalışır', ['edit'], ['controller','action']],
+          ['Veri DbContext / Model ile bulunur (FindAsync)', ['findasync','dbcontext','_db','veritaban']],
+          ['return View(c) ile View\'a model verilir', ['return view','view(']],
+          ['View HTML üretip tarayıcıya gönderir', ['html','tarayici']],
+          ['Form POST ile döner, kaydedilir, listeye yönlendirilir', ['post'], ['savechanges','kaydet','redirecttoaction','yonlendir','update','guncelle']] ],
+      c:'1) Tarayıcı GET /Contacts/Edit/5 isteğini gönderir. 2) Program.cs\'teki MapControllerRoute kuralı ({controller=Contacts}/{action=Index}/{id?}) adresi parçalar: controller Contacts, action Edit, id 5 olur. 3) [Authorize(Roles = "Admin")] nedeniyle giriş yapılmamışsa Login sayfasına yönlendirilir. 4) ContactsController\'ın Edit(int? id) action\'ı çalışır, kişiyi _db.Contacts.FindAsync(id) ile veritabanından bulur; satır bir Contacts modeline dönüşür. 5) return View(c) ile model Views/Contacts/Edit.cshtml\'e verilir. 6) View, Razor ile HTML üretir ve tarayıcıya gönderir; kutular dolu gelir. 7) Kullanıcı Güncelle\'ye basınca form POST ile gönderilir, [HttpPost] Edit action\'ı çalışır; ModelState.IsValid ise _db.Update ve SaveChangesAsync ile kaydedilir ve RedirectToAction(nameof(Index)) ile listeye dönülür.' },
+    { s:'MVC kullanmanın faydaları nelerdir?',
+      k:[ ['Sorumlulukların ayrılması', ['sorumluluk','separation','ayri','ayir']],
+          ['Düzenli kod, kolay bakım', ['bakim','duzen','okunabil','okunur']],
+          ['Ekip çalışması (aynı anda farklı katmanlar)', ['ekip','takim','ayni anda','paralel','tasarimci']],
+          ['Test edilebilirlik', ['test']],
+          ['Tekrar kullanım (aynı model farklı View\'larda)', ['tekrar kullan','yeniden kullan','birden fazla view','birden cok view','farkli view']] ],
+      c:'MVC sorumlulukları ayırır (separation of concerns): veri Model\'de, ekran View\'da, akış Controller\'da durur. Bu yüzden kod düzenli ve okunur olur, bakımı kolaylaşır: tasarım değişince yalnız View, kural değişince yalnız Model değiştirilir. Ekip çalışmasını kolaylaştırır; tasarımcı View\'larda, yazılımcı Controller ve Model\'de aynı anda çalışabilir. Katmanlar ayrı olduğu için Controller ve Model arayüzden bağımsız test edilebilir. Aynı model birden çok View\'da tekrar kullanılabilir; Contacts modeli hem liste hem düzenleme sayfasında kullanılır.' }
+  ] },
+{ title:'Yazılı · Controller ve View', file:'Yazılı sorular · Controller, View', kind:'yazili',
+  intro:'Routing, GET/POST, ViewBag, tag helper, doğrulama ve action sonuçları. Önce yaz, sonra kontrol et.',
+  sorular:[
+    { s:'Routing nedir? Projedeki varsayılan route şablonunu yazıp açıklayınız.',
+      k:[ ['Adresin hangi controller ve action\'a gideceğini belirler', ['adres','url'], ['controller','action']],
+          ['Program.cs\'te MapControllerRoute ile tanımlanır', ['mapcontrollerroute','program.cs']],
+          ['Şablon: {controller=Contacts}/{action=Index}/{id?}', ['{controller'], ['{action']],
+          ['Boş adreste Contacts/Index açılır (varsayılan)', ['varsayilan','default','bos adres','controller=contacts']],
+          ['id? isteğe bağlıdır', ['istege bagli','opsiyonel','optional','id?','zorunlu degil']] ],
+      c:'Routing (yönlendirme), gelen adresin hangi controller\'ın hangi action\'ına gideceğini belirleyen mekanizmadır. Projede Program.cs\'te app.MapControllerRoute ile tanımlanmıştır: name: "default", pattern: "{controller=Contacts}/{action=Index}/{id?}". Adresin ilk parçası controller, ikinci parçası action, üçüncüsü id değeridir; /Contacts/Edit/5 adresi ContactsController\'ın Edit action\'ını id = 5 ile çalıştırır. Eşittir işaretinden sonrakiler varsayılan değerlerdir: adres boşsa Contacts controller\'ının Index action\'ı açılır. id? içindeki soru işareti id\'nin isteğe bağlı olduğunu gösterir.' },
+    { s:'GET ve POST arasındaki fark nedir? Neden iki tane Create action\'ı vardır?',
+      k:[ ['GET sayfayı / boş formu açar', ['get'], ['ac','iste','getir','goster','bos form']],
+          ['POST form verisini sunucuya gönderir', ['post'], ['gonder','form','kaydet']],
+          ['[HttpGet] ve [HttpPost] attribute\'leri', ['httpget','httppost']],
+          ['Biri boş formu açar, diğeri kaydeder', ['bos'], ['kaydet','ekle','savechanges']],
+          ['[ValidateAntiForgeryToken] ile CSRF koruması', ['antiforgery','csrf','guvenlik','token']] ],
+      c:'GET, sunucudan bir sayfa ya da veri istemek için kullanılır; adres çubuğuna yazılan adresler ve linkler GET isteğidir. POST ise formdaki verileri sunucuya göndermek için kullanılır; veri adreste değil isteğin gövdesinde gider. Bu yüzden Create için iki action vardır: [HttpGet] Create() boş formu açar (ekip listesini ViewBag.Teams\'e koyup View döndürür), [HttpPost] Create(Contacts contact) ise "Oluştur" butonuna basılınca formdan gelen kişiyi alır, ModelState.IsValid ile doğrular, _db.Add ve SaveChangesAsync ile kaydeder ve listeye yönlendirir. POST action\'ındaki [ValidateAntiForgeryToken] formun gerçekten bizim sitemizden geldiğini doğrular (CSRF koruması).' },
+    { s:'ViewBag nedir? Projede nerede ve neden kullanıldı?',
+      k:[ ['Controller\'dan View\'a veri taşır', ['controller'], ['view'], ['tasi','gonder','aktar','ilet']],
+          ['Modelin dışındaki ek (dinamik) veri', ['dinamik','dynamic','ek veri','model disi','modelin disinda','ekstra']],
+          ['ViewBag.Teams = new SelectList(...)', ['teams','selectlist']],
+          ['View\'da asp-items ile dropdown doldurulur', ['asp-items','dropdown','acilir','select']] ],
+      c:'ViewBag, Controller\'dan View\'a modelin dışında ek veri taşımak için kullanılan dinamik bir nesnedir. Projede kişi ekleme ve düzenleme formlarındaki ekip açılır listesi (dropdown) için kullanılır: Controller\'da ViewBag.Teams = new SelectList(_db.Teams, "Id", "Name") ile ekip listesi hazırlanır, View\'da <select asp-for="TeamId" asp-items="ViewBag.Teams"> ile seçenekler doldurulur. Edit\'te SelectList\'in dördüncü parametresi (c.TeamId) kişinin mevcut ekibini seçili getirir. Login\'de hata mesajı da ViewBag.Error ile taşınır. Benzer yapı ViewData ise anahtar–değer sözlüğüdür: ViewData["Title"].' },
+    { s:'Tag helper nedir? Projeden örnekler veriniz.',
+      k:[ ['HTML etiketine eklenen asp- özellikleri', ['html','etiket'], ['asp-','ozellik','attribute']],
+          ['asp-for: kutuyu model alanına bağlar', ['asp-for']],
+          ['asp-action / asp-controller / asp-route-id: adres', ['asp-action','asp-controller','asp-route']],
+          ['asp-validation-for: hata mesajı', ['asp-validation']],
+          ['Sunucuda çalışır, normal HTML\'e dönüşür', ['sunucu','server','donusur','html uret']] ],
+      c:'Tag helper\'lar, Razor sayfalarında HTML etiketlerine eklenen ve sunucuda çalışan asp- ile başlayan özelliklerdir; sayfa üretilirken normal HTML\'e dönüşürler. asp-for bir input\'u ya da label\'ı modeldeki alana bağlar (asp-for="Name" kutunun id, name ve doğrulama bilgilerini otomatik üretir). asp-action ve asp-controller link ya da formun gideceği action\'ı belirler (asp-action="Create"); asp-route-id adrese id ekler (/Contacts/Details/5). asp-validation-for bir alanın hata mesajını, asp-validation-summary bütün hataları gösterir; asp-items dropdown seçeneklerini ViewBag.Teams\'ten doldurur.' },
+    { s:'Model binding ve model doğrulama (validation) nasıl çalışır?',
+      k:[ ['Form alanları otomatik olarak nesneye dolar', ['binding','otomatik','doldur','bagla'], ['form','alan','parametre','nesne']],
+          ['Create(Contacts contact) parametresi', ['contacts contact','parametre']],
+          ['[Required], [Phone], [EmailAddress] kuralları', ['required','phone','emailaddress','stringlength','annotation']],
+          ['ModelState.IsValid ile kontrol edilir', ['modelstate','isvalid']],
+          ['Geçersizse form hata mesajlarıyla geri gelir', ['hata'], ['view','mesaj','geri','tekrar']] ],
+      c:'Model binding, formdan gelen alanların action\'ın parametresindeki nesneye otomatik olarak doldurulmasıdır: Create(Contacts contact) action\'ında formdaki Name, PhoneNumber, Email ve TeamId kutuları kendiliğinden contact nesnesinin aynı adlı property\'lerine yazılır. Model doğrulama ise modelde attribute olarak yazılan kurallarla yapılır: [Required] zorunlu alan, [StringLength(100)] uzunluk, [Phone] telefon, [EmailAddress] e-posta biçimi. Controller\'da ModelState.IsValid ile kuralların sağlanıp sağlanmadığı kontrol edilir; geçersizse return View(contact) ile form, girilen değerler ve asp-validation-for hata mesajlarıyla yeniden gösterilir; geçerliyse kayıt yapılır.' },
+    { s:'return View(), RedirectToAction ve NotFound ne işe yarar? IActionResult nedir?',
+      k:[ ['View(): .cshtml sayfasını açar, model gönderir', ['view'], ['sayfa','cshtml','ac','model']],
+          ['RedirectToAction: başka action\'a yönlendirir', ['redirecttoaction'], ['yonlendir','baska','index']],
+          ['NotFound: 404 döndürür', ['notfound','404','bulunamad']],
+          ['IActionResult: ortak dönüş türü', ['iactionresult'], ['tur','tip','sonuc','donus','donen']] ],
+      c:'Action\'lar bir sonuç döndürür; bu sonuçların ortak türü IActionResult\'tır (async action\'larda Task<IActionResult>). return View() action ile aynı adlı .cshtml sayfasını açar; return View(list) gibi bir değer verilirse o değer sayfaya model olarak gider. return RedirectToAction(nameof(Index)) tarayıcıyı başka bir action\'a yönlendirir; ekleme, düzenleme ve silmeden sonra listeye dönmek için kullanılır. return NotFound() 404 "bulunamadı" sonucu döndürür; projede id boş geldiğinde ya da kişi bulunamadığında kullanılır.' }
+  ] },
+{ title:'Yazılı · Model, veri, proje', file:'Yazılı sorular · EF Core, DI, yetki', kind:'yazili',
+  intro:'Entity Framework, migration, bağlantı adresi, dependency injection, CRUD ve giriş sistemi.',
+  sorular:[
+    { s:'Entity Framework Core nedir? DbContext ve DbSet ne işe yarar?',
+      k:[ ['EF Core: SQL yazmadan C# ile veritabanı (ORM)', ['orm','sql yazmadan','nesne','c# ile','c# sinif'], ['veritaban','tablo']],
+          ['DbContext: veritabanıyla köprü', ['dbcontext'], ['kopru','baglanti','veritaban']],
+          ['DbSet: bir tabloyu temsil eder', ['dbset'], ['tablo']],
+          ['Projede ApplicationDbContext / _db', ['applicationdbcontext','_db']],
+          ['SaveChangesAsync değişiklikleri yazar', ['savechanges']] ],
+      c:'Entity Framework Core, Microsoft\'un ORM (nesne–ilişkisel eşleme) aracıdır: veritabanı işlemlerini SQL yazmadan C# sınıfları ve LINQ ile yapmayı sağlar. DbContext, uygulama ile veritabanı arasındaki köprüdür; projede Data/ApplicationDbContext.cs dosyasındaki ApplicationDbContext sınıfıdır ve DbContext sınıfından türer. DbSet bir tabloyu temsil eder: DbSet<Contacts> Contacts ve DbSet<Team> Teams satırları Contacts ve Teams tablolarını oluşturur. Controller\'da _db.Contacts üzerinden sorgu yapılır, Add, Update, Remove ile değişiklik işaretlenir ve SaveChangesAsync() ile veritabanına yazılır.' },
+    { s:'Migration nedir? Hangi komutlar kullanılır?',
+      k:[ ['Modeldeki değişikliği veritabanına aktarır', ['model','sinif'], ['veritaban','tablo']],
+          ['Add-Migration ile oluşturulur', ['add-migration']],
+          ['Update-Database ile uygulanır', ['update-database']],
+          ['Migrations klasörü / sürüm geçmişi', ['migrations','surum','gecmis','versiyon']],
+          ['Paket Yöneticisi Konsolu\'nda yazılır', ['konsol','console','package manager','paket yonetici']] ],
+      c:'Migration, modellerde (C# sınıflarında) yapılan değişikliklerin veritabanına aktarılmasını sağlayan EF Core özelliğidir; bir bakıma veritabanının sürüm geçmişidir. Visual Studio\'da Paket Yöneticisi Konsolu\'nda (Package Manager Console) önce Add-Migration InitialCreate gibi bir adla migration oluşturulur; bu komut Migrations klasörüne tabloları oluşturacak kodu yazar. Sonra Update-Database komutu bu değişikliği veritabanına uygular ve tablolar oluşur. Modele yeni bir alan eklendiğinde yeniden Add-Migration ve Update-Database çalıştırılır.' },
+    { s:'Connection string nedir? Projede nerede tanımlanır ve nasıl kullanılır?',
+      k:[ ['Veritabanının adresi / bağlantı bilgisi', ['adres','baglanti','sunucu','server']],
+          ['appsettings.json dosyasında durur', ['appsettings']],
+          ['ConnectionStrings → DefaultConnection', ['defaultconnection','connectionstrings']],
+          ['Program.cs: GetConnectionString + UseSqlServer', ['getconnectionstring','usesqlserver','adddbcontext']] ],
+      c:'Connection string (bağlantı adresi), uygulamanın hangi sunucudaki hangi veritabanına bağlanacağını söyleyen metindir. Projede appsettings.json dosyasında "ConnectionStrings" bölümünde "DefaultConnection" adıyla tutulur; Server=(localdb)\\mssqllocaldb ile Visual Studio\'nun yerel SQL Server\'ı, Database=PhoneBookDb ile veritabanının adı verilir. Program.cs\'te builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))) satırıyla okunur ve DbContext\'e verilir.' },
+    { s:'Dependency injection (bağımlılık enjeksiyonu) nedir? Projede nerede kullanılır?',
+      k:[ ['Nesne new ile oluşturulmaz, dışarıdan verilir', ['disaridan','otomatik','new ile','olusturmaz','enjekte','verilir']],
+          ['Program.cs\'te servis olarak kaydedilir (AddDbContext)', ['adddbcontext','services','servis']],
+          ['Constructor parametresiyle alınır', ['constructor','yapici','kurucu']],
+          ['_db alanında saklanır (ApplicationDbContext)', ['_db','applicationdbcontext','readonly']] ],
+      c:'Dependency injection, bir sınıfın ihtiyaç duyduğu nesneyi kendisinin new ile oluşturmayıp dışarıdan, çatı tarafından otomatik olarak almasıdır. Projede Program.cs\'te builder.Services.AddDbContext<ApplicationDbContext>(...) satırıyla DbContext servis olarak kaydedilir. ContactsController\'ın constructor\'ı ApplicationDbContext db parametresi ister; ASP.NET Core her istekte bu nesneyi oluşturup constructor\'a verir ve controller onu private readonly ApplicationDbContext _db alanında saklar. Böylece controller bağlantının nasıl kurulduğunu bilmek zorunda kalmaz.' },
+    { s:'CRUD nedir? PhoneBookApp\'te hangi action\'lara karşılık gelir?',
+      k:[ ['Create: ekleme (Create)', ['create'], ['ekle','olustur']],
+          ['Read: okuma / listeleme (Index, Details)', ['read'], ['index','details','listele','oku','goruntule']],
+          ['Update: güncelleme (Edit)', ['update'], ['edit','duzenle','guncelle']],
+          ['Delete: silme (Delete)', ['delete'], ['sil']] ],
+      c:'CRUD, bir veri üzerinde yapılan dört temel işlemin baş harfleridir: Create (ekleme), Read (okuma, listeleme), Update (güncelleme) ve Delete (silme). PhoneBookApp\'te Create işlemi ContactsController\'daki Create action\'ları (GET boş form, POST kaydetme), Read işlemi Index (bütün kişileri listeleme) ve Details (tek kişiyi gösterme), Update işlemi Edit action\'ları, Delete işlemi Delete action\'ıdır. Veritabanı tarafında bunlar _db.Add, sorgular (ToListAsync, FindAsync), _db.Update ve _db.Remove ile yapılır ve SaveChangesAsync ile kaydedilir.' },
+    { s:'Authentication ile authorization farkı nedir? Projede nasıl kullanıldı?',
+      k:[ ['Authentication: kimlik doğrulama ("kimsin?", giriş)', ['authentication','kimlik dogrulama'], ['kim','giris','dogrula','tani']],
+          ['Authorization: yetkilendirme ("yetkin var mı?")', ['authorization','yetkilendirme'], ['yetki','izin','rol']],
+          ['Cookie ile giriş (AddCookie, SignInAsync)', ['cookie','cerez','signinasync','addcookie']],
+          ['[Authorize(Roles = "Admin")]', ['authorize'], ['admin','roles','rol']],
+          ['UseAuthentication, UseAuthorization\'dan önce', ['useauthentication']] ],
+      c:'Authentication (kimlik doğrulama) "kimsin?" sorusudur: kullanıcının kim olduğunun anlaşılmasıdır. Authorization (yetkilendirme) ise "buna yetkin var mı?" sorusudur: kimliği belli kullanıcının bir sayfayı açıp açamayacağına karar verilir. Projede cookie ile giriş yapılır: AccountController\'da kullanıcı adı ve şifre doğruysa ad ve rol bilgisi Claim olarak eklenir ve HttpContext.SignInAsync ile cookie oluşturulur (admin/123 Admin, user/123 User). Yetki için [Authorize] ve [Authorize(Roles = "Admin")] kullanılır: listeyi giriş yapan herkes görür, ekleme, düzenleme ve silmeyi yalnız Admin yapar. Program.cs\'te AddAuthentication().AddCookie ile sistem eklenir ve app.UseAuthentication() mutlaka app.UseAuthorization()\'dan önce yazılır.' }
+  ] },
+{ title:'MVC kavramları', file:'MVC boşlukları', kind:'text', ci:true,
+  intro:'MVC yapısı sorularında geçen kelimeler. Tek kelimeyle doldur.',
+  body:String.raw`MVC deseninde veriyi ve doğrulama kurallarını tutan katman ⟦Model||Projede Contacts ve Team sınıfları.⟧'dir.
+Kullanıcının gördüğü HTML sayfayı üreten katman ⟦View||Views klasöründeki .cshtml dosyaları.⟧'dır.
+Gelen isteği karşılayıp hangi sayfanın açılacağına karar veren katman ⟦Controller||ContactsController, AccountController.⟧'dır.
+MVC'nin işi üç parçaya bölmesine ⟦sorumlulukların ayrılması|separation of concerns|sorumlulukların ayrımı||Her katman tek bir iş yapar.⟧ denir.
+Controller sınıfları ⟦Controllers⟧ klasöründe, sayfalar ⟦Views⟧ klasöründe, modeller ⟦Models⟧ klasöründe durur.
+ContactsController'daki Edit action'ı return View() ile Views/⟦Contacts⟧/⟦Edit⟧.cshtml dosyasını açar.
+View dosyalarının uzantısı ⟦.cshtml|cshtml⟧'dir; HTML içinde @ ile C# yazmaya ⟦Razor⟧ denir.
+Bütün sayfaların ortak çerçevesi Views/Shared/⟦_Layout||Sayfanın içeriği bu dosyadaki @RenderBody() yerine yerleşir.⟧.cshtml dosyasıdır.
+Adresin hangi controller ve action'a gideceğini belirleyen mekanizmaya ⟦routing|yönlendirme|yonlendirme|route||Program.cs'teki MapControllerRoute.⟧ denir.
+/Contacts/Edit/5 adresinde Contacts ⟦controller⟧, Edit ⟦action⟧, 5 ise ⟦id⟧ değeridir.
+Formdan gelen alanların action parametresindeki nesneye kendiliğinden dolmasına ⟦model binding|binding||Create(Contacts contact) parametresi böyle dolar.⟧ denir.
+View veritabanına doğrudan ⟦bağlanmaz|baglanmaz|erişmez|erismez|gitmez||Veriyi Controller'dan model olarak alır.⟧; veriyi Controller'dan model olarak alır.
+Controller'ın döndürdüğü sonuçların ortak türü ⟦IActionResult⟧'tır.
+css, js ve resim gibi statik dosyalar ⟦wwwroot||app.UseStaticFiles() bu klasörü sunar.⟧ klasöründe durur.` },
+{ title:'İsteğin yolculuğu', file:'/Contacts/Edit/5 akışı', kind:'text', ci:true,
+  intro:'Bir isteğin baştan sona yolu. Sırayı ezberlemek "MVC nasıl çalışır?" sorusunu çözer.',
+  body:String.raw`Tarayıcı /Contacts/Edit/5 adresini ister; istek önce Program.cs'teki ⟦MapControllerRoute|routing|route||{controller=Contacts}/{action=Index}/{id?} kuralı.⟧ kuralına gelir.
+Kural sayesinde ⟦ContactsController⟧ sınıfının ⟦Edit⟧ metodu çalışır ve id = ⟦5⟧ olur.
+Action'da [Authorize(Roles = "Admin")] olduğu için giriş yapmamış kullanıcı ⟦/Account/Login|Login|Account/Login||Cookie ayarındaki LoginPath.⟧ sayfasına yönlendirilir.
+Action kişiyi _db.Contacts.⟦FindAsync||Primary Key ile arar.⟧(id) ile veritabanından bulur.
+return ⟦View⟧(c); satırı kişiyi Edit.cshtml'e ⟦model⟧ olarak gönderir.
+View, @model ve ⟦asp-for||Kutuları modeldeki alanlara bağlayan tag helper.⟧ ile kutuları doldurur; üretilen ⟦HTML⟧ tarayıcıya gider.
+Güncelle'ye basılınca form ⟦POST⟧ ile gönderilir ve [HttpPost] Edit çalışır.
+Gelen alanlar ⟦model binding|binding⟧ ile Contacts nesnesine dolar; kurallar ⟦ModelState.IsValid|IsValid|ModelState⟧ ile kontrol edilir.
+_db.⟦Update⟧(contact) ve await _db.⟦SaveChangesAsync⟧() ile değişiklik kaydedilir.
+return ⟦RedirectToAction⟧(nameof(Index)); ile liste sayfasına dönülür.` }
+]},
+
+{ name:'Genel prova', desc:'Karışık sınav: boşluk + "ne işe yarar" + yazılı MVC', exam:true }
 ];
 
 /* ───────────── sözlük ───────────── */
@@ -1268,9 +1515,7 @@ function levelPct(li){ const L = LEVELS[li]; if (L.exam) return S.examBest || 0;
 let cur = null, exam = null;
 
 function renderTop(){
-  const today = new Date(); today.setHours(0,0,0,0);
-  const days = Math.round((new Date(2026, 10, 5) - today) / 864e5);
-  document.getElementById('countdown').innerHTML = days > 1 ? 'Sınava <b>' + days + ' gün</b>' : days === 1 ? '<b>Sınav yarın</b>' : days === 0 ? '<b>Sınav bugün</b>' : 'Sınav 5 Kasım';
+  document.getElementById('countdown').innerHTML = '<b>Vize</b> · kod boşluğu + MVC soruları';
   const pct = Math.round(LEVELS.reduce((a, _, i) => a + levelPct(i), 0) / LEVELS.length * 100);
   document.getElementById('overall').innerHTML = 'İlerleme <b>%' + pct + '</b>';
   document.querySelector('#wrongs .cnt').textContent = Object.keys(S.wrong).length;
@@ -1309,8 +1554,11 @@ function renderLesson(){
 
 function renderExercise(){
   const li = S.level, ei = currentTab(), E = LEVELS[li].ex[ei];
-  const { text, blanks } = parse(E);
+  if (E.kind === 'yazili') return renderYazili(li, ei, E);
+  let { text, blanks } = parse(E);
   const view = S.view[exKey(li, ei)] || 'oku';
+  const rnd = view === 'coz' && E.kind === 'code' && !!rastgele && rastgele.key === exKey(li, ei);
+  if (rnd) ({ text, blanks } = rastgele);
   const active = [];
   let body;
   if (view === 'oku') {
@@ -1333,17 +1581,20 @@ function renderExercise(){
       ? '<div class="code"><pre>' + highlight(text, E.lang).replace(PHRE, (_, i) => blankHtml(+i)) + '</pre></div>'
       : '<ol class="tlist">' + text.split('\n').map(l => '<li>' + esc(l).replace(PHRE, (_, i) => blankHtml(+i)) + '</li>').join('') + '</ol>');
     body = '<div id="sheet">' + body + '</div>' +
-      '<div class="actions"><button type="button" class="btn primary" id="act-check">Kontrol et</button><button type="button" class="btn" id="act-hint">İpucu</button><button type="button" class="btn" id="act-show">Cevapları göster</button><button type="button" class="btn" id="act-clear">Temizle</button><span class="status" id="status" aria-live="polite">' + active.length + ' boşluk</span></div>' +
+      '<div class="actions"><button type="button" class="btn primary" id="act-check">Kontrol et</button><button type="button" class="btn" id="act-hint">İpucu</button><button type="button" class="btn" id="act-show">Cevapları göster</button><button type="button" class="btn" id="act-clear">Temizle</button>' +
+      (E.kind === 'code' ? '<button type="button" class="btn" id="act-rand" title="Aynı kodda başka yerleri boşluk yapar; hoca hangi kelimeyi silerse sil hazır ol.">' + (rnd ? 'Başka boşluklar' : 'Yeni boşluklar') + '</button>' + (rnd ? '<button type="button" class="btn" id="act-orig">Asıl boşluklar</button>' : '') : '') +
+      '<span class="status" id="status" aria-live="polite">' + active.length + ' boşluk' + (rnd ? ' · rastgele, ilerlemeye sayılmaz' : '') + '</span></div>' +
       '<div id="results"></div>';
   }
   document.getElementById('card').innerHTML =
     '<div class="card-head"><div class="row"><span class="file">' + esc(E.file) + '</span><span class="eyebrow">Seviye ' + li + ' · Alıştırma ' + (ei + 1) + '/' + LEVELS[li].ex.length + '</span>' +
     '<div class="seg" role="group" aria-label="Görünüm"><button type="button" data-view="coz" aria-pressed="' + (view === 'coz') + '">Çöz</button><button type="button" data-view="oku" aria-pressed="' + (view === 'oku') + '">Oku</button></div></div>' +
     '<h2>' + esc(E.title) + '</h2><p class="intro">' + esc(E.intro) + '</p></div>' + body;
-  cur = view === 'coz' ? { li, ei, E, active, ci: !!E.ci, shown:false } : null;
+  cur = view === 'coz' ? { li, ei, E, active, ci: !!E.ci, shown:false, rnd } : null;
 }
 
 function check(){
+  if (cur && cur.yazili) return yaziliKontrol();
   const inputs = [...document.querySelectorAll('#sheet input')];
   let ok = 0;
   const rows = cur.active.map((b, i) => {
@@ -1351,7 +1602,7 @@ function check(){
     inp.classList.remove('ok','bad','case','shown');
     const st = cur.shown ? 'shown' : grade(b, val, cur.ci);
     if (st === 'ok') ok++;
-    if (!cur.shown) markWrong(cur.li, cur.ei, b.bi, st);
+    if (!cur.shown && !cur.rnd) markWrong(cur.li, cur.ei, b.bi, st);
     inp.classList.add(st);
     const label = { ok:'Doğru', bad: val.trim() ? 'Yanlış' : 'Boş', case:'Harf hatası', shown:'Gösterildi' }[st];
     const yours = (st === 'bad' && val.trim()) || st === 'case' ? '<span class="yours">Senin cevabın: <s>' + esc(val.trim()) + '</s></span>' : '';
@@ -1362,10 +1613,12 @@ function check(){
   const total = cur.active.length, st = document.getElementById('status');
   if (cur.shown) st.innerHTML = 'Cevaplar gösterildi. <b>Temizle</b> ile kendin dene.';
   else {
-    st.innerHTML = '<b>' + ok + ' / ' + total + '</b> doğru';
-    const k = exKey(cur.li, cur.ei);
-    S.best[k] = S.best[k] || {};
-    S.best[k][S.mode] = Math.max(S.best[k][S.mode] || 0, total ? ok / total : 0);
+    st.innerHTML = '<b>' + ok + ' / ' + total + '</b> doğru' + (cur.rnd ? ' · rastgele boşluklar' : '');
+    if (!cur.rnd) {
+      const k = exKey(cur.li, cur.ei);
+      S.best[k] = S.best[k] || {};
+      S.best[k][S.mode] = Math.max(S.best[k][S.mode] || 0, total ? ok / total : 0);
+    }
   }
   persist();
   const L = LEVELS[cur.li];
@@ -1399,10 +1652,132 @@ function next(){
   else go(cur.li + 1, 'konu');
 }
 
+/* ───────────── yazılı sorular ───────────── */
+const katla = s => String(s).toLocaleLowerCase('tr-TR').replace(/[çğıöşüâîû]/g, c => ({'ç':'c','ğ':'g','ı':'i','ö':'o','ş':'s','ü':'u','â':'a','î':'i','û':'u'}[c])).replace(/\s+/g, ' ');
+function kapsam(q, metin){
+  const t = katla(metin);
+  return q.k.map(([etiket, ...gruplar]) => ({ etiket, var: t.trim() !== '' && gruplar.every(g => g.some(a => t.includes(katla(a)))) }));
+}
+const kontrolListesi = sonuc => '<ul class="yz-kontrol">' + sonuc.map(r => '<li class="' + (r.var ? 'var' : 'yok') + '"><span aria-hidden="true">' + (r.var ? '✓' : '○') + '</span>' + esc(r.etiket) + (r.var ? '' : ' <i>eksik</i>') + '</li>').join('') + '</ul>';
+function yaziliHavuz(){
+  const out = [];
+  LEVELS.forEach((L, li) => (L.ex || []).forEach((E, ei) => { if (E.kind === 'yazili') E.sorular.forEach((q, qi) => out.push({ li, ei, qi, q, E })); }));
+  return out;
+}
+function renderYazili(li, ei, E){
+  S.yaz = S.yaz || {};
+  const view = S.view[exKey(li, ei)] || 'coz';
+  let body;
+  if (view === 'oku') {
+    body = '<ol class="qlist yz-liste">' + E.sorular.map((q, qi) =>
+      '<li class="q"><div class="qh"><span class="qn">' + (qi + 1) + '.</span><span class="qt">' + esc(q.s) + '</span></div>' +
+      '<div class="yz-cevap"><b>Örnek cevap</b><p>' + esc(q.c) + '</p></div>' +
+      '<div class="yz-noktalar"><b>Puan getiren noktalar</b><ul>' + q.k.map(k => '<li>' + esc(k[0]) + '</li>').join('') + '</ul></div></li>').join('') + '</ol>' +
+      '<div class="next"><button type="button" class="btn primary" data-view="coz">Şimdi kendin yaz</button></div>';
+  } else {
+    body = '<ol class="qlist yz-liste" id="yz-sheet">' + E.sorular.map((q, qi) => {
+      const key = li + '.' + ei + '.' + qi;
+      return '<li class="q" data-qi="' + qi + '"><div class="qh"><span class="qn">' + (qi + 1) + '.</span><span class="qt">' + esc(q.s) + '</span></div>' +
+        '<textarea class="yz-yazi" id="yz-' + key.replace(/\./g, '-') + '" data-yz-key="' + key + '" rows="5" aria-label="Soru ' + (qi + 1) + ' cevabın" placeholder="Sınavda yazacağın gibi yaz…">' + esc(S.yaz[key] || '') + '</textarea>' +
+        '<div class="yz-sonuc" hidden></div>' +
+        '<div class="yz-alt"><button type="button" class="btn" data-yz="' + qi + '" aria-expanded="false">Örnek cevabı göster</button></div>' +
+        '<div class="yz-cevap" hidden><b>Örnek cevap</b><p>' + esc(q.c) + '</p></div></li>';
+    }).join('') + '</ol>' +
+      '<div class="actions"><button type="button" class="btn primary" id="act-check">Kontrol et</button><button type="button" class="btn" id="yz-temizle">Temizle</button><span class="status" id="status" aria-live="polite">' + E.sorular.length + ' soru · cevapların bu tarayıcıda saklanır</span></div>' +
+      '<div id="results"></div>';
+  }
+  document.getElementById('card').innerHTML =
+    '<div class="card-head"><div class="row"><span class="file">' + esc(E.file) + '</span><span class="eyebrow">Seviye ' + li + ' · Alıştırma ' + (ei + 1) + '/' + LEVELS[li].ex.length + '</span>' +
+    '<div class="seg" role="group" aria-label="Görünüm"><button type="button" data-view="coz" aria-pressed="' + (view === 'coz') + '">Yaz</button><button type="button" data-view="oku" aria-pressed="' + (view === 'oku') + '">Örnek cevaplar</button></div></div>' +
+    '<h2>' + esc(E.title) + '</h2><p class="intro">' + esc(E.intro) + '</p></div>' + body;
+  cur = view === 'coz' ? { li, ei, E, yazili:true } : null;
+}
+function yaziliKontrol(){
+  const E = cur.E;
+  let top = 0, bulunan = 0, cevaplanan = 0;
+  document.querySelectorAll('#yz-sheet > li').forEach((li, qi) => {
+    const q = E.sorular[qi], metin = li.querySelector('textarea').value;
+    const sonuc = kapsam(q, metin), n = sonuc.filter(r => r.var).length;
+    top += q.k.length; bulunan += n; if (metin.trim()) cevaplanan++;
+    const kutu = li.querySelector('.yz-sonuc');
+    kutu.hidden = false;
+    kutu.innerHTML = metin.trim() ? '<div class="yz-puan"><b>' + n + ' / ' + q.k.length + '</b> anahtar nokta</div>' + kontrolListesi(sonuc) : '<p class="yz-bos">Boş bıraktın. Önce kendi cümlelerinle yaz, sonra örnek cevaba bak.</p>';
+    li.classList.toggle('ok', n === q.k.length);
+  });
+  const oran = top ? bulunan / top : 0, k = exKey(cur.li, cur.ei);
+  S.best[k] = S.best[k] || {};
+  S.best[k][S.mode] = Math.max(S.best[k][S.mode] || 0, oran);
+  persist();
+  document.getElementById('status').innerHTML = '<b>' + bulunan + ' / ' + top + '</b> anahtar nokta · ' + cevaplanan + ' / ' + E.sorular.length + ' soru cevaplandı';
+  const L = LEVELS[cur.li];
+  document.getElementById('results').innerHTML = '<div class="next"><button type="button" class="btn primary" id="act-next">' + (cur.ei < L.ex.length - 1 ? 'Sonraki alıştırma →' : 'Sonraki seviye →') + '</button></div>';
+  const keep = cur; renderTop(); cur = keep;
+}
+let yazZaman = 0;
+
+/* ───────────── rastgele boşluklar ───────────── */
+let rastgele = null;
+const ONEMLI = new Set();
+function onemli(){
+  if (ONEMLI.size) return ONEMLI;
+  LEVELS.forEach(L => (L.ex || []).forEach(E => {
+    if (E.kind !== 'code') return;
+    parse(E).blanks.forEach(b => b.answers.forEach(a => { if (/^[A-Za-z_]\w*(?:-[A-Za-z]+)*$/.test(a)) ONEMLI.add(a); }));
+  }));
+  KW.forEach(k => ONEMLI.add(k));
+  return ONEMLI;
+}
+function rastgeleBosluk(E, key){
+  const p = parse(E), on = onemli();
+  const duz = p.text.replace(PHRE, (_, i) => p.blanks[+i].answers[0]);
+  const araliklar = re => { const r = []; let m; re.lastIndex = 0; while ((m = re.exec(duz))) r.push([m.index, m.index + m[0].length]); return r; };
+  const yorum = araliklar(E.lang === 'razor' ? /@\*[\s\S]*?\*@|<!--[\s\S]*?-->|\/\/[^\n]*/g : E.lang === 'ps' ? /#[^\n]*/g : E.lang === 'json' ? /(?!)/g : /\/\/[^\n]*|\/\*[\s\S]*?\*\//g);
+  const metin = E.lang === 'cs' ? araliklar(/"(?:[^"\\\n]|\\.)*"/g) : [];
+  const icinde = (r, i) => r.some(([a, b]) => i >= a && i < b);
+  const adaylar = [];
+  const tre = /[A-Za-z_][A-Za-z0-9_]*(?:-[A-Za-z]+)*/g;
+  let m;
+  while ((m = tre.exec(duz))) {
+    const t = m[0], i = m.index, once = duz[i - 1] || '', sonra = duz[i + t.length] || '';
+    if (t.length < 2 || icinde(yorum, i)) continue;
+    if (E.lang === 'cs' && icinde(metin, i) && !on.has(t)) continue;
+    let ok = on.has(t);
+    if (!ok && E.lang === 'cs') ok = /^[A-Z][A-Za-z0-9]+$/.test(t);
+    if (!ok && E.lang === 'razor') ok = once === '@' || once === '.' || /^asp-/.test(t) || /asp-[\w-]+="$/.test(duz.slice(Math.max(0, i - 40), i));
+    if (!ok && (E.lang === 'json' || E.lang === 'ps')) ok = /^[A-Z]/.test(t);
+    if (E.lang === 'razor' && sonra === '=' && !/^asp-/.test(t)) ok = false;
+    if (E.lang === 'razor' && once === '<' && !on.has(t)) ok = false;
+    if (E.lang === 'razor' && duz.slice(Math.max(0, i - 30), i).replace(/\s+$/, '').slice(-1) === '>') ok = false; // etiket arasındaki düz yazı (ör. <th>Email</th>)
+    if (ok) adaylar.push({ t, i });
+  }
+  shuffle(adaylar);
+  const hedef = Math.max(6, Math.min(14, p.blanks.length || 8));
+  const secilen = [], satirSay = new Map(), kelimeSay = new Map();
+  for (const a of adaylar) {
+    if (secilen.length >= hedef) break;
+    const satir = duz.slice(0, a.i).split('\n').length;
+    if ((satirSay.get(satir) || 0) >= 2 || (kelimeSay.get(a.t) || 0) >= 2) continue;
+    secilen.push(a);
+    satirSay.set(satir, (satirSay.get(satir) || 0) + 1);
+    kelimeSay.set(a.t, (kelimeSay.get(a.t) || 0) + 1);
+  }
+  secilen.sort((x, y) => x.i - y.i);
+  let text = '', son = 0;
+  const blanks = [];
+  secilen.forEach(a => {
+    text += duz.slice(son, a.i) + PH(blanks.length);
+    const asil = p.blanks.find(b => b.answers[0] === a.t);
+    blanks.push({ answers:[a.t], exp: asil ? asil.exp : '', hard:false });
+    son = a.i + a.t.length;
+  });
+  text += duz.slice(son);
+  return { key, text, blanks };
+}
+
 /* ───────────── genel prova ───────────── */
 function pool(){
   const out = [];
-  LEVELS.forEach((L, li) => { if (!L.ex) return; L.ex.forEach((E, ei) => { const p = parse(E); p.blanks.forEach((b, bi) => out.push({ li, ei, bi, E, p, b })); }); });
+  LEVELS.forEach((L, li) => { if (!L.ex) return; L.ex.forEach((E, ei) => { if (E.kind === 'yazili') return; const p = parse(E); p.blanks.forEach((b, bi) => out.push({ li, ei, bi, E, p, b })); }); });
   return out;
 }
 function snippetHtml(q, target){
@@ -1439,15 +1814,16 @@ function newExam(onlyWrong){
       const opts = shuffle([q.b.exp].concat(same.concat(other).slice(0, 3)));
       return { type:'mc', q, opts, correct: opts.indexOf(q.b.exp) };
     });
-    qs = shuffle(fills.concat(mcs));
+    const yz = shuffle(yaziliHavuz()).slice(0, 2).map(y => ({ type:'yazili', y }));
+    qs = shuffle(fills.concat(mcs)).concat(yz);
   }
   exam = { qs, graded:false, onlyWrong: !!onlyWrong };
 }
 function renderExam(){
   if (!exam) newExam(false);
   const wrongN = Object.keys(S.wrong).length;
-  const head = '<div class="card-head"><div class="row"><span class="eyebrow">Seviye 8 · Genel prova</span></div><h2>' + (exam.onlyWrong ? 'Yanlışlarım' : 'Karışık vize provası') + '</h2>' +
-    '<p class="intro">' + (exam.onlyWrong ? 'Daha önce yanlış yaptığın ' + exam.qs.length + ' boşluk. Doğru yaptıkların listeden çıkar.' : 'Her seferinde rastgele ' + exam.qs.length + ' soru: bütün seviyelerden boşluk doldurma ve "işaretli kod ne işe yarar?" soruları. Sınavdaki gibi Zor modda, kelimeler hazır gelmez.') + '</p>' +
+  const head = '<div class="card-head"><div class="row"><span class="eyebrow">Seviye ' + (LEVELS.length - 1) + ' · Genel prova</span></div><h2>' + (exam.onlyWrong ? 'Yanlışlarım' : 'Karışık vize provası') + '</h2>' +
+    '<p class="intro">' + (exam.onlyWrong ? 'Daha önce yanlış yaptığın ' + exam.qs.length + ' boşluk. Doğru yaptıkların listeden çıkar.' : 'Her seferinde rastgele ' + exam.qs.length + ' soru: bütün seviyelerden boşluk doldurma, "işaretli kod ne işe yarar?" soruları ve sonda iki yazılı MVC sorusu. Sınavdaki gibi Zor modda, kelimeler hazır gelmez. Yazılı sorular anahtar noktaların %60\'ı varsa doğru sayılır.') + '</p>' +
     '<div class="exam-head"><button type="button" class="btn" id="ex-new">Yeni karışık sınav</button><button type="button" class="btn" id="ex-wrong"' + (wrongN ? '' : ' disabled') + '>Sadece yanlışlarım (' + wrongN + ')</button></div></div>';
   if (!exam.qs.length) {
     document.getElementById('card').innerHTML = head + '<div class="lesson"><p>Yanlış listen boş. Önce alıştırmaları çöz ya da karışık sınava gir.</p></div>';
@@ -1455,6 +1831,10 @@ function renderExam(){
   }
   const items = exam.qs.map((x, k) => {
     const { q } = x, id = 'eq-' + k;
+    if (x.type === 'yazili') {
+      return '<li class="q" data-k="' + k + '"><div class="qh"><span class="qn">' + (k + 1) + '.</span><span class="qt">Yazılı soru</span><span class="qfile">' + esc(x.y.E.file) + '</span></div>' +
+        '<p class="qtext yz-soru">' + esc(x.y.q.s) + '</p><textarea class="yz-sinav" id="' + id + '" rows="5" aria-label="Soru ' + (k + 1) + ' cevabın" placeholder="Sınavda yazacağın gibi yaz…"></textarea><div class="qexp" hidden></div></li>';
+    }
     if (x.type === 'fill') {
       return '<li class="q" data-k="' + k + '"><div class="qh"><span class="qn">' + (k + 1) + '.</span><span class="qt">Boşluğa ne gelir?</span><span class="qfile">' + esc(q.E.file) + '</span></div>' +
         snippetHtml(q, inputHtml(id, q.b, k + 1, 'data-k="' + k + '"')) + '<p class="qexp" hidden></p></li>';
@@ -1472,6 +1852,16 @@ function gradeExam(){
     const li = document.querySelector('.q[data-k="' + k + '"]'), { q } = x;
     const expEl = li.querySelector('.qexp');
     let st;
+    if (x.type === 'yazili') {
+      const metin = li.querySelector('textarea').value;
+      const sonuc = kapsam(x.y.q, metin), n = sonuc.filter(r => r.var).length;
+      st = n / sonuc.length >= 0.6 ? 'ok' : 'bad';
+      expEl.innerHTML = '<b>' + n + ' / ' + sonuc.length + ' anahtar nokta</b>' + (st === 'ok' ? ' · doğru sayıldı' : ' · %60 altında') + kontrolListesi(sonuc) + '<div class="yz-cevap"><b>Örnek cevap</b><p>' + esc(x.y.q.c) + '</p></div>';
+      if (st === 'ok') ok++;
+      li.classList.add('graded'); li.classList.toggle('ok', st === 'ok'); li.classList.toggle('bad', st !== 'ok');
+      expEl.hidden = false;
+      return;
+    }
     if (x.type === 'fill') {
       const inp = li.querySelector('input'); const val = inp.value;
       st = grade(q.b, val, !!q.E.ci);
@@ -1515,6 +1905,20 @@ document.addEventListener('click', e => {
   else if (t.id === 'act-show') showAnswers();
   else if (t.id === 'act-clear') { renderExercise(); const f = document.querySelector('#sheet input'); if (f) f.focus(); }
   else if (t.id === 'act-retry') retryWrong();
+  else if (t.id === 'act-rand') { rastgele = rastgeleBosluk(LEVELS[S.level].ex[currentTab()], exKey(S.level, currentTab())); renderExercise(); const f = document.querySelector('#sheet input'); if (f) f.focus(); }
+  else if (t.id === 'act-orig') { rastgele = null; renderExercise(); }
+  else if (t.dataset.yz !== undefined) {
+    const kutu = t.closest('li').querySelector('.yz-cevap');
+    kutu.hidden = !kutu.hidden;
+    t.setAttribute('aria-expanded', String(!kutu.hidden));
+    t.textContent = kutu.hidden ? 'Örnek cevabı göster' : 'Örnek cevabı gizle';
+  }
+  else if (t.id === 'yz-temizle') {
+    if (!cur || !cur.yazili) return;
+    cur.E.sorular.forEach((_, qi) => { delete S.yaz[cur.li + '.' + cur.ei + '.' + qi]; });
+    persist(); renderExercise();
+    const f = document.querySelector('#yz-sheet textarea'); if (f) f.focus();
+  }
   else if (t.id === 'act-next') next();
   else if (t.id === 'ex-new') { newExam(false); renderExam(); }
   else if (t.id === 'ex-wrong') { newExam(true); renderExam(); }
@@ -1534,6 +1938,12 @@ document.addEventListener('input', e => {
     const fold = s => norm(s, true).replace(/[çğışöü]/g, c => ({'ç':'c','ğ':'g','ı':'i','ş':'s','ö':'o','ü':'u'}[c]));
     const q = fold(e.target.value);
     document.querySelectorAll('#gloss-list > div').forEach(d => { d.hidden = q !== '' && !fold(d.textContent).includes(q); });
+    return;
+  }
+  if (e.target.classList.contains('yz-yazi')) {
+    S.yaz = S.yaz || {};
+    S.yaz[e.target.dataset.yzKey] = e.target.value;
+    clearTimeout(yazZaman); yazZaman = setTimeout(persist, 400);
     return;
   }
   if (e.target.tagName === 'INPUT' && e.target.type !== 'radio') e.target.classList.remove('ok','bad','case','shown');
