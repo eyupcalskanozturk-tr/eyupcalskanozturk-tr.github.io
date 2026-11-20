@@ -103,6 +103,36 @@ const CUMLELER = [
 for (const [cumle, beklenen] of CUMLELER) esit(cumle, ozet(O.ayristir(cumle, SIMDI)), beklenen);
 console.log(`   ${CUMLELER.length} cümle`);
 
+// tek mesajda birden çok görev
+const COKLU = [
+  [
+    'Yarına Mobil Uygulama projeye başlanıcak,Gömülü Sistemler konu belirlenecek,Claude Eğitimleri için çalışmaya başlanıcak',
+    [
+      { b: 'Mobil Uygulama projeye başlanıcak', z: 'Yarın' },
+      { b: 'Gömülü Sistemler konu belirlenecek', z: 'Yarın' },
+      { b: 'Claude Eğitimleri için çalışmaya başlanıcak', z: 'Yarın' },
+    ],
+  ],
+  ['süt, ekmek, yumurta al', [{ b: 'Süt, ekmek, yumurta al', z: null }]],
+  [
+    'yarın 14:00 rapor yaz, pazartesi sunum hazırla #okul',
+    [
+      { b: 'Rapor yaz', z: 'Yarın 14:00', k: 'Okul' },
+      { b: 'Sunum hazırla', z: 'Pazartesi', k: 'Okul' },
+    ],
+  ],
+  [
+    '- süt al\n- yarın 10:00 dişçi\n• kitap oku',
+    [
+      { b: 'Süt al', z: null },
+      { b: 'Dişçi', z: 'Yarın 10:00' },
+      { b: 'Kitap oku', z: null },
+    ],
+  ],
+  ['rapor yaz, hocaya gönder // son gün', [{ b: 'Rapor yaz, hocaya gönder', z: null, n: 'son gün' }]],
+];
+for (const [cumle, beklenen] of COKLU) esit(`çoklu: ${cumle.replace(/\n/g, ' ⏎ ')}`, O.cokluAyristir(cumle, SIMDI).map(ozet), beklenen);
+
 /* ───────── 2. çekirdek ───────── */
 console.log('2) Çekirdek işlemler');
 {
@@ -402,6 +432,36 @@ const mesajlar = (d) => d.giden.filter((x) => x.yontem === 'sendMessage');
   s = await kos(d, '2026-11-22T09:03:00+03:00', { ...ORTAM, GOREV_TOKEN: 'yanlis' });
   esit('yanlış token: alarm penceresinde hata kodu', s.kod, 1);
 
+  // n0) tek mesajda virgülle üç görev → üç ayrı görev; "hepsini geri al" ve "geri getir" düğmeleri
+  d.guncellemeler.push(mesajGuncellemesi(SAHIP, 'Yarına mobil uygulama projesine başla, gömülü sistemler konusunu belirle, Claude eğitimlerine çalış'));
+  await kos(d, '2026-11-22T11:01:00+03:00');
+  v = d.veri();
+  const uclu = v.gorevler.filter((g) => /^tg[0-9a-z]+-[123]$/.test(g.id));
+  esit('üç ayrı görev, hepsi yarın', uclu.map((g) => [g.baslik, g.zaman, g.tumGun]), [
+    ['Mobil uygulama projesine başla', '2026-11-23T09:00:00+03:00', true],
+    ['Gömülü sistemler konusunu belirle', '2026-11-23T09:00:00+03:00', true],
+    ['Claude eğitimlerine çalış', '2026-11-23T09:00:00+03:00', true],
+  ]);
+  const ucluYanit = mesajlar(d).find((x) => /3 görev eklendi/.test(x.govde.text));
+  dogru('çoklu ekleme yanıtı', !!ucluYanit && ucluYanit.govde.reply_markup.inline_keyboard[0][0].callback_data.startsWith('xx:'));
+  const taban = ucluYanit.govde.reply_markup.inline_keyboard[0][0].callback_data.slice(3);
+  d.guncellemeler.push(butonGuncellemesi(SAHIP, `xx:${taban}`, { message_id: 700, text: 'x' }));
+  await kos(d, '2026-11-22T11:06:00+03:00');
+  esit('hepsini geri al üçünü de siler', d.veri().gorevler.filter((g) => g.id.startsWith(`${taban}-`)).length, 0);
+  dogru('mesaj "geri getir" düğmesiyle düzenlendi', d.giden.some((x) => x.yontem === 'editMessageText' && x.govde.reply_markup.inline_keyboard[0][0].callback_data === `rx:${taban}`));
+  d.guncellemeler.push(butonGuncellemesi(SAHIP, `rx:${taban}`, { message_id: 700, text: 'x' }));
+  await kos(d, '2026-11-22T11:11:00+03:00');
+  esit('geri getir üçünü de getirir', d.veri().gorevler.filter((g) => g.id.startsWith(`${taban}-`)).length, 3);
+
+  // n1) "5 dk sonra" mesajın gönderildiği andan sayılır; bot geç okusa da hatırlatma kaybolmaz
+  const gec = mesajGuncellemesi(SAHIP, '5 dk sonra çayı demle');
+  gec.message.date = Math.floor(T('2026-11-22T11:00:00+03:00').getTime() / 1000);
+  d.guncellemeler.push(gec);
+  await kos(d, '2026-11-22T11:12:00+03:00');
+  const cay = d.veri().gorevler.find((g) => g.baslik === 'Çayı demle');
+  esit('süre mesaj anından sayıldı', cay && cay.zaman, '2026-11-22T11:05:00+03:00');
+  dogru('geciken hatırlatma aynı çalışmada gitti', mesajlar(d).some((x) => /Zamanı geldi/.test(x.govde.text) && /Çayı demle/.test(x.govde.text)));
+
   // n) günlüklerde görev metni ya da sır yok
   const satirlar = [];
   d.guncellemeler.push(mesajGuncellemesi(SAHIP, 'gizli doktor randevusu yarın 10:00'));
@@ -410,6 +470,21 @@ const mesajlar = (d) => d.giden.filter((x) => x.yontem === 'sendMessage');
   dogru('günlükte görev metni yok', !/doktor|İlaç|Sunum/i.test(gunlukMetni), gunlukMetni);
   dogru('günlükte sır yok', !/tg-sahte|gh-sahte|actions-sahte/.test(gunlukMetni));
   dogru('istek adreslerinde token gizli', !d.istek.some((x) => x.includes('tg-sahte')));
+}
+
+{
+  // Eşleşirken /start üst üste birkaç kez gelirse (derin bağlantı + elle yazılan) tek hoş geldin mesajı gider
+  const d = sahteDunya();
+  // (özet saatlerinin dışında: 12:00 civarı)
+  await kos(d, '2026-11-20T12:01:00+03:00');
+  d.yaz((v) => O.islemUygula(v, { tur: 'telegram', alanlar: { kod: 'SJNGWS', kodSonu: '2026-11-20T12:30:00+03:00' } }, T('2026-11-20T12:02:00+03:00')));
+  d.guncellemeler.push(mesajGuncellemesi(SAHIP, '/start SJNGWS'), mesajGuncellemesi(SAHIP, '/start SJNGWS'), mesajGuncellemesi(SAHIP, '/start'));
+  await kos(d, '2026-11-20T12:06:00+03:00');
+  const giden = mesajlar(d).filter((x) => x.govde.chat_id === SAHIP);
+  esit('üst üste /start: tek mesaj', [giden.length, /Bağlantı tamam/.test((giden[0] || { govde: { text: '' } }).govde.text)], [1, true]);
+  d.guncellemeler.push(mesajGuncellemesi(SAHIP, '/start'));
+  await kos(d, '2026-11-20T12:11:00+03:00');
+  esit('sonraki turda /start yine yardım verir', mesajlar(d).length, 1);
 }
 
 console.log(hata ? `\n✗ ${hata} / ${toplam} kontrol başarısız` : `\n✓ ${toplam} kontrolün hepsi geçti`);

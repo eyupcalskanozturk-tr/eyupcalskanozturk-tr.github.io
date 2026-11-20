@@ -770,8 +770,16 @@ function onizlemeCiz() {
   const kutu = $('#onizleme');
   if (!metin.trim() || !D.gorunen) return kutu.replaceChildren();
   const simdi = new Date();
-  const r = O.ayristir(metin, simdi, D.gorunen.ayarlar);
   const cip = (t, sinif = '') => h('span', { class: `cip ${sinif}`, text: t });
+  const liste = O.cokluAyristir(metin, simdi, D.gorunen.ayarlar);
+  if (liste.length > 1) {
+    // birden çok görev: her biri başlığı ve zamanıyla
+    return kutu.replaceChildren(
+      cip(`🧩 ${liste.length} görev eklenecek`, 'altin'),
+      ...liste.map((x) => cip(`“${x.baslik}”${x.zaman ? ' · ' + O.tarihMetni(new Date(x.zaman), simdi, x.tumGun) : ''}`)),
+    );
+  }
+  const r = liste[0];
   const c = [cip(`“${r.baslik}”`, 'altin')];
   c.push(cip(r.zaman ? `📅 ${O.tarihMetni(new Date(r.zaman), simdi, r.tumGun)}` : '📥 tarihsiz'));
   if (r.tekrar) c.push(cip(`↻ ${O.tekrarMetni(r.tekrar)}`));
@@ -790,13 +798,22 @@ function hizliEkle(e) {
   const girdi = $('#girdi');
   const metin = girdi.value.trim();
   if (!metin) return girdi.focus();
-  const r = O.ayristir(metin, new Date(), D.gorunen.ayarlar);
-  const id = O.yeniKimlik();
-  islemEkle({ tur: 'ekle', id, alanlar: { baslik: r.baslik, not: r.not, zaman: r.zaman, tumGun: r.tumGun, tekrar: r.tekrar, kategori: r.kategori, oncelik: r.oncelik, hatirlat: r.hatirlat, kaynak: 'site' } });
-  if (r.kategori && !D.gorunen.ayarlar.kategoriler.includes(r.kategori)) islemEkle({ tur: 'ayarlar', alanlar: { kategoriler: [...D.gorunen.ayarlar.kategoriler, r.kategori] } });
+  const liste = O.cokluAyristir(metin, new Date(), D.gorunen.ayarlar);
+  const kimlikler = [];
+  const yeniKategoriler = [];
+  for (const r of liste) {
+    const id = O.yeniKimlik();
+    kimlikler.push(id);
+    islemEkle({ tur: 'ekle', id, alanlar: { baslik: r.baslik, not: r.not, zaman: r.zaman, tumGun: r.tumGun, tekrar: r.tekrar, kategori: r.kategori, oncelik: r.oncelik, hatirlat: r.hatirlat, kaynak: 'site' } });
+    if (r.kategori && !D.gorunen.ayarlar.kategoriler.includes(r.kategori) && !yeniKategoriler.includes(r.kategori)) yeniKategoriler.push(r.kategori);
+  }
+  if (yeniKategoriler.length) islemEkle({ tur: 'ayarlar', alanlar: { kategoriler: [...D.gorunen.ayarlar.kategoriler, ...yeniKategoriler] } });
   girdi.value = '';
   onizlemeCiz();
-  bildir(`+ ${r.baslik}${r.zaman ? ' · ' + O.tarihMetni(new Date(r.zaman), new Date(), r.tumGun) : ''}`, () => islemEkle({ tur: 'sil', id }));
+  const geriAl = () => kimlikler.forEach((id) => islemEkle({ tur: 'sil', id }));
+  if (liste.length > 1) return bildir(`+ ${liste.length} görev eklendi`, geriAl);
+  const r = liste[0];
+  bildir(`+ ${r.baslik}${r.zaman ? ' · ' + O.tarihMetni(new Date(r.zaman), new Date(), r.tumGun) : ''}`, geriAl);
 }
 
 /* ───────── düzenleme ───────── */

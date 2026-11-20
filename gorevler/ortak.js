@@ -785,6 +785,53 @@ export function ayristir(girdi, simdi = new Date(), ayarlar = VARSAYILAN_AYARLAR
   return r;
 }
 
+/**
+ * Bir mesajdan bir ya da birden çok görev çıkarır.
+ *  - Her satır ayrı görevdir (başındaki "-", "•", "1." gibi imler atılır).
+ *  - Satırdaki virgül ya da noktalı virgülle ayrılmış parçaların hepsi en az iki
+ *    kelimeyse her parça ayrı görevdir ("süt, ekmek al" tek görev kalır).
+ *    Satırın ortak tarihi/saati, kategorisi ve önceliği parçalara uygulanır;
+ *    kendi tarihi olan parça kendi tarihini kullanır.
+ *  - " // " ile not yazılmışsa metin tek görevdir.
+ * "Yarına mobil uygulamaya başla, gömülü sistemler konusunu belirle" → 2 görev, ikisi de yarın.
+ */
+export function cokluAyristir(girdi, simdi = new Date(), ayarlar = VARSAYILAN_AYARLAR) {
+  const metin = String(girdi || '').trim();
+  if (/\s\/\/\s/.test(metin)) return [ayristir(metin, simdi, ayarlar)];
+  const satirlar = metin
+    .split(/\r?\n/)
+    .map((s) => s.replace(/^\s*(?:[-*•▪◦·–—]|\d{1,2}[.)])\s+/u, '').trim())
+    .filter(Boolean);
+  if (!satirlar.length) return [ayristir('', simdi, ayarlar)];
+  const kelime = (s) => s.split(/\s+/).filter(Boolean).length;
+  const sonuc = [];
+  for (const satir of satirlar) {
+    const r = ayristir(satir, simdi, ayarlar);
+    const parcalar = r.baslik
+      .split(/\s*[,;]\s*/)
+      .map((p) => p.trim())
+      .filter(Boolean);
+    if (parcalar.length < 2 || !parcalar.every((p) => kelime(p) >= 2)) {
+      sonuc.push(r);
+      continue;
+    }
+    for (const p of parcalar) {
+      const rp = ayristir(p, simdi, ayarlar);
+      const kendi = !!rp.zaman;
+      sonuc.push({
+        ...rp,
+        zaman: kendi ? rp.zaman : r.zaman,
+        tumGun: kendi ? rp.tumGun : r.tumGun,
+        tekrar: rp.tekrar || (kendi ? null : r.tekrar),
+        kategori: rp.kategori || r.kategori,
+        oncelik: rp.oncelik !== 'normal' ? rp.oncelik : r.oncelik,
+        hatirlat: rp.hatirlat || r.hatirlat,
+      });
+    }
+  }
+  return sonuc;
+}
+
 function saatiDegistirir(dp, sa) {
   if (dp === 'gece yarısı') return true;
   if (dp === 'akşam' || dp === 'öğleden sonra' || dp === 'ikindi') return sa < 12;
