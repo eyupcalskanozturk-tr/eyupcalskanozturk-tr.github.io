@@ -10,8 +10,10 @@ name: Görev hatırlatıcısı
 on:
   schedule:
     # GitHub'ın izin verdiği en sık aralık 5 dakika. Saat başındaki yoğunluğa
-    # denk gelmesin diye 1, 6, 11… geçe çalışır.
-    - cron: '1-59/5 * * * *'
+    # denk gelmesin diye 2, 7, 12… geçe çalışır (dakikalar açıkça listelendi).
+    # GitHub zamanlanmış çalışmaları yoğunlukta geciktirebilir; hatırlatmalar
+    # bu yüzden 5 dakikalık ön bakışla planlanır.
+    - cron: '2,7,12,17,22,27,32,37,42,47,52,57 * * * *'
   workflow_dispatch:
 
 permissions:

@@ -298,6 +298,7 @@ export function isle(v, guncellemeler, simdi, ayar, ek = {}) {
     giden.push({ yontem: 'editMessageText', govde, sessiz: true });
   };
 
+  const baslayan = new Set(); // bu turda /start'a cevap verilen sohbetler (üst üste /start'a tek cevap)
   for (const u of [...guncellemeler].sort((a, b) => a.update_id - b.update_id)) {
     if (!(u.update_id > (v.durum.tgSon || 0))) continue;
     v.durum.tgSon = u.update_id;
@@ -306,6 +307,9 @@ export function isle(v, guncellemeler, simdi, ayar, ek = {}) {
     const chat = m ? m.chat : cb && cb.message ? cb.message.chat : null;
     if (!chat || chat.type !== 'private') continue;
     const metin = (m && (m.text || m.caption)) || '';
+    // "30 dk sonra" gibi süreler botun mesajı okuduğu andan değil, mesajın gönderildiği andan sayılır
+    const mesajAni = m && m.date > 0 && m.date * 1000 < simdi.getTime() ? new Date(m.date * 1000) : simdi;
+    const startMi = /^\/start(?:@\w+)?(?:\s|$)/.test(metin);
 
     // eşleştirme: /start KOD (sitede üretilen, 30 dk geçerli kod)
     const kod = /^\/start(?:@\w+)?\s+([A-Za-z0-9_-]{4,64})\s*$/.exec(metin);
@@ -316,6 +320,7 @@ export function isle(v, guncellemeler, simdi, ayar, ek = {}) {
         sahip = chat.id;
         const hitap = v.ayarlar.hitap ? ` ${kacis(v.ayarlar.hitap)}` : '';
         mesaj(chat.id, `👋 <b>Merhaba${hitap}!</b> Bağlantı tamam ✓\nHatırlatmalar ve günlük özetler artık buraya gelecek.\n\n${yardimMetni(ayar)}`, KLAVYE);
+        baslayan.add(String(chat.id));
         continue;
       }
     }
@@ -332,7 +337,11 @@ export function isle(v, guncellemeler, simdi, ayar, ek = {}) {
       mesaj(chat.id, 'Şimdilik yalnız yazılı mesajları anlıyorum. Görev eklemek için yaz: <i>yarın 14:00 ödev</i>');
       continue;
     }
-    komut(v, chat.id, metin.trim(), u.update_id, simdi, ayar, { mesaj });
+    if (startMi) {
+      if (baslayan.has(String(chat.id))) continue;
+      baslayan.add(String(chat.id));
+    }
+    komut(v, chat.id, metin.trim(), u.update_id, simdi, ayar, { mesaj }, mesajAni);
   }
 
   O.tekrarIlerlet(v, simdi);
@@ -362,7 +371,7 @@ export function isle(v, guncellemeler, simdi, ayar, ek = {}) {
   return giden;
 }
 
-function komut(v, chatId, metin, updateId, simdi, ayar, { mesaj }) {
+function komut(v, chatId, metin, updateId, simdi, ayar, { mesaj }, mesajAni = simdi) {
   let ad;
   let arguman = '';
   if (DUGME_KOMUT[metin]) ad = DUGME_KOMUT[metin];
@@ -393,10 +402,24 @@ function komut(v, chatId, metin, updateId, simdi, ayar, { mesaj }) {
     }
     case 'ekle': {
       if (!arguman) return mesaj(chatId, 'Ne ekleyeyim? Örnek: <code>/ekle yarın 14:00 veritabanı ödevi</code>');
-      const r = O.ayristir(arguman, simdi, v.ayarlar);
-      const g = O.gorevEkle(v, { baslik: r.baslik, not: r.not, zaman: r.zaman, tumGun: r.tumGun, tekrar: r.tekrar, kategori: r.kategori, oncelik: r.oncelik, hatirlat: r.hatirlat, kaynak: 'telegram' }, simdi, `tg${updateId.toString(36)}`);
-      if (!g) return null;
-      if (r.kategori && !v.ayarlar.kategoriler.includes(r.kategori)) v.ayarlar.kategoriler = [...v.ayarlar.kategoriler, r.kategori];
+      // Virgülle ya da alt alta yazılmış birden çok iş ayrı görev olur; zaman mesajın gönderildiği andan sayılır.
+      const liste = O.cokluAyristir(arguman, mesajAni, v.ayarlar);
+      const taban = `tg${updateId.toString(36)}`;
+      const eklenen = [];
+      liste.forEach((r, i) => {
+        const yeni = O.gorevEkle(v, { baslik: r.baslik, not: r.not, zaman: r.zaman, tumGun: r.tumGun, tekrar: r.tekrar, kategori: r.kategori, oncelik: r.oncelik, hatirlat: r.hatirlat, kaynak: 'telegram' }, mesajAni, liste.length === 1 ? taban : `${taban}-${i + 1}`);
+        if (yeni) eklenen.push(yeni);
+        if (r.kategori && !v.ayarlar.kategoriler.includes(r.kategori)) v.ayarlar.kategoriler = [...v.ayarlar.kategoriler, r.kategori];
+      });
+      if (!eklenen.length) return null;
+      if (eklenen.length > 1) {
+        const satir = eklenen.map((x) => `• <b>${kacis(x.baslik)}</b> <i>#${x.no}</i>${x.zaman ? ' · ' + O.tarihMetni(new Date(x.zaman), simdi, x.tumGun) : ''}`);
+        const dugmeler = [[{ text: '↩️ Hepsini geri al', callback_data: `xx:${taban}` }]];
+        const site = siteDugmesi(ayar);
+        if (site) dugmeler[0].push(site);
+        return mesaj(chatId, `✅ <b>${eklenen.length} görev eklendi</b>\n\n${satir.join('\n')}`, { inline_keyboard: dugmeler });
+      }
+      const g = eklenen[0];
       const satirlar = [[{ text: '↩️ Geri al', callback_data: `x:${g.id}:k` }]];
       const d = siteDugmesi(ayar, '✏️ Düzenle', g.id);
       if (d) satirlar[0].push(d);
@@ -536,6 +559,19 @@ function geriCagir(v, cb, simdi, ayar, { mesaj, duzenle, giden }) {
     else {
       bildirim = '↩️ Geri getirildi';
       duzenle(cbMesaj, `↩️ <b>Geri getirildi</b>\n\n${gorevKarti(r, simdi)}`, { inline_keyboard: [[{ text: '🗑 Yine sil', callback_data: `x:${r.id}:k` }]] });
+    }
+  } else if ((tur === 'xx' || tur === 'rx') && id) {
+    // tek mesajla eklenen görevlerin hepsi: kimlikleri "tg<güncelleme>-1", "-2"…
+    const ait = (gid) => gid === id || gid.startsWith(`${id}-`);
+    const liste = (x) => x.map((g) => `${tur === 'xx' ? `<s>${kacis(g.baslik)}</s>` : `<b>${kacis(g.baslik)}</b>`} <i>#${g.no}</i>`).join('\n');
+    if (tur === 'xx') {
+      const silinen = v.gorevler.filter((g) => ait(g.id)).map((g) => O.gorevSil(v, g.id, simdi)).filter(Boolean);
+      bildirim = silinen.length ? `🗑 ${silinen.length} görev silindi` : 'Görevler zaten yok';
+      if (silinen.length) duzenle(cbMesaj, `🗑 <b>${silinen.length} görev geri alındı</b>\n\n${liste(silinen)}`, { inline_keyboard: [[{ text: '↩️ Geri getir', callback_data: `rx:${id}` }]] });
+    } else {
+      const gelen = v.cop.filter((c) => ait(c.gorev.id)).map((c) => O.copGeriAl(v, c.gorev.id, simdi)).filter(Boolean);
+      bildirim = gelen.length ? `↩️ ${gelen.length} görev geri geldi` : 'Geri getirilecek görev yok';
+      if (gelen.length) duzenle(cbMesaj, `↩️ <b>${gelen.length} görev geri getirildi</b>\n\n${liste(gelen)}`, { inline_keyboard: [[{ text: '↩️ Hepsini geri al', callback_data: `xx:${id}` }]] });
     }
   }
   giden.unshift({ yontem: 'answerCallbackQuery', govde: { callback_query_id: cb.id, text: bildirim || undefined }, sessiz: true });
