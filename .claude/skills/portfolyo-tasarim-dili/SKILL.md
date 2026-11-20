@@ -34,7 +34,7 @@ Derleme adımı yok: düz HTML, CSS ve JavaScript; GitHub Pages yayınlar.
 **js/main.js** — tek IIFE; en üstte `CONFIG` (e-posta, GitHub kullanıcı adı, LinkedIn, Formspree adresi, saat dilimi, koordinatlar). Başlatma sırası:
 `initMotion` (hareket tercihi) → `initClock` → `initSky` (güneş konumu + palet → CSS değişkenleri, favicon, theme-color) → `initName` (isim harflerini kutuya oturtur, imlece göre `wdth` akordeonu) → `initRoundSun` → `initReveal` → `initStatement` → `initPreview` → `initMagnetic` → `initStatus` (müşteri sitelerine `no-cors` ölçüm) → `initTerminal` → `initContact` → `loadRepos`.
 
-**Alt sayfalar** (`chen-atolyesi/`, `laravel-vize/`, `python-vize/`, `ntp-vize/`, `mesleki-ingilizce/`, `kalite-kontrol/`, `programlama-temelleri/`, `cpp-temelleri/`, `rehber-vize/`, `sinav-gunu/`, `spam/`, `veri-tabani/` (ve `veri-tabani/sql/`: açık temalı SQL pratiği), `PROJE/`) kendi stillerini taşır; istenmedikçe dokunma, ana sayfadan bağlantıları koru.
+**Alt sayfalar** (`chen-atolyesi/`, `laravel-vize/`, `python-vize/`, `ntp-vize/`, `mesleki-ingilizce/`, `kalite-kontrol/`, `programlama-temelleri/`, `cpp-temelleri/`, `rehber-vize/`, `sinav-gunu/`, `spam/`, `veri-tabani/` (ve `veri-tabani/sql/`: açık temalı SQL pratiği), `gorevler/` (görev hatırlatıcısı: açık/beyaz tema, altın vurgu; Eyüp beyaz istedi), `PROJE/`) kendi stillerini taşır; istenmedikçe dokunma, ana sayfadan bağlantıları koru. `gorevler/` ana sayfada bağlantı olarak yok; sitenin terminalinde listede görünmeyen `gorevler` (`todo`, `gorev`) komutuyla açılır.
 
 ## Renk sistemi
 

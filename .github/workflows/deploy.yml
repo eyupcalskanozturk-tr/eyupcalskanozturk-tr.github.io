@@ -57,6 +57,8 @@ jobs:
           if [ -d spam ]; then cp -R spam _site/; fi
           # Veri Tabanı I · 1–7. haftaların çözümlü örnekleri (vize)
           if [ -d veri-tabani ]; then cp -R veri-tabani _site/; fi
+          # Görev hatırlatıcısı · görev sayfası (veri gizli depoda, hatırlatmalar Telegram'dan)
+          if [ -d gorevler ]; then cp -R gorevler _site/; fi
       - name: Dosyaları yükle
         uses: actions/upload-pages-artifact@v4
         with:

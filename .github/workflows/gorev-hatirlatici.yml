@@ -1,0 +1,50 @@
+name: Görev hatırlatıcısı
+
+# Gizli veri deposundaki görevleri okur; zamanı gelen hatırlatmaları ve günlük
+# özetleri Telegram'a gönderir, bota yazılan komutları ve buton basışlarını işler.
+# Kurulum adımları: https://eyupcalskanozturk-tr.github.io/gorevler/
+# Depo sırları: TELEGRAM_BOT_TOKEN, GOREV_TOKEN (isteğe bağlı TELEGRAM_CHAT_ID).
+# Veri deposu varsayılan olarak <sahip>/gorev-verisi; değiştirmek için GOREV_REPO değişkeni.
+# Kayıtlar herkese açık olduğundan betik günlüğe görev metni yazmaz.
+
+on:
+  schedule:
+    # GitHub'ın izin verdiği en sık aralık 5 dakika. Saat başındaki yoğunluğa
+    # denk gelmesin diye 1, 6, 11… geçe çalışır.
+    - cron: '1-59/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  # Herkese açık depoda 60 gün hareketsiz kalan zamanlanmış workflow kapanır;
+  # betik haftada bir workflow'u yeniden etkinleştirip sayacı sıfırlar.
+  actions: write
+
+concurrency:
+  group: gorev-hatirlatici
+  cancel-in-progress: false
+
+jobs:
+  hatirlat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Betiği al
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: |
+            .github/gorev-hatirlatici
+            gorevler
+          persist-credentials: false
+      - name: Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Hatırlatmaları gönder, komutları işle
+        run: node .github/gorev-hatirlatici/calistir.mjs
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GOREV_TOKEN: ${{ secrets.GOREV_TOKEN }}
+          GOREV_REPO: ${{ vars.GOREV_REPO }}
+          GH_TOKEN: ${{ github.token }}
