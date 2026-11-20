@@ -634,6 +634,8 @@
         print("Bot 6 hamle ileriyi düşünür ama yenilebilir. Bol şans!", "dim");
       },
       github: () => { window.open(`https://github.com/${CONFIG.github}`, "_blank", "noopener"); print("GitHub yeni sekmede açıldı."); },
+      // Listede yok: Eyüp'ün kendi görev sayfasına kısayol (görevler gizli depoda, sayfa anahtar ister).
+      gorevler: () => { print("Görev sayfası açılıyor…", "accent"); window.location.href = "/gorevler/"; },
       whoami: () => print("ziyaretci — ama bir mesajla müşteri olabilirsin → iletisim"),
       istatistik: () => {
         let kapali = false;
@@ -657,7 +659,7 @@
       temizle: () => out.replaceChildren(),
       cikis: () => close()
     };
-    const ALIASES = { help: "yardim", "?": "yardim", about: "hakkimda", projects: "isler", projeler: "isler", contact: "iletisim", mail: "iletisim", clear: "temizle", cls: "temizle", exit: "cikis", quit: "cikis", sky: "gokyuzu", time: "saat", date: "saat", tarih: "saat", matrix: "cmatrix", dir: "ls", dortlu: "oyna", oyun: "oyna", play: "oyna", game: "oyna", stats: "istatistik", analytics: "istatistik" };
+    const ALIASES = { help: "yardim", "?": "yardim", about: "hakkimda", projects: "isler", projeler: "isler", contact: "iletisim", mail: "iletisim", clear: "temizle", cls: "temizle", exit: "cikis", quit: "cikis", sky: "gokyuzu", time: "saat", date: "saat", tarih: "saat", matrix: "cmatrix", dir: "ls", dortlu: "oyna", oyun: "oyna", play: "oyna", game: "oyna", stats: "istatistik", analytics: "istatistik", gorev: "gorevler", todo: "gorevler", tasks: "gorevler" };
 
     function run(raw) {
       const text = raw.trim();
